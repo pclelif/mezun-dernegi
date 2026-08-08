@@ -25,13 +25,13 @@ export function Header() {
     return () => window.removeEventListener("scroll", updateHeaderSurface);
   }, []);
 
+  useEffect(() => {
+    document.getElementById("mobile-navigation-toggle")?.removeAttribute("open");
+  }, [pathname]);
+
   function isItemActive(item: NavigationItem) {
     if (item.href === "/") return pathname === "/";
     return pathname.startsWith(item.href) || Boolean(item.children?.some((child) => pathname.startsWith(child.href)));
-  }
-
-  function closeMobileNavigation() {
-    document.getElementById("mobile-navigation-toggle")?.removeAttribute("open");
   }
 
   return (
@@ -92,7 +92,7 @@ export function Header() {
           <nav id="mobile-navigation" className="mobile-navigation-panel flex max-h-[calc(100dvh-10rem)] flex-col overflow-y-auto border-t border-zinc-300 px-6 py-4 text-center text-zinc-900 shadow-inner" aria-label="Mobil menü">
             {navigation.map((item, index) => {
               if (!item.children) {
-                return <Link onClick={closeMobileNavigation} className="px-2 py-4 text-base font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600" href={item.href} key={item.href}>{item.label}</Link>;
+                return <Link className="px-2 py-4 text-base font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600" href={item.href} key={item.href}>{item.label}</Link>;
               }
 
               const menuId = `mobile-submenu-${index}`;
@@ -106,7 +106,7 @@ export function Header() {
                     <Minus className="hidden size-5 text-red-500 group-open/submenu:block" aria-hidden="true" />
                   </summary>
                   <div id={menuId} className="mx-auto mb-2 grid w-full max-w-sm border-y border-red-700 bg-red-600 py-1 text-center text-white">
-                    {item.children.map((child) => <Link onClick={closeMobileNavigation} className="px-3 py-3 text-sm !text-white hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-white" href={child.href} key={child.href}>{child.label}</Link>)}
+                    {item.children.map((child) => <Link className="px-3 py-3 text-sm !text-white hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-white" href={child.href} key={child.href}>{child.label}</Link>)}
                   </div>
                 </details>
               );

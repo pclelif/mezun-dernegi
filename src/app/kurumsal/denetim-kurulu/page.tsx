@@ -9,7 +9,7 @@ export default function AuditBoardPage() {
   return (
     <>
       <PageHero title="Denetim Kurulu" description="Derneğimizin denetim çalışmalarını yürüten kurul üyeleri." />
-      <section className="container-site section-space grid gap-5 sm:grid-cols-2 lg:grid-cols-3" aria-label="Denetim kurulu üyeleri">
+      <section className="container-site section-space grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-label="Denetim kurulu üyeleri">
         {auditBoardMembers.map((member) => <BoardMemberCard key={`${member.role}-${member.name}`} {...member} />)}
       </section>
     </>
