@@ -22,7 +22,7 @@ export function Header() {
     <header className="sticky top-0 z-50 border-b border-black/10 bg-white/95 backdrop-blur-sm">
       <div className="mx-auto flex min-h-20 w-[min(100%-2rem,75rem)] items-center justify-between gap-6 md:w-[min(100%-4rem,75rem)]">
         <Link href="/" className="flex max-w-64 items-center gap-3 text-sm font-bold leading-tight tracking-tight text-zinc-950" aria-label="KAAFL Mezunlar Derneği ana sayfa">
-          <Image src="/kaafl-logo.jpg" alt="" width={56} height={56} priority className="size-14 shrink-0 rounded-full object-cover" />
+          <Image src="/kaafl-logo-v2.jpg" alt="" width={56} height={56} priority className="size-14 shrink-0 rounded-full object-cover" />
           <span>Mezunlar<br />Derneği</span>
         </Link>
 

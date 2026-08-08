@@ -7,7 +7,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: { default: "KAAFL Mezunlar Derneği", template: "%s | KAAFL Mezunlar Derneği" },
   description: "KAAFL mezunlarını bir araya getiren dayanışma ve iletişim platformu.",
-  icons: { icon: "/kaafl-logo.jpg", apple: "/kaafl-logo.jpg" },
+  icons: { icon: "/kaafl-logo-v2.jpg", apple: "/kaafl-logo-v2.jpg" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {

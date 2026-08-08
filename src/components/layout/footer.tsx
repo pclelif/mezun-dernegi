@@ -14,7 +14,7 @@ export function Footer() {
     <footer className="bg-zinc-700 text-white">
       <div className="mx-auto grid w-[min(100%-2rem,75rem)] gap-10 py-12 md:w-[min(100%-4rem,75rem)] md:grid-cols-2 lg:grid-cols-4">
         <div>
-          <div className="mb-5 flex items-center gap-3"><Image src="/kaafl-logo.jpg" alt="KAAFL Mezunlar Derneği logosu" width={64} height={64} className="size-16 rounded-full bg-white object-cover" /><p className="font-bold leading-tight">Mezunlar<br />Derneği</p></div>
+          <div className="mb-5 flex items-center gap-3"><Image src="/kaafl-logo-v2.jpg" alt="KAAFL Mezunlar Derneği logosu" width={64} height={64} className="size-16 rounded-full bg-white object-cover" /><p className="font-bold leading-tight">Mezunlar<br />Derneği</p></div>
           <p className="max-w-xs text-sm leading-6 text-zinc-200">Mezunlarımız arasındaki bağı güçlendiren, dayanışmayı ve okul kültürünü geleceğe taşıyan ortak platform.</p>
         </div>
         <div>
