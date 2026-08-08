@@ -4,6 +4,8 @@ import { AnnouncementCard } from "@/components/cards/announcement-card";
 import { EventCard } from "@/components/cards/event-card";
 import { announcements, events } from "@/content/sample-data";
 
+const upcomingEvents = events.filter((event) => event.status === "upcoming");
+
 export default function HomePage() {
   return (
     <>
@@ -25,7 +27,7 @@ export default function HomePage() {
 
       <section className="bg-zinc-100 py-14 md:py-20"><div className="mx-auto w-[min(100%-2rem,75rem)] md:w-[min(100%-4rem,75rem)]"><div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between"><div><p className="text-xs font-bold uppercase tracking-[0.16em] text-red-600">Güncel</p><h2 className="mt-2 text-2xl font-bold text-zinc-950 md:text-3xl">Duyurular</h2></div><Link className="text-sm font-bold text-zinc-900" href="/duyurular">Tüm duyurular →</Link></div><div className="grid gap-5 md:grid-cols-2">{announcements.map((item) => <AnnouncementCard key={item.href} headingLevel="h3" {...item} />)}</div></div></section>
 
-      <section className="mx-auto w-[min(100%-2rem,75rem)] py-14 md:w-[min(100%-4rem,75rem)] md:py-20"><div className="mb-8"><p className="text-xs font-bold uppercase tracking-[0.16em] text-red-600">Takvim</p><h2 className="mt-2 text-2xl font-bold text-zinc-950 md:text-3xl">Yaklaşan etkinlikler</h2></div><div className="grid gap-5 md:grid-cols-2">{events.map((item) => <EventCard key={item.href} headingLevel="h3" {...item} />)}</div></section>
+      <section className="mx-auto w-[min(100%-2rem,75rem)] py-14 md:w-[min(100%-4rem,75rem)] md:py-20"><div className="mb-8"><p className="text-xs font-bold uppercase tracking-[0.16em] text-red-600">Takvim</p><h2 className="mt-2 text-2xl font-bold text-zinc-950 md:text-3xl">Yaklaşan etkinlikler</h2></div><div className="grid gap-5 md:grid-cols-2">{upcomingEvents.map((item) => <EventCard key={item.href} headingLevel="h3" {...item} />)}</div></section>
 
       <section className="border-t border-zinc-200 bg-zinc-50 py-12 text-center"><div className="mx-auto w-[min(100%-2rem,48rem)]"><h2 className="text-2xl font-bold text-zinc-950">Mezun topluluğumuzun bir parçası olun.</h2><p className="mt-3 leading-7 text-zinc-600">Bağlarımızı güçlendirmek ve çalışmalarımıza katkı sunmak için derneğimize katılın.</p><Link href="/uyelik/basvuru" className="mt-6 inline-flex min-h-11 items-center justify-center rounded-md bg-red-600 px-6 font-semibold text-white">Üyelik başvurusu yap</Link></div></section>
     </>

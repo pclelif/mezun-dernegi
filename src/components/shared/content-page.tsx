@@ -1,6 +1,13 @@
+import type { ReactNode } from "react";
 import { PageHero } from "./page-hero";
 
-export function ContentPage({ title, description, children }) {
+type ContentPageProps = {
+  title: string;
+  description?: string;
+  children?: ReactNode;
+};
+
+export function ContentPage({ title, description, children }: ContentPageProps) {
   return (
     <>
       <PageHero title={title} description={description} />

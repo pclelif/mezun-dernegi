@@ -1,6 +1,9 @@
+import type { Metadata } from "next";
 import { EventCard } from "@/components/cards/event-card";
 import { PageHero } from "@/components/shared/page-hero";
 import { events } from "@/content/sample-data";
+
+export const metadata: Metadata = { title: "Etkinlikler" };
 
 export default function EventsPage() {
   return (

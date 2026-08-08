@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  return <html lang="tr"><body><Header /><main>{children}</main><Footer /></body></html>;
+  return <html lang="tr" data-scroll-behavior="smooth"><body><Header /><main>{children}</main><Footer /></body></html>;
 }

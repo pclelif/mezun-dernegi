@@ -1,6 +1,9 @@
+import type { Metadata } from "next";
 import { FAQAccordion } from "@/components/faq/faq-accordion";
 import { PageHero } from "@/components/shared/page-hero";
 import { frequentlyAskedQuestions } from "@/content/sample-data";
+
+export const metadata: Metadata = { title: "Sıkça Sorulan Sorular" };
 
 export default function FAQPage() {
   return (

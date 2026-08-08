@@ -67,6 +67,16 @@ export const events: Event[] = [
     href: "/etkinlikler/kariyer-sohbetleri",
     status: "upcoming",
   },
+  {
+    title: "Mezunlar Kahvaltısı",
+    date: "17 Mayıs 2026",
+    time: "10.30",
+    dateTime: "2026-05-17T10:30:00+03:00",
+    location: "Ankara",
+    description: "Farklı mezuniyet dönemlerinden üyelerimizin bir araya geldiği geleneksel kahvaltı buluşmamızı gerçekleştirdik.",
+    href: "/etkinlikler/mezunlar-kahvaltisi",
+    status: "past",
+  },
 ];
 
 export const boardMembers: BoardMember[] = [

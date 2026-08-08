@@ -1,6 +1,9 @@
+import type { Metadata } from "next";
 import { BoardMemberCard } from "@/components/cards/board-member-card";
 import { PageHero } from "@/components/shared/page-hero";
 import { boardMembers } from "@/content/sample-data";
+
+export const metadata: Metadata = { title: "Yönetim Kurulu" };
 
 export default function BoardPage() {
   return (

@@ -6,6 +6,7 @@
   - Vizyon ve Misyon `/kurumsal/vizyon-misyon`
   - Başkanın Mesajı `/kurumsal/baskanin-mesaji`
   - Yönetim Kurulu `/kurumsal/yonetim-kurulu`
+  - Denetim Kurulu `/kurumsal/denetim-kurulu`
   - Tüzük `/kurumsal/tuzuk`
 - Duyurular `/duyurular` ve `/duyurular/[slug]`
 - Etkinlikler `/etkinlikler` ve `/etkinlikler/[slug]`

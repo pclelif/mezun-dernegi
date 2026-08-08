@@ -1,6 +1,9 @@
+import type { Metadata } from "next";
 import { AnnouncementCard } from "@/components/cards/announcement-card";
 import { PageHero } from "@/components/shared/page-hero";
 import { announcements } from "@/content/sample-data";
+
+export const metadata: Metadata = { title: "Duyurular" };
 
 export default function AnnouncementsPage() {
   return (
