@@ -29,6 +29,14 @@ bileşenin içinde açıkça tanımlanır. Sabit genişlik yerine akışkan geni
 
 - `Card`, kart yüzeyi ve sınır davranışını paylaşan temel bileşendir.
 - Duyuru, etkinlik ve yönetim kurulu kartları içerik türüne özel hiyerarşiyi korur.
+- Ortak kart yüzeyi `0.5rem` radius, mobilde `1.25rem`, tablet ve üzerinde `1.5rem`
+  iç boşluk kullanır. Görselin kenara oturduğu kartlar yalnızca `padding="none"` seçeneğini kullanır.
+- Kartlar grid hücresinin yüksekliğini doldurur; içerik bileşenleri `min-width: 0` ve güvenli
+  kelime kırma davranışıyla 320 px genişlikte yatay taşma oluşturmaz.
+- Hover yalnızca border ve gölgeyi hafifçe güçlendirir. Kart içinde klavye odağı olduğunda
+  ortak `focus-within` halkası, bağlantının kendisinde de `focus-visible` outline gösterilir.
+- Ortak `Card` kendi başına tıklanabilir değildir. Etkileşim semantik `Link` veya `button`
+  üzerinden sağlanır; böylece görsel tıklanabilirlik ile klavye davranışı ayrışmaz.
 - Form alanları `FormInput`, `FormSelect` ve `FormTextarea` olarak tekrar kullanılır.
 - Header mobil menüsü React state ile yönetilir; menü açıldığında sayfa kaydırması durur.
 
