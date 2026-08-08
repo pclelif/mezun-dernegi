@@ -1,8 +1,35 @@
+import { UserRound } from "lucide-react";
 import Image from "next/image";
 import { Card } from "./card";
 
-type BoardMemberCardProps = { fullName: string; role: string; imageUrl?: string };
+export type BoardMemberCardProps = {
+  name: string;
+  role: string;
+  image?: string;
+};
 
-export function BoardMemberCard({ fullName, role, imageUrl }: BoardMemberCardProps) {
-  return <Card padding="none">{imageUrl && <div className="relative aspect-[4/5] overflow-hidden bg-zinc-100"><Image src={imageUrl} alt={`${fullName} portresi`} fill className="object-cover" sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 100vw" /></div>}<div className="min-w-0 p-5 md:p-6"><h2 className="text-lg font-bold leading-snug text-zinc-950 [overflow-wrap:anywhere]">{fullName}</h2><p className="mt-1 text-sm leading-6 text-zinc-600 [overflow-wrap:anywhere]">{role}</p></div></Card>;
+export function BoardMemberCard({ name, role, image }: BoardMemberCardProps) {
+  return (
+    <Card padding="none">
+      <div className="relative aspect-[4/5] overflow-hidden bg-zinc-100">
+        {image ? (
+          <Image
+            src={image}
+            alt={`${name}, ${role}`}
+            fill
+            className="object-cover"
+            sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 100vw"
+          />
+        ) : (
+          <div className="grid size-full place-items-center bg-zinc-100 text-zinc-400" aria-hidden="true">
+            <UserRound className="size-16 stroke-[1.25] md:size-20" />
+          </div>
+        )}
+      </div>
+      <div className="min-w-0 p-5 md:p-6">
+        <p className="text-xs font-semibold uppercase tracking-wider text-red-600 [overflow-wrap:anywhere]">{role}</p>
+        <h2 className="mt-2 text-lg font-bold leading-snug text-zinc-950 [overflow-wrap:anywhere]">{name}</h2>
+      </div>
+    </Card>
+  );
 }

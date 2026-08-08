@@ -33,8 +33,9 @@ bileşenin içinde açıkça tanımlanır. Sabit genişlik yerine akışkan geni
   iç boşluk kullanır. Görselin kenara oturduğu kartlar yalnızca `padding="none"` seçeneğini kullanır.
 - Kartlar grid hücresinin yüksekliğini doldurur; içerik bileşenleri `min-width: 0` ve güvenli
   kelime kırma davranışıyla 320 px genişlikte yatay taşma oluşturmaz.
-- Hover yalnızca border ve gölgeyi hafifçe güçlendirir. Kart içinde klavye odağı olduğunda
-  ortak `focus-within` halkası, bağlantının kendisinde de `focus-visible` outline gösterilir.
+- Etkileşimli kartlarda hover yalnızca border ve gölgeyi hafifçe güçlendirir. Kart içinde
+  klavye odağı olduğunda ortak `focus-within` halkası, bağlantının kendisinde de
+  `focus-visible` outline gösterilir. Etkileşimsiz kartlar hover sinyali vermez.
 - Ortak `Card` kendi başına tıklanabilir değildir. Etkileşim semantik `Link` veya `button`
   üzerinden sağlanır; böylece görsel tıklanabilirlik ile klavye davranışı ayrışmaz.
 - Form alanları `FormInput`, `FormSelect` ve `FormTextarea` olarak tekrar kullanılır.

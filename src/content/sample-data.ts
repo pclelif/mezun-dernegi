@@ -17,6 +17,18 @@ export type Event = {
   status: "upcoming" | "past";
 };
 
+export type BoardMember = {
+  name: string;
+  role: string;
+  image?: string;
+};
+
+export type FAQ = {
+  id: string;
+  question: string;
+  answer: string;
+};
+
 export const announcements: Announcement[] = [
   {
     title: "Yeni dönem üyelik başvuruları başladı",
@@ -54,5 +66,37 @@ export const events: Event[] = [
     description: "Mezunlarımızın deneyimlerinden yararlanacağımız çevrim içi buluşmada farklı sektörlerdeki kariyer yollarını konuşuyoruz.",
     href: "/etkinlikler/kariyer-sohbetleri",
     status: "upcoming",
+  },
+];
+
+export const boardMembers: BoardMember[] = [
+  { name: "Ayşe Yılmaz", role: "Yönetim Kurulu Başkanı" },
+  { name: "Mehmet Demir", role: "Başkan Yardımcısı" },
+  { name: "Selin Kaya", role: "Genel Sekreter" },
+  { name: "Burak Aydın", role: "Sayman" },
+  { name: "Zeynep Şahin", role: "Yönetim Kurulu Üyesi" },
+  { name: "Emre Arslan", role: "Yönetim Kurulu Üyesi" },
+];
+
+export const frequentlyAskedQuestions: FAQ[] = [
+  {
+    id: "membership-eligibility",
+    question: "Kimler derneğe üye olabilir?",
+    answer: "KAAFL mezunları, dernek tüzüğünde belirtilen üyelik koşullarını sağlamaları halinde üyelik başvurusunda bulunabilir.",
+  },
+  {
+    id: "membership-application",
+    question: "Derneğe nasıl üye olabilirim?",
+    answer: "Üyelik başvuru formunu eksiksiz doldurarak başvurunuzu iletebilirsiniz. Başvurunuz değerlendirildikten sonra sizinle iletişime geçilir.",
+  },
+  {
+    id: "membership-fee",
+    question: "Üyelik aidatını nasıl ödeyebilirim?",
+    answer: "Güncel aidat tutarı ve ödeme seçeneklerine Üyelik bölümündeki Aidat ve Bağış sayfasından ulaşabilirsiniz.",
+  },
+  {
+    id: "events",
+    question: "Etkinliklerden nasıl haberdar olabilirim?",
+    answer: "Yaklaşan buluşmaları Etkinlikler sayfasından, önemli bilgilendirmeleri ise Duyurular sayfasından takip edebilirsiniz.",
   },
 ];

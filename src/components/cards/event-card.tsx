@@ -31,7 +31,7 @@ export function EventCard({
   const isPast = status === "past";
 
   return (
-    <Card className={isPast ? "border-l-4 border-l-zinc-400 bg-zinc-50" : "border-l-4 border-l-red-600"}>
+    <Card interactive className={isPast ? "border-l-4 border-l-zinc-400 bg-zinc-50" : "border-l-4 border-l-red-600"}>
       <p className={`text-xs font-semibold uppercase tracking-wider ${isPast ? "text-zinc-500" : "text-red-600"}`}>
         {isPast ? "Geçmiş etkinlik" : "Yaklaşan etkinlik"}
       </p>

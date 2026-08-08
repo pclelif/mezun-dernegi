@@ -22,7 +22,7 @@ export function AnnouncementCard({
   const Heading = headingLevel;
 
   return (
-    <Card>
+    <Card interactive>
       <time dateTime={dateTime} className="text-xs font-semibold uppercase tracking-wider text-red-600">
         {date}
       </time>
