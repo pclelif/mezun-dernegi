@@ -90,25 +90,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto grid w-[min(100%-2rem,75rem)] gap-8 py-14 md:w-[min(100%-4rem,75rem)] md:grid-cols-2 md:py-20">
-        <div className="border-l-2 border-red-600 pl-5">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-red-600">Başkanın Mesajı</p>
-          <h2 className="mt-3 text-2xl font-bold tracking-tight text-zinc-950 md:text-3xl">Başkanımızdan mezunlarımıza mesaj</h2>
-          <p className="mt-4 leading-7 text-zinc-600">Dernek Başkanımızın mezunlarımıza yönelik mesajını okuyabilirsiniz.</p>
-          <Link className={`${textLinkClass} mt-5`} href="/kurumsal/baskanin-mesaji">
-            Mesajı Oku <ArrowRight className="size-4 text-red-600" aria-hidden="true" />
-          </Link>
-        </div>
-
-        <div className="border-l-2 border-red-600 pl-5">
-          <p className="text-xs font-bold uppercase tracking-[0.16em] text-red-600">Vizyon &amp; Misyon</p>
-          <h2 className="mt-3 text-lg font-bold text-zinc-950">Vizyonumuz</h2>
-          <p className="mt-2 leading-7 text-zinc-600">Mezunlarımız arasındaki iletişimi ve dayanışmayı güçlendiren, okulumuza ve mezun topluluğumuza değer katan sürdürülebilir bir dernek olmak.</p>
-          <h2 className="mt-5 text-lg font-bold text-zinc-950">Misyonumuz</h2>
-          <p className="mt-2 leading-7 text-zinc-600">Mezunlarımızı ortak bir platformda buluşturmak, sosyal ve mesleki iletişimi desteklemek ve okulumuzla olan bağı güçlendirmek.</p>
-        </div>
-      </section>
-
       <section className="border-t border-zinc-200 bg-zinc-50 py-12 text-center">
         <div className="mx-auto w-[min(100%-2rem,48rem)]">
           <h2 className="text-2xl font-bold text-zinc-950">Sen de bu hikâyenin bir parçası ol.</h2>
