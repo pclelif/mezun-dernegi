@@ -6,7 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { navigation, type NavigationItem } from "@/config/navigation";
-import { associationName, schoolName } from "@/config/site";
+import { associationName } from "@/config/site";
 
 const desktopLinkClass = "flex h-24 appearance-none items-center border-b-2 bg-transparent p-0 font-sans text-sm font-medium leading-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
@@ -38,10 +38,7 @@ export function Header() {
       <div className="mx-auto flex min-h-24 w-[min(100%-2rem,75rem)] items-center justify-between gap-6 md:w-[min(100%-4rem,75rem)]">
         <Link href="/" className="flex min-w-0 items-center gap-3 rounded-sm tracking-tight text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600" aria-label={`${associationName} ana sayfa`}>
           <Image src="/kaafl-logo-v2.jpg" alt="" width={64} height={64} priority className="size-16 shrink-0 rounded-full object-cover" />
-          <span className="flex max-w-[21rem] flex-col text-sm font-semibold leading-5 text-zinc-800">
-            <span>{schoolName}</span>
-            <span className="mt-0.5 text-red-600">Mezunlar Derneği</span>
-          </span>
+          <span className="max-w-[21rem] text-sm font-semibold leading-5 text-zinc-800">{associationName}</span>
         </Link>
 
         <nav className="hidden items-center gap-4 xl:flex" aria-label="Ana menü">

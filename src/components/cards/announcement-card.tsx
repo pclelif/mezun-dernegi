@@ -41,7 +41,7 @@ export function AnnouncementCard({
         className="mt-auto flex min-h-11 items-center gap-2 self-start rounded-sm pt-5 text-sm font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
       >
         Devamını oku
-        <ArrowRight className="size-4 shrink-0 text-red-600" aria-hidden="true" />
+        <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
       </Link>
     </Card>
   );
