@@ -2,13 +2,13 @@
 
 ## Renkler
 
-- Gri `#6C757D`: Nötr ve dengeli temel, profesyonel görünüm ve birincil baz renk.
+- Gri `#6C757D`: Footer, ince sınırlar, nötr kart yüzeyleri ve ikincil metinlerde kullanılan yardımcı renk.
 - Beyaz `#FFFFFF`: Ana sayfa zemini ve temiz, profesyonel yüzeyler.
-- Kırmızı `#EC1C24`: Logodan gelen güçlü vurgu rengi; buton, seçili alan, kart çizgileri, marka şeritleri ve önemli CTA bölümlerinde kullanılır.
+- Kırmızı `#EC1C24`: Logodan gelen kontrollü vurgu rengi; buton, aktif menü öğesi ve kritik odak noktalarında kullanılır.
 - Açık gri `#F1F3F5`: Bölüm arka planları, kartlar ve hafif ton farklılıkları için dengeleyici baz.
-- Siyah `#000000`: Başlıklar, gövde metinleri, açıklamalar ve form metinlerinde temel yazı rengi.
+- Siyah `#000000`: Başlıklar ve ana gövde metinlerinde temel yazı rengi.
 
-Gri metin rengi olarak kullanılmaz; nötr yüzey ve sınır öğelerinde kalır. Kırmızı kontrollü biçimde güçlü vurgu ve önemli aksiyon alanlarında kullanılabilir. Yeni bir renk eklenmeden önce proje sahibinden onay alınmalıdır.
+Sayfa zemini beyaz veya açık gri tutulur. Gri ve kırmızı, sayfayı bölen büyük bloklar ya da kalın şeritler halinde kullanılmaz. Kırmızı yalnızca kontrollü vurgu ve önemli aksiyon alanlarında yer alır. Yeni bir renk eklenmeden önce proje sahibinden onay alınmalıdır.
 
 ## Responsive yaklaşım
 

@@ -30,7 +30,7 @@ export function MembershipForm() {
       </label>
       <label className="flex gap-3 md:col-span-2">
         <input required type="checkbox" name="kvkkConsent" />
-        <span className="text-sm text-black">KVKK aydınlatma metnini okudum ve başvuru verilerimin işlenmesini kabul ediyorum.</span>
+        <span className="text-sm text-[#6C757D]">KVKK aydınlatma metnini okudum ve başvuru verilerimin işlenmesini kabul ediyorum.</span>
       </label>
       <button type="submit" className="min-h-11 rounded-md bg-[#EC1C24] px-5 font-semibold text-white md:w-fit">
         Başvuruyu gönder
