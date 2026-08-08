@@ -2,7 +2,7 @@
 
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import type { GalleryHighlight } from "@/content/sample-data";
 
 type GalleryShowcaseProps = {
@@ -12,23 +12,31 @@ type GalleryShowcaseProps = {
 export function GalleryShowcase({ items }: GalleryShowcaseProps) {
   const trackRef = useRef<HTMLDivElement>(null);
   const lastTouchRef = useRef(0);
-  const [activeIndex, setActiveIndex] = useState(0);
 
   function move(direction: -1 | 1) {
     const track = trackRef.current;
     if (!track) return;
 
-    const nextIndex = Math.min(Math.max(activeIndex + direction, 0), items.length - 1);
-    const nextItem = track.children.item(nextIndex) as HTMLElement | null;
+    const cards = Array.from(track.children) as HTMLElement[];
+    if (cards.length === 0) return;
+
+    const cardPositions = cards.map((card) => card.offsetLeft - cards[0].offsetLeft);
+    const currentIndex = cardPositions.reduce((closest, position, index) =>
+      Math.abs(position - track.scrollLeft) <
+      Math.abs(cardPositions[closest] - track.scrollLeft)
+        ? index
+        : closest, 0);
+    const nextIndex = Math.min(Math.max(currentIndex + direction, 0), cards.length - 1);
+    const nextItem = cards[nextIndex];
     if (!nextItem) return;
 
-    track.scrollLeft = nextItem.offsetLeft - track.offsetLeft;
-    setActiveIndex(nextIndex);
+    track.scrollTo({
+      left: cardPositions[nextIndex],
+      behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
+    });
   }
 
-  function handlePointerDown(event: React.PointerEvent<HTMLButtonElement>, direction: -1 | 1) {
-    if (event.pointerType === "mouse") return;
-
+  function handleTouchEnd(event: React.TouchEvent<HTMLButtonElement>, direction: -1 | 1) {
     event.preventDefault();
     event.stopPropagation();
     lastTouchRef.current = Date.now();
@@ -39,27 +47,6 @@ export function GalleryShowcase({ items }: GalleryShowcaseProps) {
     if (Date.now() - lastTouchRef.current < 500) return;
     move(direction);
   }
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-
-    function syncActiveIndex() {
-      if (!track) return;
-
-      const children = Array.from(track.children) as HTMLElement[];
-      const closestIndex = children.reduce((closest, child, index) =>
-        Math.abs(child.offsetLeft - track.scrollLeft) <
-        Math.abs(children[closest].offsetLeft - track.scrollLeft)
-          ? index
-          : closest, 0);
-
-      setActiveIndex(closestIndex);
-    }
-
-    track.addEventListener("scroll", syncActiveIndex, { passive: true });
-    return () => track.removeEventListener("scroll", syncActiveIndex);
-  }, []);
 
   return (
     <section className="bg-zinc-900 py-14 text-white md:py-16" aria-labelledby="gallery-showcase-title">
@@ -75,12 +62,14 @@ export function GalleryShowcase({ items }: GalleryShowcaseProps) {
               <div key={item.id} className="aspect-[4/3] min-w-[82%] snap-start rounded-lg border border-zinc-200 bg-zinc-100 sm:min-w-[46%] lg:min-w-[31%]" aria-hidden="true" />
             ))}
           </div>
-          <button type="button" onPointerDown={(event) => handlePointerDown(event, -1)} onClick={() => handleClick(-1)} disabled={activeIndex === 0} className="absolute left-2 top-1/2 z-20 grid size-11 touch-manipulation select-none -translate-y-1/2 place-items-center rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-sm transition-colors hover:border-red-600 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-40" aria-label="Önceki görseller">
-            <ChevronLeft className="size-5" aria-hidden="true" />
-          </button>
-          <button type="button" onPointerDown={(event) => handlePointerDown(event, 1)} onClick={() => handleClick(1)} disabled={activeIndex === items.length - 1} className="absolute right-2 top-1/2 z-20 grid size-11 touch-manipulation select-none -translate-y-1/2 place-items-center rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-sm transition-colors hover:border-red-600 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-40" aria-label="Sonraki görseller">
-            <ChevronRight className="size-5" aria-hidden="true" />
-          </button>
+          <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-between px-2" aria-hidden="false">
+            <button type="button" onTouchEnd={(event) => handleTouchEnd(event, -1)} onClick={() => handleClick(-1)} className="pointer-events-auto grid size-12 touch-manipulation select-none place-items-center rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-md transition-colors hover:border-red-600 hover:text-red-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label="Önceki görseller">
+              <ChevronLeft className="pointer-events-none size-5" aria-hidden="true" />
+            </button>
+            <button type="button" onTouchEnd={(event) => handleTouchEnd(event, 1)} onClick={() => handleClick(1)} className="pointer-events-auto grid size-12 touch-manipulation select-none place-items-center rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-md transition-colors hover:border-red-600 hover:text-red-600 active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label="Sonraki görseller">
+              <ChevronRight className="pointer-events-none size-5" aria-hidden="true" />
+            </button>
+          </div>
         </div>
 
         <Link href="/galeri" className="mt-6 inline-flex items-center gap-2 rounded-sm text-sm font-bold text-white hover:text-red-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
