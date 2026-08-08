@@ -9,8 +9,6 @@ const upcomingEvents = events.filter((event) => event.status === "upcoming");
 
 const primaryButtonClass =
   "inline-flex min-h-11 items-center justify-center rounded-md bg-red-600 px-6 font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
-const secondaryHeroButtonClass =
-  "inline-flex min-h-11 items-center justify-center rounded-md border border-white px-6 font-semibold text-white transition-colors hover:bg-white hover:text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white";
 const textLinkClass =
   "inline-flex items-center gap-2 rounded-sm text-sm font-bold text-zinc-900 hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
@@ -36,7 +34,6 @@ export default function HomePage() {
           </p>
           <div className="mt-7 flex flex-wrap gap-3">
             <Link href="/uyelik/basvuru" className={primaryButtonClass}>Üye Ol</Link>
-            <Link href="/kurumsal/hakkimizda" className={secondaryHeroButtonClass}>Dernek Hakkında</Link>
           </div>
         </div>
       </section>
