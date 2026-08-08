@@ -15,7 +15,7 @@ const textLinkClass =
 export default function HomePage() {
   return (
     <>
-      <section className="relative isolate flex min-h-[23rem] items-end overflow-hidden bg-zinc-800 md:min-h-[26rem]">
+      <section className="relative isolate flex min-h-[19rem] items-end overflow-hidden bg-zinc-800 md:min-h-[22rem]">
         <div
           className="absolute inset-0 -z-20 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=2000&q=85')] bg-cover bg-center"
           role="img"
@@ -32,9 +32,6 @@ export default function HomePage() {
           <p className="mt-5 max-w-2xl text-base leading-7 text-white/90 md:text-lg">
             Mezunlarımızı bir araya getiriyor, okulumuzla olan bağımızı ve birbirimizle olan iletişimimizi canlı tutuyoruz.
           </p>
-          <div className="mt-7 flex flex-wrap gap-3">
-            <Link href="/uyelik/basvuru" className={primaryButtonClass}>Üye Ol</Link>
-          </div>
         </div>
       </section>
 
@@ -47,7 +44,7 @@ export default function HomePage() {
         </div>
         <div className="md:pt-8">
           <p className="text-base leading-7 text-zinc-600 md:text-lg md:leading-8">
-            Derneğimiz; mezunlarımız arasındaki iletişimi güçlendirmek, okulumuza katkı sağlamak ve mezunlarımızı ortak bir çatı altında buluşturmak amacıyla faaliyet göstermektedir.
+            Geçmişimizin değerlerini koruyor, geleceğe yönelik yeni adımlar atıyoruz.
           </p>
           <Link className={`${textLinkClass} mt-5`} href="/kurumsal/hakkimizda">
             Detaylı Bilgi <ArrowRight className="size-4 text-red-600" aria-hidden="true" />
