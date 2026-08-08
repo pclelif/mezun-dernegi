@@ -4,9 +4,9 @@
   margin-inline: auto;
 }
 
-.section-space { padding-block: 4rem; }
+.section-space { padding-block: 3rem; }
 
 @media (min-width: 768px) {
   .container-site { width: min(calc(100% - 4rem), var(--container)); }
-  .section-space { padding-block: 6rem; }
+  .section-space { padding-block: 4.5rem; }
 }

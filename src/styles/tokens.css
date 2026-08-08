@@ -7,6 +7,5 @@
   --color-surface: #f1f3f5;
   --color-white: #ffffff;
   --container: 75rem;
-  --radius-card: 1rem;
-  --shadow-card: 0 0.75rem 2rem rgb(108 117 125 / 12%);
+  --radius-card: 0.5rem;
 }
