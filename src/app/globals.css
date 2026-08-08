@@ -1,15 +1,6 @@
 @import "tailwindcss";
-
-:root {
-  --color-primary: #143d2b;
-  --color-primary-light: #1f5a40;
-  --color-accent: #c7a45a;
-  --color-ink: #17201b;
-  --color-muted: #647068;
-  --color-surface: #f6f4ee;
-  --color-white: #ffffff;
-  --container: 75rem;
-}
+@import "../styles/tokens.css";
+@import "../styles/responsive.css";
 
 * { box-sizing: border-box; }
 
@@ -25,15 +16,3 @@ body {
 
 a { color: inherit; text-decoration: none; }
 button, input, textarea, select { font: inherit; }
-
-.container-site {
-  width: min(calc(100% - 2rem), var(--container));
-  margin-inline: auto;
-}
-
-.section-space { padding-block: 4rem; }
-
-@media (min-width: 768px) {
-  .container-site { width: min(calc(100% - 4rem), var(--container)); }
-  .section-space { padding-block: 6rem; }
-}
