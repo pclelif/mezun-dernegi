@@ -31,6 +31,11 @@ export type FAQ = {
   answer: string;
 };
 
+export type GalleryHighlight = {
+  src: string;
+  alt: string;
+};
+
 export const announcements: Announcement[] = [
   {
     title: "Yeni dönem üyelik başvuruları başladı",
@@ -94,6 +99,25 @@ export const auditBoardMembers: BoardMember[] = [
   { name: "Elif Koç", role: "Denetim Kurulu Başkanı" },
   { name: "Can Özdemir", role: "Denetim Kurulu Üyesi" },
   { name: "Derya Akın", role: "Denetim Kurulu Üyesi" },
+];
+
+export const galleryHighlights: GalleryHighlight[] = [
+  {
+    src: "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=1200&q=80",
+    alt: "Okul kampüsünde bir araya gelen öğrenciler",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&w=1200&q=80",
+    alt: "Birlikte vakit geçiren mezunlar",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=80",
+    alt: "Mezun buluşmasında bir araya gelen arkadaşlar",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1200&q=80",
+    alt: "Topluluk etkinliğinde sohbet eden katılımcılar",
+  },
 ];
 
 export const frequentlyAskedQuestions: FAQ[] = [

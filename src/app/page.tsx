@@ -2,8 +2,9 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { AnnouncementCard } from "@/components/cards/announcement-card";
 import { EventCard } from "@/components/cards/event-card";
+import { GalleryShowcase } from "@/components/home/gallery-showcase";
 import { associationName } from "@/config/site";
-import { announcements, events } from "@/content/sample-data";
+import { announcements, events, galleryHighlights } from "@/content/sample-data";
 
 const upcomingEvents = events.filter((event) => event.status === "upcoming");
 
@@ -21,7 +22,7 @@ export default function HomePage() {
           role="img"
           aria-label="Birlikte yürüyen mezunlar"
         />
-        <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(220,38,38,0.42)_0%,rgba(9,9,11,0.9)_9%,rgba(24,24,27,0.78)_58%,rgba(220,38,38,0.65)_100%)]" />
+        <div className="absolute inset-0 -z-10 bg-black/60" />
         <div className="mx-auto w-[min(100%-2rem,75rem)] py-10 text-white md:w-[min(100%-4rem,75rem)] md:py-14">
           <p className="mb-4 max-w-3xl text-xs font-bold uppercase leading-5 tracking-[0.16em] text-white/80">
             {associationName}
@@ -83,6 +84,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <GalleryShowcase items={galleryHighlights} />
 
       <section className="border-t border-zinc-200 bg-zinc-50 py-12 text-center">
         <div className="mx-auto w-[min(100%-2rem,48rem)]">
