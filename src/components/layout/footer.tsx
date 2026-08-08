@@ -33,7 +33,7 @@ export function Footer() {
           <h2 className={footerHeadingClass}>İletişim</h2>
           <div className={`${footerContentClass} text-sm leading-6 text-zinc-200`}>
             <p>Adres ve güncel iletişim bilgilerimize iletişim sayfasından ulaşabilirsiniz.</p>
-            <Link href="/iletisim" className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-sm font-semibold text-white hover:text-red-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">İletişim sayfasına git <ArrowRight className="size-4 shrink-0" aria-hidden="true" /></Link>
+            <Link href="/iletisim" className="mt-2 inline-flex items-center gap-2 rounded-sm font-semibold text-white hover:text-red-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">İletişim sayfasına git <ArrowRight className="size-4 shrink-0" aria-hidden="true" /></Link>
           </div>
         </div>
       </div>

@@ -60,14 +60,14 @@ export function Header() {
                 >
                   <button
                     type="button"
-                    className={`${desktopLinkClass} gap-1 ${active ? "text-red-600 after:bg-red-600" : "text-zinc-700 after:bg-transparent hover:text-red-600"}`}
+                    className={`${desktopLinkClass} gap-0.5 ${active ? "text-red-600 after:bg-red-600" : "text-zinc-700 after:bg-transparent hover:text-red-600"}`}
                     aria-expanded={menuOpen}
                     aria-controls={menuId}
                     onClick={() => setOpenDesktopMenu((current) => current === item.href ? null : item.href)}
                     onFocus={() => setOpenDesktopMenu(item.href)}
                   >
                     {item.label}
-                    <ChevronDown className={`size-4 transition-transform motion-reduce:transition-none ${menuOpen ? "rotate-180" : ""}`} aria-hidden="true" />
+                    <ChevronDown className={`size-3.5 transition-transform motion-reduce:transition-none ${menuOpen ? "rotate-180" : ""}`} aria-hidden="true" />
                   </button>
                   <div id={menuId} className={`${menuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"} absolute left-1/2 top-full w-64 -translate-x-1/2 border border-red-700 bg-red-600 py-2 text-center text-white shadow-lg transition-[opacity,transform] motion-reduce:transition-none`}>
                     {item.children.map((child) => <Link key={child.href} href={child.href} onClick={() => setOpenDesktopMenu(null)} className={`block px-4 py-3 text-sm leading-5 outline-none hover:bg-red-700 focus-visible:bg-red-700 ${pathname.startsWith(child.href) ? "bg-red-700 font-semibold" : ""}`}>{child.label}</Link>)}
