@@ -33,7 +33,7 @@ export default function HomePage() {
 
       <section className="section-space container-site">
         <SectionHeading eyebrow="Mezun ağı" title="Şehirleri aşan bağ" centered />
-        <p className="body-copy body-copy--center">Mezunların meslek ve şehir bazında birbirine ulaşabileceği ağ yapısı sonraki sprintlerde geliştirilecek.</p>
+        <p className="body-copy body-copy--center">Mezunların şehir bazında birbirine ulaşabileceği ağ yapısı sonraki sprintlerde geliştirilecek.</p>
       </section>
 
       <section className="cta-section">
