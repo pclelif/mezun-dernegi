@@ -9,6 +9,31 @@ input, textarea, select { font: inherit; }
 button { font-family: inherit; }
 button { cursor: pointer; }
 
+@media (max-width: 1279px) {
+  .site-main-header {
+    background-color: rgb(255 255 255 / 75%);
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  }
+
+  .site-main-header:has(.mobile-navigation-details[open]) {
+    position: relative;
+  }
+
+  .mobile-navigation-panel {
+    position: static;
+    width: 100%;
+    background: var(--color-surface);
+  }
+}
+
+@media (min-width: 1280px) {
+  .site-main-header.desktop-home-sticky {
+    position: sticky;
+    top: 0;
+  }
+}
+
 .container-site { width: min(calc(100% - 2rem), 75rem); margin-inline: auto; }
 .section-space { padding-block: 3rem; }
 .text-secondary { color: var(--color-muted); }
@@ -36,7 +61,7 @@ button { cursor: pointer; }
 .home-hero__title { max-width: 44rem; margin: 0; font-size: 1.75rem; line-height: 1.25; letter-spacing: -.01em; }
 .home-hero__description { max-width: 40rem; margin: 1rem 0 0; color: var(--color-muted); font-size: 1rem; line-height: 1.65; }
 .button { display: inline-flex; min-height: 2.75rem; align-items: center; justify-content: center; padding: .625rem 1.25rem; border: 1px solid transparent; border-radius: .375rem; font-weight: 600; }
-.button--primary { background: var(--color-accent); color: white; }
+.button--primary, .button--primary:visited, .button--primary:hover, .button--primary:focus-visible { background: var(--color-accent); color: var(--color-white); }
 .button--secondary { border-color: var(--color-accent); color: var(--color-accent); background: white; }
 .home-hero .button { margin-top: 1.5rem; }
 

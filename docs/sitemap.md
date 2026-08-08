@@ -10,7 +10,6 @@
   - Tüzük `/kurumsal/tuzuk`
 - Duyurular `/duyurular` ve `/duyurular/[slug]`
 - Etkinlikler `/etkinlikler` ve `/etkinlikler/[slug]`
-- Haberler `/haberler` ve `/haberler/[slug]`
 - Galeri `/galeri` ve `/galeri/[slug]`
 - Üyelik `/uyelik`
   - Üyelik Şartları `/uyelik/sartlar`

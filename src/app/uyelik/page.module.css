@@ -1,0 +1,255 @@
+.page {
+  padding-bottom: 4rem;
+}
+
+.container {
+  width: min(calc(100% - 2rem), 52rem);
+  margin-inline: auto;
+}
+
+.intro {
+  padding-block: 2.75rem;
+  border-bottom: 1px solid rgb(108 117 125 / 20%);
+  background: var(--color-surface);
+}
+
+.intro h1 {
+  margin: 0;
+  font-size: clamp(1.75rem, 5vw, 2.25rem);
+  line-height: 1.2;
+  letter-spacing: -.015em;
+}
+
+.intro p,
+.sectionIntro {
+  margin: .875rem 0 0;
+  color: var(--color-muted);
+  line-height: 1.65;
+}
+
+.steps {
+  margin: 0;
+  padding: 2.75rem 0 0;
+  list-style: none;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding-bottom: 2rem;
+}
+
+.step:not(:last-child)::before {
+  position: absolute;
+  top: 2.25rem;
+  bottom: 0;
+  left: 1.21875rem;
+  width: 1px;
+  background: rgb(108 117 125 / 28%);
+  content: "";
+}
+
+.stepNumber {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(236 28 36 / 35%);
+  border-radius: 50%;
+  background: white;
+  color: var(--color-accent);
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+}
+
+.stepContent {
+  padding-top: .25rem;
+}
+
+.stepContent h2,
+.section h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  line-height: 1.35;
+}
+
+.stepContent p {
+  margin: .5rem 0 0;
+  color: var(--color-muted);
+  line-height: 1.65;
+}
+
+.stepContent a {
+  min-width: 11rem;
+  margin-top: 1rem;
+}
+
+.section {
+  margin-top: 1rem;
+  padding-top: 2.5rem;
+  border-top: 1px solid rgb(108 117 125 / 20%);
+}
+
+.rightsList {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rightsList li {
+  position: relative;
+  padding: .75rem 0 .75rem 1.25rem;
+  border-bottom: 1px solid rgb(108 117 125 / 16%);
+  line-height: 1.55;
+}
+
+.rightsList li::before {
+  position: absolute;
+  top: 1.45rem;
+  left: .125rem;
+  width: .3rem;
+  height: .3rem;
+  border-radius: 50%;
+  background: var(--color-accent);
+  content: "";
+}
+
+.feePanel {
+  margin-top: 2.5rem;
+  padding: 1.5rem;
+  border: 1px solid rgb(108 117 125 / 24%);
+  border-radius: var(--radius-card);
+  background: var(--color-surface);
+}
+
+.feeAmount {
+  margin: .875rem 0 0;
+  line-height: 1.6;
+}
+
+.bankDetails {
+  margin: 1.25rem 0 0;
+  border-top: 1px solid rgb(108 117 125 / 22%);
+}
+
+.bankDetails > div {
+  display: grid;
+  gap: .25rem;
+  padding-block: .875rem;
+  border-bottom: 1px solid rgb(108 117 125 / 18%);
+}
+
+.bankDetails > div:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.bankDetails dt {
+  color: var(--color-muted);
+  font-size: .8125rem;
+  font-weight: 600;
+}
+
+.bankDetails dd {
+  min-width: 0;
+  margin: 0;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+
+.ibanRow dd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.copyButton {
+  min-width: 5.75rem;
+  min-height: 2.5rem;
+  flex: none;
+  padding: .5rem .75rem;
+  border: 1px solid rgb(108 117 125 / 38%);
+  border-radius: .375rem;
+  background: white;
+  color: #000;
+  font-size: .8125rem;
+  font-weight: 600;
+}
+
+.copyButton:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.copyButton:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.faqSection {
+  margin-top: 2.5rem;
+}
+
+.faqSection > h2 {
+  margin-bottom: 1.25rem;
+}
+
+@media (min-width: 640px) {
+  .bankDetails > div {
+    grid-template-columns: 7rem minmax(0, 1fr);
+    align-items: start;
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .page {
+    padding-bottom: 5rem;
+  }
+
+  .container {
+    width: min(calc(100% - 4rem), 52rem);
+  }
+
+  .intro {
+    padding-block: 3.5rem;
+  }
+
+  .steps {
+    padding-top: 3.5rem;
+  }
+
+  .step {
+    grid-template-columns: 3rem minmax(0, 1fr);
+    gap: 1.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  .step:not(:last-child)::before {
+    left: 1.46875rem;
+  }
+
+  .stepNumber {
+    width: 3rem;
+    height: 3rem;
+  }
+
+  .stepContent {
+    padding-top: .45rem;
+  }
+
+  .section {
+    padding-top: 3rem;
+  }
+
+  .feePanel {
+    padding: 2rem;
+  }
+}

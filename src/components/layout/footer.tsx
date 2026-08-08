@@ -19,7 +19,7 @@ export function Footer() {
         </div>
 
         <div className={footerPanelClass}>
-          <ul className="grid grid-flow-col grid-cols-2 grid-rows-3 gap-x-5 gap-y-1.5 text-sm leading-5">
+          <ul className="grid grid-flow-col grid-cols-[max-content_max-content] grid-rows-3 gap-x-3 gap-y-1.5 text-sm leading-5 sm:grid-cols-2 sm:gap-x-5">
             {corporateNavigation.map((item) => <li key={item.href}><Link className={footerLinkClass} href={item.href}>{item.label}</Link></li>)}
           </ul>
         </div>

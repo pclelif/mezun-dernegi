@@ -23,7 +23,6 @@ export const navigation: NavigationItem[] = [
   { label: "Hakkımızda", href: "/kurumsal/hakkimizda", children: corporateNavigation },
   { label: "Duyurular", href: "/duyurular" },
   { label: "Etkinlikler", href: "/etkinlikler" },
-  { label: "Haberler", href: "/haberler" },
   { label: "Galeri", href: "/galeri" },
   { label: "Üyelik", href: "/uyelik", children: membershipNavigation },
   { label: "İletişim", href: "/iletisim" },

@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown, Menu, Minus, Plus, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -11,17 +11,19 @@ import { associationName } from "@/config/site";
 const desktopLinkClass = "relative flex h-24 appearance-none items-center whitespace-nowrap bg-transparent p-0 font-sans text-sm font-medium leading-5 transition-colors after:absolute after:bottom-8 after:left-0 after:h-0.5 after:w-full after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
 export function Header() {
-  const [isOpen, setIsOpen] = useState(false);
   const [openDesktopMenu, setOpenDesktopMenu] = useState<string | null>(null);
-  const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(null);
+  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
   useEffect(() => {
-    document.body.style.overflow = isOpen ? "hidden" : "";
-    return () => {
-      document.body.style.overflow = "";
-    };
-  }, [isOpen]);
+    function updateHeaderSurface() {
+      setIsScrolled(window.scrollY > 8);
+    }
+
+    updateHeaderSurface();
+    window.addEventListener("scroll", updateHeaderSurface, { passive: true });
+    return () => window.removeEventListener("scroll", updateHeaderSurface);
+  }, []);
 
   function isItemActive(item: NavigationItem) {
     if (item.href === "/") return pathname === "/";
@@ -29,16 +31,15 @@ export function Header() {
   }
 
   function closeMobileNavigation() {
-    setIsOpen(false);
-    setOpenMobileMenu(null);
+    document.getElementById("mobile-navigation-toggle")?.removeAttribute("open");
   }
 
   return (
-    <header className="sticky top-0 z-50 border-b border-black/10 bg-white/95 backdrop-blur-sm">
-      <div className="mx-auto flex min-h-24 w-[min(100%-2rem,75rem)] items-center justify-between gap-6 md:w-[min(100%-4rem,75rem)]">
-        <Link href="/" className="flex min-w-0 items-center gap-3 rounded-sm tracking-tight text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600" aria-label={`${associationName} ana sayfa`}>
-          <Image src="/kaafl-logo-v2.jpg" alt="" width={64} height={64} priority className="size-16 shrink-0 rounded-full object-cover" />
-          <span className="max-w-[21rem] text-sm font-semibold leading-5 text-zinc-800">{associationName}</span>
+    <header className={`site-main-header ${pathname === "/" ? "desktop-home-sticky" : ""} relative z-50 border-b border-black/10 transition-[background-color,box-shadow] duration-200 motion-reduce:transition-none ${isScrolled ? "shadow-lg xl:bg-white/75 xl:shadow-md xl:backdrop-blur-lg" : "xl:bg-white"}`}>
+      <div className="relative mx-auto flex h-40 w-[min(100%-2rem,75rem)] flex-col items-center justify-start gap-2 pt-2 xl:h-auto xl:min-h-24 xl:flex-row xl:justify-between xl:gap-6 xl:pt-0 xl:w-[min(100%-4rem,75rem)]">
+        <Link href="/" className="flex min-w-0 flex-col items-center gap-2 rounded-sm text-center tracking-tight text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 xl:flex-row xl:gap-3 xl:text-left" aria-label={`${associationName} ana sayfa`}>
+          <Image src="/kaafl-logo-v2.jpg" alt="" width={80} height={80} priority className="size-20 shrink-0 rounded-full bg-white object-cover xl:size-16" />
+          <span className="max-w-[17rem] text-xs font-semibold leading-5 text-zinc-800 xl:max-w-[21rem] xl:text-sm">{associationName}</span>
         </Link>
 
         <nav className="hidden items-center gap-3 xl:flex" aria-label="Ana menü">
@@ -80,34 +81,38 @@ export function Header() {
           })}
         </nav>
 
-        <button type="button" className="grid size-11 shrink-0 place-items-center rounded-md border border-zinc-300 text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 xl:hidden" onClick={() => setIsOpen((current) => !current)} aria-expanded={isOpen} aria-controls="mobile-navigation" aria-label={isOpen ? "Menüyü kapat" : "Menüyü aç"}>
-          {isOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-        </button>
       </div>
 
-      <nav id="mobile-navigation" className={`${isOpen ? "flex" : "hidden"} fixed inset-x-0 top-24 h-[calc(100dvh-6rem)] flex-col overflow-y-auto border-t border-zinc-200 bg-white px-4 py-5 xl:hidden`} aria-label="Mobil menü">
-        {navigation.map((item, index) => {
-          if (!item.children) {
-            return <Link onClick={closeMobileNavigation} className="border-b border-zinc-200 px-2 py-4 text-base font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600" href={item.href} key={item.href}>{item.label}</Link>;
-          }
+        <details id="mobile-navigation-toggle" className="mobile-navigation-details group xl:hidden">
+          <summary className="absolute right-4 top-3 grid size-11 list-none place-items-center rounded-md text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 [&::-webkit-details-marker]:hidden" aria-controls="mobile-navigation" aria-label="Menüyü aç veya kapat">
+            <Menu className="group-open:hidden" aria-hidden="true" />
+            <X className="hidden group-open:block" aria-hidden="true" />
+          </summary>
 
-          const menuId = `mobile-submenu-${index}`;
-          const menuOpen = openMobileMenu === item.href;
+          <nav id="mobile-navigation" className="mobile-navigation-panel flex max-h-[calc(100dvh-10rem)] flex-col overflow-y-auto border-t border-zinc-300 px-6 py-4 text-center text-zinc-900 shadow-inner" aria-label="Mobil menü">
+            {navigation.map((item, index) => {
+              if (!item.children) {
+                return <Link onClick={closeMobileNavigation} className="px-2 py-4 text-base font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600" href={item.href} key={item.href}>{item.label}</Link>;
+              }
 
-          return (
-            <div className="border-b border-zinc-200" key={item.href}>
-              <button type="button" className="flex min-h-14 w-full items-center justify-between px-2 text-left text-base font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600" aria-expanded={menuOpen} aria-controls={menuId} onClick={() => setOpenMobileMenu((current) => current === item.href ? null : item.href)}>
-                {item.label}
-                <ChevronDown className={`size-5 transition-transform motion-reduce:transition-none ${menuOpen ? "rotate-180" : ""}`} aria-hidden="true" />
-              </button>
-              <div id={menuId} className={`${menuOpen ? "grid" : "hidden"} mx-2 mb-3 overflow-hidden rounded-md bg-red-600 py-1 text-center text-white`}>
-                {item.children.map((child) => <Link onClick={closeMobileNavigation} className="px-3 py-3 text-sm hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-white" href={child.href} key={child.href}>{child.label}</Link>)}
-              </div>
-            </div>
-          );
-        })}
-        <Link onClick={closeMobileNavigation} href="/uyelik/basvuru" className="mt-6 inline-flex min-h-11 items-center justify-center rounded-md bg-red-600 px-5 font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">Üyelik başvurusu</Link>
-      </nav>
+              const menuId = `mobile-submenu-${index}`;
+
+              return (
+                <details className="group/submenu" key={item.href}>
+                  <summary className="grid min-h-14 w-full list-none grid-cols-[2rem_1fr_2rem] items-center px-2 text-base font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600 [&::-webkit-details-marker]:hidden" aria-controls={menuId}>
+                    <span aria-hidden="true" />
+                    <span>{item.label}</span>
+                    <Plus className="size-5 text-red-500 group-open/submenu:hidden" aria-hidden="true" />
+                    <Minus className="hidden size-5 text-red-500 group-open/submenu:block" aria-hidden="true" />
+                  </summary>
+                  <div id={menuId} className="mx-auto mb-2 grid w-full max-w-sm border-y border-red-700 bg-red-600 py-1 text-center text-white">
+                    {item.children.map((child) => <Link onClick={closeMobileNavigation} className="px-3 py-3 text-sm !text-white hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-white" href={child.href} key={child.href}>{child.label}</Link>)}
+                  </div>
+                </details>
+              );
+            })}
+          </nav>
+        </details>
     </header>
   );
 }

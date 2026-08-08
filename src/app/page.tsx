@@ -9,7 +9,7 @@ import { announcements, events, galleryHighlights } from "@/content/sample-data"
 const upcomingEvents = events.filter((event) => event.status === "upcoming");
 
 const primaryButtonClass =
-  "inline-flex min-h-11 items-center justify-center rounded-md bg-red-600 px-6 font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
+  "inline-flex min-h-11 min-w-44 items-center justify-center rounded-md bg-red-600 px-6 font-semibold !text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 const textLinkClass =
   "inline-flex items-center gap-2 rounded-sm text-sm font-bold text-zinc-900 hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
@@ -53,7 +53,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="mx-auto w-[min(100%-2rem,75rem)] py-14 md:w-[min(100%-4rem,75rem)] md:py-20">
+      <section className="mx-auto w-[min(100%-2rem,75rem)] border-t border-zinc-200 py-14 md:w-[min(100%-4rem,75rem)] md:py-20">
         <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <h2 className="text-2xl font-bold text-zinc-950 md:text-3xl">Etkinlikler</h2>
@@ -91,7 +91,7 @@ export default function HomePage() {
         <div className="mx-auto w-[min(100%-2rem,48rem)]">
           <h2 className="text-2xl font-bold text-zinc-950">Sen de bu hikâyenin bir parçası ol.</h2>
           <p className="mt-3 leading-7 text-zinc-600">Mezun topluluğumuza katılın, dernek çalışmalarından ve etkinliklerden haberdar olun.</p>
-          <Link href="/uyelik/basvuru" className={`${primaryButtonClass} mt-6`}>Üyelik Başvurusu</Link>
+          <Link href="/uyelik" className={`${primaryButtonClass} mt-6`}>Dernek Üyeliği</Link>
         </div>
       </section>
     </>

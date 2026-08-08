@@ -2,7 +2,7 @@
 
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { GalleryHighlight } from "@/content/sample-data";
 
 type GalleryShowcaseProps = {
@@ -11,17 +11,55 @@ type GalleryShowcaseProps = {
 
 export function GalleryShowcase({ items }: GalleryShowcaseProps) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const lastTouchRef = useRef(0);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   function move(direction: -1 | 1) {
     const track = trackRef.current;
     if (!track) return;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    track.scrollBy({
-      left: direction * track.clientWidth * 0.8,
-      behavior: reduceMotion ? "auto" : "smooth",
-    });
+    const nextIndex = Math.min(Math.max(activeIndex + direction, 0), items.length - 1);
+    const nextItem = track.children.item(nextIndex) as HTMLElement | null;
+    if (!nextItem) return;
+
+    track.scrollLeft = nextItem.offsetLeft - track.offsetLeft;
+    setActiveIndex(nextIndex);
   }
+
+  function handlePointerDown(event: React.PointerEvent<HTMLButtonElement>, direction: -1 | 1) {
+    if (event.pointerType === "mouse") return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    lastTouchRef.current = Date.now();
+    move(direction);
+  }
+
+  function handleClick(direction: -1 | 1) {
+    if (Date.now() - lastTouchRef.current < 500) return;
+    move(direction);
+  }
+
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    function syncActiveIndex() {
+      if (!track) return;
+
+      const children = Array.from(track.children) as HTMLElement[];
+      const closestIndex = children.reduce((closest, child, index) =>
+        Math.abs(child.offsetLeft - track.scrollLeft) <
+        Math.abs(children[closest].offsetLeft - track.scrollLeft)
+          ? index
+          : closest, 0);
+
+      setActiveIndex(closestIndex);
+    }
+
+    track.addEventListener("scroll", syncActiveIndex, { passive: true });
+    return () => track.removeEventListener("scroll", syncActiveIndex);
+  }, []);
 
   return (
     <section className="bg-zinc-900 py-14 text-white md:py-16" aria-labelledby="gallery-showcase-title">
@@ -37,10 +75,10 @@ export function GalleryShowcase({ items }: GalleryShowcaseProps) {
               <div key={item.id} className="aspect-[4/3] min-w-[82%] snap-start rounded-lg border border-zinc-200 bg-zinc-100 sm:min-w-[46%] lg:min-w-[31%]" aria-hidden="true" />
             ))}
           </div>
-          <button type="button" onClick={() => move(-1)} className="absolute left-2 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-sm transition-colors hover:border-red-600 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label="Önceki görseller">
+          <button type="button" onPointerDown={(event) => handlePointerDown(event, -1)} onClick={() => handleClick(-1)} disabled={activeIndex === 0} className="absolute left-2 top-1/2 z-20 grid size-11 touch-manipulation select-none -translate-y-1/2 place-items-center rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-sm transition-colors hover:border-red-600 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-40" aria-label="Önceki görseller">
             <ChevronLeft className="size-5" aria-hidden="true" />
           </button>
-          <button type="button" onClick={() => move(1)} className="absolute right-2 top-1/2 z-10 grid size-11 -translate-y-1/2 place-items-center rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-sm transition-colors hover:border-red-600 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label="Sonraki görseller">
+          <button type="button" onPointerDown={(event) => handlePointerDown(event, 1)} onClick={() => handleClick(1)} disabled={activeIndex === items.length - 1} className="absolute right-2 top-1/2 z-20 grid size-11 touch-manipulation select-none -translate-y-1/2 place-items-center rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-sm transition-colors hover:border-red-600 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white disabled:cursor-not-allowed disabled:opacity-40" aria-label="Sonraki görseller">
             <ChevronRight className="size-5" aria-hidden="true" />
           </button>
         </div>
