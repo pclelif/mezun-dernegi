@@ -6,4 +6,4 @@ export const navigation = [
   { label: "Galeri", href: "/galeri" },
   { label: "Üyelik", href: "/uyelik" },
   { label: "İletişim", href: "/iletisim" },
-] as const;
+];
