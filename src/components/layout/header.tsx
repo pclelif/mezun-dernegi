@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { navigation, type NavigationItem } from "@/config/navigation";
 import { associationName } from "@/config/site";
 
-const desktopLinkClass = "relative flex h-24 appearance-none items-center bg-transparent p-0 font-sans text-sm font-medium leading-5 transition-colors after:absolute after:bottom-7 after:left-0 after:h-0.5 after:w-full after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
+const desktopLinkClass = "relative flex h-24 appearance-none items-center whitespace-nowrap bg-transparent p-0 font-sans text-sm font-medium leading-5 transition-colors after:absolute after:bottom-8 after:left-0 after:h-0.5 after:w-full after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,7 +41,7 @@ export function Header() {
           <span className="max-w-[21rem] text-sm font-semibold leading-5 text-zinc-800">{associationName}</span>
         </Link>
 
-        <nav className="hidden items-center gap-4 xl:flex" aria-label="Ana menü">
+        <nav className="hidden items-center gap-3 xl:flex" aria-label="Ana menü">
           {navigation.map((item, index) => {
             const active = isItemActive(item);
             const menuId = `desktop-submenu-${index}`;

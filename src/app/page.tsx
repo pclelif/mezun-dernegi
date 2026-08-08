@@ -17,7 +17,7 @@ export default function HomePage() {
           <p className="mb-4 max-w-3xl text-xs font-bold uppercase leading-5 tracking-[0.16em] text-white/80">{associationName}</p>
           <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight md:text-4xl">Bir okuldan fazlası,<br className="hidden md:block" /> ömür boyu süren bir bağ.</h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-white/90 md:text-lg">Geçmişimizi yaşatıyor, mezunlarımızı buluşturuyor ve yeni kuşaklara birlikte değer katıyoruz.</p>
-          <div className="mt-7"><Link href="/uyelik/basvuru" className="inline-flex min-h-11 items-center justify-center rounded-md bg-red-600 px-6 font-semibold text-white hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Derneğe üye ol</Link></div>
+          <div className="mt-7"><Link href="/uyelik/basvuru" className="inline-flex min-h-11 items-center justify-center rounded-md bg-red-600 px-6 font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Derneğe üye ol</Link></div>
         </div>
       </section>
 
@@ -30,7 +30,7 @@ export default function HomePage() {
 
       <section className="mx-auto w-[min(100%-2rem,75rem)] py-14 md:w-[min(100%-4rem,75rem)] md:py-20"><div className="mb-8"><p className="text-xs font-bold uppercase tracking-[0.16em] text-red-600">Takvim</p><h2 className="mt-2 text-2xl font-bold text-zinc-950 md:text-3xl">Yaklaşan etkinlikler</h2></div><div className="grid gap-5 md:grid-cols-2">{upcomingEvents.map((item) => <EventCard key={item.href} headingLevel="h3" {...item} />)}</div></section>
 
-      <section className="border-t border-zinc-200 bg-zinc-50 py-12 text-center"><div className="mx-auto w-[min(100%-2rem,48rem)]"><h2 className="text-2xl font-bold text-zinc-950">Mezun topluluğumuzun bir parçası olun.</h2><p className="mt-3 leading-7 text-zinc-600">Bağlarımızı güçlendirmek ve çalışmalarımıza katkı sunmak için derneğimize katılın.</p><Link href="/uyelik/basvuru" className="mt-6 inline-flex min-h-11 items-center justify-center rounded-md bg-red-600 px-6 font-semibold text-white">Üyelik başvurusu yap</Link></div></section>
+      <section className="border-t border-zinc-200 bg-zinc-50 py-12 text-center"><div className="mx-auto w-[min(100%-2rem,48rem)]"><h2 className="text-2xl font-bold text-zinc-950">Mezun topluluğumuzun bir parçası olun.</h2><p className="mt-3 leading-7 text-zinc-600">Bağlarımızı güçlendirmek ve çalışmalarımıza katkı sunmak için derneğimize katılın.</p><Link href="/uyelik/basvuru" className="mt-6 inline-flex min-h-11 items-center justify-center rounded-md bg-red-600 px-6 font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600">Üyelik başvurusu yap</Link></div></section>
     </>
   );
 }

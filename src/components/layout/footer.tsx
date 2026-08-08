@@ -10,7 +10,7 @@ const footerPanelClass = "border-l-2 border-red-600 pl-3";
 export function Footer() {
   return (
     <footer className="bg-zinc-700 font-sans text-white">
-      <div className="mx-auto grid w-[min(100%-2rem,75rem)] items-start gap-10 py-9 md:w-[min(100%-4rem,75rem)] md:grid-cols-2 lg:grid-cols-3">
+      <div className="mx-auto grid w-[min(100%-2rem,75rem)] items-start gap-8 py-9 md:w-[min(100%-4rem,75rem)] md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr]">
         <div className={footerPanelClass}>
           <Link href="/" className="inline-flex items-start gap-3 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`${associationName} ana sayfa`}>
             <Image src="/kaafl-logo-v2.jpg" alt="" width={64} height={64} className="size-16 shrink-0 rounded-full bg-white object-cover" />
@@ -19,7 +19,7 @@ export function Footer() {
         </div>
 
         <div className={footerPanelClass}>
-          <ul className="grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm leading-5">
+          <ul className="grid grid-flow-col grid-cols-2 grid-rows-3 gap-x-5 gap-y-1.5 text-sm leading-5">
             {corporateNavigation.map((item) => <li key={item.href}><Link className={footerLinkClass} href={item.href}>{item.label}</Link></li>)}
           </ul>
         </div>
