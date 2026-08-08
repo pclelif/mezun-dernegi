@@ -90,6 +90,12 @@ export const boardMembers: BoardMember[] = [
   { name: "Emre Arslan", role: "Yönetim Kurulu Üyesi" },
 ];
 
+export const auditBoardMembers: BoardMember[] = [
+  { name: "Elif Koç", role: "Denetim Kurulu Başkanı" },
+  { name: "Can Özdemir", role: "Denetim Kurulu Üyesi" },
+  { name: "Derya Akın", role: "Denetim Kurulu Üyesi" },
+];
+
 export const frequentlyAskedQuestions: FAQ[] = [
   {
     id: "membership-eligibility",
