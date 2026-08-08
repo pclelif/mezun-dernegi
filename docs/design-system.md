@@ -2,14 +2,12 @@
 
 ## Renkler
 
-- Ana yeşil: `#143D2B`
-- Açık yeşil: `#1F5A40`
-- Altın vurgu: `#C7A45A`
-- Metin: `#17201B`
-- İkincil metin: `#647068`
-- Açık zemin: `#F6F4EE`
+- Ana kırmızı: `#EC1C24`
+- Gri: `#6C757D`
+- Açık zemin: `#F1F3F5`
+- Beyaz: `#FFFFFF`
 
-Renkler geçicidir; okulun kurumsal renkleri ve logo incelendikten sonra kesinleştirilmelidir.
+Bu palet proje sahibi tarafından belirlenmiştir. Yeni bir renk eklenmeden önce onay alınmalıdır.
 
 ## Responsive yaklaşım
 

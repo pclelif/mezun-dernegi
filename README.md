@@ -1,4 +1,4 @@
-# KAFL Mezun Derneği Web Sitesi
+# KAAFL Mezun Derneği Web Sitesi
 
 Next.js, TypeScript, Tailwind CSS ve Supabase tabanlı mezun derneği web projesi.
 

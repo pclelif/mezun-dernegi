@@ -1,12 +1,12 @@
 :root {
-  --color-primary: #143d2b;
-  --color-primary-light: #1f5a40;
-  --color-accent: #c7a45a;
-  --color-ink: #17201b;
-  --color-muted: #647068;
-  --color-surface: #f6f4ee;
+  --color-primary: #ec1c24;
+  --color-primary-light: #ec1c24;
+  --color-accent: #ec1c24;
+  --color-ink: #6c757d;
+  --color-muted: #6c757d;
+  --color-surface: #f1f3f5;
   --color-white: #ffffff;
   --container: 75rem;
   --radius-card: 1rem;
-  --shadow-card: 0 0.75rem 2rem rgb(23 32 27 / 8%);
+  --shadow-card: 0 0.75rem 2rem rgb(108 117 125 / 12%);
 }

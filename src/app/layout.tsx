@@ -4,8 +4,8 @@ import { Header } from "@/components/layout/header";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: "KAFL Mezun Derneği", template: "%s | KAFL Mezun Derneği" },
-  description: "KAFL mezunlarını bir araya getiren dayanışma ve iletişim platformu.",
+  title: { default: "KAAFL Mezun Derneği", template: "%s | KAAFL Mezun Derneği" },
+  description: "KAAFL mezunlarını bir araya getiren dayanışma ve iletişim platformu.",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
