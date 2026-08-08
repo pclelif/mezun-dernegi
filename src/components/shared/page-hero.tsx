@@ -1,4 +1,10 @@
-export function PageHero({ eyebrow, title, description }) {
+type PageHeroProps = {
+  title: string;
+  eyebrow?: string;
+  description?: string;
+};
+
+export function PageHero({ eyebrow, title, description }: PageHeroProps) {
   return (
     <section className="page-hero">
       <div className="container-site">

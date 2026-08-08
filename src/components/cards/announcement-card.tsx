@@ -2,8 +2,47 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { Card } from "./card";
 
-type AnnouncementCardProps = { title: string; date: string; slug: string; summary?: string };
+export type AnnouncementCardProps = {
+  title: string;
+  date: string;
+  summary: string;
+  href: string;
+  dateTime?: string;
+  headingLevel?: "h2" | "h3";
+};
 
-export function AnnouncementCard({ title, date, slug, summary }: AnnouncementCardProps) {
-  return <Card><time className="text-xs font-semibold uppercase tracking-wider text-red-600">{date}</time><h3 className="mt-3 text-lg font-bold leading-snug text-zinc-950 [overflow-wrap:anywhere]"><Link className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600" href={`/duyurular/${slug}`}>{title}</Link></h3>{summary && <p className="mt-3 text-sm leading-6 text-zinc-600 [overflow-wrap:anywhere]">{summary}</p>}<Link className="mt-auto flex min-h-11 items-center gap-2 self-start rounded-sm pt-5 text-sm font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600" href={`/duyurular/${slug}`}>Devamını oku <ArrowRight className="size-4 shrink-0" aria-hidden="true" /></Link></Card>;
+export function AnnouncementCard({
+  title,
+  date,
+  summary,
+  href,
+  dateTime,
+  headingLevel = "h2",
+}: AnnouncementCardProps) {
+  const Heading = headingLevel;
+
+  return (
+    <Card>
+      <time dateTime={dateTime} className="text-xs font-semibold uppercase tracking-wider text-red-600">
+        {date}
+      </time>
+      <Heading className="mt-3 text-lg font-bold leading-snug text-zinc-950 [overflow-wrap:anywhere]">
+        <Link
+          href={href}
+          className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+        >
+          {title}
+        </Link>
+      </Heading>
+      <p className="mt-3 text-sm leading-6 text-zinc-600 [overflow-wrap:anywhere]">{summary}</p>
+      <Link
+        href={href}
+        aria-label={`${title} duyurusunun devamını oku`}
+        className="mt-auto flex min-h-11 items-center gap-2 self-start rounded-sm pt-5 text-sm font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+      >
+        Devamını oku
+        <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
+      </Link>
+    </Card>
+  );
 }
