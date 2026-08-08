@@ -6,9 +6,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { navigation, type NavigationItem } from "@/config/navigation";
-import { associationName } from "@/config/site";
+import { associationName, schoolName } from "@/config/site";
 
-const desktopLinkClass = "border-b-2 py-7 text-[0.8125rem] font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
+const desktopLinkClass = "border-b-2 bg-transparent py-9 text-sm font-medium leading-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,13 +35,13 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-black/10 bg-white/95 backdrop-blur-sm">
-      <div className="mx-auto flex min-h-20 w-[min(100%-2rem,75rem)] items-center justify-between gap-5 md:w-[min(100%-4rem,75rem)]">
-        <Link href="/" className="flex items-center gap-3 rounded-sm tracking-tight text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600" aria-label={`${associationName} ana sayfa`}>
-          <Image src="/kaafl-logo-v2.jpg" alt="" width={56} height={56} priority className="size-14 shrink-0 rounded-full object-cover" />
-          <span><strong className="block text-base leading-5">KAAFL</strong><span className="block text-xs font-semibold leading-4 text-zinc-600">Mezunlar Derneği</span></span>
+      <div className="mx-auto flex min-h-24 w-[min(100%-2rem,75rem)] items-center justify-between gap-6 md:w-[min(100%-4rem,75rem)]">
+        <Link href="/" className="flex min-w-0 items-center gap-3 rounded-sm tracking-tight text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600" aria-label={`${associationName} ana sayfa`}>
+          <Image src="/kaafl-logo-v2.jpg" alt="" width={64} height={64} priority className="size-16 shrink-0 rounded-full object-cover" />
+          <span className="max-w-[19rem] text-[0.8125rem] font-semibold leading-[1.15rem]"><span className="block">{schoolName}</span><strong className="mt-0.5 block text-red-600">Mezunlar Derneği</strong></span>
         </Link>
 
-        <nav className="hidden items-center gap-4 lg:flex" aria-label="Ana menü">
+        <nav className="hidden items-center gap-4 xl:flex" aria-label="Ana menü">
           {navigation.map((item, index) => {
             const active = isItemActive(item);
             const menuId = `desktop-submenu-${index}`;
@@ -80,12 +80,12 @@ export function Header() {
           })}
         </nav>
 
-        <button type="button" className="grid size-11 shrink-0 place-items-center rounded-md border border-zinc-300 text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 lg:hidden" onClick={() => setIsOpen((current) => !current)} aria-expanded={isOpen} aria-controls="mobile-navigation" aria-label={isOpen ? "Menüyü kapat" : "Menüyü aç"}>
+        <button type="button" className="grid size-11 shrink-0 place-items-center rounded-md border border-zinc-300 text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 xl:hidden" onClick={() => setIsOpen((current) => !current)} aria-expanded={isOpen} aria-controls="mobile-navigation" aria-label={isOpen ? "Menüyü kapat" : "Menüyü aç"}>
           {isOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
         </button>
       </div>
 
-      <nav id="mobile-navigation" className={`${isOpen ? "flex" : "hidden"} fixed inset-x-0 top-20 h-[calc(100dvh-5rem)] flex-col overflow-y-auto border-t border-zinc-200 bg-white px-4 py-5 lg:hidden`} aria-label="Mobil menü">
+      <nav id="mobile-navigation" className={`${isOpen ? "flex" : "hidden"} fixed inset-x-0 top-24 h-[calc(100dvh-6rem)] flex-col overflow-y-auto border-t border-zinc-200 bg-white px-4 py-5 xl:hidden`} aria-label="Mobil menü">
         {navigation.map((item, index) => {
           if (!item.children) {
             return <Link onClick={closeMobileNavigation} className="border-b border-zinc-200 px-2 py-4 text-base font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600" href={item.href} key={item.href}>{item.label}</Link>;
