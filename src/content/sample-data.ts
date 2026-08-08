@@ -1,3 +1,5 @@
+import { associationName } from "@/config/site";
+
 export type Announcement = {
   title: string;
   date: string;
@@ -92,7 +94,7 @@ export const frequentlyAskedQuestions: FAQ[] = [
   {
     id: "membership-eligibility",
     question: "Kimler derneğe üye olabilir?",
-    answer: "KAAFL mezunları, dernek tüzüğünde belirtilen üyelik koşullarını sağlamaları halinde üyelik başvurusunda bulunabilir.",
+    answer: `${associationName} kapsamındaki mezunlar, dernek tüzüğünde belirtilen üyelik koşullarını sağlamaları halinde üyelik başvurusunda bulunabilir.`,
   },
   {
     id: "membership-application",

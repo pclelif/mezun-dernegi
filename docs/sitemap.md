@@ -1,7 +1,7 @@
 # Sitemap
 
 - Ana Sayfa `/`
-- Kurumsal
+- Hakkımızda
   - Hakkımızda `/kurumsal/hakkimizda`
   - Vizyon ve Misyon `/kurumsal/vizyon-misyon`
   - Başkanın Mesajı `/kurumsal/baskanin-mesaji`

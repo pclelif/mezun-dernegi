@@ -1,4 +1,4 @@
-# KAAFL Mezunlar Derneği Web Sitesi
+# Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunlar Derneği Web Sitesi
 
 Next.js, React, JavaScript, normal CSS ve Supabase tabanlı mezunlar derneği web projesi. React bileşenleri ve sayfalar `.js` uzantısıyla tutulur.
 

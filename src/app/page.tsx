@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AnnouncementCard } from "@/components/cards/announcement-card";
 import { EventCard } from "@/components/cards/event-card";
 import { announcements, events } from "@/content/sample-data";
+import { associationName } from "@/config/site";
 
 const upcomingEvents = events.filter((event) => event.status === "upcoming");
 
@@ -13,7 +14,7 @@ export default function HomePage() {
         <div className="absolute inset-0 -z-20 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=2000&q=85')] bg-cover bg-center" role="img" aria-label="Birlikte yürüyen mezunlar" />
         <div className="absolute inset-0 -z-10 bg-black/55" />
         <div className="mx-auto w-[min(100%-2rem,75rem)] py-14 text-white md:w-[min(100%-4rem,75rem)] md:py-20">
-          <p className="mb-4 text-xs font-bold uppercase tracking-[0.18em] text-white/80">KAAFL Mezunlar Derneği</p>
+          <p className="mb-4 max-w-3xl text-xs font-bold uppercase leading-5 tracking-[0.16em] text-white/80">{associationName}</p>
           <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight md:text-5xl">Bir okuldan fazlası,<br className="hidden md:block" /> ömür boyu süren bir bağ.</h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-white/90 md:text-lg">Geçmişimizi yaşatıyor, mezunlarımızı buluşturuyor ve yeni kuşaklara birlikte değer katıyoruz.</p>
           <div className="mt-7 flex flex-col gap-3 sm:flex-row"><Link href="/uyelik/basvuru" className="inline-flex min-h-11 items-center justify-center rounded-md bg-red-600 px-6 font-semibold text-white hover:bg-red-700">Derneğe üye ol</Link><Link href="/kurumsal/hakkimizda" className="inline-flex min-h-11 items-center justify-center rounded-md border border-white px-6 font-semibold text-white hover:bg-white hover:text-zinc-950">Bizi tanıyın</Link></div>
