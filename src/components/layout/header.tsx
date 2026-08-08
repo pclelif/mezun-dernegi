@@ -6,9 +6,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { navigation, type NavigationItem } from "@/config/navigation";
-import { associationName, schoolName } from "@/config/site";
+import { associationName } from "@/config/site";
 
-const desktopLinkClass = "border-b-2 bg-transparent py-9 text-sm font-medium leading-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
+const desktopLinkClass = "flex h-24 appearance-none items-center border-b-2 bg-transparent p-0 font-sans text-sm font-medium leading-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,7 +38,7 @@ export function Header() {
       <div className="mx-auto flex min-h-24 w-[min(100%-2rem,75rem)] items-center justify-between gap-6 md:w-[min(100%-4rem,75rem)]">
         <Link href="/" className="flex min-w-0 items-center gap-3 rounded-sm tracking-tight text-zinc-950 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600" aria-label={`${associationName} ana sayfa`}>
           <Image src="/kaafl-logo-v2.jpg" alt="" width={64} height={64} priority className="size-16 shrink-0 rounded-full object-cover" />
-          <span className="max-w-[19rem] text-[0.8125rem] font-semibold leading-[1.15rem]"><span className="block">{schoolName}</span><strong className="mt-0.5 block text-red-600">Mezunlar Derneği</strong></span>
+          <span className="max-w-[21rem] text-sm font-semibold leading-5 text-zinc-800">{associationName}</span>
         </Link>
 
         <nav className="hidden items-center gap-4 xl:flex" aria-label="Ana menü">
@@ -50,7 +50,7 @@ export function Header() {
             if (item.children) {
               return (
                 <div
-                  className="relative"
+                  className="relative h-24"
                   key={item.href}
                   onMouseEnter={() => setOpenDesktopMenu(item.href)}
                   onMouseLeave={() => setOpenDesktopMenu(null)}
@@ -60,7 +60,7 @@ export function Header() {
                 >
                   <button
                     type="button"
-                    className={`${desktopLinkClass} flex items-center gap-1 ${active ? "border-red-600 text-red-600" : "border-transparent text-zinc-700 hover:text-red-600"}`}
+                    className={`${desktopLinkClass} gap-1 ${active ? "border-red-600 text-red-600" : "border-transparent text-zinc-700 hover:text-red-600"}`}
                     aria-expanded={menuOpen}
                     aria-controls={menuId}
                     onClick={() => setOpenDesktopMenu((current) => current === item.href ? null : item.href)}
