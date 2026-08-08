@@ -15,13 +15,13 @@ const textLinkClass =
 export default function HomePage() {
   return (
     <>
-      <section className="relative isolate flex min-h-[19rem] items-end overflow-hidden bg-zinc-800 md:min-h-[22rem]">
+      <section className="relative isolate flex min-h-[19rem] items-center overflow-hidden bg-zinc-800 md:min-h-[22rem]">
         <div
           className="absolute inset-0 -z-20 bg-[url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?auto=format&fit=crop&w=2000&q=85')] bg-cover bg-center"
           role="img"
           aria-label="Birlikte yürüyen mezunlar"
         />
-        <div className="absolute inset-0 -z-10 bg-black/55" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-zinc-950/90 via-zinc-900/75 to-red-950/70" />
         <div className="mx-auto w-[min(100%-2rem,75rem)] py-10 text-white md:w-[min(100%-4rem,75rem)] md:py-14">
           <p className="mb-4 max-w-3xl text-xs font-bold uppercase leading-5 tracking-[0.16em] text-white/80">
             {associationName}
