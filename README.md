@@ -1,6 +1,6 @@
 # KAAFL Mezunlar Derneği Web Sitesi
 
-Next.js, React, JavaScript, normal CSS ve Supabase tabanlı mezunlar derneği web projesi.
+Next.js, React, JavaScript, normal CSS ve Supabase tabanlı mezunlar derneği web projesi. React bileşenleri ve sayfalar `.js` uzantısıyla tutulur.
 
 ## İlk kurulum
 
@@ -14,7 +14,7 @@ Tarayıcıda `http://localhost:3000` adresini açın.
 
 ## Klasör yapısı
 
-- `src/app`: JSX sayfaları, route'lar, layout ve global CSS
+- `src/app`: React sayfaları (`page.js`), route'lar, layout ve global CSS
 - `src/components/layout`: Navbar, footer gibi ana yerleşim bileşenleri
 - `src/components/ui`: Buton, kart, başlık, form gibi tekrar kullanılabilir parçalar
 - `src/config`: Menü ve site ayarları
@@ -26,7 +26,7 @@ Tarayıcıda `http://localhost:3000` adresini açın.
 
 ## İsimlendirme kuralları
 
-- Dosya ve klasör: `kebab-case` (`board-member-card.jsx`)
+- Dosya ve klasör: `kebab-case` (`board-member-card.js`)
 - React bileşeni: `PascalCase` (`BoardMemberCard`)
 - Fonksiyon/değişken: `camelCase` (`getAnnouncements`)
 - Sabit: `UPPER_SNAKE_CASE` (`MAX_FILE_SIZE`)
