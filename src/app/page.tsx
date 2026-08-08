@@ -21,7 +21,7 @@ export default function HomePage() {
           role="img"
           aria-label="Birlikte yürüyen mezunlar"
         />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-zinc-950/90 via-zinc-900/70 to-red-600/65" />
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-zinc-950/90 via-red-600/45 via-50% to-red-600/70" />
         <div className="mx-auto w-[min(100%-2rem,75rem)] py-10 text-white md:w-[min(100%-4rem,75rem)] md:py-14">
           <p className="mb-4 max-w-3xl text-xs font-bold uppercase leading-5 tracking-[0.16em] text-white/80">
             {associationName}
