@@ -7,7 +7,6 @@ export default function HomePage() {
     <>
       <section className="home-hero">
         <div className="container-site home-hero__content">
-          <p className="eyebrow">KAAFL Mezunlar Derneği</p>
           <h1 className="home-hero__title">Bir okul. Binlerce hikâye. Tek bir aile.</h1>
           <p className="home-hero__description">Geçmişimizi yaşatıyor, mezunlarımızı buluşturuyor ve geleceğe birlikte değer katıyoruz.</p>
           <Link href="/uyelik" className="button button--primary">Üye Ol</Link>
@@ -33,12 +32,12 @@ export default function HomePage() {
       </section>
 
       <section className="section-space container-site">
-        <SectionHeading eyebrow="Mezun ağı" title="Şehirleri ve meslekleri aşan bağ" centered />
+        <SectionHeading eyebrow="Mezun ağı" title="Şehirleri aşan bağ" centered />
         <p className="body-copy body-copy--center">Mezunların meslek ve şehir bazında birbirine ulaşabileceği ağ yapısı sonraki sprintlerde geliştirilecek.</p>
       </section>
 
       <section className="cta-section">
-        <div className="container-site"><h2>Sen de bu hikâyenin bir parçası ol.</h2><Link href="/uyelik" className="button button--primary">Üyelik başvurusu yap</Link></div>
+        <div className="container-site"><h2>Derneğimize katılın.</h2><Link href="/uyelik" className="button button--primary">Üyelik başvurusu yap</Link></div>
       </section>
     </>
   );
