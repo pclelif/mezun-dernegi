@@ -1,4 +1,9 @@
-export const navigation = [
+export type NavigationItem = {
+  label: string;
+  href: string;
+};
+
+export const navigation: NavigationItem[] = [
   { label: "Kurumsal", href: "/kurumsal/hakkimizda" },
   { label: "Duyurular", href: "/duyurular" },
   { label: "Etkinlikler", href: "/etkinlikler" },

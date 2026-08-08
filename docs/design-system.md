@@ -20,6 +20,18 @@ Sayfa zemini beyaz veya açık gri tutulur. Gri ve kırmızı, sayfayı bölen b
 - Dokunma hedefleri minimum 44×44 px
 - Mobil ve masaüstünde içerik sırası aynı; yalnızca yerleşim değişir
 
+Uygulama Tailwind CSS ile mobile-first geliştirilir. Görünürlük ve yerleşim değişimleri
+`hidden md:flex`, `md:hidden`, `grid md:grid-cols-2` gibi breakpoint yardımcılarıyla
+bileşenin içinde açıkça tanımlanır. Sabit genişlik yerine akışkan genişlik ve ortak
+`75rem` içerik sınırı kullanılır.
+
+## Bileşen yaklaşımı
+
+- `Card`, kart yüzeyi ve sınır davranışını paylaşan temel bileşendir.
+- Duyuru, etkinlik ve yönetim kurulu kartları içerik türüne özel hiyerarşiyi korur.
+- Form alanları `FormInput`, `FormSelect` ve `FormTextarea` olarak tekrar kullanılır.
+- Header mobil menüsü React state ile yönetilir; menü açıldığında sayfa kaydırması durur.
+
 ## Tasarım ilkeleri
 
 - Görünüm resmi, kurumsal, profesyonel ve güven verici olmalıdır.
