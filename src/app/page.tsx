@@ -17,7 +17,7 @@ export default function HomePage() {
           <p className="mb-4 max-w-3xl text-xs font-bold uppercase leading-5 tracking-[0.16em] text-white/80">{associationName}</p>
           <h1 className="max-w-3xl text-3xl font-bold leading-tight tracking-tight md:text-4xl">Bir okuldan fazlası,<br className="hidden md:block" /> ömür boyu süren bir bağ.</h1>
           <p className="mt-5 max-w-2xl text-base leading-7 text-white/90 md:text-lg">Geçmişimizi yaşatıyor, mezunlarımızı buluşturuyor ve yeni kuşaklara birlikte değer katıyoruz.</p>
-          <div className="mt-7"><Link href="/uyelik/basvuru" className="inline-flex min-h-11 items-center justify-center rounded-md border border-white bg-white px-6 font-semibold text-red-600 hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Derneğe üye ol</Link></div>
+          <div className="mt-7"><Link href="/uyelik/basvuru" className="inline-flex min-h-11 items-center justify-center rounded-md bg-red-600 px-6 font-semibold text-white hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">Derneğe üye ol</Link></div>
         </div>
       </section>
 

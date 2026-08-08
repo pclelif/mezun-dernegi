@@ -5,7 +5,8 @@
 html { scroll-behavior: smooth; }
 body { margin: 0; background: var(--color-white); color: #000; font-family: Arial, Helvetica, sans-serif; -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
-button, input, textarea, select { font: inherit; }
+input, textarea, select { font: inherit; }
+button { font-family: inherit; }
 button { cursor: pointer; }
 
 .container-site { width: min(calc(100% - 2rem), 75rem); margin-inline: auto; }

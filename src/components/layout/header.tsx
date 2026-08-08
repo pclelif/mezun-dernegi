@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { navigation, type NavigationItem } from "@/config/navigation";
 import { associationName } from "@/config/site";
 
-const desktopLinkClass = "flex h-24 appearance-none items-center border-b-2 bg-transparent p-0 font-sans text-sm font-medium leading-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
+const desktopLinkClass = "relative flex h-24 appearance-none items-center bg-transparent p-0 font-sans text-sm font-medium leading-5 transition-colors after:absolute after:bottom-7 after:left-0 after:h-0.5 after:w-full after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -60,7 +60,7 @@ export function Header() {
                 >
                   <button
                     type="button"
-                    className={`${desktopLinkClass} gap-1 ${active ? "border-red-600 text-red-600" : "border-transparent text-zinc-700 hover:text-red-600"}`}
+                    className={`${desktopLinkClass} gap-1 ${active ? "text-red-600 after:bg-red-600" : "text-zinc-700 after:bg-transparent hover:text-red-600"}`}
                     aria-expanded={menuOpen}
                     aria-controls={menuId}
                     onClick={() => setOpenDesktopMenu((current) => current === item.href ? null : item.href)}
@@ -76,7 +76,7 @@ export function Header() {
               );
             }
 
-            return <Link className={`${desktopLinkClass} ${active ? "border-red-600 text-red-600" : "border-transparent text-zinc-700 hover:text-red-600"}`} href={item.href} key={item.href}>{item.label}</Link>;
+            return <Link className={`${desktopLinkClass} ${active ? "text-red-600 after:bg-red-600" : "text-zinc-700 after:bg-transparent hover:text-red-600"}`} href={item.href} key={item.href}>{item.label}</Link>;
           })}
         </nav>
 

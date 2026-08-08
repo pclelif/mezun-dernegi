@@ -11,7 +11,7 @@ const footerContentClass = "pl-[0.875rem]";
 export function Footer() {
   return (
     <footer className="bg-zinc-700 font-sans text-white">
-      <div className="mx-auto grid w-[min(100%-2rem,75rem)] items-start gap-10 py-9 md:w-[min(100%-4rem,75rem)] md:grid-cols-2 lg:grid-cols-3 lg:gap-12">
+      <div className="mx-auto grid w-[min(100%-2rem,75rem)] items-start gap-10 py-9 md:w-[min(100%-4rem,75rem)] md:grid-cols-2 lg:grid-cols-3">
         <div>
           <h2 className={footerHeadingClass}>Mezunlar Derneği</h2>
           <div className={footerContentClass}>
@@ -24,7 +24,7 @@ export function Footer() {
 
         <div>
           <h2 className={footerHeadingClass}>Hakkımızda</h2>
-          <ul className={`${footerContentClass} grid gap-1.5 text-sm leading-5`}>
+          <ul className={`${footerContentClass} grid grid-cols-2 gap-x-4 gap-y-1.5 text-sm leading-5`}>
             {corporateNavigation.map((item) => <li key={item.href}><Link className={footerLinkClass} href={item.href}>{item.label}</Link></li>)}
           </ul>
         </div>
