@@ -1,6 +1,6 @@
-# KAAFL Mezun Derneği Web Sitesi
+# KAAFL Mezunlar Derneği Web Sitesi
 
-Next.js, TypeScript, Tailwind CSS ve Supabase tabanlı mezun derneği web projesi.
+Next.js, TypeScript, Tailwind CSS ve Supabase tabanlı mezunlar derneği web projesi.
 
 ## İlk kurulum
 

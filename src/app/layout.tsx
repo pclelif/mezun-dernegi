@@ -4,7 +4,7 @@ import { Header } from "@/components/layout/header";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: { default: "KAAFL Mezun Derneği", template: "%s | KAAFL Mezun Derneği" },
+  title: { default: "KAAFL Mezunlar Derneği", template: "%s | KAAFL Mezunlar Derneği" },
   description: "KAAFL mezunlarını bir araya getiren dayanışma ve iletişim platformu.",
 };
 

@@ -2,12 +2,12 @@
 
 ## Renkler
 
-- Ana kırmızı: `#EC1C24`
-- Gri: `#6C757D`
-- Açık zemin: `#F1F3F5`
-- Beyaz: `#FFFFFF`
+- Gri `#6C757D`: Nötr ve dengeli temel, profesyonel görünüm ve birincil baz renk.
+- Beyaz `#FFFFFF`: Ana sayfa zemini ve temiz, profesyonel yüzeyler.
+- Kırmızı `#EC1C24`: Logodan gelen tek vurgu rengi; buton, seçili alan ve küçük dikkat unsurlarında kullanılır.
+- Açık gri `#F1F3F5`: Bölüm arka planları, kartlar ve hafif ton farklılıkları için dengeleyici baz.
 
-Bu palet proje sahibi tarafından belirlenmiştir. Yeni bir renk eklenmeden önce onay alınmalıdır.
+Geniş yüzeylerde kırmızı kullanılmaz. Kırmızı yalnızca kontrollü vurgu alanlarında yer alır. Yeni bir renk eklenmeden önce proje sahibinden onay alınmalıdır.
 
 ## Responsive yaklaşım
 
