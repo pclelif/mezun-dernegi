@@ -17,9 +17,11 @@ export async function getEventBySlug(slug: string) {
   return data as DbEvent | null;
 }
 
-export async function getAnnouncements() {
+export async function getAnnouncements(limit?: number) {
   const supabase = createServerAnonClient();
-  const { data, error } = await supabase.from("announcements").select("*").order("created_at", { ascending: false });
+  let query = supabase.from("announcements").select("*").order("created_at", { ascending: false });
+  if (limit) query = query.limit(limit);
+  const { data, error } = await query;
   if (error) throw error;
   return (data ?? []) as DbAnnouncement[];
 }

@@ -65,6 +65,7 @@ export type DbBoardMember = {
   id: string;
   name: string;
   role: string | null;
+  board_type: "management" | "audit";
   image_url: string | null;
   display_order: number;
   created_at: string;

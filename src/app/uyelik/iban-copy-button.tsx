@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import styles from "./page.module.css";
 
 type IbanCopyButtonProps = {
   value: string;
@@ -17,7 +16,7 @@ export function IbanCopyButton({ value }: IbanCopyButtonProps) {
 
   async function copyIban() {
     try {
-      await navigator.clipboard.writeText(value);
+      await navigator.clipboard.writeText(value.replaceAll(" ", ""));
       setCopied(true);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => setCopied(false), 1800);
@@ -27,7 +26,12 @@ export function IbanCopyButton({ value }: IbanCopyButtonProps) {
   }
 
   return (
-    <button className={styles.copyButton} type="button" onClick={copyIban} aria-live="polite">
+    <button
+      type="button"
+      onClick={() => void copyIban()}
+      aria-live="polite"
+      className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-md border border-zinc-300 bg-white px-4 text-sm font-semibold text-zinc-900 transition-colors hover:border-red-600 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+    >
       {copied ? "Kopyalandı" : "Kopyala"}
     </button>
   );

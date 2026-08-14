@@ -10,7 +10,7 @@ export default async function BoardPage() {
   let members: Awaited<ReturnType<typeof getBoardMembers>> = [];
   try {
     const all = await getBoardMembers();
-    members = all.filter((member) => !/denetim/i.test(member.role ?? ""));
+    members = all.filter((member) => member.board_type === "management");
   } catch {
     members = [];
   }

@@ -9,7 +9,12 @@ import { InstagramIcon, LinkedinIcon } from "@/components/icons/social-icons";
 import { navigation, type NavigationItem } from "@/config/navigation";
 import { associationName } from "@/config/site";
 
-const desktopLinkClass = "relative flex h-24 appearance-none items-center whitespace-nowrap bg-transparent p-0 font-sans text-base font-semibold leading-5 transition-colors after:absolute after:bottom-8 after:left-0 after:h-0.5 after:w-full after:content-[''] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
+const desktopLinkClass = "relative flex h-20 appearance-none items-center gap-1.5 whitespace-nowrap bg-transparent p-0 font-sans text-[15px] font-semibold leading-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
+
+/** Aktif göstergesi metnin kendi alt kenarlığı; böylece yazının ortasından geçemez. */
+function labelClass(active: boolean) {
+  return `border-b-2 pb-1 ${active ? "border-red-600" : "border-transparent"}`;
+}
 
 const socialLinks = [
   { label: "Instagram", href: "https://www.instagram.com/kaaflmezunder", Icon: InstagramIcon },
@@ -44,38 +49,40 @@ export function Header() {
   }
 
   return (
-    <header className={`site-main-header ${pathname === "/" ? "desktop-home-sticky" : ""} relative z-50 border-b border-black/10 bg-white transition-[box-shadow] duration-200 motion-reduce:transition-none ${isScrolled ? "shadow-lg xl:shadow-md" : ""}`}>
-      <div className="relative mx-auto flex w-[min(100%-2rem,75rem)] flex-col items-center justify-center gap-3 py-6 xl:w-[min(100%-4rem,75rem)] xl:flex-row xl:items-center xl:justify-between xl:gap-4 xl:py-4">
-        {/* Sol: logo + yazı lockup (Koç tarzı) — mobilde ortalı, xl'den itibaren sola yaslı */}
-        <Link href="/" className="flex shrink-0 flex-col items-center gap-3 rounded-sm text-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 xl:-ml-1 xl:flex-row xl:items-center xl:gap-3.5 xl:text-left" aria-label={`${associationName} ana sayfa`}>
+    <header className={`site-main-header ${pathname === "/" ? "desktop-home-sticky" : ""} relative z-[100] border-b border-black/10 bg-white transition-[box-shadow] duration-200 motion-reduce:transition-none ${isScrolled ? "shadow-lg xl:shadow-md" : ""}`}>
+      {/* Hamburger: header'ın doğrudan çocuğu, marka bloğunun hiyerarşisi dışında */}
+      <button
+        type="button"
+        className="absolute right-4 top-4 z-[70] grid size-11 place-items-center rounded-md text-zinc-900 transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 xl:hidden"
+        aria-expanded={isMobileNavOpen}
+        aria-controls="mobile-navigation"
+        aria-label="Menüyü aç veya kapat"
+        onClick={() => setIsMobileNavOpen((current) => !current)}
+      >
+        {isMobileNavOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+      </button>
+
+      <div className="mx-auto flex w-[min(100%-2rem,75rem)] flex-col items-center justify-center gap-4 py-7 xl:w-[min(100%-3rem,84rem)] xl:flex-row xl:justify-between xl:gap-6 xl:py-5">
+        {/* Mobilde logo üstte, isim altında ve ortalı; xl'den itibaren yan yana ve sola yaslı */}
+        <Link
+          href="/"
+          className="flex min-w-0 max-w-[calc(100%-6rem)] flex-col items-center gap-4 rounded-sm text-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 xl:max-w-none xl:shrink-0 xl:flex-row xl:items-center xl:gap-4 xl:text-left"
+          aria-label={`${associationName} ana sayfa`}
+        >
           <Image
-            src="/kaafl-logo-v2.jpg"
+            src="/mezunderlogo.jpg"
             alt=""
-            width={112}
-            height={112}
+            width={96}
+            height={96}
             priority
-            className="size-24 shrink-0"
+            className="h-28 w-auto shrink-0 object-contain xl:h-[6.5rem]"
           />
-          <span className="flex flex-col items-center justify-center gap-1.5 text-center xl:items-start xl:text-left">
-            <span className="whitespace-nowrap text-sm font-extrabold uppercase leading-none tracking-tight text-red-600 xl:text-xl">Keçiören Fen Lisesi</span>
-            <span className="whitespace-nowrap text-xs font-bold uppercase leading-none tracking-wide text-zinc-800 xl:text-base">Mezunlar Derneği</span>
+          <span className="min-w-0 text-xs font-semibold leading-relaxed text-zinc-800 text-balance sm:text-sm xl:max-w-[14rem] xl:leading-snug">
+            {associationName}
           </span>
         </Link>
 
-        {/* Mobil menü tetikleyicisi: içerik kolonunun sağında, dikeyde ortalı */}
-        <button
-          type="button"
-          className="absolute right-4 top-8 grid size-11 z-50 place-items-center rounded-md text-red-600 transition-colors hover:bg-red-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 xl:hidden"
-          aria-expanded={isMobileNavOpen}
-          aria-controls="mobile-navigation"
-          aria-label="Menüyü aç veya kapat"
-          onClick={() => setIsMobileNavOpen((current) => !current)}
-        >
-          {isMobileNavOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-        </button>
-
-        {/* Orta: kalan alanı doldurur, kendi içinde ortalanır — absolute yok */}
-        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-6 xl:flex" aria-label="Ana menü">
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-7 xl:flex 2xl:gap-10" aria-label="Ana menü">
           {navigation.map((item, index) => {
             const active = isItemActive(item);
             const menuId = `desktop-submenu-${index}`;
@@ -84,7 +91,7 @@ export function Header() {
             if (item.children) {
               return (
                 <div
-                  className="relative h-24"
+                  className="relative h-20"
                   key={item.href}
                   onMouseEnter={() => setOpenDesktopMenu(item.href)}
                   onMouseLeave={() => setOpenDesktopMenu(null)}
@@ -94,17 +101,17 @@ export function Header() {
                 >
                   <button
                     type="button"
-                    className={`${desktopLinkClass} gap-1 ${active ? "text-red-600 after:bg-red-600" : "text-zinc-900 after:bg-transparent hover:text-red-600"}`}
+                    className={`${desktopLinkClass} ${active ? "text-red-600" : "text-zinc-900 hover:text-red-600"}`}
                     aria-expanded={menuOpen}
                     aria-controls={menuId}
                     onClick={() => setOpenDesktopMenu((current) => current === item.href ? null : item.href)}
                     onFocus={() => setOpenDesktopMenu(item.href)}
                   >
-                    {item.label}
+                    <span className={labelClass(active)}>{item.label}</span>
                     <ChevronDown className={`size-4 transition-transform motion-reduce:transition-none ${menuOpen ? "rotate-180" : ""} ${active ? "text-red-600" : "text-zinc-700"}`} aria-hidden="true" />
                   </button>
                   {/* Invisible pt bridge closes the hover gap between trigger and panel */}
-                  <div id={menuId} className={`${menuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"} absolute left-1/2 top-full w-64 -translate-x-1/2 pt-4 transition-[opacity,transform] motion-reduce:transition-none`}>
+                  <div id={menuId} className={`${menuOpen ? "visible translate-y-0 opacity-100" : "invisible -translate-y-1 opacity-0"} absolute left-1/2 top-full z-[120] w-64 -translate-x-1/2 pt-3 transition-[opacity,transform] motion-reduce:transition-none`}>
                     <div className="rounded-xl border border-zinc-200 bg-white py-2 text-center shadow-lg shadow-zinc-900/10">
                       {item.children.map((child) => (
                         <Link
@@ -122,12 +129,19 @@ export function Header() {
               );
             }
 
-            return <Link className={`${desktopLinkClass} ${active ? "text-red-600 after:bg-red-600" : "text-zinc-900 after:bg-transparent hover:text-red-600"}`} href={item.href} key={item.href}>{item.label}</Link>;
+            return (
+              <Link
+                className={`${desktopLinkClass} ${active ? "text-red-600" : "text-zinc-900 hover:text-red-600"}`}
+                href={item.href}
+                key={item.href}
+              >
+                <span className={labelClass(active)}>{item.label}</span>
+              </Link>
+            );
           })}
         </nav>
 
-        {/* Sağ: doğal genişlik */}
-        <div className="hidden shrink-0 items-center gap-4 xl:flex">
+        <div className="hidden shrink-0 items-center gap-3 xl:flex">
           {socialLinks.map(({ label, href, Icon }) => (
             <a
               key={label}
@@ -137,7 +151,7 @@ export function Header() {
               aria-label={label}
               className="rounded-md p-2 text-zinc-900 transition-colors hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
             >
-              <Icon className="size-7" />
+              <Icon className="size-6" />
             </a>
           ))}
         </div>

@@ -1,11 +1,18 @@
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { Fragment } from "react";
 import { footerLinks } from "@/config/navigation";
 import { associationName } from "@/config/site";
 
 const footerLinkClass = "rounded-sm text-zinc-200 transition-colors hover:text-red-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white";
 const footerPanelClass = "border-l-2 border-red-600 pl-3";
+const legalLinks = [
+  { href: "/kvkk", label: "KVKK Aydınlatma Metni" },
+  { href: "/gizlilik-politikasi", label: "Gizlilik Politikası" },
+  { href: "/cerez-politikasi", label: "Çerez Politikası" },
+  { href: "/kullanim-kosullari", label: "Kullanım Koşulları" },
+];
 
 export function Footer() {
   return (
@@ -14,7 +21,7 @@ export function Footer() {
         <div className={footerPanelClass}>
           <Link href="/" className="inline-flex items-start gap-3 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`${associationName} ana sayfa`}>
             <Image src="/kaafl-logo-v2.jpg" alt="" width={64} height={64} className="size-16 shrink-0 rounded-full bg-white object-cover" />
-            <span className="max-w-xs text-sm font-semibold leading-5">{associationName}</span>
+            <span className="max-w-xs text-sm font-semibold leading-5 text-balance">{associationName}</span>
           </Link>
         </div>
 
@@ -33,8 +40,25 @@ export function Footer() {
       </div>
 
       <div className="border-t border-white/15">
-        <div className="mx-auto w-[min(100%-2rem,75rem)] py-4 text-center text-xs leading-5 text-zinc-300 md:w-[min(100%-4rem,75rem)]">
+        <div className="mx-auto flex w-[min(100%-2rem,75rem)] flex-col items-center gap-2 py-4 text-center text-xs leading-5 text-zinc-300 md:w-[min(100%-4rem,75rem)]">
           <p>© {new Date().getFullYear()} {associationName}. Tüm hakları saklıdır.</p>
+          <nav className="flex flex-wrap items-center justify-center gap-4 md:gap-6" aria-label="Yasal bağlantılar">
+            {legalLinks.map((item, index) => (
+              <Fragment key={item.href}>
+                {index > 0 ? (
+                  <span className="text-zinc-500" aria-hidden="true">
+                    •
+                  </span>
+                ) : null}
+                <Link
+                  href={item.href}
+                  className="rounded-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  {item.label}
+                </Link>
+              </Fragment>
+            ))}
+          </nav>
         </div>
       </div>
     </footer>

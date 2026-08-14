@@ -13,7 +13,6 @@
 - Galeri `/galeri` ve `/galeri/[slug]`
 - Üyelik `/uyelik`
   - Üyelik Şartları `/uyelik/sartlar`
-  - Başvuru `/uyelik/basvuru`
   - Aidat `/uyelik/aidat`
 - SSS `/sss`
 - İletişim `/iletisim`

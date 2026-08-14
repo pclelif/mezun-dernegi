@@ -1,7 +1,13 @@
 const nextConfig = {
-  allowedDevOrigins: ["192.168.1.7"],
+  allowedDevOrigins: ["192.168.1.7", "192.168.1.111"],
   images: {
-    remotePatterns: [],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "jmogqtwyfgmwiflbizjz.supabase.co",
+        pathname: "/storage/v1/object/public/media/**",
+      },
+    ],
   },
 };
 

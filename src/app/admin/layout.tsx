@@ -3,9 +3,11 @@
 import {
   ArrowLeft,
   CalendarDays,
+  CircleHelp,
   Images,
   LayoutDashboard,
   Megaphone,
+  UsersRound,
   type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
@@ -18,6 +20,8 @@ const navItems: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/admin/etkinlikler", label: "Etkinlikler", icon: CalendarDays },
   { href: "/admin/duyurular", label: "Duyurular", icon: Megaphone },
   { href: "/admin/galeri", label: "Galeri", icon: Images },
+  { href: "/admin/sss", label: "S.S.S. Yönetimi", icon: CircleHelp },
+  { href: "/admin/kurul", label: "Kurul Yönetimi", icon: UsersRound },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
