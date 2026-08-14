@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { corporateNavigation } from "@/config/navigation";
+import { footerLinks } from "@/config/navigation";
 import { associationName } from "@/config/site";
 
 const footerLinkClass = "rounded-sm text-zinc-200 transition-colors hover:text-red-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white";
@@ -19,8 +19,8 @@ export function Footer() {
         </div>
 
         <div className={footerPanelClass}>
-          <ul className="grid grid-flow-col grid-cols-[max-content_max-content] grid-rows-3 gap-x-3 gap-y-1.5 text-sm leading-5 sm:grid-cols-2 sm:gap-x-5">
-            {corporateNavigation.map((item) => <li key={item.href}><Link className={footerLinkClass} href={item.href}>{item.label}</Link></li>)}
+          <ul className="grid grid-flow-col grid-cols-[max-content_max-content] grid-rows-4 gap-x-3 gap-y-1.5 text-sm leading-5 sm:grid-cols-2 sm:gap-x-5">
+            {footerLinks.map((item) => <li key={item.href}><Link className={footerLinkClass} href={item.href}>{item.label}</Link></li>)}
           </ul>
         </div>
 

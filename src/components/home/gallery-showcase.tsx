@@ -3,10 +3,10 @@
 import { ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
-import type { GalleryHighlight } from "@/content/sample-data";
+import type { DbGallery } from "@/lib/supabase/client";
 
 type GalleryShowcaseProps = {
-  items: GalleryHighlight[];
+  items: Pick<DbGallery, "slug">[];
 };
 
 export function GalleryShowcase({ items }: GalleryShowcaseProps) {
@@ -70,7 +70,7 @@ export function GalleryShowcase({ items }: GalleryShowcaseProps) {
         <div className="relative">
           <div ref={trackRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" tabIndex={0} aria-label="Anılarımızdan fotoğraflar">
             {items.map((item) => (
-              <div key={item.id} className="aspect-[4/3] min-w-[82%] snap-start rounded-lg border border-zinc-200 bg-zinc-100 sm:min-w-[46%] lg:min-w-[31%]" aria-hidden="true" />
+              <div key={item.slug} className="aspect-[4/3] min-w-[82%] snap-start rounded-lg border border-zinc-200 bg-zinc-100 sm:min-w-[46%] lg:min-w-[31%]" aria-hidden="true" />
             ))}
           </div>
           <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-between px-2" aria-hidden="false">

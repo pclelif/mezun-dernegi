@@ -1,4 +1,4 @@
-export const schoolName = "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi";
+export const schoolName = "Keçiören Fen Lisesi";
 
 export const associationName = `${schoolName} Mezunlar Derneği`;
 

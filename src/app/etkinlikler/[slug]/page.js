@@ -1,2 +1,0 @@
-import { ContentPage } from "@/components/shared/content-page";
-export default async function Page({ params }) { const { slug } = await params; return <ContentPage title="Etkinlik detayı" description={`Etkinlik: ${slug}`} />; }
