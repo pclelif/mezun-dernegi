@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { EventCard } from "@/components/cards/event-card";
 import { PageHero } from "@/components/shared/page-hero";
 import { getEvents, mapEventToCardProps } from "@/lib/supabase/queries";
@@ -19,7 +18,13 @@ export default async function EventsPage() {
 
   return (
     <>
-      <PageHero title="Etkinlikler" description="Yaklaşan buluşmalar ve geçmiş etkinliklerimiz." />
+      <PageHero
+        eyebrow="Sıradaki Buluşmalar"
+        title="Etkinlikler"
+        description="Mezunlarımızı bir araya getiren etkinlikler ve buluşmalar."
+        titleClassName="panel-title--compact"
+        descriptionClassName="panel-copy--compact"
+      />
       <section className="container-site section-space" aria-label="Etkinlik listesi">
         {loadError ? (
           <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-slate-600">
@@ -36,11 +41,6 @@ export default async function EventsPage() {
             ))}
           </div>
         )}
-        <div className="mt-8 text-center">
-          <Link href="/" className="text-sm font-semibold text-[#ec1c24] hover:text-red-700">
-            Ana sayfaya dön
-          </Link>
-        </div>
       </section>
     </>
   );

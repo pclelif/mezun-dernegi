@@ -25,9 +25,8 @@ export default function KvkkPage() {
           <strong>{associationName}</strong>’dir (“Dernek”).
         </p>
         <ul className={legalListClass}>
-          <li>Adres: [DERNEK ADRESİ]</li>
-          <li>E-posta: [DERNEK İLETİŞİM E-POSTASI]</li>
-          <li>Telefon: [DERNEK TELEFON NUMARASI]</li>
+          <li>Adres: <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong></li>
+          <li>E-posta: <strong>kaaflmezunder@gmail.com</strong></li>
         </ul>
       </section>
 
@@ -112,8 +111,9 @@ export default function KvkkPage() {
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>8. Başvuru yöntemi</h2>
         <p>
-          Taleplerinizi kimliğinizi doğrulayan bilgiler ve talebinizin açıklamasıyla birlikte [DERNEK
-          ADRESİ] adresine yazılı olarak veya [DERNEK İLETİŞİM E-POSTASI] adresine iletebilirsiniz.
+          Taleplerinizi kimliğinizi doğrulayan bilgiler ve talebinizin açıklamasıyla birlikte{" "}
+          <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong> adresine yazılı
+          olarak veya <strong>kaaflmezunder@gmail.com</strong> adresine iletebilirsiniz.
           Başvurular, niteliğine göre en kısa sürede ve en geç 30 gün içinde sonuçlandırılır.
         </p>
       </section>

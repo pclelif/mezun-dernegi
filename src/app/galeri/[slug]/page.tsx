@@ -39,8 +39,6 @@ export default async function GalleryAlbumPage({ params }: PageProps) {
     images = [];
   }
 
-  const placeholders = images.length > 0 ? images : Array.from({ length: 6 }, (_, index) => ({ id: `ph-${index}`, image_url: "" }));
-
   return (
     <article>
       <section className="border-b border-zinc-200 bg-slate-50">
@@ -63,16 +61,16 @@ export default async function GalleryAlbumPage({ params }: PageProps) {
       </section>
 
       <section className="mx-auto w-[min(100%-2rem,75rem)] py-12 md:w-[min(100%-4rem,75rem)] md:py-16" aria-label="Albüm fotoğrafları">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
-          {placeholders.map((item) => (
+        {images.length ? <div className="grid grid-cols-2 gap-4 md:grid-cols-3 md:gap-6">
+          {images.map((item) => (
             <div
-              key={"id" in item ? item.id : item.image_url}
+              key={item.id}
               className="aspect-square rounded-lg bg-slate-200 bg-cover bg-center"
-              style={"image_url" in item && item.image_url ? { backgroundImage: `url(${item.image_url})` } : undefined}
+              style={item.image_url ? { backgroundImage: `url(${item.image_url})` } : undefined}
               aria-hidden="true"
             />
           ))}
-        </div>
+        </div> : <p className="rounded-xl border border-dashed border-zinc-300 bg-slate-50 px-6 py-12 text-center text-slate-600">Bu albüme henüz fotoğraf eklenmemiş.</p>}
       </section>
     </article>
   );

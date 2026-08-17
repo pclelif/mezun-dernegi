@@ -1,12 +1,9 @@
-import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
-import { footerLinks } from "@/config/navigation";
+import { corporateNavigation } from "@/config/navigation";
 import { associationName } from "@/config/site";
 
-const footerLinkClass = "rounded-sm text-zinc-200 transition-colors hover:text-red-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white";
-const footerPanelClass = "border-l-2 border-red-600 pl-3";
 const legalLinks = [
   { href: "/kvkk", label: "KVKK Aydınlatma Metni" },
   { href: "/gizlilik-politikasi", label: "Gizlilik Politikası" },
@@ -14,35 +11,62 @@ const legalLinks = [
   { href: "/kullanim-kosullari", label: "Kullanım Koşulları" },
 ];
 
-export function Footer() {
+export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4\nÇankaya/Ankara" }: { logoUrl?: string; address?: string }) {
   return (
-    <footer className="bg-zinc-700 font-sans text-white">
-      <div className="mx-auto grid w-[min(100%-2rem,75rem)] items-start gap-8 py-9 md:w-[min(100%-4rem,75rem)] md:grid-cols-2 lg:grid-cols-[1.2fr_1fr_1fr]">
-        <div className={footerPanelClass}>
-          <Link href="/" className="inline-flex items-start gap-3 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`${associationName} ana sayfa`}>
-            <Image src="/kaafl-logo-v2.jpg" alt="" width={64} height={64} className="size-16 shrink-0 rounded-full bg-white object-cover" />
-            <span className="max-w-xs text-sm font-semibold leading-5 text-balance">{associationName}</span>
+    <footer className="bg-[#18181b] font-sans text-white">
+      <div className="mx-auto grid w-[min(100%-2rem,80rem)] items-start gap-8 py-7 md:grid-cols-2 md:gap-10 md:py-8 lg:grid-cols-[1fr_auto_1fr]">
+        <div>
+          <Link href="/" className="inline-flex items-center gap-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`${associationName} ana sayfa`}>
+            <Image src={logoUrl} alt="" width={56} height={56} className="size-14 shrink-0 rounded-full bg-white object-cover" />
+            <span className="max-w-lg text-sm font-semibold leading-6 text-balance">{associationName}</span>
           </Link>
         </div>
 
-        <div className={footerPanelClass}>
-          <ul className="grid grid-flow-col grid-cols-[max-content_max-content] grid-rows-4 gap-x-3 gap-y-1.5 text-sm leading-5 sm:grid-cols-2 sm:gap-x-5">
-            {footerLinks.map((item) => <li key={item.href}><Link className={footerLinkClass} href={item.href}>{item.label}</Link></li>)}
+        <nav className="sm:w-fit sm:max-w-full lg:translate-x-3 lg:justify-self-center" aria-label="Hakkımızda bağlantıları">
+          <h2 className="w-full border-b border-white/20 pb-2 text-left text-sm font-semibold text-white">Hakkımızda</h2>
+          <ul className="mt-3 grid gap-y-2 text-sm leading-5 sm:grid-cols-[max-content_max-content] sm:gap-x-6">
+            {corporateNavigation.map((item) => (
+              <li key={item.href}>
+                <Link
+                  href={item.href}
+                  className="rounded-sm text-zinc-300 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
           </ul>
-        </div>
+        </nav>
 
-        <div className={footerPanelClass}>
-          <div className="text-sm leading-6 text-zinc-200">
-            <p>Adres ve güncel iletişim bilgilerimize iletişim sayfasından ulaşabilirsiniz.</p>
-            <Link href="/iletisim" className="mt-2 inline-flex items-center gap-2 rounded-sm font-semibold text-white hover:text-red-400 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">İletişim sayfasına git <ArrowRight className="size-4 shrink-0" aria-hidden="true" /></Link>
-          </div>
+        <div className="w-full max-w-md sm:w-[20.5rem] md:col-span-2 lg:col-span-1 lg:justify-self-end">
+          <h2 className="border-b border-white/20 pb-2 text-left text-sm font-semibold text-white">
+            Adres
+          </h2>
+          <address className="mt-3 text-sm not-italic leading-6 text-zinc-200">
+            <span className="whitespace-pre-line">{address}</span>
+          </address>
         </div>
       </div>
 
       <div className="border-t border-white/15">
-        <div className="mx-auto flex w-[min(100%-2rem,75rem)] flex-col items-center gap-2 py-4 text-center text-xs leading-5 text-zinc-300 md:w-[min(100%-4rem,75rem)]">
-          <p>© {new Date().getFullYear()} {associationName}. Tüm hakları saklıdır.</p>
-          <nav className="flex flex-wrap items-center justify-center gap-4 md:gap-6" aria-label="Yasal bağlantılar">
+        <div className="mx-auto flex w-[min(100%-2rem,52rem)] flex-col items-center justify-center gap-2 py-3 text-center text-xs leading-5 text-zinc-300">
+          <p className="text-center">
+            © {new Date().getFullYear()} {associationName}. Tüm hakları saklıdır.
+          </p>
+          <nav className="grid grid-cols-[auto_auto] justify-center gap-x-3 gap-y-1 md:hidden" aria-label="Yasal bağlantılar">
+            {[legalLinks[0], legalLinks[1], legalLinks[3], legalLinks[2]].map((item, index) => (
+              <span key={item.href} className="text-left">
+                {index % 2 === 1 ? <span className="mr-3 text-zinc-500" aria-hidden="true">·</span> : null}
+                <Link
+                  href={item.href}
+                  className="rounded-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  {item.label}
+                </Link>
+              </span>
+            ))}
+          </nav>
+          <nav className="hidden flex-wrap items-center justify-center gap-4 md:flex md:gap-6" aria-label="Yasal bağlantılar">
             {legalLinks.map((item, index) => (
               <Fragment key={item.href}>
                 {index > 0 ? (

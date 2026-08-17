@@ -35,9 +35,8 @@ export default function CookiePolicyPage() {
           <strong>{associationName}</strong>’dir (“Dernek”).
         </p>
         <ul className={legalListClass}>
-          <li>Adres: [DERNEK ADRESİ]</li>
-          <li>E-posta: [DERNEK İLETİŞİM E-POSTASI]</li>
-          <li>Telefon: [DERNEK TELEFON NUMARASI]</li>
+          <li>Adres: <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong></li>
+          <li>E-posta: <strong>kaaflmezunder@gmail.com</strong></li>
         </ul>
       </section>
 
@@ -98,8 +97,9 @@ export default function CookiePolicyPage() {
         <h2 className={legalHeadingClass}>7. Kişisel veriler ve haklarınız</h2>
         <p>
           Çerezler yoluyla kişisel veri işlenmesi hâlinde işlemler 6698 sayılı KVKK’ya uygun yürütülür.
-          KVKK’nın 11’inci maddesindeki haklarınıza ilişkin taleplerinizi [DERNEK ADRESİ] adresine veya
-          [DERNEK İLETİŞİM E-POSTASI] adresine iletebilirsiniz.
+          KVKK’nın 11’inci maddesindeki haklarınıza ilişkin taleplerinizi{" "}
+          <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong> adresine veya{" "}
+          <strong>kaaflmezunder@gmail.com</strong> adresine iletebilirsiniz.
         </p>
       </section>
 

@@ -22,7 +22,7 @@ export function AnnouncementCard({
   const Heading = headingLevel;
 
   return (
-    <Card interactive>
+    <Card interactive className="border-l-4 border-l-red-600">
       <time dateTime={dateTime} className="text-xs font-semibold uppercase tracking-wider text-red-600">
         {date}
       </time>
@@ -41,7 +41,7 @@ export function AnnouncementCard({
         className="mt-auto flex min-h-11 items-center gap-2 self-start rounded-sm pt-5 text-sm font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
       >
         Devamını oku
-        <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
+        <ArrowRight className="size-4 shrink-0 text-zinc-900" aria-hidden="true" />
       </Link>
     </Card>
   );

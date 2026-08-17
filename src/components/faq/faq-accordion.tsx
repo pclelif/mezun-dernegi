@@ -47,7 +47,7 @@ export function FAQAccordion({ items, allowMultiple = false, defaultOpenIds = []
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => toggleItem(item.id)}
-                className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-bold leading-6 text-zinc-950 outline-none transition-colors hover:bg-zinc-50 focus-visible:bg-zinc-50 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-red-600 motion-reduce:transition-none md:px-6 [overflow-wrap:anywhere]"
+                className="flex min-h-14 w-full items-center justify-between gap-4 px-5 py-4 text-left text-base font-bold leading-6 text-zinc-950 outline-none transition-colors hover:bg-zinc-50 hover:text-red-600 focus-visible:bg-zinc-50 focus-visible:text-red-600 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-red-600 motion-reduce:transition-none md:px-6 [overflow-wrap:anywhere]"
               >
                 <span className="min-w-0">{item.question}</span>
                 <ChevronDown className={`size-5 shrink-0 text-red-600 transition-transform duration-200 motion-reduce:transition-none ${isOpen ? "rotate-180" : ""}`} aria-hidden="true" />

@@ -5,7 +5,7 @@ export const legalHeadingClass = "text-xl font-semibold text-gray-900 mt-8 mb-4"
 export const legalSubheadingClass = "text-lg font-semibold text-gray-900 mt-6 mb-2";
 export const legalListClass = "list-disc list-inside space-y-2 ml-4";
 export const legalLinkClass =
-  "font-semibold text-red-700 underline underline-offset-4 hover:text-red-800";
+  "font-semibold text-[#ec1c24] underline underline-offset-4 hover:text-red-700";
 
 type LegalPageProps = {
   title: string;

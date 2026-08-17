@@ -102,8 +102,9 @@ export default function PrivacyPolicyPage() {
           <Link href="/kvkk" className={legalLinkClass}>
             KVKK Aydınlatma Metni
           </Link>{" "}
-          sayfasını inceleyebilirsiniz. Sorularınızı [DERNEK İLETİŞİM E-POSTASI] adresine veya [DERNEK
-          ADRESİ] adresine iletebilirsiniz.
+          sayfasını inceleyebilirsiniz. Sorularınızı <strong>kaaflmezunder@gmail.com</strong> adresine
+          veya <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong> adresine
+          iletebilirsiniz.
         </p>
       </section>
 

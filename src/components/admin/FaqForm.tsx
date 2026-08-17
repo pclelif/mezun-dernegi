@@ -23,6 +23,7 @@ export function FaqForm({ initial }: FaqFormProps) {
     const form = new FormData(event.currentTarget);
     const question = String(form.get("question") ?? "").trim();
     const answer = String(form.get("answer") ?? "").trim();
+    const category = String(form.get("category") ?? "general") as DbFaq["category"];
     const displayOrder = Number(form.get("display_order") ?? 0);
 
     if (!question || !answer) {
@@ -40,15 +41,24 @@ export function FaqForm({ initial }: FaqFormProps) {
     const payload = {
       question,
       answer,
+      category,
       display_order: displayOrder,
     };
 
     try {
       const supabase = createClient();
-      const query = initial
-        ? supabase.from("faqs").update(payload).eq("id", initial.id)
-        : supabase.from("faqs").insert(payload);
-      const { error: saveError } = await query;
+      const save = (data: Omit<typeof payload, "category"> | typeof payload) => initial
+        ? supabase.from("faqs").update(data).eq("id", initial.id)
+        : supabase.from("faqs").insert(data);
+      let { error: saveError } = await save(payload);
+
+      if (saveError?.code === "PGRST204") {
+        const { category: _category, ...legacyPayload } = payload;
+        void _category;
+        const fallback = await save(legacyPayload);
+        saveError = fallback.error;
+      }
+
       if (saveError) throw saveError;
 
       router.push("/admin/sss");
@@ -100,6 +110,18 @@ export function FaqForm({ initial }: FaqFormProps) {
             defaultValue={initial?.answer ?? ""}
             className={fieldClass}
           />
+        </label>
+        <label className="block text-sm font-semibold text-zinc-800">
+          Gösterileceği bölüm
+          <select
+            name="category"
+            defaultValue={initial?.category ?? "general"}
+            className={fieldClass}
+          >
+            <option value="general">Genel SSS sayfası</option>
+            <option value="membership">Üyelik işlemleri</option>
+            <option value="dues">Aidat ve bağış</option>
+          </select>
         </label>
         <label className="block text-sm font-semibold text-zinc-800">
           Görüntülenme Sırası

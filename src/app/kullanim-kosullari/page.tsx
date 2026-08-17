@@ -128,8 +128,9 @@ export default function TermsOfUsePage() {
           kanunen yetkili Türk mahkemeleri ve icra daireleri yetkilidir.
         </p>
         <p>
-          Sorularınız için [DERNEK İLETİŞİM E-POSTASI], [DERNEK TELEFON NUMARASI] veya [DERNEK ADRESİ]
-          üzerinden Dernek ile iletişim kurabilirsiniz.
+          Sorularınız için <strong>kaaflmezunder@gmail.com</strong> veya{" "}
+          <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong> üzerinden Dernek
+          ile iletişim kurabilirsiniz.
         </p>
       </section>
     </LegalPage>

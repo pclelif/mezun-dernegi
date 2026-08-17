@@ -5,6 +5,12 @@ import {
   CalendarDays,
   CircleHelp,
   Images,
+  Home,
+  Building2,
+  Contact,
+  BadgeDollarSign,
+  Palette,
+  UserRoundCheck,
   LayoutDashboard,
   Megaphone,
   UsersRound,
@@ -13,15 +19,22 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
+import { AdminBrandLogo } from "@/components/admin/AdminBrandLogo";
 import { LogoutButton } from "@/components/admin/LogoutButton";
 
 const navItems: { href: string; label: string; icon: LucideIcon }[] = [
-  { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/admin", label: "Genel Bakış", icon: LayoutDashboard },
+  { href: "/admin/icerik/ana-sayfa", label: "Ana Sayfa", icon: Home },
+  { href: "/admin/icerik/hakkimizda", label: "Hakkımızda", icon: Building2 },
   { href: "/admin/etkinlikler", label: "Etkinlikler", icon: CalendarDays },
   { href: "/admin/duyurular", label: "Duyurular", icon: Megaphone },
   { href: "/admin/galeri", label: "Galeri", icon: Images },
-  { href: "/admin/sss", label: "S.S.S. Yönetimi", icon: CircleHelp },
-  { href: "/admin/kurul", label: "Kurul Yönetimi", icon: UsersRound },
+  { href: "/admin/kurul", label: "Yönetim ve Denetim Kurulları", icon: UsersRound },
+  { href: "/admin/icerik/uyelik", label: "Üyelik Bilgileri", icon: UserRoundCheck },
+  { href: "/admin/icerik/aidat-bagis", label: "Aidat ve Bağış", icon: BadgeDollarSign },
+  { href: "/admin/iletisim", label: "İletişim", icon: Contact },
+  { href: "/admin/sss", label: "Sıkça Sorulanlar", icon: CircleHelp },
+  { href: "/admin/icerik/marka", label: "Logo", icon: Palette },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {
@@ -33,12 +46,13 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen bg-slate-100 text-zinc-900">
-      <div className="mx-auto flex min-h-screen max-w-[90rem] flex-col lg:flex-row">
-        <aside className="border-b border-zinc-200 bg-zinc-950 text-white lg:w-64 lg:shrink-0 lg:border-b-0 lg:border-r lg:border-zinc-800">
+      <div className="flex min-h-screen w-full flex-col lg:flex-row">
+        <aside className="border-b border-zinc-800 bg-[#18181b] text-white lg:w-64 lg:shrink-0 lg:border-b-0 lg:border-r lg:border-zinc-800">
           <div className="flex items-center justify-between px-5 py-5 lg:block">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-red-400">Yönetim</p>
-              <p className="mt-1 text-sm font-bold">Dernek Paneli</p>
+              <AdminBrandLogo />
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-red-400">Yönetim Paneli</p>
+              <p className="mt-2 max-w-52 text-xs font-semibold leading-5 text-white">Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği</p>
             </div>
           </div>
 

@@ -1,0 +1,13 @@
+"use client";
+
+import { FileText, LoaderCircle, Trash2, Upload } from "lucide-react";
+import { useId, useState } from "react";
+import { createClient } from "@/lib/supabase/client";
+
+function pathFromUrl(url: string) { const marker = "/storage/v1/object/public/media/"; const at = url.indexOf(marker); return at < 0 ? null : decodeURIComponent(url.slice(at + marker.length)); }
+export function PdfUploader({ value, onChange }: { value: string; onChange: (url: string) => void }) {
+  const id=useId(); const [busy,setBusy]=useState(false); const [error,setError]=useState<string|null>(null);
+  async function choose(file?: File) { if(!file)return; setError(null); if(file.type!=="application/pdf"||file.size>15*1024*1024){setError("En fazla 15 MB boyutunda bir PDF seçin.");return;} setBusy(true); try { const client=createClient(); const {data:{user}}=await client.auth.getUser(); if(!user)throw new Error("Oturum bulunamadı."); const old=pathFromUrl(value); const path=`${user.id}/documents/tuzuk-${Date.now()}.pdf`; const {error:uploadError}=await client.storage.from("media").upload(path,file,{contentType:"application/pdf"}); if(uploadError)throw uploadError; const url=client.storage.from("media").getPublicUrl(path).data.publicUrl; onChange(url); if(old) await client.storage.from("media").remove([old]); } catch(e){setError(e instanceof Error?e.message:"PDF yüklenemedi.");} finally {setBusy(false);} }
+  async function remove(){const path=pathFromUrl(value);if(path)await createClient().storage.from("media").remove([path]);onChange("");}
+  return <div className="space-y-3"><p className="text-sm font-semibold text-zinc-800">Dernek Tüzüğü (PDF)</p>{value?<div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border bg-slate-50 p-4"><a href={value} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-semibold text-red-700"><FileText className="size-5"/>Mevcut tüzüğü görüntüle</a><button type="button" onClick={()=>void remove()} className="inline-flex items-center gap-1.5 text-sm font-semibold text-red-700"><Trash2 className="size-4"/>Sil</button></div>:null}<label htmlFor={id} className="inline-flex min-h-11 cursor-pointer items-center gap-2 rounded-md border border-zinc-300 px-4 text-sm font-semibold hover:bg-slate-50">{busy?<LoaderCircle className="size-4 animate-spin"/>:<Upload className="size-4"/>}{busy?"Yükleniyor…":value?"PDF’yi Değiştir":"PDF Yükle"}</label><input id={id} type="file" accept="application/pdf" disabled={busy} className="sr-only" onChange={(e)=>{void choose(e.target.files?.[0]);e.target.value="";}}/>{error?<p className="text-sm text-red-700">{error}</p>:null}</div>;
+}

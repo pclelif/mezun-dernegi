@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, Menu, Minus, Plus, X } from "lucide-react";
+import { ChevronDown, Mail, Menu, Minus, Plus, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -9,24 +9,23 @@ import { InstagramIcon, LinkedinIcon } from "@/components/icons/social-icons";
 import { navigation, type NavigationItem } from "@/config/navigation";
 import { associationName } from "@/config/site";
 
-const desktopLinkClass = "relative flex h-20 appearance-none items-center gap-1.5 whitespace-nowrap bg-transparent p-0 font-sans text-[15px] font-semibold leading-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
+const desktopLinkClass = "relative flex h-24 appearance-none items-center gap-1.5 whitespace-nowrap bg-transparent p-0 font-sans text-base font-semibold leading-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
 /** Aktif göstergesi metnin kendi alt kenarlığı; böylece yazının ortasından geçemez. */
 function labelClass(active: boolean) {
   return `border-b-2 pb-1 ${active ? "border-red-600" : "border-transparent"}`;
 }
 
-const socialLinks = [
-  { label: "Instagram", href: "https://www.instagram.com/kaaflmezunder", Icon: InstagramIcon },
-  { label: "LinkedIn", href: "https://www.linkedin.com/company/ke%C3%A7i%C3%B6ren-vatansever-%C5%9Fehit-t%C3%BCmgeneral-aydo%C4%9Fan-ayd%C4%B1n-fen-lisesi-mezunlar-derne%C4%9Fi/", Icon: LinkedinIcon },
-];
-
-export function Header() {
+export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@gmail.com", instagramUrl = "https://www.instagram.com/kaaflmezunder", linkedinUrl = "" }: { logoUrl?: string; email?: string; instagramUrl?: string; linkedinUrl?: string }) {
   const [openDesktopMenu, setOpenDesktopMenu] = useState<string | null>(null);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(null);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
+  const socialLinks = [
+    instagramUrl ? { label: "Instagram", href: instagramUrl, Icon: InstagramIcon } : null,
+    linkedinUrl ? { label: "LinkedIn", href: linkedinUrl, Icon: LinkedinIcon } : null,
+  ].filter((item): item is { label: string; href: string; Icon: typeof InstagramIcon } => Boolean(item));
 
   useEffect(() => {
     function updateHeaderSurface() {
@@ -38,51 +37,63 @@ export function Header() {
     return () => window.removeEventListener("scroll", updateHeaderSurface);
   }, []);
 
-  useEffect(() => {
-    setIsMobileNavOpen(false);
-    setOpenMobileMenu(null);
-  }, [pathname]);
-
   function isItemActive(item: NavigationItem) {
     if (item.href === "/") return pathname === "/";
     return pathname.startsWith(item.href) || Boolean(item.children?.some((child) => pathname.startsWith(child.href)));
   }
 
   return (
-    <header className={`site-main-header ${pathname === "/" ? "desktop-home-sticky" : ""} relative z-[100] border-b border-black/10 bg-white transition-[box-shadow] duration-200 motion-reduce:transition-none ${isScrolled ? "shadow-lg xl:shadow-md" : ""}`}>
-      {/* Hamburger: header'ın doğrudan çocuğu, marka bloğunun hiyerarşisi dışında */}
-      <button
-        type="button"
-        className="absolute right-4 top-4 z-[70] grid size-11 place-items-center rounded-md text-zinc-900 transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 xl:hidden"
-        aria-expanded={isMobileNavOpen}
-        aria-controls="mobile-navigation"
-        aria-label="Menüyü aç veya kapat"
-        onClick={() => setIsMobileNavOpen((current) => !current)}
-      >
-        {isMobileNavOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-      </button>
+    <header className={`site-main-header relative z-[100] border-b border-black/10 bg-white transition-[box-shadow] duration-200 motion-reduce:transition-none ${isScrolled ? "shadow-lg xl:shadow-md" : ""}`}>
+      <div className="bg-[var(--color-accent)] text-white">
+        <div className="mx-auto flex min-h-11 w-[min(100%-2rem,75rem)] items-center justify-between gap-4 xl:w-[min(100%-3rem,84rem)]">
+          <a
+            href={`mailto:${email}`}
+            className="flex min-w-0 items-center gap-2 rounded-sm py-1 text-xs font-medium transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-sm"
+          >
+            <Mail className="size-4 shrink-0" aria-hidden="true" />
+            <span className="truncate">{email}</span>
+          </a>
+          <div className="flex shrink-0 items-center gap-1" aria-label="Sosyal medya bağlantıları">
+            {socialLinks.map(({ label, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="rounded p-1.5 transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white"
+              >
+                <Icon className="size-[18px]" />
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
 
-      <div className="mx-auto flex w-[min(100%-2rem,75rem)] flex-col items-center justify-center gap-4 py-7 xl:w-[min(100%-3rem,84rem)] xl:flex-row xl:justify-between xl:gap-6 xl:py-5">
-        {/* Mobilde logo üstte, isim altında ve ortalı; xl'den itibaren yan yana ve sola yaslı */}
+      <div className="relative mx-auto flex min-h-24 w-[min(100%-2rem,75rem)] items-center justify-between gap-3 py-2 xl:min-h-0 xl:w-[min(100%-3rem,84rem)] xl:gap-12 xl:py-0">
         <Link
           href="/"
-          className="flex min-w-0 max-w-[calc(100%-6rem)] flex-col items-center gap-4 rounded-sm text-center focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 xl:max-w-none xl:shrink-0 xl:flex-row xl:items-center xl:gap-4 xl:text-left"
+          onClick={() => {
+            setIsMobileNavOpen(false);
+            setOpenMobileMenu(null);
+          }}
+          className="flex min-w-0 max-w-[calc(100%-3.5rem)] items-center gap-2.5 rounded-sm text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 sm:gap-3 xl:max-w-none xl:shrink-0"
           aria-label={`${associationName} ana sayfa`}
         >
           <Image
-            src="/mezunderlogo.jpg"
+            src={logoUrl}
             alt=""
             width={96}
             height={96}
             priority
-            className="h-28 w-auto shrink-0 object-contain xl:h-[6.5rem]"
+            className="size-[4.5rem] shrink-0 rounded-full bg-white object-contain ring-2 ring-white/90 sm:size-20 xl:size-[5.5rem]"
           />
-          <span className="min-w-0 text-xs font-semibold leading-relaxed text-zinc-800 text-balance sm:text-sm xl:max-w-[14rem] xl:leading-snug">
+          <span className="min-w-0 max-w-[16rem] text-[13px] font-black leading-snug text-zinc-900 text-balance sm:max-w-[28rem] sm:text-[15px] xl:max-w-[22rem] xl:text-[15px]">
             {associationName}
           </span>
         </Link>
 
-        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-7 xl:flex 2xl:gap-10" aria-label="Ana menü">
+        <nav className="hidden min-w-0 items-center justify-end gap-6 xl:flex xl:flex-none 2xl:gap-9" aria-label="Ana menü">
           {navigation.map((item, index) => {
             const active = isItemActive(item);
             const menuId = `desktop-submenu-${index}`;
@@ -91,7 +102,7 @@ export function Header() {
             if (item.children) {
               return (
                 <div
-                  className="relative h-20"
+                  className="relative h-24"
                   key={item.href}
                   onMouseEnter={() => setOpenDesktopMenu(item.href)}
                   onMouseLeave={() => setOpenDesktopMenu(null)}
@@ -141,20 +152,16 @@ export function Header() {
           })}
         </nav>
 
-        <div className="hidden shrink-0 items-center gap-3 xl:flex">
-          {socialLinks.map(({ label, href, Icon }) => (
-            <a
-              key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={label}
-              className="rounded-md p-2 text-zinc-900 transition-colors hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
-            >
-              <Icon className="size-6" />
-            </a>
-          ))}
-        </div>
+        <button
+          type="button"
+          className="grid size-11 shrink-0 place-items-center rounded-md text-zinc-900 transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 xl:hidden"
+          aria-expanded={isMobileNavOpen}
+          aria-controls="mobile-navigation"
+          aria-label="Menüyü aç veya kapat"
+          onClick={() => setIsMobileNavOpen((current) => !current)}
+        >
+          {isMobileNavOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+        </button>
       </div>
 
       <div
@@ -165,7 +172,7 @@ export function Header() {
           <nav id="mobile-navigation" className="mobile-navigation-panel flex max-h-[70dvh] flex-col overflow-y-auto border-t border-zinc-300 px-6 py-4 text-center text-zinc-900 shadow-inner" aria-label="Mobil menü">
             {navigation.map((item, index) => {
               if (!item.children) {
-                return <Link className="px-2 py-4 text-base font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600" href={item.href} key={item.href}>{item.label}</Link>;
+                return <Link className="px-2 py-4 text-base font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600" href={item.href} key={item.href} onClick={() => setIsMobileNavOpen(false)}>{item.label}</Link>;
               }
 
               const menuId = `mobile-submenu-${index}`;
@@ -199,6 +206,10 @@ export function Header() {
                             className="block border-b border-zinc-100 px-3 py-3.5 text-sm font-medium text-gray-900 transition-colors last:border-b-0 hover:bg-zinc-50 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600"
                             href={child.href}
                             key={child.href}
+                            onClick={() => {
+                              setIsMobileNavOpen(false);
+                              setOpenMobileMenu(null);
+                            }}
                           >
                             {child.label}
                           </Link>

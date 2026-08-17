@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { GalleryShowcase, type GalleryShowcaseItem } from "@/components/home/gallery-showcase";
 import { PageHero } from "@/components/shared/page-hero";
 import { formatTurkishDate } from "@/lib/supabase/client";
 import { getGalleries } from "@/lib/supabase/queries";
@@ -17,9 +17,25 @@ export default async function GalleryPage() {
     loadError = error instanceof Error ? error.message : "Galeri yüklenemedi.";
   }
 
+  const items: GalleryShowcaseItem[] = galleries.map((album) => ({
+    id: album.id,
+    title: album.title,
+    href: `/galeri/${album.slug}`,
+    imageUrl: album.cover_image_url,
+    date: formatTurkishDate(album.date),
+    dateTime: album.date ?? undefined,
+  }));
+
   return (
     <>
-      <PageHero title="Galeri" description="Buluşmalarımızdan ve okul yıllarından kareler." />
+      <PageHero
+        eyebrow="Anılarımızdan Seçkiler"
+        title="Galeri"
+        description="Etkinliklerimizden ve buluşmalarımızdan geriye kalan güzel anılar."
+        titleClassName="panel-title--compact"
+        descriptionClassName="panel-copy--compact"
+      />
+      {loadError || galleries.length === 0 ? (
       <section className="mx-auto w-[min(100%-2rem,75rem)] py-12 md:w-[min(100%-4rem,75rem)] md:py-16" aria-label="Fotoğraf albümleri">
         {loadError ? (
           <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-slate-600">
@@ -29,28 +45,15 @@ export default async function GalleryPage() {
           <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-slate-600">
             Henüz albüm eklenmemiş.
           </p>
-        ) : (
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {galleries.map((album) => (
-              <Link
-                key={album.id}
-                href={`/galeri/${album.slug}`}
-                className="group flex flex-col rounded-lg outline-none transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
-              >
-                <div
-                  className="aspect-video overflow-hidden rounded-lg bg-slate-200 bg-cover bg-center transition-opacity group-hover:opacity-90"
-                  style={album.cover_image_url ? { backgroundImage: `url(${album.cover_image_url})` } : undefined}
-                  aria-hidden="true"
-                />
-                <h2 className="mt-4 text-lg font-bold text-zinc-950 group-hover:text-red-600">{album.title}</h2>
-                <p className="mt-1 text-sm text-slate-500">
-                  <time dateTime={album.date ?? undefined}>{formatTurkishDate(album.date) || "Tarih yok"}</time>
-                </p>
-              </Link>
-            ))}
-          </div>
-        )}
+        ) : null}
       </section>
+      ) : (
+        <GalleryShowcase
+          items={items}
+          showAllLink={false}
+          showHeader={false}
+        />
+      )}
     </>
   );
 }

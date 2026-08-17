@@ -19,7 +19,13 @@ export default async function AnnouncementsPage() {
 
   return (
     <>
-      <PageHero title="Duyurular" description="Dernekten güncel haber ve bilgilendirmeler." />
+      <PageHero
+        eyebrow="Güncel Gelişmeler"
+        title="Duyurular"
+        description="Derneğimizden haberler, gelişmeler ve önemli bilgilendirmeler."
+        titleClassName="panel-title--compact"
+        descriptionClassName="panel-copy--compact"
+      />
       <section className="container-site section-space" aria-label="Duyuru listesi">
         {loadError ? (
           <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-slate-600">

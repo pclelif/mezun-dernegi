@@ -40,7 +40,7 @@ export function EventCard({
           <CalendarDays className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
           <time dateTime={dateTime} className="[overflow-wrap:anywhere]">{date}</time>
         </span>
-        <span className="flex min-w-0 items-start gap-2">
+        <span className="flex min-w-0 items-start gap-2 sm:justify-end">
           <Clock3 className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
           <span className="[overflow-wrap:anywhere]">{time}</span>
         </span>
@@ -63,8 +63,8 @@ export function EventCard({
         aria-label={`${title} etkinliğinin detaylarını görüntüle`}
         className="mt-auto flex min-h-11 items-center gap-2 self-start rounded-sm pt-5 text-sm font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
       >
-        Etkinlik detayı
-        <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
+        Detayları incele
+        <ArrowRight className="size-4 shrink-0 text-zinc-900" aria-hidden="true" />
       </Link>
     </Card>
   );

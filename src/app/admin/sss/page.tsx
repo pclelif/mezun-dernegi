@@ -5,6 +5,12 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { createClient, type DbFaq } from "@/lib/supabase/client";
 
+const categoryLabels: Record<DbFaq["category"], string> = {
+  general: "Genel",
+  membership: "Üyelik",
+  dues: "Aidat ve Bağış",
+};
+
 export default function AdminFaqsPage() {
   const [items, setItems] = useState<DbFaq[]>([]);
   const [loading, setLoading] = useState(true);
@@ -26,7 +32,7 @@ export default function AdminFaqsPage() {
       if (queryError) throw queryError;
       setItems((data ?? []) as DbFaq[]);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "S.S.S. kayıtları yüklenemedi.");
+      setError(err instanceof Error ? err.message : "Sorular yüklenemedi.");
       setItems([]);
     } finally {
       setLoading(false);
@@ -79,7 +85,7 @@ export default function AdminFaqsPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-950">S.S.S. Yönetimi</h1>
+          <h1 className="text-2xl font-bold text-zinc-950">Sıkça Sorulanlar</h1>
           <p className="mt-1 text-sm text-slate-600">
             Sıkça sorulan soruları listeleyin, ekleyin veya düzenleyin.
           </p>
@@ -120,6 +126,7 @@ export default function AdminFaqsPage() {
               <thead className="border-b border-zinc-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
                 <tr>
                   <th className="px-4 py-3 font-semibold">Sıra</th>
+                  <th className="px-4 py-3 font-semibold">Bölüm</th>
                   <th className="px-4 py-3 font-semibold">Soru</th>
                   <th className="px-4 py-3 font-semibold">Cevap</th>
                   <th className="px-4 py-3 font-semibold">İşlemler</th>
@@ -129,6 +136,9 @@ export default function AdminFaqsPage() {
                 {items.map((item) => (
                   <tr key={item.id} className="border-b border-zinc-100 last:border-0">
                     <td className="px-4 py-3 text-slate-600">{item.display_order}</td>
+                    <td className="whitespace-nowrap px-4 py-3 text-slate-600">
+                      {categoryLabels[item.category ?? "general"]}
+                    </td>
                     <td className="max-w-xs px-4 py-3 font-medium text-zinc-900">
                       {item.question}
                     </td>

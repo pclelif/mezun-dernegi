@@ -9,7 +9,7 @@ export const dynamic = "force-dynamic";
 export default async function FAQPage() {
   let faqs: Awaited<ReturnType<typeof getFaqs>> = [];
   try {
-    faqs = await getFaqs();
+    faqs = await getFaqs("general");
   } catch {
     faqs = [];
   }
@@ -22,9 +22,15 @@ export default async function FAQPage() {
 
   return (
     <>
-      <PageHero title="Sıkça Sorulan Sorular" description="Üyelik ve dernek çalışmaları hakkında merak edilenler." />
+      <PageHero
+        eyebrow="Merak Edilenler"
+        title="Sıkça Sorulan Sorular"
+        description="Dernek hakkında genel soruların kısa ve net yanıtları."
+        titleClassName="panel-title--compact"
+        descriptionClassName="panel-copy--compact"
+      />
       <section className="container-site section-space">
-        <div className="max-w-3xl">
+        <div className="w-full">
           {items.length === 0 ? (
             <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-slate-600">
               SSS içerikleri henüz eklenmemiş.

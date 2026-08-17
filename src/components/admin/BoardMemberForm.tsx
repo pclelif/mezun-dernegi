@@ -130,7 +130,6 @@ export function BoardMemberForm({ initial }: BoardMemberFormProps) {
         </div>
 
         <ImageUploader value={images} onChange={setImages} label="Üye fotoğrafı" />
-
         {error ? (
           <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
         ) : null}

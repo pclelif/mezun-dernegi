@@ -49,43 +49,44 @@ export function CookieBanner() {
   }
 
   const linkClass =
-    "font-semibold text-white underline underline-offset-4 transition-colors hover:text-red-300";
+    "font-semibold text-[#ec1c24] underline underline-offset-4 transition-colors hover:text-red-700";
 
   return (
     <div
       role="dialog"
       aria-live="polite"
       aria-label="Çerez ve KVKK onay bildirimi"
-      className="animate-fade-in-up fixed bottom-0 left-0 right-0 z-[110] w-full border-t border-white/10 bg-zinc-900 p-4 text-white shadow-2xl md:bottom-6 md:right-6 md:left-auto md:w-[min(100%-2rem,26rem)] md:rounded-lg md:border md:border-white/10"
+      className="animate-fade-in-up fixed inset-x-0 bottom-0 z-[110] w-full border-t border-zinc-200 bg-white px-4 py-3 text-zinc-950 shadow-[0_-8px_24px_rgba(0,0,0,0.10)]"
     >
-      <p className="text-sm leading-6 text-zinc-200">
-        Sitemizde, kullanıcı deneyimini geliştirmek ve hizmetlerimizden en iyi şekilde
-        faydalanabilmeniz için çerezler kullanılmaktadır. Detaylı bilgi için{" "}
-        <Link href="/cerez-politikasi" className={linkClass}>
-          Çerez Politikası
-        </Link>{" "}
-        ve{" "}
-        <Link href="/kvkk" className={linkClass}>
-          KVKK Aydınlatma Metni
-        </Link>{" "}
-        sayfalarımızı inceleyebilirsiniz.
-      </p>
+      <div className="mx-auto flex max-w-7xl flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-6">
+        <p className="text-xs leading-5 text-zinc-700">
+          Sitemizde çerezler kullanılmaktadır. Tercihinizi belirleyebilir; ayrıntılar için{" "}
+          <Link href="/cerez-politikasi" className={linkClass}>
+            Çerez Politikası
+          </Link>{" "}
+          ve{" "}
+          <Link href="/kvkk" className={linkClass}>
+            KVKK Aydınlatma Metni
+          </Link>{" "}
+          sayfalarımızı inceleyebilirsiniz.
+        </p>
 
-      <div className="mt-4 flex flex-wrap gap-2">
-        <button
-          type="button"
-          onClick={() => saveConsent("accepted")}
-          className="inline-flex min-h-10 flex-1 items-center justify-center rounded-md bg-[#ec1c24] px-4 text-sm font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:flex-none"
-        >
-          Kabul Et
-        </button>
-        <button
-          type="button"
-          onClick={() => saveConsent("rejected")}
-          className="inline-flex min-h-10 flex-1 items-center justify-center rounded-md border border-white/20 bg-transparent px-4 text-sm font-semibold text-zinc-200 transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:flex-none"
-        >
-          Reddet
-        </button>
+        <div className="flex w-full shrink-0 gap-2 sm:w-auto">
+          <button
+            type="button"
+            onClick={() => saveConsent("accepted")}
+            className="inline-flex min-h-9 flex-1 items-center justify-center rounded-md bg-[#ec1c24] px-4 text-xs font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-none"
+          >
+            Kabul Et
+          </button>
+          <button
+            type="button"
+            onClick={() => saveConsent("rejected")}
+            className="inline-flex min-h-9 flex-1 items-center justify-center rounded-md border border-zinc-300 bg-white px-4 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-none"
+          >
+            Reddet
+          </button>
+        </div>
       </div>
     </div>
   );

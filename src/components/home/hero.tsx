@@ -2,21 +2,32 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { associationName } from "@/config/site";
 
-export function HomeHero() {
+export function HomeHero({ title, description, imageUrl }: { title: string; description: string; imageUrl?: string }) {
   const pathname = usePathname();
 
   return (
-    <section className="overflow-hidden bg-slate-50 px-4 py-20 md:py-28">
+    <section className="relative isolate overflow-hidden bg-slate-200 px-4 py-20 md:py-28">
+      {imageUrl ? (
+        <>
+          <div
+            className="absolute inset-0 -z-20 bg-cover bg-center"
+            style={{ backgroundImage: `url(${imageUrl})` }}
+            aria-hidden="true"
+          />
+          <div
+            className="absolute inset-0 -z-10 bg-gradient-to-r from-white/90 via-white/75 to-white/90"
+            aria-hidden="true"
+          />
+        </>
+      ) : null}
       {/* key, rotalar arasında dönüldüğünde React'i remount'a zorlar; CSS animasyonu baştan oynar. */}
       <div key={pathname} className="mx-auto flex max-w-4xl flex-col items-center text-center">
         <h1 className="animate-fade-in-up text-balance text-2xl font-bold tracking-tight text-zinc-950 sm:text-3xl md:text-4xl lg:text-5xl">
-          {associationName}
+          {title}
         </h1>
-        <p className="animate-fade-in-up animation-delay-150 mt-5 max-w-2xl text-base leading-7 text-slate-600 md:text-lg md:leading-8">
-          Bir okul. Binlerce hikâye. Tek bir aile. Geçmişimizin değerlerini koruyor, geleceğe yönelik
-          yeni adımlar atıyoruz.
+        <p className="animate-fade-in-up animation-delay-150 mt-5 max-w-3xl text-center text-base leading-7 text-slate-600 md:text-lg md:leading-8">
+          {description.split("\n").map((line) => <span key={line} className="block">{line}</span>)}
         </p>
         <div className="animate-fade-in-up animation-delay-300 mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link

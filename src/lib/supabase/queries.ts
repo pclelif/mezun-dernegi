@@ -1,4 +1,4 @@
-import { formatTurkishDate, type DbAnnouncement, type DbEvent, type DbGallery } from "@/lib/supabase/client";
+import { formatTurkishDate, type DbAnnouncement, type DbEvent, type DbFaq, type DbGallery } from "@/lib/supabase/client";
 import { createServerAnonClient } from "@/lib/supabase/server";
 
 export async function getEvents(limit?: number) {
@@ -65,11 +65,26 @@ export async function getBoardMembers() {
   return data ?? [];
 }
 
-export async function getFaqs() {
+export async function getFaqs(category?: DbFaq["category"]) {
   const supabase = createServerAnonClient();
-  const { data, error } = await supabase.from("faqs").select("*").order("display_order", { ascending: true });
+  let query = supabase.from("faqs").select("*").order("display_order", { ascending: true });
+  if (category) query = query.eq("category", category);
+  let { data, error } = await query;
+
+  if (error && category) {
+    const fallback = await supabase.from("faqs").select("*").order("display_order", { ascending: true });
+    data = fallback.data;
+    error = fallback.error;
+  }
+
   if (error) throw error;
-  return data ?? [];
+  return (data ?? []).map((faq) => ({ ...faq, category: faq.category ?? "general" })) as DbFaq[];
+}
+
+export async function getSiteContent<T extends Record<string, string>>(section: string, defaults: T): Promise<T> {
+  const { data, error } = await createServerAnonClient().from("site_content").select("content").eq("section", section).maybeSingle();
+  if (error) return defaults;
+  return { ...defaults, ...((data?.content as Partial<T> | null) ?? {}) };
 }
 
 export function mapEventToCardProps(event: DbEvent) {

@@ -32,6 +32,7 @@ export type DbEvent = {
   location: string | null;
   status: string | null;
   image_url: string | null;
+  is_published?: boolean;
   created_at: string;
 };
 
@@ -42,6 +43,7 @@ export type DbAnnouncement = {
   content: string | null;
   date: string | null;
   image_url: string | null;
+  is_published?: boolean;
   created_at: string;
 };
 
@@ -58,6 +60,7 @@ export type DbGalleryImage = {
   id: string;
   gallery_id: string;
   image_url: string;
+  display_order: number;
   created_at: string;
 };
 
@@ -67,6 +70,7 @@ export type DbBoardMember = {
   role: string | null;
   board_type: "management" | "audit";
   image_url: string | null;
+  bio?: string | null;
   display_order: number;
   created_at: string;
 };
@@ -75,6 +79,7 @@ export type DbFaq = {
   id: string;
   question: string;
   answer: string;
+  category: "general" | "membership" | "dues";
   display_order: number;
   created_at: string;
 };

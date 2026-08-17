@@ -1,6 +1,6 @@
 "use client";
 
-import { LoaderCircle, Plus, Trash2 } from "lucide-react";
+import { LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { createClient, formatTurkishDate, type DbGallery } from "@/lib/supabase/client";
@@ -106,15 +106,15 @@ export default function AdminGalleryPage() {
               <div className="p-4">
                 <h2 className="font-bold text-zinc-950">{item.title}</h2>
                 <p className="mt-1 text-sm text-slate-500">{formatTurkishDate(item.date) || "Tarih yok"}</p>
-                <button
+                <div className="mt-4 flex gap-2"><Link href={`/admin/galeri/${item.id}`} className="inline-flex items-center gap-1.5 rounded-md border border-zinc-300 px-2.5 py-1.5 text-xs font-semibold"><Pencil className="size-3.5" />Albümü Yönet</Link><button
                   type="button"
                   onClick={() => void handleDelete(item.id, item.title)}
                   disabled={deletingId === item.id}
-                  className="mt-4 inline-flex items-center gap-1.5 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:opacity-50"
+                  className="inline-flex items-center gap-1.5 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:opacity-50"
                 >
                   <Trash2 className="size-3.5" aria-hidden="true" />
                   {deletingId === item.id ? "Siliniyor…" : "Sil"}
-                </button>
+                </button></div>
               </div>
             </article>
           ))}

@@ -17,23 +17,25 @@ export default async function AuditBoardPage() {
 
   return (
     <>
-      <PageHero title="Denetim Kurulu" description="Derneğimizin denetim çalışmalarını yürüten kurul üyeleri." />
-      <section className="container-site section-space grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-label="Denetim kurulu üyeleri">
-        {members.length === 0 ? (
-          <p className="col-span-full rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-slate-600">
-            Denetim kurulu üyeleri henüz eklenmemiş.
-          </p>
-        ) : (
-          members.map((member) => (
+      <PageHero
+        eyebrow="Kurullarımız"
+        title="Denetim Kurulu"
+        description="Derneğimizin denetim çalışmalarını yürüten kurul üyeleri."
+        titleClassName="panel-title--compact"
+        descriptionClassName="panel-copy--compact"
+      />
+      {members.length > 0 ? (
+        <section className="container-site section-space grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" aria-label="Denetim kurulu üyeleri">
+          {members.map((member) => (
             <BoardMemberCard
               key={member.id}
               name={member.name}
               role={member.role ?? ""}
               image={member.image_url ?? undefined}
             />
-          ))
-        )}
-      </section>
+          ))}
+        </section>
+      ) : null}
     </>
   );
 }
