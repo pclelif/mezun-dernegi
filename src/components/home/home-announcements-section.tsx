@@ -34,7 +34,7 @@ export async function HomeAnnouncementsSection() {
               </div>
             </div>
           </div>
-          <Link className={textLinkClass} href="/duyurular">
+          <Link className={`${textLinkClass} -translate-x-[0.5px] -translate-y-[1.5px]`} href="/duyurular">
             Tüm Duyurular <ArrowRight className="size-4 text-zinc-900" aria-hidden="true" />
           </Link>
         </div>

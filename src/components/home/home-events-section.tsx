@@ -33,8 +33,8 @@ export async function HomeEventsSection() {
             </div>
           </div>
         </div>
-        <Link className={textLinkClass} href="/etkinlikler">
-          Tüm Etkinlikler <ArrowRight className="size-4 text-zinc-900" aria-hidden="true" />
+        <Link className={`${textLinkClass} -translate-x-[0.5px] -translate-y-[1.5px]`} href="/etkinlikler">
+          Etkinlikler <ArrowRight className="size-4 text-zinc-900" aria-hidden="true" />
         </Link>
       </div>
 
