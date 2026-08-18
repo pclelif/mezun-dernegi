@@ -5,7 +5,85 @@ import { useId, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
+const MAX_RAW_FILE_SIZE = 50 * 1024 * 1024; // 50 MB before automatic client compression
+
+/**
+ * Compresses an image file in the browser using HTML Canvas before upload.
+ * Resizes max dimension to 1920px (full HD) and compresses to JPEG ~85% quality.
+ */
+async function compressImageFile(file: File, maxDimension = 1920, quality = 0.85): Promise<File> {
+  if (!file.type.startsWith("image/") || file.type === "image/svg+xml") {
+    return file;
+  }
+
+  return new Promise((resolve) => {
+    const img = new Image();
+    const objectUrl = URL.createObjectURL(file);
+
+    img.onload = () => {
+      URL.revokeObjectURL(objectUrl);
+
+      let { width, height } = img;
+
+      if (width > maxDimension || height > maxDimension) {
+        if (width > height) {
+          height = Math.round((height * maxDimension) / width);
+          width = maxDimension;
+        } else {
+          width = Math.round((width * maxDimension) / height);
+          height = maxDimension;
+        }
+      }
+
+      const canvas = document.createElement("canvas");
+      canvas.width = width;
+      canvas.height = height;
+
+      const ctx = canvas.getContext("2d");
+      if (!ctx) {
+        resolve(file);
+        return;
+      }
+
+      // Draw white background behind transparent PNGs when converting to JPEG
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, width, height);
+      ctx.drawImage(img, 0, 0, width, height);
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            resolve(file);
+            return;
+          }
+
+          // If blob is larger than original without dimension reduction, keep original
+          if (blob.size >= file.size && width === img.width && height === img.height) {
+            resolve(file);
+            return;
+          }
+
+          const newFileName = file.name.replace(/\.[^/.]+$/, ".jpg");
+          const compressedFile = new File([blob], newFileName, {
+            type: "image/jpeg",
+            lastModified: Date.now(),
+          });
+
+          resolve(compressedFile);
+        },
+        "image/jpeg",
+        quality
+      );
+    };
+
+    img.onerror = () => {
+      URL.revokeObjectURL(objectUrl);
+      resolve(file);
+    };
+
+    img.src = objectUrl;
+  });
+}
 
 type ImageUploaderProps = {
   value: string[];
@@ -57,18 +135,24 @@ export function ImageUploader({
       return;
     }
 
-    const tooLarge = selected.find((file) => file.size > MAX_FILE_SIZE);
+    const tooLarge = selected.find((file) => file.size > MAX_RAW_FILE_SIZE);
     if (tooLarge) {
-      setError(`"${tooLarge.name}" 5 MB sınırını aşıyor.`);
+      setError(`"${tooLarge.name}" 50 MB sınırını aşıyor.`);
       return;
     }
 
-    const filesToUpload = multiple ? selected : selected.slice(0, 1);
-    const temporaryPreviews = filesToUpload.map((file) => URL.createObjectURL(file));
-    setPreviewUrls(temporaryPreviews);
     setUploading(true);
 
     try {
+      // Auto-compress photos in browser before upload
+      const compressedFiles = await Promise.all(
+        selected.map((file) => compressImageFile(file, 1920, 0.85))
+      );
+
+      const filesToUpload = multiple ? compressedFiles : compressedFiles.slice(0, 1);
+      const temporaryPreviews = filesToUpload.map((file) => URL.createObjectURL(file));
+      setPreviewUrls(temporaryPreviews);
+
       const supabase = createClient();
       const {
         data: { user },
@@ -94,8 +178,10 @@ export function ImageUploader({
     } catch (err) {
       setError(err instanceof Error ? err.message : "Görsel yüklenemedi.");
     } finally {
-      temporaryPreviews.forEach(URL.revokeObjectURL);
-      setPreviewUrls([]);
+      setPreviewUrls((current) => {
+        current.forEach(URL.revokeObjectURL);
+        return [];
+      });
       setUploading(false);
     }
   }

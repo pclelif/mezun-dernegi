@@ -32,11 +32,13 @@ const navItems: { href: string; label: string; icon: LucideIcon }[] = [
 export default function AdminLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [prevPathname, setPrevPathname] = useState(pathname);
 
-  // Close mobile drawer when pathname changes
-  useEffect(() => {
+  // Close mobile menu when pathname changes
+  if (prevPathname !== pathname) {
+    setPrevPathname(pathname);
     setMobileMenuOpen(false);
-  }, [pathname]);
+  }
 
   if (pathname === "/admin/login") {
     return <>{children}</>;
@@ -153,7 +155,9 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
         {/* Main Content Area */}
         <main className="min-w-0 flex-1 px-3.5 py-4 sm:px-6 lg:px-8 lg:py-8">
-          {children}
+          <div className="mx-auto w-full max-w-7xl">
+            {children}
+          </div>
         </main>
       </div>
     </div>

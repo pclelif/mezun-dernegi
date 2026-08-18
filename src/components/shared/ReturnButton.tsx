@@ -11,23 +11,17 @@ export function ReturnButton({
   defaultHref: string;
   defaultLabel: string;
 }) {
-  const [href, setHref] = useState(defaultHref);
-  const [label, setLabel] = useState(defaultLabel);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    // Check search params first (e.g. ?from=home)
+  const [buttonState] = useState(() => {
+    if (typeof window === "undefined") {
+      return { href: defaultHref, label: defaultLabel };
+    }
     try {
       const params = new URLSearchParams(window.location.search);
       if (params.get("from") === "home") {
-        setHref("/");
-        setLabel("Ana Sayfaya Dön");
-        return;
+        return { href: "/", label: "Ana Sayfaya Dön" };
       }
     } catch {}
 
-    // Check document.referrer fallback
     if (document.referrer) {
       try {
         const refUrl = new URL(document.referrer);
@@ -35,21 +29,22 @@ export function ReturnButton({
 
         if (refUrl.origin === currentUrl.origin) {
           if (refUrl.pathname === "/" || refUrl.pathname === "") {
-            setHref("/");
-            setLabel("Ana Sayfaya Dön");
+            return { href: "/", label: "Ana Sayfaya Dön" };
           }
         }
       } catch {}
     }
-  }, [defaultHref, defaultLabel]);
+
+    return { href: defaultHref, label: defaultLabel };
+  });
 
   return (
     <Link
-      href={href}
+      href={buttonState.href}
       className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 transition hover:bg-slate-50 hover:text-zinc-950"
     >
       <Undo2 className="size-3.5 text-zinc-500" aria-hidden="true" />
-      {label}
+      {buttonState.label}
     </Link>
   );
 }

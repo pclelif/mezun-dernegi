@@ -24,19 +24,18 @@ export default function AdminEventsPage() {
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [deleteConfirmItem, setDeleteConfirmItem] = useState<{ id: string; title: string } | null>(null);
-  const [sortBy, setSortBy] = useState<string>("created-desc");
+  const [sortBy, setSortBy] = useState<string>(() => {
+    if (typeof window === "undefined") return "created-desc";
+    try {
+      return localStorage.getItem("admin_events_sort") || "created-desc";
+    } catch {
+      return "created-desc";
+    }
+  });
 
   // Drag and drop state
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
-
-  // Load saved sort preference from localStorage on mount
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("admin_events_sort");
-      if (saved) setSortBy(saved);
-    } catch {}
-  }, []);
 
   const sortItems = useCallback((dataList: DbEvent[], key: string) => {
     const list = [...dataList];

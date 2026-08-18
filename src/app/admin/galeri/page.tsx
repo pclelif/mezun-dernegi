@@ -27,19 +27,14 @@ export default function AdminGalleryPage() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<string>("created-desc");
-
-  // Drag and drop state
-  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
-
-  // Load saved sort preference from localStorage on mount
-  useEffect(() => {
+  const [sortBy, setSortBy] = useState<string>(() => {
+    if (typeof window === "undefined") return "created-desc";
     try {
-      const saved = localStorage.getItem("admin_gallery_sort");
-      if (saved) setSortBy(saved);
-    } catch {}
-  }, []);
+      return localStorage.getItem("admin_gallery_sort") || "created-desc";
+    } catch {
+      return "created-desc";
+    }
+  });
 
   const sortPhotos = useCallback((list: DbGalleryImage[], key: string) => {
     const sorted = [...list];
