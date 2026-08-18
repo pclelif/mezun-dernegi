@@ -1,8 +1,9 @@
-import { ArrowLeft, CalendarDays, Clock3, MapPin } from "lucide-react";
+import { ArrowRight, CalendarDays, Clock3, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { ReturnButton } from "@/components/shared/ReturnButton";
 import { formatTurkishDate } from "@/lib/supabase/client";
 import { getEventBySlug } from "@/lib/supabase/queries";
 
@@ -50,13 +51,7 @@ export default async function EventDetailPage({ params }: PageProps) {
             </span>
           </div>
 
-          <Link
-            href="/etkinlikler"
-            className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 transition hover:bg-slate-50 hover:text-zinc-950"
-          >
-            <ArrowLeft className="size-3.5" aria-hidden="true" />
-            Etkinliklere Dön
-          </Link>
+          <ReturnButton defaultHref="/etkinlikler" defaultLabel="Etkinliklere Dön" />
         </div>
 
         {/* Card Body */}
@@ -105,13 +100,14 @@ export default async function EventDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Footer Actions */}
-        <div className="flex items-center justify-between border-t border-zinc-100 bg-slate-50/50 px-6 py-4">
+        {/* Footer Actions - Right Aligned with Arrow on the Right */}
+        <div className="flex items-center justify-end border-t border-zinc-100 bg-slate-50/50 px-6 py-4">
           <Link
             href="/etkinlikler"
-            className="text-xs font-bold text-[#ec1c24] hover:underline"
+            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#ec1c24] hover:underline"
           >
-            ← Tüm Etkinlikleri İncele
+            Tüm Etkinlikleri İncele
+            <ArrowRight className="size-3.5 text-[#ec1c24] -translate-y-[0.5px]" aria-hidden="true" />
           </Link>
         </div>
       </div>
