@@ -12,15 +12,21 @@ export const viewport: Viewport = {
 };
 
 export async function generateMetadata(): Promise<Metadata> {
-  const brand = await getSiteContent("marka", { logo_url: "/mezunderlogo.jpg", favicon_url: "/logo-dernek.svg" });
-  return { title: { default: associationName, template: `%s | ${associationName}` }, description: associationDescription, icons: { icon: brand.favicon_url, apple: brand.logo_url } };
+  const [brand, home] = await Promise.all([
+    getSiteContent("marka", { logo_url: "/mezunderlogo.jpg", favicon_url: "/logo-dernek.svg" }),
+    getSiteContent("ana-sayfa", { logo_url: "/mezunderlogo.jpg" }),
+  ]);
+  const logoUrl = home.logo_url || brand.logo_url || "/mezunderlogo.jpg";
+  return { title: { default: associationName, template: `%s | ${associationName}` }, description: associationDescription, icons: { icon: brand.favicon_url, apple: logoUrl } };
 }
 
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
-  const [brand, contact] = await Promise.all([
+  const [brand, contact, home] = await Promise.all([
     getSiteContent("marka", { logo_url: "/mezunderlogo.jpg", favicon_url: "/logo-dernek.svg" }),
     getSiteContent("iletisim", { address: "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420 Çankaya/Ankara", email: "kaaflmezunder@gmail.com", instagram_url: "https://www.instagram.com/kaaflmezunder", linkedin_url: "https://www.linkedin.com/company/ke%C3%A7i%C3%B6ren-vatansever-%C5%9Fehit-t%C3%BCmgeneral-aydo%C4%9Fan-ayd%C4%B1n-fen-lisesi-mezunlar-derne%C4%9Fi/" }),
+    getSiteContent("ana-sayfa", { logo_url: "/mezunderlogo.jpg" }),
   ]);
+  const logoUrl = home.logo_url || brand.logo_url || "/mezunderlogo.jpg";
   return (
     <html lang="tr" data-scroll-behavior="smooth" className="light" style={{ colorScheme: "only light" }}>
       <head>
@@ -31,7 +37,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)" />
       </head>
       <body className="bg-white text-black">
-        <SiteShell settings={{ logo_url: brand.logo_url, address: contact.address, email: contact.email, instagram_url: contact.instagram_url, linkedin_url: contact.linkedin_url }}>{children}</SiteShell>
+        <SiteShell settings={{ logo_url: logoUrl, address: contact.address, email: contact.email, instagram_url: contact.instagram_url, linkedin_url: contact.linkedin_url }}>{children}</SiteShell>
         <CookieBanner />
       </body>
     </html>

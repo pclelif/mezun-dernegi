@@ -34,7 +34,6 @@ const navItems: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/admin/icerik/aidat-bagis", label: "Aidat ve Bağış", icon: BadgeDollarSign },
   { href: "/admin/iletisim", label: "İletişim", icon: Contact },
   { href: "/admin/sss", label: "Sıkça Sorulanlar", icon: CircleHelp },
-  { href: "/admin/icerik/marka", label: "Logo", icon: Palette },
 ];
 
 export default function AdminLayout({ children }: { children: ReactNode }) {

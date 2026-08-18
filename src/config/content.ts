@@ -16,14 +16,15 @@ export type ContentSection = {
 export const contentSections = {
   "ana-sayfa": {
     title: "Ana Sayfa",
-    description: "Ana sayfanın üst bölümünde görünen başlık, açıklama ve görseli düzenleyin.",
+    description: "Site logosunu, hero arka plan görselini ve açıklama metnini buradan yönetin.",
     fields: [
-      { key: "hero_title", label: "Ana başlık" },
-      { key: "hero_description", label: "Ana açıklama", type: "textarea", rows: 3 },
-      { key: "hero_image_url", label: "Ana görsel", type: "image" },
+      { key: "logo_url", label: "Site logosu", type: "image", help: "Sitenin ve yönetim panelinin logosunu buradan yükleyin veya değiştirin." },
+      { key: "hero_image_url", label: "Arka plan görseli", type: "image", help: "Ana sayfa hero bölümündeki arka plan görselini buradan değiştirin." },
+      { key: "hero_description", label: "Açıklama metni", type: "textarea", rows: 3, help: "Ana sayfadaki hero tanıtım açıklama metnini buradan düzenleyin." },
     ],
     defaults: {
-      hero_title: "Kara Kuvvetleri Komutanlığı Aydoğan Aydın Fen Lisesi Mezunları Derneği",
+      logo_url: "/mezunderlogo.jpg",
+      hero_title: "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği",
       hero_description: "Bir okul. Binlerce hikâye. Tek bir aile.\nGeçmişimizin değerlerini koruyor, geleceğe yönelik yeni adımlar atıyoruz.",
       hero_image_url: "",
     },
