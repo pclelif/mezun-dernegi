@@ -24,15 +24,11 @@ import { LogoutButton } from "@/components/admin/LogoutButton";
 
 const navItems: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/admin", label: "Genel Bakış", icon: LayoutDashboard },
-  { href: "/admin/icerik/ana-sayfa", label: "Ana Sayfa", icon: Home },
-  { href: "/admin/icerik/hakkimizda", label: "Hakkımızda", icon: Building2 },
-  { href: "/admin/etkinlikler", label: "Etkinlikler", icon: CalendarDays },
   { href: "/admin/duyurular", label: "Duyurular", icon: Megaphone },
+  { href: "/admin/etkinlikler", label: "Etkinlikler", icon: CalendarDays },
   { href: "/admin/galeri", label: "Galeri", icon: Images },
   { href: "/admin/kurul", label: "Yönetim ve Denetim Kurulu", icon: UsersRound },
-  { href: "/admin/icerik/uyelik", label: "Üyelik Bilgileri", icon: UserRoundCheck },
-  { href: "/admin/icerik/aidat-bagis", label: "Aidat ve Bağış", icon: BadgeDollarSign },
-  { href: "/admin/iletisim", label: "İletişim", icon: Contact },
+  { href: "/admin/iletisim", label: "İletişim Formu", icon: Contact },
   { href: "/admin/sss", label: "Sıkça Sorulanlar", icon: CircleHelp },
 ];
 
