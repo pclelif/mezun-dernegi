@@ -64,7 +64,7 @@ export default async function EventDetailPage({ params }: PageProps) {
                 alt={`${event.title} etkinlik görseli`}
                 fill
                 sizes="(max-width: 640px) 100vw, 650px"
-                className="object-contain"
+                className="object-cover"
               />
             </div>
           ) : null}

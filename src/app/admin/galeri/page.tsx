@@ -36,6 +36,10 @@ export default function AdminGalleryPage() {
     }
   });
 
+  // Drag and drop state
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
   const sortPhotos = useCallback((list: DbGalleryImage[], key: string) => {
     const sorted = [...list];
     if (key === "created-desc") {

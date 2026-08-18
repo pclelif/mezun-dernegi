@@ -61,7 +61,7 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
                 alt={`${announcement.title} duyuru görseli`}
                 fill
                 sizes="(max-width: 640px) 100vw, 650px"
-                className="object-contain"
+                className="object-cover"
               />
             </div>
           ) : null}
