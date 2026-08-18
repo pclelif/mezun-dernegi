@@ -289,7 +289,7 @@ export default function AdminContactPage() {
 
                   <div className="mt-1.5 flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-slate-600">
                     <span className="font-semibold text-zinc-900">{item.name}</span>
-                    <span className="text-slate-400 font-normal select-none">•</span>
+                    <span className="text-slate-500 font-normal select-none">·</span>
                     <a
                       href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(item.email)}`}
                       target="_blank"
@@ -300,7 +300,7 @@ export default function AdminContactPage() {
                     </a>
                     {item.phone && (
                       <>
-                        <span className="text-slate-400 font-normal select-none">•</span>
+                        <span className="text-slate-500 font-normal select-none">·</span>
                         <a
                           href={`tel:${item.phone.replace(/\s+/g, "")}`}
                           className="text-slate-600 hover:text-red-600 hover:underline"
@@ -309,7 +309,7 @@ export default function AdminContactPage() {
                         </a>
                       </>
                     )}
-                    <span className="text-slate-400 font-normal select-none">•</span>
+                    <span className="text-slate-500 font-normal select-none">·</span>
                     <span className="text-slate-400">{formatTurkishDate(item.created_at)}</span>
                   </div>
                 </div>
