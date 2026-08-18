@@ -43,22 +43,22 @@ export default async function AdminDashboardPage() {
   const notifications = recentMessages.data ?? [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-bold tracking-tight text-zinc-950">Genel Bakış</h1>
-        <p className="mt-1 text-sm text-slate-600">
+        <h1 className="text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl">Genel Bakış</h1>
+        <p className="mt-1 text-xs text-slate-600 sm:text-sm">
           Yönetim paneline hoş geldiniz. Bekleyen bildirimler, son eklenen içerikler ve güncel dernek istatistikleri burada görüntülenmektedir.
         </p>
       </div>
 
       {/* Üst Kısım: Bildirimler (Sol) ve Son Eklenenler (Sağ) */}
-      <div className="grid gap-5 lg:grid-cols-2">
+      <div className="grid gap-4 lg:grid-cols-2">
         {/* Sol: Bildirimler Panel */}
-        <section className="flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
+        <section className="flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-4 sm:p-5 shadow-sm min-w-0">
           <div>
-            <div className="flex items-center justify-between gap-3 border-b border-zinc-100 pb-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 pb-3">
               <div className="flex items-center gap-2">
-                <span className="grid size-8 place-items-center rounded-lg bg-red-50 text-red-600">
+                <span className="grid size-8 place-items-center rounded-lg bg-red-50 text-[#ec1c24]">
                   <Bell className="size-4" />
                 </span>
                 <h2 className="text-base font-bold text-zinc-950">Bildirimler</h2>
@@ -74,7 +74,7 @@ export default async function AdminDashboardPage() {
               )}
             </div>
 
-            <div className="mt-3.5 space-y-2.5">
+            <div className="mt-3 space-y-2">
               {notifications.length > 0 ? (
                 notifications.map((msg) => (
                   <Link
@@ -84,12 +84,12 @@ export default async function AdminDashboardPage() {
                       !msg.is_read ? "border-red-200 bg-red-50/20" : "border-zinc-100 bg-slate-50/40"
                     }`}
                   >
-                    <div className="flex items-start justify-between gap-2">
+                    <div className="flex items-start justify-between gap-2 min-w-0">
                       <div className="min-w-0 flex-1">
-                        <div className="flex items-center gap-2">
-                          <p className="truncate text-sm font-bold text-zinc-900">{msg.name}</p>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <p className="truncate text-xs font-bold text-zinc-900 sm:text-sm">{msg.name}</p>
                           {!msg.is_read ? (
-                            <span className="shrink-0 rounded bg-red-600 px-1.5 py-0.2 text-[10px] font-bold uppercase tracking-wider text-white">
+                            <span className="shrink-0 rounded bg-[#ec1c24] px-1.5 py-0.2 text-[10px] font-bold uppercase tracking-wider text-white">
                               Yeni
                             </span>
                           ) : null}
@@ -98,7 +98,7 @@ export default async function AdminDashboardPage() {
                           {msg.subject || "Konu belirtilmedi"}
                         </p>
                       </div>
-                      <span className="shrink-0 text-xs text-slate-400">
+                      <span className="shrink-0 text-[11px] text-slate-400">
                         {formatTurkishDate(msg.created_at)}
                       </span>
                     </div>
@@ -113,7 +113,7 @@ export default async function AdminDashboardPage() {
           <div className="mt-4 border-t border-zinc-100 pt-3">
             <Link
               href="/admin/iletisim"
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-red-600 hover:text-red-700 hover:underline"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#ec1c24] hover:underline"
             >
               Tüm İletişim Mesajlarını Görüntüle <ArrowRight className="size-3.5" />
             </Link>
@@ -121,25 +121,25 @@ export default async function AdminDashboardPage() {
         </section>
 
         {/* Sağ: Son Eklenenler Panel */}
-        <section className="flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
+        <section className="flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-4 sm:p-5 shadow-sm min-w-0">
           <div>
-            <div className="flex items-center justify-between gap-3 border-b border-zinc-100 pb-3">
+            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 pb-3">
               <h2 className="text-base font-bold text-zinc-950">Son Eklenenler</h2>
               <span className="text-xs font-medium text-slate-500">Son güncellemeler</span>
             </div>
 
-            <div className="mt-3.5 space-y-2.5">
+            <div className="mt-3 space-y-2">
               {latestContent.length > 0 ? (
                 latestContent.map((item) => (
                   <div
                     key={`${item.type}-${item.id}`}
-                    className="flex items-center justify-between gap-3 rounded-lg border border-zinc-100 bg-slate-50/40 p-3 text-sm"
+                    className="flex items-center justify-between gap-2 rounded-lg border border-zinc-100 bg-slate-50/40 p-2.5 sm:p-3 text-sm min-w-0"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-medium text-zinc-900">{item.title}</p>
-                      <p className="mt-0.5 text-xs text-slate-400">{formatTurkishDate(item.created_at)}</p>
+                      <p className="truncate font-medium text-zinc-900 text-xs sm:text-sm">{item.title}</p>
+                      <p className="mt-0.5 text-[11px] text-slate-400">{formatTurkishDate(item.created_at)}</p>
                     </div>
-                    <span className="shrink-0 rounded-md bg-zinc-200/70 px-2 py-1 text-xs font-semibold text-zinc-700">
+                    <span className="shrink-0 rounded-md bg-zinc-200/70 px-2 py-0.5 text-[11px] font-semibold text-zinc-700">
                       {item.type}
                     </span>
                   </div>
@@ -150,7 +150,7 @@ export default async function AdminDashboardPage() {
             </div>
           </div>
 
-          <div className="mt-4 border-t border-zinc-100 pt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs font-bold text-red-600">
+          <div className="mt-4 border-t border-zinc-100 pt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs font-bold text-[#ec1c24]">
             <Link href="/admin/duyurular" className="hover:underline">Duyuruları Yönet →</Link>
             <Link href="/admin/etkinlikler" className="hover:underline">Etkinlikleri Yönet →</Link>
           </div>
@@ -165,14 +165,14 @@ export default async function AdminDashboardPage() {
             <Link
               href={href}
               key={label}
-              className="group rounded-xl border border-zinc-200 bg-white p-3.5 sm:p-4.5 shadow-sm transition hover:border-red-200 hover:shadow-md"
+              className="group rounded-xl border border-zinc-200 bg-white p-3.5 sm:p-4.5 shadow-sm transition hover:border-red-200 hover:shadow-md min-w-0"
             >
               <div className="flex items-center justify-between gap-2 sm:gap-3">
-                <div>
-                  <p className="text-xs font-medium text-slate-500">{label}</p>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-xs font-medium text-slate-500">{label}</p>
                   <p className="mt-1 sm:mt-1.5 text-xl sm:text-2xl font-bold tracking-tight text-zinc-950">{value}</p>
                 </div>
-                <span className="grid size-8 sm:size-9 shrink-0 place-items-center rounded-lg bg-red-50 text-red-600 transition group-hover:bg-red-600 group-hover:text-white">
+                <span className="grid size-8 sm:size-9 shrink-0 place-items-center rounded-lg bg-red-50 text-[#ec1c24] transition group-hover:bg-[#ec1c24] group-hover:text-white">
                   <Icon className="size-4 sm:size-4.5" />
                 </span>
               </div>
