@@ -106,7 +106,6 @@ export default function AdminContactPage() {
   const totalCount = items.length;
   const unreadCount = items.filter((x) => !x.is_read).length;
   const readCount = totalCount - unreadCount;
-  const phoneCount = items.filter((x) => x.phone && x.phone.trim() !== "").length;
 
   // Filtered & Sorted items
   const filteredItems = useMemo(() => {
@@ -154,7 +153,7 @@ export default function AdminContactPage() {
       </div>
 
       {/* Summary Stat Badges - All Unified Red Icons */}
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
         <div className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
           <div className="flex items-center gap-3">
             <span className="grid size-10 place-items-center rounded-lg bg-red-50 text-[#ec1c24]">
@@ -187,18 +186,6 @@ export default function AdminContactPage() {
             <div>
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Okunmuş</p>
               <p className="text-xl font-bold text-zinc-950">{readCount}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
-          <div className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-lg bg-red-50 text-[#ec1c24]">
-              <Phone className="size-5" />
-            </span>
-            <div>
-              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Telefon Nolu</p>
-              <p className="text-xl font-bold text-zinc-950">{phoneCount}</p>
             </div>
           </div>
         </div>
