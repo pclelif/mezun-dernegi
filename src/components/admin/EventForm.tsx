@@ -107,7 +107,7 @@ export function EventForm({ initial }: EventFormProps) {
         </label>
 
         <ImageUploader value={images} onChange={setImages} label="Etkinlik görseli" />
-        <label className="flex items-center justify-between gap-3 text-sm font-semibold text-zinc-800">
+        <label className="flex items-center gap-2.5 text-sm font-semibold text-zinc-800">
           <span>Web sitesinde yayınla</span>
           <input name="is_published" type="checkbox" defaultChecked={initial?.is_published ?? true} className="size-4.5 cursor-pointer accent-red-600" />
         </label>
