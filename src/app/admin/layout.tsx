@@ -114,7 +114,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       {/* Main Page Layout Wrapper */}
       <div className="flex w-full min-h-screen flex-col lg:flex-row">
         {/* Desktop Sidebar (Visible >= 1024px) */}
-        <aside className="hidden border-r border-zinc-800 bg-[#18181b] text-white lg:flex lg:w-[16.75rem] lg:shrink-0 lg:flex-col">
+        <aside className="hidden border-r border-zinc-800 bg-[#18181b] text-white lg:flex lg:w-[16.25rem] lg:shrink-0 lg:flex-col">
           <div className="px-5 py-5">
             <AdminBrandLogo />
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#ec1c24]">Yönetim Paneli</p>

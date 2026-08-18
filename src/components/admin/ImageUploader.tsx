@@ -230,7 +230,7 @@ export function ImageUploader({
                   <img
                     src={url}
                     alt=""
-                    className="size-full object-cover"
+                    className="size-full object-contain p-2 bg-white"
                   />
                   {isTemporary ? (
                     <div className="absolute inset-0 grid place-items-center rounded-xl bg-zinc-950/60 text-white">

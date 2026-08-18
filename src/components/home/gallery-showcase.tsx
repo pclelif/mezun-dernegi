@@ -84,7 +84,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
                   <img
                     src={item.imageUrl}
                     alt={item.title || "Galeri fotoğrafı"}
-                    className="absolute inset-0 size-full object-cover transition-transform duration-300 hover:scale-105"
+                    className="absolute inset-0 size-full object-contain p-2 transition-transform duration-300 hover:scale-105"
                   />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
@@ -161,7 +161,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
                   <img
                     src={item.imageUrl}
                     alt={item.title || "Galeri fotoğrafı"}
-                    className="absolute inset-0 size-full object-cover transition-transform duration-300 hover:scale-105"
+                    className="absolute inset-0 size-full object-contain p-2 transition-transform duration-300 hover:scale-105"
                   />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
