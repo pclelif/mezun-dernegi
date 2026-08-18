@@ -43,7 +43,7 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
             {/* Masaüstü görünüm (2 Sütunlu Dağılım) */}
             <div className="mt-3 hidden sm:grid sm:grid-cols-2 sm:gap-x-6 text-sm leading-5">
               <ul className="grid gap-y-2">
-                {[corporateNavigation[0], corporateNavigation[2], corporateNavigation[4]].map((item) => (
+                {[corporateNavigation[0], corporateNavigation[2], corporateNavigation[5]].map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
@@ -55,7 +55,7 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
                 ))}
               </ul>
               <ul className="grid gap-y-2">
-                {[corporateNavigation[1], corporateNavigation[3], corporateNavigation[5]].map((item) => (
+                {[corporateNavigation[1], corporateNavigation[3], corporateNavigation[4]].map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
