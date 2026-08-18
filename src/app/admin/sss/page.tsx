@@ -11,6 +11,19 @@ const categoryLabels: Record<DbFaq["category"], string> = {
   dues: "Aidat ve Bağış",
 };
 
+async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
+  try {
+    const supabase = createClient();
+    await Promise.all(
+      itemsList.map((item, idx) =>
+        supabase.from(table).update({ display_order: idx }).eq("id", item.id)
+      )
+    );
+  } catch (err) {
+    console.error(`Failed to save order to ${table}:`, err);
+  }
+}
+
 export default function AdminFaqsPage() {
   const [items, setItems] = useState<DbFaq[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,6 +35,14 @@ export default function AdminFaqsPage() {
   // Drag and drop state
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
+  // Load saved sort preference from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("admin_faqs_sort");
+      if (saved) setSortBy(saved);
+    } catch {}
+  }, []);
 
   const sortItems = useCallback((dataList: DbFaq[], key: string) => {
     const list = [...dataList];
@@ -85,8 +106,13 @@ export default function AdminFaqsPage() {
 
   function handleSortChange(key: string) {
     setSortBy(key);
+    try {
+      localStorage.setItem("admin_faqs_sort", key);
+    } catch {}
     if (key !== "manual") {
-      setItems((current) => sortItems(current, key));
+      const sorted = sortItems(items, key);
+      setItems(sorted);
+      void saveDisplayOrder("faqs", sorted);
     }
   }
 
@@ -114,6 +140,10 @@ export default function AdminFaqsPage() {
     setItems(updated);
     setDraggedIndex(null);
     setDragOverIndex(null);
+    try {
+      localStorage.setItem("admin_faqs_sort", "manual");
+    } catch {}
+    void saveDisplayOrder("faqs", updated);
   }
 
   function handleDragEnd() {

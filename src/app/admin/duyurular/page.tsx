@@ -5,6 +5,19 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { createClient, formatTurkishDate, type DbAnnouncement } from "@/lib/supabase/client";
 
+async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
+  try {
+    const supabase = createClient();
+    await Promise.all(
+      itemsList.map((item, idx) =>
+        supabase.from(table).update({ display_order: idx }).eq("id", item.id)
+      )
+    );
+  } catch (err) {
+    console.error(`Failed to save order to ${table}:`, err);
+  }
+}
+
 export default function AdminAnnouncementsPage() {
   const [items, setItems] = useState<DbAnnouncement[]>([]);
   const [loading, setLoading] = useState(true);
@@ -16,6 +29,14 @@ export default function AdminAnnouncementsPage() {
   // Drag and drop state
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
+  // Load saved sort preference from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("admin_announcements_sort");
+      if (saved) setSortBy(saved);
+    } catch {}
+  }, []);
 
   const sortItems = useCallback((dataList: DbAnnouncement[], key: string) => {
     const list = [...dataList];
@@ -99,8 +120,13 @@ export default function AdminAnnouncementsPage() {
 
   function handleSortChange(key: string) {
     setSortBy(key);
+    try {
+      localStorage.setItem("admin_announcements_sort", key);
+    } catch {}
     if (key !== "manual") {
-      setItems((current) => sortItems(current, key));
+      const sorted = sortItems(items, key);
+      setItems(sorted);
+      void saveDisplayOrder("announcements", sorted);
     }
   }
 
@@ -128,6 +154,10 @@ export default function AdminAnnouncementsPage() {
     setItems(updated);
     setDraggedIndex(null);
     setDragOverIndex(null);
+    try {
+      localStorage.setItem("admin_announcements_sort", "manual");
+    } catch {}
+    void saveDisplayOrder("announcements", updated);
   }
 
   function handleDragEnd() {

@@ -33,6 +33,14 @@ export default function AdminGalleryPage() {
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
+  // Load saved sort preference from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("admin_gallery_sort");
+      if (saved) setSortBy(saved);
+    } catch {}
+  }, []);
+
   const sortPhotos = useCallback((list: DbGalleryImage[], key: string) => {
     const sorted = [...list];
     if (key === "created-desc") {
@@ -68,6 +76,9 @@ export default function AdminGalleryPage() {
 
   function handleSortChange(key: string) {
     setSortBy(key);
+    try {
+      localStorage.setItem("admin_gallery_sort", key);
+    } catch {}
     if (key !== "manual") {
       const sorted = sortPhotos(images, key);
       setImages(sorted);
@@ -99,6 +110,9 @@ export default function AdminGalleryPage() {
     setImages(updated);
     setDraggedIndex(null);
     setDragOverIndex(null);
+    try {
+      localStorage.setItem("admin_gallery_sort", "manual");
+    } catch {}
     void saveDisplayOrder("gallery_images", updated);
   }
 
