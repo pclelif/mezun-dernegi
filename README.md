@@ -1,133 +1,182 @@
-# Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği
+# Mezun Derneği Web Sitesi
 
-Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği'nin resmi web uygulaması ve içerik yönetim paneli.
-
----
-
-## Proje Hakkında
-
-Bu proje, mezunlar arasındaki iletişimi ve dayanışmayı artırmak, dernek faaliyetlerini kamuoyuna duyurmak, üyelik ve aidat süreçlerini bilgilendirmek ve yönetim kurulu tarafından web sitesi içeriklerinin dinamik olarak yönetilebilmesini sağlamak amacıyla geliştirilmiştir.
+Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği için geliştirilmiş kurumsal web sitesi ve yönetim paneli uygulamasıdır. Proje; dernek faaliyetlerinin paylaşılması, duyuru ve etkinliklerin yayımlanması, üyelik ve aidat süreçleri hakkında bilgi sunulması, mezunlar ve ziyaretçilerle iletişim kurulması ve tüm bu içeriklerin yönetim paneli üzerinden dinamik olarak yönetilmesi amacıyla tasarlanmıştır.
 
 ---
 
-## Modüller ve İşlevler
+## Özellikler
 
-### Web Portalı (Kamuya Açık Arayüz)
+### Kullanıcı Tarafı (Kamuya Açık Portal)
 
-- **Ana Sayfa**
-  - Manşet alanı ve kurumsal giriş metinleri.
-  - Öne çıkan son duyurular ve yaklaşan etkinlik kartları.
-  - Fotoğraf galerisi seçkisi ve carousel bileşeni.
-  - Sıkça sorulan sorular (SSS) akordeon menüsü.
-
-- **Duyurular ve Etkinlikler**
-  - Tüm duyuru ve etkinliklerin listelendiği arşiv sayfaları.
-  - Geçmiş ve yaklaşan etkinlik ayrımı.
-  - Detay görünümleri için odaklanmış modal kart yapısı ve kaynak takipli dinamik geri dönüş yönlendirmesi.
-
-- **Galeri**
-  - Sürükleme ve tıklama destekli görsel galerisi.
-  - Tam ekran fotoğraf inceleme (Lightbox) desteği.
-
-- **Kurumsal Sayfalar**
-  - Başkanın Mesajı, Hakkımızda, Tüzük, Vizyon & Misyon bölümleri.
-  - Şehit Tümgeneral Aydoğan Aydın anısına özel sayfa.
-  - Yönetim Kurulu ve Denetim Kurulu üye listeleri.
-
-- **Üyelik ve Aidat**
-  - Adım adım üyelik başvuru rehberi.
-  - Resmi üyelik başvuru formu indirme bağlantısı (PDF).
-  - Banka hesap bilgileri ve tek tıkla IBAN kopyalama butonları.
-  - Dönem aidatları bilgilendirmesi.
-
-- **İletişim ve Yasal Bağlantılar**
-  - İletişim formu ve Google Maps harita entegrasyonu.
-  - Doğrudan e-posta gönderimi (Gmail) ve telefon arama yönlendirmeleri.
-  - KVKK Aydınlatma Metni, Gizlilik Politikası, Çerez Politikası ve Kullanım Koşulları sayfaları.
-
----
+- **Ana Sayfa:** Karşılama alanı, öne çıkan duyurular, yaklaşan etkinlikler, fotoğraf galerisi seçkisi ve sıkça sorulan sorular.
+- **Duyurular:** Tüm duyuruların listelendiği arşiv sayfası ve detay kartı görünümleri.
+- **Etkinlikler:** Yaklaşan ve geçmiş etkinliklerin listelendiği sayfa, tarih/saat/konum bilgileri ve detay kartları.
+- **Galeri:** Etkinlik ve dernek fotoğraflarının sergilendiği grid ve carousel görünümleri ile tam ekran resim büyütme (Lightbox) desteği.
+- **Kurumsal Sayfalar:** Başkanın Mesajı, Hakkımızda, Tüzük, Vizyon & Misyon, Şehit Aydoğan Aydın Özel Sayfası, Yönetim ve Denetim Kurulları listesi.
+- **Üyelik ve Aidat:** Başvuru adımları, resmi üyelik başvuru formu indirme (PDF), banka hesap bilgileri (tek tıkla IBAN kopyalama) ve aidat bilgilendirmesi.
+- **İletişim:** İletişim formu, Google Maps harita entegrasyonu, doğrudan e-posta (Gmail) ve telefon arama yönlendirmeleri.
+- **Yasal Bağlantılar:** KVKK Aydınlatma Metni, Gizlilik Politikası, Çerez Politikası ve Kullanım Koşulları sayfaları.
 
 ### Yönetim Paneli (Admin CMS)
 
-- **Erişim ve Güvenlik**
-  - Supabase Auth tabanlı admin oturum yönetimi.
-  - Middleware (`proxy.ts`) ile korunan `/admin` rotaları.
-
-- **İletişim Mesajları Paneli**
-  - Gelen iletilerin toplam, okunmuş ve okunmamış sayılarını gösteren özet kartlar.
-  - Arama çubuğu ve duruma göre sekme filtreleri (Tümü / Okunmamış / Okunmuş).
-  - Tek tıkla tümünü okundu işaretleme aksiyonu.
-  - Mesaj detay modalları ve hızlı e-posta / telefon başlatma butonları.
-
-- **İçerik Yönetimi**
-  - **Duyuru Yönetimi:** Yeni duyuru ekleme, içerik düzenleme, görsel yükleme ve silme.
-  - **Etkinlik Yönetimi:** Tarih, saat, konum, açıklama ve durum (yaklaşan/geçmiş) güncelleme.
-  - **Kurul Yönetimi:** Üye ekleme, unvan/görev ve profil fotoğrafı güncelleme.
-  - **Galeri Yönetimi:** Çoklu fotoğraf yükleme, sürükle-bırak (Drag & Drop) ile sıralama değiştirme ve silme.
-  - **SSS Yönetimi:** Soru ve cevapların dinamik yönetimi.
-
-- **Arayüz ve Kullanılabilirlik**
-  - Mobil cihazlar için özel çekmece menü ve dokunmatik kart tasarımları.
-  - Markaya özel onay modalları.
-  - Sıralama tercihlerinin yerel hafızada (`localStorage`) saklanması.
+- **Güvenli Giriş:** Supabase Auth ve Next.js middleware altyapısı ile korunan admin paneli.
+- **İletişim Mesajları Paneli:** Gelen mesajların toplam, okunmuş ve okunmamış sayılarını gösteren özet istatistikler, canlı arama, durum filtreleme ve tek tıkla tümünü okundu işaretleme imkanı.
+- **Duyuru Yönetimi:** Yeni duyuru ekleme, düzenleme, görsel yükleme ve silme.
+- **Etkinlik Yönetimi:** Etkinlik ekleme, tarih/saat/konum düzenleme, etkinlik durumunu (yaklaşan/geçmiş) yönetme ve silme.
+- **Kurul Üyeleri Yönetimi:** Yönetim ve denetim kurulu üyelerini ekleme, görev ve fotoğraf güncelleme.
+- **Galeri Yönetimi:** Çoklu fotoğraf yükleme, sürükle-bırak (Drag & Drop) ile sıralama değiştirme ve silme.
+- **SSS Yönetimi:** Sıkça sorulan soruları ekleme, düzenleme ve silme.
 
 ---
 
-## Teknolojiler ve Bağımlılıklar
+## Teknolojiler
 
-- **Framework:** Next.js 16 (App Router)
-- **Kütüphane:** React 19
+### Frontend & Framework
+- **Framework:** Next.js 16.3.0 (App Router)
+- **UI Kütüphanesi:** React 19.0.0
 - **Dil:** TypeScript (Strict Mode)
-- **Stil:** Tailwind CSS v4, Custom CSS Tokens, Lucide React İkon Seti
-- **Veritabanı ve Auth:** Supabase PostgreSQL, Supabase Auth, Supabase Storage
+
+### Styling & Arayüz
+- **Stil Altyapısı:** Tailwind CSS 4.0.0
+- **İkon Seti:** Lucide React (`lucide-react`)
+- **Tasarım:** Custom CSS Tokens & Responsive Layout
+
+### Backend & Veritabanı
+- **Backend Servisi:** Supabase (`@supabase/supabase-js`)
+- **Veritabanı:** Supabase PostgreSQL (Row Level Security politikaları ile)
+- **Kimlik Doğrulama:** Supabase Auth
+- **Medya Depolama:** Supabase Storage (Görsel yüklemeleri için)
+
+### Güvenlik & Yönlendirme
+- **Middleware:** Next.js Proxy Middleware (`src/proxy.ts`)
 
 ---
 
-## Proje Dizini
+## Proje Yapısı
 
 ```text
 mezun-dernegi/
-├── public/                     # Statik dosyalar (Logo, SVG, PDF)
+├── public/                     # Statik varlıklar (Logolar, favicon, PDF belgeleri)
 ├── src/
-│   ├── app/                    # App Router rotaları (Kamu ve Admin)
-│   ├── components/             # Bileşenler (Admin, Cards, Forms, Home, Layout, Shared)
-│   ├── config/                 # Navigasyon ve içerik konfigürasyonları
+│   ├── app/                    # Next.js App Router sayfaları ve yönlendirmeleri
+│   │   ├── admin/              # Yönetim paneli sayfaları (iletisim, duyurular, kurul vb.)
+│   │   ├── duyurular/          # Duyuru liste ve detay sayfaları
+│   │   ├── etkinlikler/        # Etkinlik liste ve detay sayfaları
+│   │   ├── galeri/             # Fotoğraf galerisi sayfası
+│   │   ├── iletisim/           # İletişim sayfası
+│   │   ├── kurumsal/           # Kurumsal bilgi sayfaları (hakkimizda, tuzuk vb.)
+│   │   ├── uyelik/             # Üyelik ve aidat sayfaları
+│   │   ├── globals.css         # Global stil tanımlamaları
+│   │   ├── layout.tsx          # Ana site düzeni (Header, Footer, Metadata)
+│   │   └── proxy.ts            # Admin rotalarını koruyan middleware katmanı
+│   ├── components/             # Yeniden kullanılabilir arayüz bileşenleri
+│   │   ├── admin/              # Yönetim paneline özel formlar ve yükleyiciler
+│   │   ├── cards/              # Kart bileşenleri (Duyuru, Etkinlik, Kurul)
+│   │   ├── forms/              # İletişim formu ve girdi elemanları
+│   │   ├── home/               # Ana sayfa modülleri ve galeri vitrini
+│   │   ├── layout/             # Header, Footer ve genel sayfa kabuğu
+│   │   └── shared/             # Ortak sayfa başlıkları ve dönüş butonları
+│   ├── config/                 # Navigasyon, site ayarları ve içerik yapılandırmaları
 │   ├── lib/                    # Supabase istemcisi ve veritabanı sorguları
-│   └── styles/                 # Özel stil tanımları ve tasarım token'ları
+│   └── styles/                 # CSS tasarım token'ları
 ├── supabase/                   # Veritabanı SQL migration dosyaları
-└── next.config.mjs             # Next.js ayarları
+└── next.config.mjs             # Next.js konfigürasyon dosyası
 ```
 
 ---
 
-## Kurulum ve Çalıştırma
+## Kurulum
 
-### 1. Projeyi İndirin ve Bağımlılıkları Yükleyin
+### Ön Koşullar
+- Node.js 18.0.0 veya üzeri bir sürüm.
+- npm paket yöneticisi.
 
-```bash
-git clone https://github.com/pclelif/mezun-dernegi.git
-cd mezun-dernegi
-npm install
-```
+### Adım Adım Kurulum
 
-### 2. Çevre Değişkenlerini Oluşturun
+1. Repository'yi klonlayın:
+   ```bash
+   git clone https://github.com/pclelif/mezun-dernegi.git
+   ```
 
-Kök dizinde `.env.local` dosyası oluşturarak Supabase bağlantı bilgilerinizi ekleyin:
+2. Proje dizinine girin:
+   ```bash
+   cd mezun-dernegi
+   ```
 
-```env
-NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
-```
+3. Bağımlılıkları yükleyin:
+   ```bash
+   npm install
+   ```
 
-### 3. Geliştirme Sunucusunu Başlatın
+4. Environment Variables dosyasını oluşturun:
+   Kök dizinde `.env.local` adında bir dosya oluşturun ve gerekli Supabase anahtarlarınızı ekleyin.
 
-```bash
-npm run dev
-```
+5. Geliştirme sunucusunu çalıştırın:
+   ```bash
+   npm run dev
+   ```
 
-Uygulama varsayılan olarak `http://localhost:3000` adresinde çalışır. Yönetim paneline `http://localhost:3000/admin` adresinden erişilebilir.
+Tarayıcınızda `http://localhost:3000` adresine giderek uygulamayı görüntüleyebilirsiniz.
 
-### 4. Derleme ve Canlıya Alma (Production Build)
+---
+
+## Environment Variables
+
+Projede Supabase veritabanı, kimlik doğrulama ve depolama servisleri ile iletişim kurabilmek için aşağıdaki çevre değişkenleri kullanılmaktadır:
+
+- `NEXT_PUBLIC_SUPABASE_URL`: Supabase projenizin API URL adresi.
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Supabase anonim istemci erişim anahtarı (Anon Key).
+
+Geliştirme yaparken bu değişkenleri kök dizindeki `.env.local` dosyası içerisine eklemeniz gerekmektedir. Örnek yapılandırma için `.env.example` dosyasını referans alabilirsiniz.
+
+---
+
+## Kullanım
+
+- **Ziyaretçiler:** Ana sayfayı gezebilir, duyuruları ve etkinlikleri inceleyebilir, galerideki fotoğrafları inceleyebilir, kurumsal bilgileri okuyabilir, üyelik formunu indirebilir ve iletişim formu üzerinden dernek yönetimine mesaj gönderebilir.
+- **Yöneticiler:** `/admin/login` adresi üzerinden giriş yaparak yönetim paneline erişir. Panel üzerinden gelen mesajları yönetebilir; duyuruları, etkinlikleri, kurul üyelerini, galeri fotoğraflarını ve SSS içeriklerini ekleyebilir, düzenleyebilir veya silebilir.
+
+---
+
+## Sıralama Mantığı
+
+Uygulama genelinde içeriklerin listelenmesi ve sıralanması kullanım amacına göre özelleştirilmiştir:
+
+- **Duyurular:** Eklenme ve yayın tarihine göre en yeniden en eskiye doğru (`created_at` / `date` azalan) sıralanır.
+- **Etkinlikler:** Etkinlik tarihine göre sınıflandırılır. Yaklaşan etkinlikler en yakın tarihten ileriye doğru, geçmiş etkinlikler ise gerçekleşme tarihine göre arşivlenir.
+- **Galeri:** Yönetim panelinde sürüklenebilir kartlar (Drag & Drop) ile belirlediğiniz özel sıra (`display_order`) saklanır. İstenildiğinde tarihe göre sıralama moduna da geçilebilir.
+
+---
+
+## Yönetim Paneli
+
+Yönetim paneli (`/admin`), dernek yetkililerinin site içeriğini kod müdahalesi olmadan güncelleyebilmesini sağlar. 
+
+- **Erişim Koruması:** `proxy.ts` middleware katmanı, oturum açmamış kullanıcıların yönetim sayfalarına erişmesini engeller ve kullanıcıyı `/admin/login` sayfasına yönlendirir. Oturum açmış yöneticiler Supabase Auth jetonu ile doğrulanır.
+- **Veri Güvenliği:** Veritabanındaki güncelleme ve silme işlemleri Supabase Row Level Security (RLS) politikaları ile korunmaktadır.
+
+---
+
+## Veritabanı
+
+Projede veri kalıcılığı ve içerik yönetimi için Supabase PostgreSQL veritabanı kullanılmaktadır.
+
+Veritabanında yönetilen temel veri grupları şunlardır:
+- `announcements`: Duyuru başlıkları, içerikleri, görselleri ve tarihleri.
+- `events`: Etkinlik başlıkları, açıklamaları, tarih, saat, konum ve yayın durumları.
+- `board_members`: Yönetim ve denetim kurulu üyelerinin isim, görev, unvan ve görselleri.
+- `gallery_images`: Fotoğraf galerisine ait görsel URL'leri ve sıralama bilgileri.
+- `faqs`: Sıkça sorulan sorular ve cevapları.
+- `site_content`: Ana sayfa, kurumsal sayfalar ve genel site metinlerinin dinamik ayarları.
+- `contact_messages`: İletişim formu üzerinden gönderilen mesajlar, okundu bilgileri ve gönderim tarihleri.
+
+---
+
+## Deployment
+
+Proje Next.js standartlarında hazırlanmış olup Vercel veya Node.js destekleyen herhangi bir sunucu ortamında derlenebilir.
+
+Üretim sürümü (Production Build) oluşturmak ve başlatmak için:
 
 ```bash
 npm run build
@@ -136,8 +185,30 @@ npm start
 
 ---
 
-## Telif Hakkı ve İletişim
+## Tasarım Yaklaşımı
 
-Bu yazılım Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği adına geliştirilmiştir. Tüm hakları saklıdır.
+Tasarımda Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği'nin kurumsal kimliğini yansıtan modern, sade ve kullanıcı odaklı bir arayüz hedeflenmiştir. 
 
-- **İletişim:** kaaflmezunder@gmail.com
+- Dernek kurumsal kırmızısı (`#EC1C24`) vurgu rengi olarak kullanılmıştır.
+- Tüm içerik alanlarında okunabilirliği yüksek tipografi tercih edilmiştir.
+- Mobil cihazlarda kolay kullanım için 44px dokunma hedefleri, özel çekmece (drawer) gezinme menüsü ve dokunmatik kart tasarımları uygulanmıştır.
+
+---
+
+## Geliştirme Notları
+
+- **Strict TypeScript:** Kod tabanındaki tüm bileşenler ve veri modelleri TypeScript ile tiplendirilmiştir. Yeni sayfa ve bileşen eklerken tür tanımlarına dikkat edilmelidir.
+- **Next.js Middleware:** Admin yetkilendirme mantığı `src/proxy.ts` dosyasında yer almaktadır. Rota değişikliklerinde bu dosyadaki eşleşme kuralları göz önünde bulundurulmalıdır.
+- **Client/Server Ayrımı:** Supabase istemci fonksiyonları `src/lib/supabase/client.ts` ve `src/lib/supabase/server.ts` dosyaları üzerinden ayrıştırılmıştır.
+
+---
+
+## Lisans
+
+Bu proje Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği adına özel olarak geliştirilmiştir. Tüm hakları saklıdır.
+
+---
+
+## Geliştirici
+
+- Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği Geliştirme Ekibi
