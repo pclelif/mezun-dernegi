@@ -12,6 +12,7 @@ type ImageUploaderProps = {
   onChange: (urls: string[]) => void;
   multiple?: boolean;
   label?: string;
+  aspectRatio?: "square" | "video";
 };
 
 function storagePathFromPublicUrl(url: string) {
@@ -25,11 +26,14 @@ export function ImageUploader({
   onChange,
   multiple = false,
   label = "Görsel yükle",
+  aspectRatio,
 }: ImageUploaderProps) {
   const inputId = useId();
   const [uploading, setUploading] = useState(false);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
+
+  const isSquare = aspectRatio ? aspectRatio === "square" : label.toLowerCase().includes("logo");
 
   async function handleFiles(files: FileList | null) {
     if (!files?.length) return;
@@ -103,7 +107,7 @@ export function ImageUploader({
   const visibleImages = uploading ? [...value, ...previewUrls] : value;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2.5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <label htmlFor={inputId} className="text-sm font-semibold text-zinc-800">
           {label}
@@ -117,13 +121,15 @@ export function ImageUploader({
           return (
             <div
               key={`${url}-${index}`}
-              className="relative group size-24 shrink-0 overflow-hidden rounded-xl border border-zinc-200 bg-slate-50 p-1 shadow-sm transition hover:shadow-md"
+              className={`relative group shrink-0 overflow-hidden rounded-xl border border-zinc-200 bg-slate-100 shadow-sm transition hover:shadow-md ${
+                isSquare ? "size-28" : "w-52 aspect-video"
+              }`}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={url}
                 alt=""
-                className="size-full rounded-lg object-contain"
+                className={`size-full ${isSquare ? "object-contain p-1.5 bg-white" : "object-cover"}`}
               />
               {isTemporary ? (
                 <div className="absolute inset-0 grid place-items-center rounded-xl bg-zinc-950/60 text-white">
@@ -133,7 +139,7 @@ export function ImageUploader({
                 <button
                   type="button"
                   onClick={() => void removeImage(url)}
-                  className="absolute right-1 top-1 grid size-6 place-items-center rounded-full bg-white/95 text-red-600 shadow hover:bg-red-600 hover:text-white"
+                  className="absolute right-1.5 top-1.5 grid size-7 place-items-center rounded-full bg-white/95 text-red-600 shadow hover:bg-red-600 hover:text-white"
                   aria-label="Görseli sil"
                 >
                   <Trash2 className="size-3.5" aria-hidden="true" />
@@ -145,17 +151,21 @@ export function ImageUploader({
 
         <label
           htmlFor={inputId}
-          className={`flex size-24 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-zinc-300 bg-white p-2 text-center text-zinc-600 transition hover:border-red-500 hover:bg-red-50/50 hover:text-red-700 ${
+          className={`inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-zinc-300 bg-white px-4 py-2.5 text-sm font-semibold text-zinc-700 shadow-sm transition-colors hover:border-red-500 hover:bg-red-50/50 hover:text-red-700 ${
             uploading ? "pointer-events-none opacity-60" : ""
           }`}
         >
           {uploading ? (
-            <LoaderCircle className="size-5 animate-spin text-red-600" aria-hidden="true" />
+            <LoaderCircle className="size-4 animate-spin text-red-600" aria-hidden="true" />
           ) : (
-            <ImagePlus className="size-5 text-red-600" aria-hidden="true" />
+            <ImagePlus className="size-4 text-red-600" aria-hidden="true" />
           )}
-          <span className="text-[11px] font-semibold leading-tight">
-            {uploading ? "Yükleniyor" : visibleImages.length > 0 ? (multiple ? "Ekle" : "Değiştir") : "Görsel Seç"}
+          <span>
+            {uploading
+              ? "Yükleniyor…"
+              : visibleImages.length > 0
+              ? (multiple ? "Görsel Ekle" : "Görseli Değiştir")
+              : (multiple ? "Görselleri Seç" : "Görsel Seç")}
           </span>
         </label>
       </div>
