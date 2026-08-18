@@ -257,22 +257,24 @@ export default function AdminGalleryPage() {
       {/* Lightbox Modal */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 p-4 sm:p-8 backdrop-blur-md animate-in fade-in duration-200"
           onClick={() => setSelectedImage(null)}
         >
           <button
             type="button"
             onClick={() => setSelectedImage(null)}
-            className="absolute top-4 right-4 z-10 rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors"
+            className="absolute top-5 right-5 z-[100000] grid size-10 place-items-center rounded-full bg-white/15 text-white backdrop-blur-md transition-all hover:bg-red-600 hover:scale-110 active:scale-95 cursor-pointer"
+            aria-label="Kapat"
           >
-            <X className="size-6 text-white" />
+            <X className="size-6" />
           </button>
-          <img
-            src={selectedImage}
-            alt="Büyütülmüş fotoğraf"
-            className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
+          <div className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl bg-black/40 p-2 shadow-2xl backdrop-blur-sm border border-white/10" onClick={(e) => e.stopPropagation()}>
+            <img
+              src={selectedImage}
+              alt="Büyütülmüş fotoğraf"
+              className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
+            />
+          </div>
         </div>
       )}
     </div>
