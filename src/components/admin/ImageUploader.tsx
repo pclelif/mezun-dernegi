@@ -107,64 +107,72 @@ export function ImageUploader({
   const visibleImages = uploading ? [...value, ...previewUrls] : value;
 
   return (
-    <div className="space-y-2.5">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <label htmlFor={inputId} className="text-sm font-semibold text-zinc-800">
-          {label}
-        </label>
-        <span className="text-xs text-slate-500">JPEG, PNG · En fazla 5 MB</span>
+    <div className="flex flex-col justify-between space-y-4">
+      <div className="space-y-3">
+        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 pb-2.5">
+          <label htmlFor={inputId} className="text-base font-bold text-zinc-950">
+            {label}
+          </label>
+          <span className="text-xs text-slate-500">JPEG, PNG · En fazla 5 MB</span>
+        </div>
+
+        {visibleImages.length > 0 ? (
+          <div className={`grid gap-3 ${multiple ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-1"}`}>
+            {visibleImages.map((url, index) => {
+              const isTemporary = previewUrls.includes(url);
+              return (
+                <div
+                  key={`${url}-${index}`}
+                  className={`relative group overflow-hidden rounded-xl border border-zinc-200 bg-slate-50 shadow-sm transition hover:shadow-md ${
+                    isSquare
+                      ? "mx-auto size-36 sm:size-40"
+                      : "w-full aspect-video min-h-[140px] sm:min-h-[160px]"
+                  }`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={url}
+                    alt=""
+                    className={`size-full ${isSquare ? "object-contain p-2 bg-white" : "object-cover"}`}
+                  />
+                  {isTemporary ? (
+                    <div className="absolute inset-0 grid place-items-center rounded-xl bg-zinc-950/60 text-white">
+                      <LoaderCircle className="size-6 animate-spin" aria-label="Yükleniyor" />
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => void removeImage(url)}
+                      className="absolute right-2 top-2 grid size-8 place-items-center rounded-full bg-white/95 text-red-600 shadow transition hover:bg-red-600 hover:text-white"
+                      aria-label="Görseli sil"
+                    >
+                      <Trash2 className="size-4" aria-hidden="true" />
+                    </button>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ) : null}
       </div>
 
-      <div className="flex flex-wrap items-center gap-3">
-        {visibleImages.map((url, index) => {
-          const isTemporary = previewUrls.includes(url);
-          return (
-            <div
-              key={`${url}-${index}`}
-              className={`relative group shrink-0 overflow-hidden rounded-xl border border-zinc-200 bg-slate-100 shadow-sm transition hover:shadow-md ${
-                isSquare ? "size-28" : "w-52 aspect-video"
-              }`}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={url}
-                alt=""
-                className={`size-full ${isSquare ? "object-contain p-1.5 bg-white" : "object-cover"}`}
-              />
-              {isTemporary ? (
-                <div className="absolute inset-0 grid place-items-center rounded-xl bg-zinc-950/60 text-white">
-                  <LoaderCircle className="size-5 animate-spin" aria-label="Yükleniyor" />
-                </div>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => void removeImage(url)}
-                  className="absolute right-1.5 top-1.5 grid size-7 place-items-center rounded-full bg-white/95 text-red-600 shadow hover:bg-red-600 hover:text-white"
-                  aria-label="Görseli sil"
-                >
-                  <Trash2 className="size-3.5" aria-hidden="true" />
-                </button>
-              )}
-            </div>
-          );
-        })}
-
+      <div>
         <label
           htmlFor={inputId}
-          className={`inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-zinc-300 bg-white px-4 py-2.5 text-sm font-semibold text-zinc-700 shadow-sm transition-colors hover:border-red-500 hover:bg-red-50/50 hover:text-red-700 ${
+          className={`flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-4 py-2.5 text-center text-sm font-semibold text-zinc-800 transition-colors hover:border-red-500 hover:bg-red-50/60 hover:text-red-700 ${
             uploading ? "pointer-events-none opacity-60" : ""
           }`}
         >
           {uploading ? (
-            <LoaderCircle className="size-4 animate-spin text-red-600" aria-hidden="true" />
+            <LoaderCircle className="size-4.5 animate-spin text-red-600" aria-hidden="true" />
           ) : (
-            <ImagePlus className="size-4 text-red-600" aria-hidden="true" />
+            <ImagePlus className="size-4.5 text-red-600" aria-hidden="true" />
           )}
           <span>
             {uploading
               ? "Yükleniyor…"
               : visibleImages.length > 0
-              ? (multiple ? "Görsel Ekle" : "Görseli Değiştir")
+              ? (multiple ? "Yeni Görsel Ekle" : "Görseli Değiştir")
               : (multiple ? "Görselleri Seç" : "Görsel Seç")}
           </span>
         </label>
@@ -184,7 +192,7 @@ export function ImageUploader({
       />
 
       {error ? (
-        <p role="alert" className="rounded-md bg-red-50 px-3 py-1.5 text-xs text-red-700">
+        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-xs text-red-700">
           {error}
         </p>
       ) : null}
