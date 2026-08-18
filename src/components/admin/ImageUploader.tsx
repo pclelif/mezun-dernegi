@@ -21,6 +21,17 @@ function storagePathFromPublicUrl(url: string) {
   return index >= 0 ? decodeURIComponent(url.slice(index + marker.length)) : null;
 }
 
+function generateUUID() {
+  if (typeof crypto !== "undefined" && typeof crypto.randomUUID === "function") {
+    return crypto.randomUUID();
+  }
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, (c) => {
+    const r = (Math.random() * 16) | 0;
+    const v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
 export function ImageUploader({
   value,
   onChange,
@@ -69,7 +80,7 @@ export function ImageUploader({
 
       for (const file of filesToUpload) {
         const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
-        const path = `${user.id}/${Date.now()}-${crypto.randomUUID()}.${extension}`;
+        const path = `${user.id}/${Date.now()}-${generateUUID()}.${extension}`;
         const { error: uploadError } = await supabase.storage
           .from("media")
           .upload(path, file, { contentType: file.type, upsert: false });
