@@ -109,8 +109,8 @@ export function ImageUploader({
   return (
     <div className="flex flex-col justify-between space-y-4">
       <div className="space-y-3">
-        <div className="flex flex-wrap items-center justify-between gap-2 border-b border-zinc-100 pb-2.5">
-          <label htmlFor={inputId} className="text-base font-bold text-zinc-950">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <label htmlFor={inputId} className="block text-sm font-semibold text-zinc-800">
             {label}
           </label>
           <span className="text-xs text-slate-500">JPEG, PNG · En fazla 5 MB</span>
