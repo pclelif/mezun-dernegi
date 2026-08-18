@@ -52,7 +52,7 @@ export default function NewGalleryPage() {
           <ArrowLeft className="size-4" />
           Galeriye dön
         </Link>
-        <h1 className="mt-4 text-2xl font-bold">Fotoğraf Ekle</h1>
+        <h1 className="mt-4 text-2xl font-bold tracking-tight text-zinc-950">Fotoğraf Ekle</h1>
       </div>
 
       <form onSubmit={(e) => void handleSubmit(e)} className="space-y-6">

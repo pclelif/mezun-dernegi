@@ -81,8 +81,8 @@ export default function AdminGalleryPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-zinc-950">Galeri</h1>
-        <p className="mt-1 text-sm text-slate-600">Fotoğrafları yönetin.</p>
+        <h1 className="text-2xl font-bold tracking-tight text-zinc-950">Galeri</h1>
+        <p className="mt-1 text-sm text-slate-600">Galeri fotoğraflarını yönetin.</p>
       </div>
 
       {error && <p className="rounded-md bg-red-50 p-4 text-sm text-red-700">{error}</p>}

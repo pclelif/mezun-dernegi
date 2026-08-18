@@ -74,7 +74,7 @@ export default function AdminAnnouncementsPage() {
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-zinc-950">Duyurular</h1>
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-950">Duyurular</h1>
           <p className="mt-1 text-sm text-slate-600">Duyuruları listeleyin, ekleyin veya silin.</p>
         </div>
         <Link
