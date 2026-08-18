@@ -26,6 +26,9 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
       <head>
         <meta name="color-scheme" content="light" />
         <meta name="supported-color-schemes" content="light" />
+        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
+        <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)" />
       </head>
       <body className="bg-white text-black">
         <SiteShell settings={{ logo_url: brand.logo_url, address: contact.address, email: contact.email, instagram_url: contact.instagram_url, linkedin_url: contact.linkedin_url }}>{children}</SiteShell>
