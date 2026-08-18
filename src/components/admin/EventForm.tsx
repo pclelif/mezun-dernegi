@@ -31,13 +31,8 @@ export function EventForm({ initial }: EventFormProps) {
     }
 
     const dateVal = String(form.get("date") ?? "").trim();
-    let autoStatus = "upcoming";
-    if (dateVal) {
-      const parts = dateVal.split(".");
-      const isoDate = parts.length === 3 ? `${parts[2]}-${parts[1].padStart(2, "0")}-${parts[0].padStart(2, "0")}` : dateVal;
-      const todayStr = new Date().toISOString().split("T")[0];
-      if (isoDate < todayStr) autoStatus = "past";
-    }
+    const todayStr = new Date().toISOString().split("T")[0];
+    const autoStatus = dateVal && dateVal < todayStr ? "past" : "upcoming";
 
     const payload = {
       title,
@@ -94,27 +89,15 @@ export function EventForm({ initial }: EventFormProps) {
           <label className="block text-sm font-semibold text-zinc-800">
             Tarih
             <div className="relative mt-1.5">
-              <input
-                name="date"
-                type="text"
-                defaultValue={initial?.date ?? ""}
-                placeholder="Örn: 19.08.2026"
-                className={`${fieldClass} mt-0 pr-10`}
-              />
-              <CalendarDays className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
+              <input name="date" type="date" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 cursor-pointer pr-10`} />
+              <CalendarDays className="pointer-events-none absolute right-3 top-[calc(50%+1px)] size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
             </div>
           </label>
           <label className="block text-sm font-semibold text-zinc-800">
             Saat
             <div className="relative mt-1.5">
-              <input
-                name="time"
-                type="text"
-                defaultValue={initial?.time ?? ""}
-                placeholder="Örn: 19.00"
-                className={`${fieldClass} mt-0 pr-10`}
-              />
-              <Clock className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
+              <input name="time" type="time" defaultValue={initial?.time ?? ""} className={`${fieldClass} mt-0 cursor-pointer pr-10`} placeholder="15:00" />
+              <Clock className="pointer-events-none absolute right-3 top-[calc(50%+1px)] size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
             </div>
           </label>
         </div>
