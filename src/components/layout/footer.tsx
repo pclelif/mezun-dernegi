@@ -11,7 +11,7 @@ const legalLinks = [
   { href: "/kullanim-kosullari", label: "Kullanım Koşulları" },
 ];
 
-export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420\nÇankaya/Ankara" }: { logoUrl?: string; address?: string }) {
+export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420\nÇankaya/Ankara" }: { logoUrl?: string; address?: string }) {
   return (
     <footer className="bg-[#18181b] font-sans text-white">
       <div className="mx-auto grid w-[min(100%-2rem,80rem)] items-start gap-8 py-7 md:grid-cols-2 md:gap-10 md:py-8 lg:grid-cols-[1fr_auto_1fr] lg:gap-16">

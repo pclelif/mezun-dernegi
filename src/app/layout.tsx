@@ -13,10 +13,10 @@ export const viewport: Viewport = {
 
 export async function generateMetadata(): Promise<Metadata> {
   const [brand, home] = await Promise.all([
-    getSiteContent("marka", { logo_url: "/mezunderlogo.jpg", favicon_url: "/logo-dernek.svg" }),
-    getSiteContent("ana-sayfa", { logo_url: "/mezunderlogo.jpg" }),
+    getSiteContent("marka", { logo_url: "/logo-dernek.jpg", favicon_url: "/logo-dernek.svg" }),
+    getSiteContent("ana-sayfa", { logo_url: "/logo-dernek.jpg" }),
   ]);
-  const logoUrl = home.logo_url || brand.logo_url || "/mezunderlogo.jpg";
+  const logoUrl = home.logo_url || brand.logo_url || "/logo-dernek.jpg";
   return { title: { default: associationName, template: `%s | ${associationName}` }, description: associationDescription, icons: { icon: brand.favicon_url, apple: logoUrl } };
 }
 

@@ -16,7 +16,7 @@ function labelClass(active: boolean, underline = true) {
   return `inline-block w-fit justify-self-center border-b-2 pb-1 ${active && underline ? "border-red-600" : "border-transparent"}`;
 }
 
-export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@gmail.com", instagramUrl = "https://www.instagram.com/kaaflmezunder", linkedinUrl = "" }: { logoUrl?: string; email?: string; instagramUrl?: string; linkedinUrl?: string }) {
+export function Header({ logoUrl = "/logo-dernek.jpg", email = "kaaflmezunder@gmail.com", instagramUrl = "https://www.instagram.com/kaaflmezunder", linkedinUrl = "" }: { logoUrl?: string; email?: string; instagramUrl?: string; linkedinUrl?: string }) {
   const [openDesktopMenu, setOpenDesktopMenu] = useState<string | null>(null);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(null);

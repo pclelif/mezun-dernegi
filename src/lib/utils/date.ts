@@ -1,3 +1,4 @@
-export function formatDate(date) {
+export function formatDate(date?: string | Date | number | null) {
+  if (!date) return "";
   return new Intl.DateTimeFormat("tr-TR", { day: "numeric", month: "long", year: "numeric" }).format(new Date(date));
 }

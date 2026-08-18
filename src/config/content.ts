@@ -23,7 +23,7 @@ export const contentSections = {
       { key: "hero_description", label: "Açıklama metni", type: "textarea", rows: 3 },
     ],
     defaults: {
-      logo_url: "/mezunderlogo.jpg",
+      logo_url: "/logo-dernek.jpg",
       hero_title: "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği",
       hero_description: "Bir okul. Binlerce hikâye. Tek bir aile.\nGeçmişimizin değerlerini koruyor, geleceğe yönelik yeni adımlar atıyoruz.",
       hero_image_url: "",
@@ -76,7 +76,7 @@ export const contentSections = {
     fields: [
       { key: "logo_url", label: "Site logosu", type: "image", help: "Bu logo sitenin ve admin panelinin tüm logo alanlarında kullanılır." },
       { key: "favicon_url", label: "Tarayıcı sekmesi simgesi", type: "image", help: "Bu küçük simge yalnızca tarayıcı sekmesinde görünür; ikinci bir site logosu değildir." },
-    ], defaults: { logo_url: "/mezunderlogo.jpg", favicon_url: "/logo-dernek.svg" },
+    ], defaults: { logo_url: "/logo-dernek.jpg", favicon_url: "/logo-dernek.svg" },
   },
 } satisfies Record<string, ContentSection>;
 

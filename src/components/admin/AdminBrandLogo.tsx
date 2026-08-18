@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 export function AdminBrandLogo({ compact = false }: { compact?: boolean }) {
-  const [url, setUrl] = useState("/mezunderlogo.jpg");
+  const [url, setUrl] = useState("/logo-dernek.jpg");
 
   useEffect(() => {
     let active = true;
