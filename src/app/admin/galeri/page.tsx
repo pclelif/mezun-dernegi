@@ -5,6 +5,19 @@ import { useCallback, useEffect, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { createClient, type DbGalleryImage } from "@/lib/supabase/client";
 
+async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
+  try {
+    const supabase = createClient();
+    await Promise.all(
+      itemsList.map((item, idx) =>
+        supabase.from(table).update({ display_order: idx }).eq("id", item.id)
+      )
+    );
+  } catch (err) {
+    console.error(`Failed to save order to ${table}:`, err);
+  }
+}
+
 export default function AdminGalleryPage() {
   const [images, setImages] = useState<DbGalleryImage[]>([]);
   const [uploads, setUploads] = useState<string[]>([]);
@@ -31,6 +44,7 @@ export default function AdminGalleryPage() {
     void supabase
       .from("gallery_images")
       .select("*")
+      .order("display_order", { ascending: true, nullsFirst: false })
       .order("created_at", { ascending: false })
       .then(({ data, error: queryError }) => {
         if (!active) return;
@@ -39,7 +53,7 @@ export default function AdminGalleryPage() {
           setImages([]);
         } else {
           const loaded = (data ?? []) as DbGalleryImage[];
-          setImages(sortPhotos(loaded, sortBy));
+          setImages(sortBy === "manual" ? loaded : sortPhotos(loaded, sortBy));
         }
         setLoading(false);
       });
@@ -52,7 +66,9 @@ export default function AdminGalleryPage() {
   function handleSortChange(key: string) {
     setSortBy(key);
     if (key !== "manual") {
-      setImages((current) => sortPhotos(current, key));
+      const sorted = sortPhotos(images, key);
+      setImages(sorted);
+      void saveDisplayOrder("gallery_images", sorted);
     }
   }
 
@@ -64,6 +80,7 @@ export default function AdminGalleryPage() {
     const [moved] = updated.splice(index, 1);
     updated.splice(targetIndex, 0, moved);
     setImages(updated);
+    void saveDisplayOrder("gallery_images", updated);
   }
 
   async function handleAddPhotos() {

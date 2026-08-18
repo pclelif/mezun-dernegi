@@ -5,6 +5,19 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { createClient, formatTurkishDate, type DbAnnouncement } from "@/lib/supabase/client";
 
+async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
+  try {
+    const supabase = createClient();
+    await Promise.all(
+      itemsList.map((item, idx) =>
+        supabase.from(table).update({ display_order: idx }).eq("id", item.id)
+      )
+    );
+  } catch (err) {
+    console.error(`Failed to save order to ${table}:`, err);
+  }
+}
+
 export default function AdminAnnouncementsPage() {
   const [items, setItems] = useState<DbAnnouncement[]>([]);
   const [loading, setLoading] = useState(true);
@@ -38,11 +51,12 @@ export default function AdminAnnouncementsPage() {
       const { data, error: queryError } = await supabase
         .from("announcements")
         .select("*")
+        .order("display_order", { ascending: true, nullsFirst: false })
         .order("created_at", { ascending: false });
 
       if (queryError) throw queryError;
       const loaded = (data ?? []) as DbAnnouncement[];
-      setItems(sortItems(loaded, sortBy));
+      setItems(sortBy === "manual" ? loaded : sortItems(loaded, sortBy));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Duyurular yüklenemedi.");
       setItems([]);
@@ -57,6 +71,7 @@ export default function AdminAnnouncementsPage() {
     void supabase
       .from("announcements")
       .select("*")
+      .order("display_order", { ascending: true, nullsFirst: false })
       .order("created_at", { ascending: false })
       .then(({ data, error: queryError }) => {
         if (!active) return;
@@ -65,7 +80,7 @@ export default function AdminAnnouncementsPage() {
           setItems([]);
         } else {
           const loaded = (data ?? []) as DbAnnouncement[];
-          setItems(sortItems(loaded, sortBy));
+          setItems(sortBy === "manual" ? loaded : sortItems(loaded, sortBy));
         }
         setLoading(false);
       });
@@ -78,7 +93,9 @@ export default function AdminAnnouncementsPage() {
   function handleSortChange(key: string) {
     setSortBy(key);
     if (key !== "manual") {
-      setItems((current) => sortItems(current, key));
+      const sorted = sortItems(items, key);
+      setItems(sorted);
+      void saveDisplayOrder("announcements", sorted);
     }
   }
 
@@ -106,6 +123,7 @@ export default function AdminAnnouncementsPage() {
     setItems(updated);
     setDraggedIndex(null);
     setDragOverIndex(null);
+    void saveDisplayOrder("announcements", updated);
   }
 
   function handleDragEnd() {
