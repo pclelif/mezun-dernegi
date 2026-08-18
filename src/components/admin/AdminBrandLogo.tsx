@@ -24,22 +24,22 @@ export function AdminBrandLogo({ compact = false }: { compact?: boolean }) {
 
   if (compact) {
     return (
-      <div className="size-9 shrink-0 overflow-hidden rounded-full bg-white p-0.5 shadow-sm">
-        <div
-          className="size-full rounded-full bg-contain bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${url})` }}
-          aria-label="Dernek logosu"
+      <div className="size-9 shrink-0 overflow-hidden rounded-full bg-white p-0.5 shadow-sm ring-1 ring-white/20">
+        <img
+          src={url}
+          alt="Dernek logosu"
+          className="size-full rounded-full object-cover"
         />
       </div>
     );
   }
 
   return (
-    <div className="mb-3 size-16 shrink-0 overflow-hidden rounded-full bg-white p-1">
-      <div
-        className="size-full rounded-full bg-contain bg-center bg-no-repeat"
-        style={{ backgroundImage: `url(${url})` }}
-        aria-label="Dernek logosu"
+    <div className="mb-3 size-16 shrink-0 overflow-hidden rounded-full bg-white p-0.5 shadow-md ring-2 ring-white/30">
+      <img
+        src={url}
+        alt="Dernek logosu"
+        className="size-full rounded-full object-cover"
       />
     </div>
   );

@@ -81,7 +81,11 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
-                  <div className="absolute inset-0 bg-cover bg-center bg-slate-100 transition-transform duration-300 hover:scale-105" style={{ backgroundImage: `url(${item.imageUrl})` }} role="img" aria-label={item.title} />
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title || "Galeri fotoğrafı"}
+                    className="size-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
                     <Images className="size-12" />
@@ -154,7 +158,11 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
-                  <div className="absolute inset-0 bg-cover bg-center bg-slate-100 transition-transform duration-300 hover:scale-105" style={{ backgroundImage: `url(${item.imageUrl})` }} role="img" aria-label={item.title} />
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title || "Galeri fotoğrafı"}
+                    className="size-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
                     <Images className="size-12" />
