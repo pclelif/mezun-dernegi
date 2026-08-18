@@ -146,13 +146,10 @@ export default function AdminEventsPage() {
               className="h-10 rounded-md border border-zinc-300 bg-white pl-9 pr-4 text-sm font-semibold text-zinc-800 shadow-sm outline-none transition focus:border-red-500 cursor-pointer"
               aria-label="Sıralama ölçütü"
             >
-              <option value="date-desc">Etkinlik Tarihine Göre (En Yeni)</option>
-              <option value="date-asc">Etkinlik Tarihine Göre (En Eski)</option>
-              <option value="created-desc">Eklenme Tarihine Göre (En Yeni)</option>
-              <option value="created-asc">Eklenme Tarihine Göre (En Eski)</option>
-              <option value="title-asc">Başlığa Göre (A-Z)</option>
-              <option value="title-desc">Başlığa Göre (Z-A)</option>
-              <option value="manual">Manuel Sıralama (Sürükle-Bırak)</option>
+              <option value="date-desc">Etkinlik Tarihine Göre</option>
+              <option value="created-desc">Eklenme Tarihine Göre</option>
+              <option value="title-asc">Başlığa Göre</option>
+              <option value="manual">Manuel Sıralama</option>
             </select>
           </div>
           <Link
