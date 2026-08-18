@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, CalendarDays, LoaderCircle } from "lucide-react";
+import { ArrowLeft, CalendarDays, Clock, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
@@ -81,7 +81,7 @@ export function EventForm({ initial }: EventFormProps) {
           Açıklama
           <textarea name="description" rows={4} defaultValue={initial?.description ?? ""} className={fieldClass} />
         </label>
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-2 gap-4">
           <label className="block text-sm font-semibold text-zinc-800">
             Tarih
             <div className="relative mt-1.5">
@@ -91,7 +91,10 @@ export function EventForm({ initial }: EventFormProps) {
           </label>
           <label className="block text-sm font-semibold text-zinc-800">
             Saat
-            <input name="time" defaultValue={initial?.time ?? ""} className={fieldClass} placeholder="15.00" />
+            <div className="relative mt-1.5">
+              <input name="time" defaultValue={initial?.time ?? ""} className={`${fieldClass} mt-0 pr-10`} placeholder="15.00" />
+              <Clock className="pointer-events-none absolute right-3 top-[calc(50%+0.5px)] size-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+            </div>
           </label>
         </div>
         <label className="block text-sm font-semibold text-zinc-800">
