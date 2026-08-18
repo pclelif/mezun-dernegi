@@ -1,11 +1,11 @@
 "use client";
 
 import {
+  ArrowUpDown,
   CheckCheck,
   ChevronDown,
   Eye,
   EyeOff,
-  Filter,
   Inbox,
   LoaderCircle,
   Mail,
@@ -238,7 +238,7 @@ export default function AdminContactPage() {
           </div>
 
           <div className="relative inline-flex items-center">
-            <Filter className="pointer-events-none absolute left-3 size-4 text-slate-400" />
+            <ArrowUpDown className="pointer-events-none absolute left-3 size-4 text-slate-400" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as "desc" | "asc")}
