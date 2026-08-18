@@ -112,7 +112,7 @@ export function ImageUploader({
         <label htmlFor={inputId} className="text-sm font-semibold text-zinc-800">
           {label}
         </label>
-        <span className="text-xs text-slate-500">JPEG, PNG, WebP · en fazla 5 MB</span>
+        <span className="text-xs text-slate-500">JPEG, PNG · En fazla 5 MB</span>
       </div>
 
       <div className="flex flex-wrap items-center gap-3">

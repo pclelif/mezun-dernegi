@@ -20,7 +20,7 @@ export const contentSections = {
     fields: [
       { key: "logo_url", label: "Site logosu", type: "image", help: "Sitenin ve yönetim panelinin logosunu buradan yükleyin veya değiştirin." },
       { key: "hero_image_url", label: "Arka plan görseli", type: "image", help: "Ana sayfa hero bölümündeki arka plan görselini buradan değiştirin." },
-      { key: "hero_description", label: "Açıklama metni", type: "textarea", rows: 3, help: "Ana sayfadaki hero tanıtım açıklama metnini buradan düzenleyin." },
+      { key: "hero_description", label: "Açıklama metni", type: "textarea", rows: 3 },
     ],
     defaults: {
       logo_url: "/mezunderlogo.jpg",
