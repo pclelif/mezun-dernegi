@@ -10,11 +10,15 @@ export default function AdminAnnouncementsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<string>("date-desc");
+  const [sortBy, setSortBy] = useState<string>("created-desc");
 
   const sortItems = useCallback((dataList: DbAnnouncement[], key: string) => {
     const list = [...dataList];
-    if (key === "date-desc") {
+    if (key === "created-desc") {
+      list.sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
+    } else if (key === "created-asc") {
+      list.sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)));
+    } else if (key === "date-desc") {
       list.sort((a, b) => String(b.date || b.created_at).localeCompare(String(a.date || a.created_at)));
     } else if (key === "date-asc") {
       list.sort((a, b) => String(a.date || a.created_at).localeCompare(String(b.date || b.created_at)));
@@ -73,12 +77,15 @@ export default function AdminAnnouncementsPage() {
 
   function handleSortChange(key: string) {
     setSortBy(key);
-    setItems((current) => sortItems(current, key));
+    if (key !== "manual") {
+      setItems((current) => sortItems(current, key));
+    }
   }
 
   function moveItem(index: number, direction: "up" | "down") {
     const targetIndex = direction === "up" ? index - 1 : index + 1;
     if (targetIndex < 0 || targetIndex >= items.length) return;
+    setSortBy("manual");
     const updated = [...items];
     const [moved] = updated.splice(index, 1);
     updated.splice(targetIndex, 0, moved);
@@ -117,10 +124,13 @@ export default function AdminAnnouncementsPage() {
               className="h-10 rounded-md border border-zinc-300 bg-white pl-9 pr-4 text-sm font-semibold text-zinc-800 shadow-sm outline-none transition focus:border-red-500 cursor-pointer"
               aria-label="Sıralama ölçütü"
             >
-              <option value="date-desc">Sırala: Tarihe Göre (En Yeni)</option>
-              <option value="date-asc">Sırala: Tarihe Göre (En Eski)</option>
-              <option value="title-asc">Sırala: Başlığa Göre (A-Z)</option>
-              <option value="title-desc">Sırala: Başlığa Göre (Z-A)</option>
+              <option value="created-desc">Son Eklenenlere Göre (En Yeni)</option>
+              <option value="created-asc">İlk Eklenenlere Göre (En Eski)</option>
+              <option value="date-desc">Etkinlik/Duyuru Tarihine Göre (Yeniden Eskiye)</option>
+              <option value="date-asc">Etkinlik/Duyuru Tarihine Göre (Eskiden Yeniye)</option>
+              <option value="title-asc">Başlığa Göre (A-Z)</option>
+              <option value="title-desc">Başlığa Göre (Z-A)</option>
+              <option value="manual">Serbest (Manuel Sıralama)</option>
             </select>
           </div>
           <Link

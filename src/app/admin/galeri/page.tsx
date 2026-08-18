@@ -13,13 +13,13 @@ export default function AdminGalleryPage() {
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<string>("newest");
+  const [sortBy, setSortBy] = useState<string>("created-desc");
 
   const sortPhotos = useCallback((list: DbGalleryImage[], key: string) => {
     const sorted = [...list];
-    if (key === "newest") {
+    if (key === "created-desc") {
       sorted.sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
-    } else if (key === "oldest") {
+    } else if (key === "created-asc") {
       sorted.sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)));
     }
     return sorted;
@@ -51,12 +51,15 @@ export default function AdminGalleryPage() {
 
   function handleSortChange(key: string) {
     setSortBy(key);
-    setImages((current) => sortPhotos(current, key));
+    if (key !== "manual") {
+      setImages((current) => sortPhotos(current, key));
+    }
   }
 
   function movePhoto(index: number, direction: "left" | "right") {
     const targetIndex = direction === "left" ? index - 1 : index + 1;
     if (targetIndex < 0 || targetIndex >= images.length) return;
+    setSortBy("manual");
     const updated = [...images];
     const [moved] = updated.splice(index, 1);
     updated.splice(targetIndex, 0, moved);
@@ -119,8 +122,9 @@ export default function AdminGalleryPage() {
             className="h-10 rounded-md border border-zinc-300 bg-white pl-9 pr-4 text-sm font-semibold text-zinc-800 shadow-sm outline-none transition focus:border-red-500 cursor-pointer"
             aria-label="Sıralama ölçütü"
           >
-            <option value="newest">Sırala: Fotoğraflar (En Yeni)</option>
-            <option value="oldest">Sırala: Fotoğraflar (En Eski)</option>
+            <option value="created-desc">Son Eklenen Fotoğraflar (En Yeni)</option>
+            <option value="created-asc">İlk Eklenen Fotoğraflar (En Eski)</option>
+            <option value="manual">Serbest (Manuel Sıralama)</option>
           </select>
         </div>
       </div>
