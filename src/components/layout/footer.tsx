@@ -58,17 +58,21 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
           <p className="w-full text-left md:text-center">
             © {new Date().getFullYear()} {associationName}. Tüm hakları saklıdır.
           </p>
-          <nav className="grid grid-cols-[auto_auto] justify-start gap-x-3 gap-y-1 md:hidden" aria-label="Yasal bağlantılar">
+          <nav className="flex flex-wrap items-center justify-start gap-x-2 gap-y-1 md:hidden" aria-label="Yasal bağlantılar">
             {[legalLinks[0], legalLinks[1], legalLinks[3], legalLinks[2]].map((item, index) => (
-              <span key={item.href} className="text-left">
-                {index % 2 === 1 ? <span className="mr-3 text-zinc-500" aria-hidden="true">·</span> : null}
+              <Fragment key={item.href}>
+                {index > 0 ? (
+                  <span className="text-zinc-500" aria-hidden="true">
+                    ·
+                  </span>
+                ) : null}
                 <Link
                   href={item.href}
                   className="touch-manipulation rounded-sm text-zinc-400 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   {item.label}
                 </Link>
-              </span>
+              </Fragment>
             ))}
           </nav>
           <nav className="hidden flex-wrap items-center justify-center gap-4 md:flex md:gap-6" aria-label="Yasal bağlantılar">
