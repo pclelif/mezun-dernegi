@@ -54,13 +54,13 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
       </div>
 
       <div className="border-t border-white/15">
-        <div className="mx-auto flex w-[min(100%-2rem,52rem)] flex-col items-center justify-center gap-2 py-3 text-center text-xs leading-5 text-zinc-300">
-          <p className="text-center">
+        <div className="mx-auto flex w-[min(100%-2rem,52rem)] flex-col items-end justify-end gap-2 py-3 text-right text-xs leading-5 text-zinc-300 md:items-center md:justify-center md:text-center">
+          <p className="w-full text-right md:text-center">
             © {new Date().getFullYear()} {associationName}. Tüm hakları saklıdır.
           </p>
-          <nav className="grid grid-cols-[auto_auto] justify-center gap-x-3 gap-y-1 md:hidden" aria-label="Yasal bağlantılar">
+          <nav className="grid grid-cols-[auto_auto] justify-end gap-x-3 gap-y-1 md:hidden" aria-label="Yasal bağlantılar">
             {[legalLinks[0], legalLinks[1], legalLinks[3], legalLinks[2]].map((item, index) => (
-              <span key={item.href} className="text-left">
+              <span key={item.href} className="text-right">
                 {index % 2 === 1 ? <span className="mr-3 text-zinc-500" aria-hidden="true">·</span> : null}
                 <Link
                   href={item.href}
