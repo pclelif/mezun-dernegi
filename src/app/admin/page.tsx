@@ -1,34 +1,188 @@
-import { CalendarDays, Image, Images, Mail, Megaphone, type LucideIcon } from "lucide-react";
+import { ArrowRight, Bell, CalendarDays, Image, Mail, Megaphone, MessageSquare, type LucideIcon } from "lucide-react";
 import Link from "next/link";
+import { formatTurkishDate } from "@/lib/supabase/client";
 import { createServerSessionClient } from "@/lib/supabase/server";
 
 export default async function AdminDashboardPage() {
   const supabase = await createServerSessionClient();
-  const [events, announcements, galleries, photos, messages, unread, recentEvents, recentAnnouncements] = await Promise.all([
+  const [
+    events,
+    announcements,
+    photos,
+    messages,
+    unread,
+    recentEvents,
+    recentAnnouncements,
+    recentMessages,
+  ] = await Promise.all([
     supabase.from("events").select("*", { count: "exact", head: true }),
     supabase.from("announcements").select("*", { count: "exact", head: true }),
-    supabase.from("galleries").select("*", { count: "exact", head: true }),
     supabase.from("gallery_images").select("*", { count: "exact", head: true }),
     supabase.from("contact_messages").select("*", { count: "exact", head: true }),
     supabase.from("contact_messages").select("*", { count: "exact", head: true }).eq("is_read", false),
     supabase.from("events").select("id,title,created_at").order("created_at", { ascending: false }).limit(3),
     supabase.from("announcements").select("id,title,created_at").order("created_at", { ascending: false }).limit(3),
+    supabase.from("contact_messages").select("id,name,email,subject,message,is_read,created_at").order("created_at", { ascending: false }).limit(4),
   ]);
-  const groups: { title: string; stats: { label: string; value: number; href: string; icon: LucideIcon }[] }[] = [
-    { title: "İçerikler", stats: [
-      { label: "Toplam Etkinlik", value: events.count ?? 0, href: "/admin/etkinlikler", icon: CalendarDays },
-      { label: "Toplam Duyuru", value: announcements.count ?? 0, href: "/admin/duyurular", icon: Megaphone },
-      { label: "Toplam Albüm", value: galleries.count ?? 0, href: "/admin/galeri", icon: Images },
-      { label: "Toplam Fotoğraf", value: photos.count ?? 0, href: "/admin/galeri", icon: Image },
-    ] },
-    { title: "İletişim", stats: [
-      { label: "Toplam Mesaj", value: messages.count ?? 0, href: "/admin/iletisim", icon: Mail },
-      { label: "Okunmamış Mesaj", value: unread.count ?? 0, href: "/admin/iletisim", icon: Mail },
-    ] },
+
+  const stats: { label: string; value: number; href: string; icon: LucideIcon }[] = [
+    { label: "Toplam Etkinlik", value: events.count ?? 0, href: "/admin/etkinlikler", icon: CalendarDays },
+    { label: "Toplam Duyuru", value: announcements.count ?? 0, href: "/admin/duyurular", icon: Megaphone },
+    { label: "Toplam Fotoğraf", value: photos.count ?? 0, href: "/admin/galeri", icon: Image },
+    { label: "Toplam Mesaj", value: messages.count ?? 0, href: "/admin/iletisim", icon: Mail },
+    { label: "Okunmamış Mesaj", value: unread.count ?? 0, href: "/admin/iletisim", icon: MessageSquare },
   ];
-  const latest = [...(recentEvents.data ?? []).map((x) => ({ ...x, type: "Etkinlik" })), ...(recentAnnouncements.data ?? []).map((x) => ({ ...x, type: "Duyuru" }))].sort((a, b) => b.created_at.localeCompare(a.created_at)).slice(0, 5);
-  return <div className="space-y-8"><div><h1 className="text-2xl font-bold tracking-tight text-zinc-950 md:text-3xl">Genel Bakış</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 md:text-base">Dernek web sitenizdeki içerikleri ve iletişim mesajlarını buradan yönetin.</p></div>
-    {groups.map((group) => <section key={group.title} className="space-y-3"><h2 className="text-lg font-bold text-zinc-900">{group.title}</h2><div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">{group.stats.map(({ label, value, href, icon: Icon }) => <Link href={href} key={label} className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-red-200 hover:shadow-md"><div className="flex items-start justify-between gap-3"><div><p className="text-sm font-medium text-slate-500">{label}</p><p className="mt-3 text-3xl font-bold text-zinc-950">{value}</p></div><span className="grid size-10 place-items-center rounded-lg bg-red-50 text-red-600"><Icon className="size-5" /></span></div></Link>)}</div></section>)}
-    <div className="grid gap-5 lg:grid-cols-2"><section className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm"><h2 className="font-bold text-zinc-950">Son Eklenenler</h2><div className="mt-4 space-y-3">{latest.length ? latest.map((item) => <div key={`${item.type}-${item.id}`} className="flex items-center justify-between gap-3 border-b border-zinc-100 pb-3 text-sm last:border-0"><span className="font-medium text-zinc-800">{item.title}</span><span className="text-xs text-slate-500">{item.type}</span></div>) : <p className="text-sm text-slate-500">Henüz içerik eklenmedi.</p>}</div></section><section className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm"><h2 className="font-bold text-zinc-950">Bekleyen İşlemler</h2><Link href="/admin/iletisim" className="mt-4 flex justify-between rounded-lg bg-red-50 p-4 text-sm font-semibold text-red-800"><span>Okunmamış iletişim mesajları</span><span>{unread.count ?? 0}</span></Link></section></div>
-  </div>;
+
+  const latestContent = [
+    ...(recentEvents.data ?? []).map((x) => ({ ...x, type: "Etkinlik" })),
+    ...(recentAnnouncements.data ?? []).map((x) => ({ ...x, type: "Duyuru" })),
+  ]
+    .sort((a, b) => b.created_at.localeCompare(a.created_at))
+    .slice(0, 5);
+
+  const notifications = recentMessages.data ?? [];
+
+  return (
+    <div className="space-y-8">
+      <div>
+        <h1 className="text-2xl font-bold tracking-tight text-zinc-950 md:text-3xl">Genel Bakış</h1>
+        <p className="mt-2 max-w-3xl text-sm leading-6 text-slate-600 md:text-base">
+          Yönetim paneline hoş geldiniz. Bekleyen bildirimler, son eklenen içerikler ve güncel dernek istatistikleri burada görüntülenmektedir.
+        </p>
+      </div>
+
+      {/* Üst Kısım: Bildirimler (Sol) ve Son Eklenenler (Sağ) */}
+      <div className="grid gap-6 lg:grid-cols-2">
+        {/* Sol: Bildirimler Panel */}
+        <section className="flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
+          <div>
+            <div className="flex items-center justify-between gap-3 border-b border-zinc-100 pb-3">
+              <div className="flex items-center gap-2">
+                <span className="grid size-8 place-items-center rounded-lg bg-red-50 text-red-600">
+                  <Bell className="size-4" />
+                </span>
+                <h2 className="font-bold text-zinc-950">Bildirimler</h2>
+              </div>
+              {(unread.count ?? 0) > 0 ? (
+                <span className="rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-bold text-red-700">
+                  {unread.count} yeni mesaj
+                </span>
+              ) : (
+                <span className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">
+                  Tümü okundu
+                </span>
+              )}
+            </div>
+
+            <div className="mt-4 space-y-3">
+              {notifications.length > 0 ? (
+                notifications.map((msg) => (
+                  <Link
+                    key={msg.id}
+                    href="/admin/iletisim"
+                    className={`block rounded-lg border p-3.5 transition hover:border-red-200 hover:bg-red-50/40 ${
+                      !msg.is_read ? "border-red-200 bg-red-50/20" : "border-zinc-100 bg-slate-50/40"
+                    }`}
+                  >
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="truncate text-sm font-bold text-zinc-900">{msg.name}</p>
+                          {!msg.is_read ? (
+                            <span className="shrink-0 rounded bg-red-600 px-1.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white">
+                              Yeni
+                            </span>
+                          ) : null}
+                        </div>
+                        <p className="mt-0.5 truncate text-xs font-medium text-slate-600">
+                          {msg.subject || "Konu belirtilmedi"}
+                        </p>
+                        <p className="mt-1 line-clamp-1 text-xs text-slate-500">
+                          {msg.message}
+                        </p>
+                      </div>
+                      <span className="shrink-0 text-[11px] text-slate-400">
+                        {formatTurkishDate(msg.created_at)}
+                      </span>
+                    </div>
+                  </Link>
+                ))
+              ) : (
+                <p className="py-6 text-center text-sm text-slate-500">Henüz bildirim bulunmuyor.</p>
+              )}
+            </div>
+          </div>
+
+          <div className="mt-5 border-t border-zinc-100 pt-3">
+            <Link
+              href="/admin/iletisim"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-red-600 hover:text-red-700 hover:underline"
+            >
+              Tüm İletişim Mesajlarını Görüntüle <ArrowRight className="size-3.5" />
+            </Link>
+          </div>
+        </section>
+
+        {/* Sağ: Son Eklenenler Panel */}
+        <section className="flex flex-col justify-between rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
+          <div>
+            <div className="flex items-center justify-between gap-3 border-b border-zinc-100 pb-3">
+              <h2 className="font-bold text-zinc-950">Son Eklenenler</h2>
+              <span className="text-xs font-medium text-slate-500">Son güncellemeler</span>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              {latestContent.length > 0 ? (
+                latestContent.map((item) => (
+                  <div
+                    key={`${item.type}-${item.id}`}
+                    className="flex items-center justify-between gap-3 rounded-lg border border-zinc-100 bg-slate-50/40 p-3.5 text-sm"
+                  >
+                    <div className="min-w-0 flex-1">
+                      <p className="truncate font-medium text-zinc-900">{item.title}</p>
+                      <p className="mt-0.5 text-xs text-slate-400">{formatTurkishDate(item.created_at)}</p>
+                    </div>
+                    <span className="shrink-0 rounded-md bg-zinc-200/70 px-2 py-1 text-xs font-semibold text-zinc-700">
+                      {item.type}
+                    </span>
+                  </div>
+                ))
+              ) : (
+                <p className="py-6 text-center text-sm text-slate-500">Henüz içerik eklenmedi.</p>
+              )}
+            </div>
+          </div>
+
+          <div className="mt-5 border-t border-zinc-100 pt-3 flex gap-4 text-xs font-bold text-red-600">
+            <Link href="/admin/duyurular" className="hover:underline">Duyuruları Yönet →</Link>
+            <Link href="/admin/etkinlikler" className="hover:underline">Etkinlikleri Yönet →</Link>
+          </div>
+        </section>
+      </div>
+
+      {/* Alt Kısım: İstatistikler */}
+      <section className="space-y-4">
+        <h2 className="text-lg font-bold text-zinc-950">İstatistikler</h2>
+        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+          {stats.map(({ label, value, href, icon: Icon }) => (
+            <Link
+              href={href}
+              key={label}
+              className="group rounded-xl border border-zinc-200 bg-white p-5 shadow-sm transition hover:border-red-200 hover:shadow-md"
+            >
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className="text-xs font-medium text-slate-500">{label}</p>
+                  <p className="mt-3 text-3xl font-bold tracking-tight text-zinc-950">{value}</p>
+                </div>
+                <span className="grid size-10 place-items-center rounded-lg bg-red-50 text-red-600 transition group-hover:bg-red-600 group-hover:text-white">
+                  <Icon className="size-5" />
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
+    </div>
+  );
 }
