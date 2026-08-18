@@ -22,7 +22,7 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
           </Link>
         </div>
 
-        <nav className="w-full sm:w-fit sm:max-w-full lg:translate-x-8 lg:justify-self-center" aria-label="Hakkımızda bağlantıları">
+        <nav className="w-full sm:w-fit sm:max-w-full lg:translate-x-20 lg:justify-self-center" aria-label="Hakkımızda bağlantıları">
           <div className="w-full sm:w-fit sm:max-w-full">
             <h2 className="relative w-full pb-2 text-left text-sm font-semibold text-white after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/20 after:content-['']">Hakkımızda</h2>
             <ul className="mt-3 grid gap-y-2 text-sm leading-5 sm:grid-cols-[max-content_max-content] sm:gap-x-6">
