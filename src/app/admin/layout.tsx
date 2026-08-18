@@ -24,7 +24,7 @@ const navItems: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/admin/duyurular", label: "Duyurular", icon: Megaphone },
   { href: "/admin/etkinlikler", label: "Etkinlikler", icon: CalendarDays },
   { href: "/admin/galeri", label: "Galeri", icon: Images },
-  { href: "/admin/kurul", label: "Yönetim ve Denetim Kurulu", icon: UsersRound },
+  { href: "/admin/kurul", label: "Kurul Üyeleri", icon: UsersRound },
   { href: "/admin/sss", label: "Sıkça Sorulanlar", icon: CircleHelp },
   { href: "/admin/iletisim", label: "İletişim Formu", icon: Contact },
 ];
@@ -127,7 +127,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                   <Link
                     key={href}
                     href={href}
-                    className={`inline-flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                    className={`inline-flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium whitespace-nowrap transition-colors ${
                       active ? "bg-[#ec1c24] text-white shadow-sm font-semibold" : "text-zinc-300 hover:bg-zinc-800 hover:text-white"
                     }`}
                   >
