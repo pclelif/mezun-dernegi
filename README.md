@@ -130,4 +130,3 @@ Bu yazılım Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi
 
 - **E-posta:** kaaflmezunder@gmail.com
 - **Instagram:** https://www.instagram.com/kaaflmezunder
-- **Adres:** Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420 Çankaya / Ankara
