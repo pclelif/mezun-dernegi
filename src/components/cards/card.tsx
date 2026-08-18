@@ -13,7 +13,7 @@ const paddingClasses = {
 
 export function Card({ children, className = "", interactive = false, padding = "default", ...props }: CardProps) {
   const interactionClasses = interactive
-    ? "hover:border-zinc-300 hover:shadow-md focus-within:border-red-600 focus-within:ring-2 focus-within:ring-red-600/20"
+    ? "hover:border-zinc-300 hover:shadow-md active:border-zinc-300 active:shadow-md focus-within:border-red-600 focus-within:ring-2 focus-within:ring-red-600/20"
     : "";
 
   return (

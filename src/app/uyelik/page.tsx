@@ -84,7 +84,7 @@ export default async function MembershipPage() {
               target="_blank"
               rel="noopener noreferrer"
               download
-              className="mt-7 inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-7 text-sm font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+              className="mt-7 inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-7 text-sm font-semibold text-white transition-colors hover:bg-red-700 active:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
             >
               <Download className="size-5 shrink-0" aria-hidden="true" />
               Üyelik Formunu İndir
@@ -102,7 +102,7 @@ export default async function MembershipPage() {
 
             <Link
               href="/uyelik/aidat"
-              className="mt-5 inline-flex items-center gap-2 rounded-sm font-semibold text-[#ec1c24] transition-colors hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+              className="mt-5 inline-flex touch-manipulation items-center gap-2 rounded-sm font-semibold text-[#ec1c24] transition-colors hover:text-red-700 active:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
             >
               Üyelik sonrası dönem aidatlarını ve ödeme dönemlerini görüntüle
               <ArrowRight className="size-4 shrink-0" aria-hidden="true" />

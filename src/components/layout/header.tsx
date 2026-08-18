@@ -12,8 +12,8 @@ import { associationName } from "@/config/site";
 const desktopLinkClass = "relative flex h-24 appearance-none items-center gap-1.5 whitespace-nowrap bg-transparent p-0 font-sans text-base font-semibold leading-5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
 /** Aktif göstergesi metnin kendi alt kenarlığı; böylece yazının ortasından geçemez. */
-function labelClass(active: boolean) {
-  return `border-b-2 pb-1 ${active ? "border-red-600" : "border-transparent"}`;
+function labelClass(active: boolean, underline = true) {
+  return `inline-block w-fit justify-self-center border-b-2 pb-1 ${active && underline ? "border-red-600" : "border-transparent"}`;
 }
 
 export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@gmail.com", instagramUrl = "https://www.instagram.com/kaaflmezunder", linkedinUrl = "" }: { logoUrl?: string; email?: string; instagramUrl?: string; linkedinUrl?: string }) {
@@ -42,13 +42,17 @@ export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@g
     return pathname.startsWith(item.href) || Boolean(item.children?.some((child) => pathname.startsWith(child.href)));
   }
 
+  function isItemExactActive(item: NavigationItem) {
+    return pathname === item.href;
+  }
+
   return (
     <header className={`site-main-header relative z-[100] border-b border-black/10 bg-white transition-[box-shadow] duration-200 motion-reduce:transition-none ${isScrolled ? "shadow-lg xl:shadow-md" : ""}`}>
       <div className="bg-[var(--color-accent)] text-white">
         <div className="mx-auto flex min-h-11 w-[min(100%-2rem,75rem)] items-center justify-between gap-4 xl:w-[min(100%-3rem,84rem)]">
           <a
             href={`mailto:${email}`}
-            className="flex min-w-0 items-center gap-2 rounded-sm py-1 text-xs font-medium transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-sm"
+            className="flex min-w-0 touch-manipulation items-center gap-2 rounded-sm py-1 text-xs font-medium transition-opacity hover:opacity-80 active:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-sm"
           >
             <Mail className="size-4 shrink-0" aria-hidden="true" />
             <span className="truncate">{email}</span>
@@ -61,7 +65,7 @@ export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@g
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="rounded p-1.5 transition-opacity hover:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white"
+                className="touch-manipulation rounded p-1.5 transition-opacity hover:opacity-70 active:opacity-70 focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-white"
               >
                 <Icon className="size-[18px]" />
               </a>
@@ -112,7 +116,7 @@ export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@g
                 >
                   <button
                     type="button"
-                    className={`${desktopLinkClass} ${active ? "text-red-600" : "text-zinc-900 hover:text-red-600"}`}
+                    className={`${desktopLinkClass} ${active ? "text-red-600 hover:text-black" : "text-zinc-900 hover:text-black"}`}
                     aria-expanded={menuOpen}
                     aria-controls={menuId}
                     onClick={() => setOpenDesktopMenu((current) => current === item.href ? null : item.href)}
@@ -129,9 +133,11 @@ export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@g
                           key={child.href}
                           href={child.href}
                           onClick={() => setOpenDesktopMenu(null)}
-                          className={`block px-4 py-3 text-center text-sm leading-5 text-zinc-800 outline-none transition-colors hover:bg-zinc-50 hover:text-zinc-950 focus-visible:bg-zinc-50 ${pathname.startsWith(child.href) ? "bg-zinc-50 font-semibold text-red-600" : ""}`}
+                          className={`block px-4 py-3 text-center text-sm leading-5 text-zinc-700 outline-none transition-[color,background-color] hover:bg-zinc-50 hover:text-black focus-visible:bg-zinc-50 focus-visible:text-black ${pathname === child.href ? "bg-zinc-50 font-semibold text-black" : ""}`}
                         >
-                          {child.label}
+                          <span className={`border-b-2 pb-1 ${pathname === child.href ? "border-black" : "border-transparent"}`}>
+                            {child.label}
+                          </span>
                         </Link>
                       ))}
                     </div>
@@ -142,11 +148,11 @@ export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@g
 
             return (
               <Link
-                className={`${desktopLinkClass} ${active ? "text-red-600" : "text-zinc-900 hover:text-red-600"}`}
+                className={`${desktopLinkClass} ${active ? "text-red-600 hover:text-black" : "text-zinc-900 hover:text-black"}`}
                 href={item.href}
                 key={item.href}
               >
-                <span className={labelClass(active)}>{item.label}</span>
+                <span className={labelClass(isItemExactActive(item), isItemExactActive(item))}>{item.label}</span>
               </Link>
             );
           })}
@@ -154,7 +160,7 @@ export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@g
 
         <button
           type="button"
-          className="grid size-11 shrink-0 place-items-center rounded-md text-zinc-900 transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 xl:hidden"
+          className="grid size-11 touch-manipulation shrink-0 place-items-center rounded-md text-zinc-900 transition-colors hover:bg-zinc-100 active:bg-zinc-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 xl:hidden"
           aria-expanded={isMobileNavOpen}
           aria-controls="mobile-navigation"
           aria-label="Menüyü aç veya kapat"
@@ -171,8 +177,10 @@ export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@g
         <div className="overflow-hidden">
           <nav id="mobile-navigation" className="mobile-navigation-panel flex max-h-[70dvh] flex-col overflow-y-auto border-t border-zinc-300 px-6 py-4 text-center text-zinc-900 shadow-inner" aria-label="Mobil menü">
             {navigation.map((item, index) => {
+              const active = isItemActive(item);
+
               if (!item.children) {
-                return <Link className="px-2 py-4 text-base font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600" href={item.href} key={item.href} onClick={() => setIsMobileNavOpen(false)}>{item.label}</Link>;
+                return <Link className={`touch-manipulation rounded-md px-2 py-4 text-base font-semibold transition-colors active:bg-zinc-200 active:text-black focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600 ${active ? "text-red-600" : "text-zinc-900"}`} href={item.href} key={item.href} onClick={() => setIsMobileNavOpen(false)}><span className={labelClass(active)}>{item.label}</span></Link>;
               }
 
               const menuId = `mobile-submenu-${index}`;
@@ -182,13 +190,13 @@ export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@g
                 <div key={item.href}>
                   <button
                     type="button"
-                    className="grid min-h-14 w-full appearance-none grid-cols-[2rem_1fr_2rem] items-center bg-transparent px-2 text-base font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600"
+                    className={`grid min-h-14 w-full touch-manipulation appearance-none grid-cols-[2rem_1fr_2rem] items-center rounded-md bg-transparent px-2 text-base font-semibold transition-colors active:bg-zinc-200 active:text-black focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600 ${active ? "text-red-600" : "text-zinc-900"}`}
                     aria-expanded={menuOpen}
                     aria-controls={menuId}
                     onClick={() => setOpenMobileMenu((current) => (current === item.href ? null : item.href))}
                   >
                     <span aria-hidden="true" />
-                    <span>{item.label}</span>
+                    <span className={labelClass(isItemExactActive(item), isItemExactActive(item))}>{item.label}</span>
                     {menuOpen ? (
                       <Minus className="size-5 text-red-500" aria-hidden="true" />
                     ) : (
@@ -203,7 +211,7 @@ export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@g
                       <div className="mx-auto mb-3 w-full max-w-sm overflow-hidden rounded-lg border border-zinc-200 bg-white text-center shadow-sm">
                         {item.children.map((child) => (
                           <Link
-                            className="block border-b border-zinc-100 px-3 py-3.5 text-sm font-medium text-gray-900 transition-colors last:border-b-0 hover:bg-zinc-50 focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600"
+                            className={`block touch-manipulation border-b border-zinc-100 px-3 py-3.5 text-sm font-medium text-zinc-700 transition-[color,background-color] last:border-b-0 hover:bg-zinc-50 hover:text-black active:bg-zinc-200 active:text-black focus-visible:outline-2 focus-visible:outline-inset focus-visible:outline-red-600 ${pathname === child.href ? "bg-zinc-50 font-semibold text-black" : ""}`}
                             href={child.href}
                             key={child.href}
                             onClick={() => {
@@ -211,7 +219,9 @@ export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@g
                               setOpenMobileMenu(null);
                             }}
                           >
-                            {child.label}
+                            <span className={`border-b-2 pb-1 ${pathname === child.href ? "border-black" : "border-transparent"}`}>
+                              {child.label}
+                            </span>
                           </Link>
                         ))}
                       </div>

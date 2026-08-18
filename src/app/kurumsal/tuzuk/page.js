@@ -19,7 +19,7 @@ export default async function Page() {
           target="_blank"
           rel="noopener noreferrer"
           download
-          className="inline-flex min-h-12 items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-8 text-base font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+          className="inline-flex min-h-12 touch-manipulation items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-8 text-base font-semibold text-white transition-colors hover:bg-red-700 active:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
         >
           <Download className="size-5 shrink-0" aria-hidden="true" />
           Dernek Tüzüğünü İndir

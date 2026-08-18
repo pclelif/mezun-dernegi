@@ -10,7 +10,7 @@ export function HomeAboutSection() {
           <h2 id="home-about-title" className="max-w-3xl text-2xl font-bold tracking-tight text-zinc-950 md:text-3xl">
             Geçmişin Güçlü Temelleriyle Geleceğe Uzanan Köprü
           </h2>
-          <Link href="/kurumsal/hakkimizda" className="inline-flex items-center gap-2 self-start rounded-sm text-sm font-bold text-zinc-900 hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 sm:self-auto">
+          <Link href="/kurumsal/hakkimizda" className="inline-flex touch-manipulation items-center gap-2 self-start rounded-sm text-sm font-bold text-zinc-900 hover:text-red-700 active:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 sm:self-auto">
             Detaylı Bilgi <ArrowRight className="size-4 text-red-600" aria-hidden="true" />
           </Link>
         </div>

@@ -32,7 +32,7 @@ export function HomeHero({ title, description, imageUrl }: { title: string; desc
         <div className="animate-fade-in-up animation-delay-300 mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/uyelik"
-            className="inline-flex min-h-12 items-center justify-center rounded-md bg-[#ec1c24] px-8 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-lg active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+            className="inline-flex min-h-12 touch-manipulation items-center justify-center rounded-md bg-[#ec1c24] px-8 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-lg active:scale-95 active:bg-red-700 active:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
           >
             Derneğimize Üye Ol!
           </Link>

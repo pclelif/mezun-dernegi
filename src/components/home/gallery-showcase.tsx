@@ -19,7 +19,7 @@ type GalleryShowcaseProps = {
   description?: string;
   showAllLink?: boolean;
   showHeader?: boolean;
-  displayMode?: "albums" | "photos";
+  displayMode?: "albums" | "carousel" | "grid";
 };
 
 export function GalleryShowcase({ items, title = "Galeri", description, showAllLink = true, showHeader = true, displayMode = "albums" }: GalleryShowcaseProps) {
@@ -67,46 +67,67 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
     move(direction);
   }
 
+  // Grid mode for /galeri page
+  if (displayMode === "grid") {
+    return (
+      <section className="overflow-hidden border-t border-zinc-200 bg-white px-4 py-14 text-zinc-950 md:py-20" aria-label="Fotoğraflar">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:gap-6">
+            {items.map((item) => (
+              <figure key={item.id} className="relative aspect-square overflow-hidden rounded-lg border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-shadow" onClick={() => window.open(item.imageUrl || '', '_blank')}>
+                {item.imageUrl ? (
+                  <div className="absolute inset-0 bg-cover bg-center hover:scale-105 transition-transform duration-300" style={{ backgroundImage: `url(${item.imageUrl})` }} role="img" aria-label={item.title} />
+                ) : (
+                  <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
+                    <Images className="size-12" />
+                  </div>
+                )}
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  // Carousel mode (albums and carousel displayModes)
   return (
     <section className="overflow-hidden border-t border-zinc-200 bg-white px-4 py-14 text-zinc-950 md:py-20" aria-labelledby={showHeader ? "gallery-showcase-title" : undefined}>
       <div className="mx-auto max-w-7xl">
-        {showHeader ? <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div className="flex items-center gap-3">
-            <span className="grid h-12 w-9 -translate-y-[3px] shrink-0 place-items-center rounded-lg bg-red-50 text-red-600">
-              <Images className="size-4" aria-hidden="true" />
-            </span>
-            <div>
-              <p className="text-xs font-semibold uppercase leading-tight tracking-[0.02em] text-red-600">Anılarımızdan Seçkiler</p>
-              <h2 id="gallery-showcase-title" className="mt-0.5 text-2xl font-bold leading-tight tracking-tight text-zinc-950 md:text-[1.75rem]">{title}</h2>
-              {description ? <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-600">{description}</p> : null}
+        {showHeader ? (
+          <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <div className="flex items-center gap-3">
+              <span className="grid h-12 w-9 -translate-y-[3px] shrink-0 place-items-center rounded-lg bg-red-50 text-red-600">
+                <Images className="size-4" aria-hidden="true" />
+              </span>
+              <div>
+                <p className="text-xs font-semibold uppercase leading-tight tracking-[0.02em] text-red-600">Anılarımızdan Seçkiler</p>
+                <h2 id="gallery-showcase-title" className="mt-0.5 text-2xl font-bold leading-tight tracking-tight text-zinc-950 md:text-[1.75rem]">
+                  {title}
+                </h2>
+                {description ? <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-600">{description}</p> : null}
+              </div>
             </div>
+            {showAllLink ? (
+              <Link href="/galeri" className="inline-flex touch-manipulation items-center gap-2 self-start rounded-sm text-sm font-bold text-zinc-900 transition-colors hover:text-red-700 active:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 sm:self-auto">
+                Tüm galeriyi görüntüle <ArrowRight className="size-4 text-zinc-900" aria-hidden="true" />
+              </Link>
+            ) : null}
           </div>
-          {showAllLink ? (
-            <Link href="/galeri" className="inline-flex items-center gap-2 self-start rounded-sm text-sm font-bold text-zinc-900 transition-colors hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 sm:self-auto">
-              Tüm galeriyi görüntüle <ArrowRight className="size-4 text-zinc-900" aria-hidden="true" />
-            </Link>
-          ) : null}
-        </div> : null}
+        ) : null}
 
         <div className="relative">
-          <div ref={trackRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" tabIndex={0} aria-label="Fotoğraf albümleri">
-            {items.map((item) => displayMode === "photos" ? (
-              <figure key={item.id} className="relative aspect-[4/3] min-w-[82%] snap-start overflow-hidden rounded-lg border border-zinc-200 bg-white sm:min-w-[46%] lg:min-w-[31%]">
+          <div ref={trackRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" tabIndex={0} aria-label="Fotoğraf galerisi">
+            {items.map((item) => (
+              <figure key={item.id} className="relative aspect-[4/3] min-w-[78%] snap-start overflow-hidden rounded-lg border border-zinc-200 bg-white sm:min-w-[43%] lg:min-w-[29%]">
                 {item.imageUrl ? (
                   <div className="absolute inset-0 bg-contain bg-center bg-no-repeat" style={{ backgroundImage: `url(${item.imageUrl})` }} role="img" aria-label={item.title} />
                 ) : (
-                  <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true"><Images className="size-12" /></div>
+                  <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
+                    <Images className="size-12" />
+                  </div>
                 )}
               </figure>
-            ) : (
-              <Link key={item.id} href={item.href} className="group relative aspect-[4/3] min-w-[82%] snap-start overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm outline-none sm:min-w-[46%] lg:min-w-[31%] focus-visible:ring-2 focus-visible:ring-red-600 focus-visible:ring-offset-4 focus-visible:ring-offset-white">
-                {item.imageUrl ? <div className="absolute inset-0 bg-cover bg-center transition-transform duration-500 motion-reduce:transition-none group-hover:scale-105" style={{ backgroundImage: `url(${item.imageUrl})` }} aria-hidden="true" /> : <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true"><Images className="size-12" /></div>}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" aria-hidden="true" />
-                <div className="absolute inset-x-0 bottom-0 p-5">
-                  {item.date ? <time dateTime={item.dateTime} className="text-xs font-semibold uppercase tracking-wider text-red-400">{item.date}</time> : null}
-                  <h3 className="mt-1 text-lg font-bold leading-snug text-white [overflow-wrap:anywhere]">{item.title}</h3>
-                </div>
-              </Link>
             ))}
           </div>
 
@@ -116,7 +137,16 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
                 const isPrevious = direction === -1;
                 const Icon = isPrevious ? ChevronLeft : ChevronRight;
                 return (
-                  <button key={direction} type="button" onTouchEnd={(event) => handleTouchEnd(event, direction)} onClick={(event) => handleClick(event, direction)} className={`pointer-events-auto grid size-12 touch-manipulation select-none place-items-center rounded-full border border-zinc-300 bg-white text-zinc-900 shadow-md transition-all hover:border-red-600 hover:bg-red-600 hover:text-white active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 ${pressedDirection === direction ? "scale-95" : ""}`} aria-label={isPrevious ? "Önceki görseller" : "Sonraki görseller"}>
+                  <button
+                    key={direction}
+                    type="button"
+                    onTouchEnd={(event) => handleTouchEnd(event, direction)}
+                    onClick={(event) => handleClick(event, direction)}
+                    className={`pointer-events-auto grid size-12 touch-manipulation select-none place-items-center rounded-full border shadow-md transition-all hover:border-red-600 hover:bg-red-600 hover:text-white active:scale-95 active:border-red-600 active:bg-red-600 active:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 ${
+                      pressedDirection === direction ? "scale-95 border-red-600 bg-red-600 text-white" : "border-zinc-300 bg-white text-zinc-900"
+                    }`}
+                    aria-label={isPrevious ? "Önceki görseller" : "Sonraki görseller"}
+                  >
                     <Icon className="size-5" aria-hidden="true" />
                   </button>
                 );

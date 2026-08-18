@@ -35,7 +35,7 @@ export async function HomeFaqSection() {
           </div>
           <Link
             href="/sss"
-            className="inline-flex items-center gap-2 self-start rounded-sm text-sm font-bold text-zinc-900 transition-colors hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 sm:self-auto"
+            className="inline-flex touch-manipulation items-center gap-2 self-start rounded-sm text-sm font-bold text-zinc-900 transition-colors hover:text-red-700 active:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 sm:self-auto"
           >
             Tüm soruları görüntüle
             <ArrowRight className="size-4 text-zinc-900" aria-hidden="true" />

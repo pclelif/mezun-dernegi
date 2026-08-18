@@ -1,48 +1,33 @@
 "use client";
 
-import { LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
-import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
-import { createClient, formatTurkishDate, type DbGallery } from "@/lib/supabase/client";
+import { LoaderCircle, Trash2, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ImageUploader } from "@/components/admin/ImageUploader";
+import { createClient, type DbGalleryImage } from "@/lib/supabase/client";
 
 export default function AdminGalleryPage() {
-  const [items, setItems] = useState<DbGallery[]>([]);
+  const [images, setImages] = useState<DbGalleryImage[]>([]);
+  const [uploads, setUploads] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-
-  const loadItems = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const supabase = createClient();
-      const { data, error: queryError } = await supabase
-        .from("galleries")
-        .select("*")
-        .order("created_at", { ascending: false });
-      if (queryError) throw queryError;
-      setItems((data ?? []) as DbGallery[]);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Albümler yüklenemedi.");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
     const supabase = createClient();
     void supabase
-      .from("galleries")
+      .from("gallery_images")
       .select("*")
       .order("created_at", { ascending: false })
       .then(({ data, error: queryError }) => {
         if (!active) return;
         if (queryError) {
           setError(queryError.message);
-          setItems([]);
+          setImages([]);
         } else {
-          setItems((data ?? []) as DbGallery[]);
+          setImages((data ?? []) as DbGalleryImage[]);
         }
         setLoading(false);
       });
@@ -52,16 +37,42 @@ export default function AdminGalleryPage() {
     };
   }, []);
 
-  async function handleDelete(id: string, title: string) {
-    if (!window.confirm(`"${title}" albümünü ve fotoğraf kayıtlarını silmek istediğinize emin misiniz?`)) return;
+  async function handleAddPhotos() {
+    if (!uploads.length) return;
+    setSaving(true);
+    setError(null);
+    try {
+      const supabase = createClient();
+      const { data, error: insertError } = await supabase
+        .from("gallery_images")
+        .insert(
+          uploads.map((image_url) => ({
+            gallery_id: "00000000-0000-0000-0000-000000000000",
+            image_url,
+            display_order: images.length + uploads.indexOf(image_url),
+          }))
+        )
+        .select("*");
+      if (insertError) throw insertError;
+      setImages((current) => [...(data as DbGalleryImage[]), ...current]);
+      setUploads([]);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Fotoğraflar yüklenemedi.");
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  async function handleDelete(id: string) {
+    if (!window.confirm("Bu fotoğrafı silmek istediğinize emin misiniz?")) return;
     setDeletingId(id);
     try {
       const supabase = createClient();
-      const { error: deleteError } = await supabase.from("galleries").delete().eq("id", id);
+      const { error: deleteError } = await supabase.from("gallery_images").delete().eq("id", id);
       if (deleteError) throw deleteError;
-      setItems((current) => current.filter((item) => item.id !== id));
+      setImages((current) => current.filter((item) => item.id !== id));
     } catch (err) {
-      window.alert(err instanceof Error ? err.message : "Albüm silinemedi.");
+      setError(err instanceof Error ? err.message : "Fotoğraf silinemedi.");
     } finally {
       setDeletingId(null);
     }
@@ -69,55 +80,79 @@ export default function AdminGalleryPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-2xl font-bold text-zinc-950">Galeri</h1>
-          <p className="mt-1 text-sm text-slate-600">Fotoğraf albümlerini yönetin.</p>
-        </div>
-        <Link
-          href="/admin/galeri/yeni"
-          className="inline-flex items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-4 py-2.5 text-sm font-semibold text-white hover:bg-red-700"
-        >
-          <Plus className="size-4" aria-hidden="true" />
-          Yeni Albüm
-        </Link>
+      <div>
+        <h1 className="text-2xl font-bold text-zinc-950">Galeri</h1>
+        <p className="mt-1 text-sm text-slate-600">Fotoğrafları yönetin.</p>
       </div>
+
+      {error && <p className="rounded-md bg-red-50 p-4 text-sm text-red-700">{error}</p>}
+
+      <section className="rounded-xl border bg-white p-5 shadow-sm">
+        <ImageUploader value={uploads} onChange={setUploads} label="Yeni fotoğraflar" multiple />
+        <button
+          type="button"
+          disabled={saving || !uploads.length}
+          onClick={() => void handleAddPhotos()}
+          className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-md bg-red-600 px-4 font-semibold text-white disabled:opacity-50"
+        >
+          Fotoğrafları Ekle
+        </button>
+      </section>
 
       {loading ? (
         <p className="flex items-center justify-center gap-2 py-16 text-sm text-slate-500">
           <LoaderCircle className="size-5 animate-spin" aria-hidden="true" />
           Yükleniyor…
         </p>
-      ) : error ? (
-        <p className="rounded-md bg-red-50 p-4 text-sm text-red-700">{error}</p>
-      ) : items.length === 0 ? (
+      ) : images.length === 0 ? (
         <p className="rounded-xl border border-dashed border-zinc-300 bg-white px-6 py-12 text-center text-sm text-slate-500">
-          Henüz albüm yok.
+          Henüz fotoğraf yok.
         </p>
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
-          {items.map((item) => (
-            <article key={item.id} className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
+        <div className="grid gap-4 grid-cols-4">
+          {images.map((photo) => (
+            <article key={photo.id} className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
               <div
-                className="aspect-video bg-slate-200 bg-cover bg-center"
-                style={item.cover_image_url ? { backgroundImage: `url(${item.cover_image_url})` } : undefined}
+                className="aspect-square bg-slate-200 bg-cover bg-center cursor-pointer hover:opacity-90 transition-opacity"
+                style={{ backgroundImage: `url(${photo.image_url})` }}
                 aria-hidden="true"
+                onClick={() => setSelectedImage(photo.image_url)}
               />
-              <div className="p-4">
-                <h2 className="font-bold text-zinc-950">{item.title}</h2>
-                <p className="mt-1 text-sm text-slate-500">{formatTurkishDate(item.date) || "Tarih yok"}</p>
-                <div className="mt-4 flex gap-2"><Link href={`/admin/galeri/${item.id}`} className="inline-flex items-center gap-1.5 rounded-md border border-zinc-300 px-2.5 py-1.5 text-xs font-semibold"><Pencil className="size-3.5" />Albümü Yönet</Link><button
+              <div className="p-3">
+                <button
                   type="button"
-                  onClick={() => void handleDelete(item.id, item.title)}
-                  disabled={deletingId === item.id}
-                  className="inline-flex items-center gap-1.5 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:opacity-50"
+                  onClick={() => void handleDelete(photo.id)}
+                  disabled={deletingId === photo.id}
+                  className="w-full inline-flex items-center justify-center gap-1 rounded-md border border-red-200 px-2 py-1 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:opacity-50"
                 >
                   <Trash2 className="size-3.5" aria-hidden="true" />
-                  {deletingId === item.id ? "Siliniyor…" : "Sil"}
-                </button></div>
+                  {deletingId === photo.id ? "Siliniyor…" : "Sil"}
+                </button>
               </div>
             </article>
           ))}
+        </div>
+      )}
+
+      {/* Lightbox Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setSelectedImage(null)}
+            className="absolute top-4 right-4 z-10 rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors"
+          >
+            <X className="size-6 text-white" />
+          </button>
+          <img
+            src={selectedImage}
+            alt="Büyütülmüş fotoğraf"
+            className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
         </div>
       )}
     </div>

@@ -11,10 +11,10 @@ const legalLinks = [
   { href: "/kullanim-kosullari", label: "Kullanım Koşulları" },
 ];
 
-export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4\nÇankaya/Ankara" }: { logoUrl?: string; address?: string }) {
+export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420\nÇankaya/Ankara" }: { logoUrl?: string; address?: string }) {
   return (
     <footer className="bg-[#18181b] font-sans text-white">
-      <div className="mx-auto grid w-[min(100%-2rem,80rem)] items-start gap-8 py-7 md:grid-cols-2 md:gap-10 md:py-8 lg:grid-cols-[1fr_auto_1fr]">
+      <div className="mx-auto grid w-[min(100%-2rem,80rem)] items-start gap-8 py-7 md:grid-cols-2 md:gap-10 md:py-8 lg:grid-cols-[1fr_auto_1fr] lg:gap-16">
         <div>
           <Link href="/" className="inline-flex items-center gap-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`${associationName} ana sayfa`}>
             <Image src={logoUrl} alt="" width={56} height={56} className="size-14 shrink-0 rounded-full bg-white object-cover" />
@@ -22,29 +22,34 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
           </Link>
         </div>
 
-        <nav className="sm:w-fit sm:max-w-full lg:translate-x-3 lg:justify-self-center" aria-label="Hakkımızda bağlantıları">
-          <h2 className="w-full border-b border-white/20 pb-2 text-left text-sm font-semibold text-white">Hakkımızda</h2>
-          <ul className="mt-3 grid gap-y-2 text-sm leading-5 sm:grid-cols-[max-content_max-content] sm:gap-x-6">
-            {corporateNavigation.map((item) => (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className="rounded-sm text-zinc-300 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <nav className="w-full sm:w-fit sm:max-w-full lg:translate-x-8 lg:justify-self-center" aria-label="Hakkımızda bağlantıları">
+          <div className="w-full sm:w-fit sm:max-w-full">
+            <h2 className="relative w-full pb-2 text-left text-sm font-semibold text-white after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/20 after:content-['']">Hakkımızda</h2>
+            <ul className="mt-3 grid gap-y-2 text-sm leading-5 sm:grid-cols-[max-content_max-content] sm:gap-x-6">
+              {corporateNavigation.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="touch-manipulation rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </nav>
 
-        <div className="w-full max-w-md sm:w-[20.5rem] md:col-span-2 lg:col-span-1 lg:justify-self-end">
-          <h2 className="border-b border-white/20 pb-2 text-left text-sm font-semibold text-white">
-            Adres
-          </h2>
-          <address className="mt-3 text-sm not-italic leading-6 text-zinc-200">
-            <span className="whitespace-pre-line">{address}</span>
-          </address>
+        <div className="w-full sm:w-fit sm:max-w-full md:col-span-2 lg:col-span-1 lg:justify-self-end lg:ml-auto lg:-translate-x-4">
+          <div className="w-full sm:w-fit sm:max-w-full lg:ml-auto text-left">
+            <h2 className="relative w-full pb-2 text-left text-sm font-semibold text-white after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/20 after:content-['']">
+              Adres
+            </h2>
+            <address className="mt-3 text-sm not-italic leading-6 text-zinc-200">
+              <span className="block sm:w-max sm:max-w-full">Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420</span>
+              <span className="block">Çankaya/Ankara</span>
+            </address>
+          </div>
         </div>
       </div>
 
@@ -59,7 +64,7 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
                 {index % 2 === 1 ? <span className="mr-3 text-zinc-500" aria-hidden="true">·</span> : null}
                 <Link
                   href={item.href}
-                  className="rounded-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="touch-manipulation rounded-sm text-zinc-400 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   {item.label}
                 </Link>
@@ -76,7 +81,7 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
                 ) : null}
                 <Link
                   href={item.href}
-                  className="rounded-sm text-zinc-400 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  className="touch-manipulation rounded-sm text-zinc-400 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   {item.label}
                 </Link>

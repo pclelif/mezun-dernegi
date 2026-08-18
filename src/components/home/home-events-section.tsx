@@ -4,7 +4,7 @@ import { EventCard } from "@/components/cards/event-card";
 import { getEvents, mapEventToCardProps } from "@/lib/supabase/queries";
 
 const textLinkClass =
-  "inline-flex items-center gap-2 rounded-sm text-sm font-bold text-zinc-900 hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
+  "inline-flex touch-manipulation items-center gap-2 rounded-sm text-sm font-bold text-zinc-900 hover:text-red-700 active:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
 export async function HomeEventsSection() {
   let events: Awaited<ReturnType<typeof getEvents>> = [];

@@ -58,6 +58,16 @@ export async function getGalleryImages(galleryId: string) {
   return data ?? [];
 }
 
+export async function getAllGalleryImages() {
+  const supabase = createServerAnonClient();
+  const { data, error } = await supabase
+    .from("gallery_images")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data ?? [];
+}
+
 export async function getBoardMembers() {
   const supabase = createServerAnonClient();
   const { data, error } = await supabase.from("board_members").select("*").order("display_order", { ascending: true });

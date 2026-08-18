@@ -49,7 +49,7 @@ export function CookieBanner() {
   }
 
   const linkClass =
-    "font-semibold text-[#ec1c24] underline underline-offset-4 transition-colors hover:text-red-700";
+    "touch-manipulation font-semibold text-[#ec1c24] underline underline-offset-4 transition-colors hover:text-red-700 active:text-red-700";
 
   return (
     <div
@@ -75,14 +75,14 @@ export function CookieBanner() {
           <button
             type="button"
             onClick={() => saveConsent("accepted")}
-            className="inline-flex min-h-9 flex-1 items-center justify-center rounded-md bg-[#ec1c24] px-4 text-xs font-semibold text-white transition-colors hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-none"
+            className="inline-flex min-h-9 flex-1 touch-manipulation items-center justify-center rounded-md bg-[#ec1c24] px-4 text-xs font-semibold text-white transition-colors hover:bg-red-700 active:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-none"
           >
             Kabul Et
           </button>
           <button
             type="button"
             onClick={() => saveConsent("rejected")}
-            className="inline-flex min-h-9 flex-1 items-center justify-center rounded-md border border-zinc-300 bg-white px-4 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-none"
+            className="inline-flex min-h-9 flex-1 touch-manipulation items-center justify-center rounded-md border border-zinc-300 bg-white px-4 text-xs font-semibold text-zinc-700 transition-colors hover:bg-zinc-100 active:bg-zinc-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 sm:flex-none"
           >
             Reddet
           </button>

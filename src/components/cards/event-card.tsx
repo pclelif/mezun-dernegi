@@ -54,14 +54,14 @@ export function EventCard({
         </Link>
       </Heading>
       <p className="mt-3 text-sm leading-6 text-zinc-600 [overflow-wrap:anywhere]">{description}</p>
-      <p className="mt-4 flex min-w-0 items-start gap-2 border-t border-zinc-200 pt-4 text-sm leading-6 text-zinc-600">
+      <p className="mt-auto flex min-w-0 items-start gap-2 border-t border-zinc-200 pt-4 text-sm leading-6 text-zinc-600">
         <MapPin className="mt-1 size-4 shrink-0" aria-hidden="true" />
         <span className="[overflow-wrap:anywhere]">{location}</span>
       </p>
       <Link
         href={href}
         aria-label={`${title} etkinliğinin detaylarını görüntüle`}
-        className="mt-auto flex min-h-11 items-center gap-2 self-start rounded-sm pt-5 text-sm font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+        className="flex min-h-11 items-center gap-2 self-start rounded-sm pt-5 text-sm font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
       >
         Detayları incele
         <ArrowRight className="size-4 shrink-0 text-zinc-900" aria-hidden="true" />

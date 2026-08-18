@@ -26,7 +26,7 @@ export function AnnouncementCard({
       <time dateTime={dateTime} className="text-xs font-semibold uppercase tracking-wider text-red-600">
         {date}
       </time>
-      <Heading className="mt-3 text-lg font-bold leading-snug text-zinc-950 [overflow-wrap:anywhere]">
+      <Heading className="mt-4 text-xl font-bold leading-snug text-zinc-950 [overflow-wrap:anywhere]">
         <Link
           href={href}
           className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
@@ -37,10 +37,10 @@ export function AnnouncementCard({
       <p className="mt-3 text-sm leading-6 text-zinc-600 [overflow-wrap:anywhere]">{summary}</p>
       <Link
         href={href}
-        aria-label={`${title} duyurusunun devamını oku`}
+        aria-label={`${title} duyurusunun detaylarını görüntüle`}
         className="mt-auto flex min-h-11 items-center gap-2 self-start rounded-sm pt-5 text-sm font-semibold text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
       >
-        Devamını oku
+        Detayları incele
         <ArrowRight className="size-4 shrink-0 text-zinc-900" aria-hidden="true" />
       </Link>
     </Card>

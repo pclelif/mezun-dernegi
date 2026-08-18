@@ -30,7 +30,7 @@ export function IbanCopyButton({ value }: IbanCopyButtonProps) {
       type="button"
       onClick={() => void copyIban()}
       aria-live="polite"
-      className="inline-flex min-h-10 shrink-0 items-center justify-center rounded-md border border-zinc-300 bg-white px-4 text-sm font-semibold text-zinc-900 transition-colors hover:border-red-600 hover:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+      className="inline-flex min-h-10 touch-manipulation shrink-0 items-center justify-center rounded-md border border-zinc-300 bg-white px-4 text-sm font-semibold text-zinc-900 transition-colors hover:border-red-600 hover:text-red-600 active:border-red-600 active:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
     >
       {copied ? "Kopyalandı" : "Kopyala"}
     </button>
