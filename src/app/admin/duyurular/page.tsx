@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowDown, ArrowUp, ArrowUpDown, LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
+import { ArrowUpDown, GripVertical, LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { createClient, formatTurkishDate, type DbAnnouncement } from "@/lib/supabase/client";
@@ -12,16 +12,16 @@ export default function AdminAnnouncementsPage() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<string>("created-desc");
 
+  // Drag and drop state
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
   const sortItems = useCallback((dataList: DbAnnouncement[], key: string) => {
     const list = [...dataList];
     if (key === "created-desc") {
       list.sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
     } else if (key === "created-asc") {
       list.sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)));
-    } else if (key === "date-desc") {
-      list.sort((a, b) => String(b.date || b.created_at).localeCompare(String(a.date || a.created_at)));
-    } else if (key === "date-asc") {
-      list.sort((a, b) => String(a.date || a.created_at).localeCompare(String(b.date || b.created_at)));
     } else if (key === "title-asc") {
       list.sort((a, b) => a.title.localeCompare(b.title, "tr"));
     } else if (key === "title-desc") {
@@ -82,14 +82,32 @@ export default function AdminAnnouncementsPage() {
     }
   }
 
-  function moveItem(index: number, direction: "up" | "down") {
-    const targetIndex = direction === "up" ? index - 1 : index + 1;
-    if (targetIndex < 0 || targetIndex >= items.length) return;
-    setSortBy("manual");
+  // Drag and drop handlers
+  function handleDragStart(index: number) {
+    if (sortBy !== "manual") return;
+    setDraggedIndex(index);
+  }
+
+  function handleDragOver(e: React.DragEvent, index: number) {
+    if (sortBy !== "manual") return;
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+    setDragOverIndex(index);
+  }
+
+  function handleDrop(index: number) {
+    if (sortBy !== "manual" || draggedIndex === null || draggedIndex === index) return;
     const updated = [...items];
-    const [moved] = updated.splice(index, 1);
-    updated.splice(targetIndex, 0, moved);
+    const [moved] = updated.splice(draggedIndex, 1);
+    updated.splice(index, 0, moved);
     setItems(updated);
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  }
+
+  function handleDragEnd() {
+    setDraggedIndex(null);
+    setDragOverIndex(null);
   }
 
   async function handleDelete(id: string, title: string) {
@@ -124,13 +142,11 @@ export default function AdminAnnouncementsPage() {
               className="h-10 rounded-md border border-zinc-300 bg-white pl-9 pr-4 text-sm font-semibold text-zinc-800 shadow-sm outline-none transition focus:border-red-500 cursor-pointer"
               aria-label="Sıralama ölçütü"
             >
-              <option value="created-desc">Son Eklenenlere Göre (En Yeni)</option>
-              <option value="created-asc">İlk Eklenenlere Göre (En Eski)</option>
-              <option value="date-desc">Etkinlik/Duyuru Tarihine Göre (Yeniden Eskiye)</option>
-              <option value="date-asc">Etkinlik/Duyuru Tarihine Göre (Eskiden Yeniye)</option>
+              <option value="created-desc">Eklenme Tarihine Göre (En Yeni)</option>
+              <option value="created-asc">Eklenme Tarihine Göre (En Eski)</option>
               <option value="title-asc">Başlığa Göre (A-Z)</option>
               <option value="title-desc">Başlığa Göre (Z-A)</option>
-              <option value="manual">Serbest (Manuel Sıralama)</option>
+              <option value="manual">Manuel Sıralama (Sürükle-Bırak)</option>
             </select>
           </div>
           <Link
@@ -161,61 +177,65 @@ export default function AdminAnnouncementsPage() {
         ) : (
           <div className="overflow-x-auto">
             <table className="min-w-full text-left text-sm">
-              <thead className="border-b border-zinc-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500">
+              <thead className="border-b border-zinc-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500 select-none">
                 <tr>
-                  <th className="w-16 px-3 py-3 text-center font-semibold">Sıra</th>
+                  {sortBy === "manual" && <th className="w-10 px-3 py-3 text-center"></th>}
                   <th className="px-4 py-3 font-semibold">Başlık</th>
                   <th className="px-4 py-3 font-semibold">Tarih</th>
                   <th className="px-4 py-3 font-semibold">İşlemler</th>
                 </tr>
               </thead>
               <tbody>
-                {items.map((item, index) => (
-                  <tr key={item.id} className="border-b border-zinc-100 last:border-0 hover:bg-slate-50/50">
-                    <td className="px-3 py-3 text-center">
-                      <div className="flex items-center justify-center gap-1 text-slate-400">
+                {items.map((item, index) => {
+                  const isDragging = draggedIndex === index;
+                  const isOver = dragOverIndex === index;
+
+                  return (
+                    <tr
+                      key={item.id}
+                      draggable={sortBy === "manual"}
+                      onDragStart={() => handleDragStart(index)}
+                      onDragOver={(e) => handleDragOver(e, index)}
+                      onDrop={() => handleDrop(index)}
+                      onDragEnd={handleDragEnd}
+                      className={`border-b border-zinc-100 last:border-0 transition-all duration-150 ${
+                        sortBy === "manual" ? "cursor-grab active:cursor-grabbing" : ""
+                      } ${
+                        isDragging
+                          ? "opacity-30 bg-slate-100 scale-[0.99]"
+                          : isOver
+                          ? "border-t-2 border-t-red-500 bg-red-50/50"
+                          : "hover:bg-slate-50/60"
+                      }`}
+                    >
+                      {sortBy === "manual" && (
+                        <td className="w-10 px-3 py-3 text-center">
+                          <GripVertical className="mx-auto size-4 text-slate-400 hover:text-zinc-700 transition-colors" />
+                        </td>
+                      )}
+                      <td className="px-4 py-3 font-medium text-zinc-900">{item.title}</td>
+                      <td className="px-4 py-3 text-slate-600">{formatTurkishDate(item.date) || "—"}</td>
+                      <td className="flex items-center gap-2 px-4 py-3">
+                        <Link
+                          href={`/admin/duyurular/${item.id}`}
+                          className="inline-flex items-center gap-1.5 rounded-md border border-zinc-300 px-2.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-slate-50"
+                        >
+                          <Pencil className="size-3.5" aria-hidden="true" />
+                          Düzenle
+                        </Link>
                         <button
                           type="button"
-                          onClick={() => moveItem(index, "up")}
-                          disabled={index === 0}
-                          className="rounded p-1 hover:bg-zinc-200 hover:text-zinc-800 disabled:opacity-30"
-                          title="Yukarı taşı"
+                          onClick={() => void handleDelete(item.id, item.title)}
+                          disabled={deletingId === item.id}
+                          className="inline-flex items-center gap-1.5 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-700 transition-colors hover:bg-red-50 disabled:opacity-50"
                         >
-                          <ArrowUp className="size-3.5" />
+                          <Trash2 className="size-3.5" aria-hidden="true" />
+                          {deletingId === item.id ? "Siliniyor…" : "Sil"}
                         </button>
-                        <button
-                          type="button"
-                          onClick={() => moveItem(index, "down")}
-                          disabled={index === items.length - 1}
-                          className="rounded p-1 hover:bg-zinc-200 hover:text-zinc-800 disabled:opacity-30"
-                          title="Aşağı taşı"
-                        >
-                          <ArrowDown className="size-3.5" />
-                        </button>
-                      </div>
-                    </td>
-                    <td className="px-4 py-3 font-medium text-zinc-900">{item.title}</td>
-                    <td className="px-4 py-3 text-slate-600">{formatTurkishDate(item.date) || "—"}</td>
-                    <td className="flex items-center gap-2 px-4 py-3">
-                      <Link
-                        href={`/admin/duyurular/${item.id}`}
-                        className="inline-flex items-center gap-1.5 rounded-md border border-zinc-300 px-2.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-slate-50"
-                      >
-                        <Pencil className="size-3.5" aria-hidden="true" />
-                        Düzenle
-                      </Link>
-                      <button
-                        type="button"
-                        onClick={() => void handleDelete(item.id, item.title)}
-                        disabled={deletingId === item.id}
-                        className="inline-flex items-center gap-1.5 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-700 transition-colors hover:bg-red-50 disabled:opacity-50"
-                      >
-                        <Trash2 className="size-3.5" aria-hidden="true" />
-                        {deletingId === item.id ? "Siliniyor…" : "Sil"}
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>
