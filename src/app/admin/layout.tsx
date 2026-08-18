@@ -29,7 +29,7 @@ const navItems: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/admin/etkinlikler", label: "Etkinlikler", icon: CalendarDays },
   { href: "/admin/duyurular", label: "Duyurular", icon: Megaphone },
   { href: "/admin/galeri", label: "Galeri", icon: Images },
-  { href: "/admin/kurul", label: "Yönetim ve Denetim Kurulları", icon: UsersRound },
+  { href: "/admin/kurul", label: "Yönetim ve Denetim Kurulu", icon: UsersRound },
   { href: "/admin/icerik/uyelik", label: "Üyelik Bilgileri", icon: UserRoundCheck },
   { href: "/admin/icerik/aidat-bagis", label: "Aidat ve Bağış", icon: BadgeDollarSign },
   { href: "/admin/iletisim", label: "İletişim", icon: Contact },

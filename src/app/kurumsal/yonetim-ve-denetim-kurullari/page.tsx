@@ -3,7 +3,7 @@ import { BoardMemberCard } from "@/components/cards/board-member-card";
 import { PageHero } from "@/components/shared/page-hero";
 import { getBoardMembers } from "@/lib/supabase/queries";
 
-export const metadata: Metadata = { title: "Yönetim ve Denetim Kurulları" };
+export const metadata: Metadata = { title: "Yönetim ve Denetim Kurulu" };
 export const dynamic = "force-dynamic";
 
 export default async function BoardsPage() {
@@ -21,15 +21,15 @@ export default async function BoardsPage() {
     <>
       <PageHero
         eyebrow="DERNEĞİMİZİN KURULLARI"
-        title="Yönetim ve Denetim Kurulları"
+        title="Yönetim ve Denetim Kurulu"
         description="Derneğimizin yönetim ve denetim çalışmalarını yürüten kurul üyelerimiz."
         titleClassName="panel-title--compact"
         descriptionClassName="panel-copy--compact"
       />
-      <div className="mx-auto w-[min(100%-2rem,75rem)] py-12 md:w-[min(100%-4rem,75rem)] md:py-16 space-y-12 md:space-y-16">
+      <div className="mx-auto w-[min(100%-2rem,75rem)] py-12 md:w-[min(100%-4rem,75rem)] md:py-16 space-y-10 md:space-y-12">
         <section aria-labelledby="management-board-heading">
-          <div className="mb-6 border-b border-zinc-200 pb-3">
-            <h2 id="management-board-heading" className="text-xl font-bold tracking-tight text-zinc-950 md:text-2xl">
+          <div className="mb-5 border-b border-zinc-200 pb-2.5">
+            <h2 id="management-board-heading" className="text-base font-bold tracking-tight text-zinc-950 md:text-lg">
               Yönetim Kurulu
             </h2>
           </div>
@@ -52,8 +52,8 @@ export default async function BoardsPage() {
         </section>
 
         <section aria-labelledby="audit-board-heading">
-          <div className="mb-6 border-b border-zinc-200 pb-3">
-            <h2 id="audit-board-heading" className="text-xl font-bold tracking-tight text-zinc-950 md:text-2xl">
+          <div className="mb-5 border-b border-zinc-200 pb-2.5">
+            <h2 id="audit-board-heading" className="text-base font-bold tracking-tight text-zinc-950 md:text-lg">
               Denetim Kurulu
             </h2>
           </div>
