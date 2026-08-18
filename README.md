@@ -2,13 +2,15 @@
 
 Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği için geliştirilmiş kurumsal web sitesi ve yönetim paneli uygulamasıdır. Proje; dernek faaliyetlerinin paylaşılması, duyuru ve etkinliklerin yayımlanması, üyelik ve aidat süreçleri hakkında bilgi sunulması, mezunlar ve ziyaretçilerle iletişim kurulması ve tüm bu içeriklerin yönetim paneli üzerinden dinamik olarak yönetilmesi amacıyla tasarlanmıştır.
 
----
+## Proje Hakkında
+
+Bu proje, mezunlar arasındaki iletişimi ve dayanışmayı artırmak, dernek faaliyetlerini kamuoyuna duyurmak, üyelik ve aidat süreçlerini bilgilendirmek ve yönetim kurulu tarafından web sitesi içeriklerinin dinamik olarak yönetilebilmesini sağlamak amacıyla geliştirilmiştir.
 
 ## Özellikler
 
 ### Kullanıcı Tarafı (Kamuya Açık Portal)
 
-- **Ana Sayfa:** Karşılama alanı, öne çıkan duyurular, yaklaşan etkinlikler, fotoğraf galerisi seçkisi ve sıkça sorulan sorular.
+- **Ana Sayfa:** Karşılama alanı, öne çıkan duyurular, yaklaşan etkinlik kartları, fotoğraf galerisi seçkisi ve sıkça sorulan sorular.
 - **Duyurular:** Tüm duyuruların listelendiği arşiv sayfası ve detay kartı görünümleri.
 - **Etkinlikler:** Yaklaşan ve geçmiş etkinliklerin listelendiği sayfa, tarih/saat/konum bilgileri ve detay kartları.
 - **Galeri:** Etkinlik ve dernek fotoğraflarının sergilendiği grid ve carousel görünümleri ile tam ekran resim büyütme (Lightbox) desteği.
@@ -26,8 +28,6 @@ Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları D
 - **Kurul Üyeleri Yönetimi:** Yönetim ve denetim kurulu üyelerini ekleme, görev ve fotoğraf güncelleme.
 - **Galeri Yönetimi:** Çoklu fotoğraf yükleme, sürükle-bırak (Drag & Drop) ile sıralama değiştirme ve silme.
 - **SSS Yönetimi:** Sıkça sorulan soruları ekleme, düzenleme ve silme.
-
----
 
 ## Teknolojiler
 
@@ -50,40 +50,20 @@ Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları D
 ### Güvenlik & Yönlendirme
 - **Middleware:** Next.js Proxy Middleware (`src/proxy.ts`)
 
----
-
 ## Proje Yapısı
 
 ```text
 mezun-dernegi/
-├── public/                     # Statik varlıklar (Logolar, favicon, PDF belgeleri)
+├── public/                     # Statik dosyalar (Logo, SVG, PDF)
 ├── src/
-│   ├── app/                    # Next.js App Router sayfaları ve yönlendirmeleri
-│   │   ├── admin/              # Yönetim paneli sayfaları (iletisim, duyurular, kurul vb.)
-│   │   ├── duyurular/          # Duyuru liste ve detay sayfaları
-│   │   ├── etkinlikler/        # Etkinlik liste ve detay sayfaları
-│   │   ├── galeri/             # Fotoğraf galerisi sayfası
-│   │   ├── iletisim/           # İletişim sayfası
-│   │   ├── kurumsal/           # Kurumsal bilgi sayfaları (hakkimizda, tuzuk vb.)
-│   │   ├── uyelik/             # Üyelik ve aidat sayfaları
-│   │   ├── globals.css         # Global stil tanımlamaları
-│   │   ├── layout.tsx          # Ana site düzeni (Header, Footer, Metadata)
-│   │   └── proxy.ts            # Admin rotalarını koruyan middleware katmanı
-│   ├── components/             # Yeniden kullanılabilir arayüz bileşenleri
-│   │   ├── admin/              # Yönetim paneline özel formlar ve yükleyiciler
-│   │   ├── cards/              # Kart bileşenleri (Duyuru, Etkinlik, Kurul)
-│   │   ├── forms/              # İletişim formu ve girdi elemanları
-│   │   ├── home/               # Ana sayfa modülleri ve galeri vitrini
-│   │   ├── layout/             # Header, Footer ve genel sayfa kabuğu
-│   │   └── shared/             # Ortak sayfa başlıkları ve dönüş butonları
-│   ├── config/                 # Navigasyon, site ayarları ve içerik yapılandırmaları
+│   ├── app/                    # App Router rotaları (Kamu ve Admin)
+│   ├── components/             # Bileşenler (Admin, Cards, Forms, Home, Layout, Shared)
+│   ├── config/                 # Navigasyon ve içerik konfigürasyonları
 │   ├── lib/                    # Supabase istemcisi ve veritabanı sorguları
-│   └── styles/                 # CSS tasarım token'ları
+│   └── styles/                 # Özel stil tanımları ve tasarım token'ları
 ├── supabase/                   # Veritabanı SQL migration dosyaları
-└── next.config.mjs             # Next.js konfigürasyon dosyası
+└── next.config.mjs             # Next.js ayarları
 ```
-
----
 
 ## Kurulum
 
@@ -118,8 +98,6 @@ mezun-dernegi/
 
 Tarayıcınızda `http://localhost:3000` adresine giderek uygulamayı görüntüleyebilirsiniz.
 
----
-
 ## Environment Variables
 
 Projede Supabase veritabanı, kimlik doğrulama ve depolama servisleri ile iletişim kurabilmek için aşağıdaki çevre değişkenleri kullanılmaktadır:
@@ -129,14 +107,10 @@ Projede Supabase veritabanı, kimlik doğrulama ve depolama servisleri ile ileti
 
 Geliştirme yaparken bu değişkenleri kök dizindeki `.env.local` dosyası içerisine eklemeniz gerekmektedir. Örnek yapılandırma için `.env.example` dosyasını referans alabilirsiniz.
 
----
-
 ## Kullanım
 
 - **Ziyaretçiler:** Ana sayfayı gezebilir, duyuruları ve etkinlikleri inceleyebilir, galerideki fotoğrafları inceleyebilir, kurumsal bilgileri okuyabilir, üyelik formunu indirebilir ve iletişim formu üzerinden dernek yönetimine mesaj gönderebilir.
 - **Yöneticiler:** `/admin/login` adresi üzerinden giriş yaparak yönetim paneline erişir. Panel üzerinden gelen mesajları yönetebilir; duyuruları, etkinlikleri, kurul üyelerini, galeri fotoğraflarını ve SSS içeriklerini ekleyebilir, düzenleyebilir veya silebilir.
-
----
 
 ## Sıralama Mantığı
 
@@ -146,16 +120,12 @@ Uygulama genelinde içeriklerin listelenmesi ve sıralanması kullanım amacına
 - **Etkinlikler:** Etkinlik tarihine göre sınıflandırılır. Yaklaşan etkinlikler en yakın tarihten ileriye doğru, geçmiş etkinlikler ise gerçekleşme tarihine göre arşivlenir.
 - **Galeri:** Yönetim panelinde sürüklenebilir kartlar (Drag & Drop) ile belirlediğiniz özel sıra (`display_order`) saklanır. İstenildiğinde tarihe göre sıralama moduna da geçilebilir.
 
----
-
 ## Yönetim Paneli
 
 Yönetim paneli (`/admin`), dernek yetkililerinin site içeriğini kod müdahalesi olmadan güncelleyebilmesini sağlar. 
 
 - **Erişim Koruması:** `proxy.ts` middleware katmanı, oturum açmamış kullanıcıların yönetim sayfalarına erişmesini engeller ve kullanıcıyı `/admin/login` sayfasına yönlendirir. Oturum açmış yöneticiler Supabase Auth jetonu ile doğrulanır.
 - **Veri Güvenliği:** Veritabanındaki güncelleme ve silme işlemleri Supabase Row Level Security (RLS) politikaları ile korunmaktadır.
-
----
 
 ## Veritabanı
 
@@ -170,8 +140,6 @@ Veritabanında yönetilen temel veri grupları şunlardır:
 - `site_content`: Ana sayfa, kurumsal sayfalar ve genel site metinlerinin dinamik ayarları.
 - `contact_messages`: İletişim formu üzerinden gönderilen mesajlar, okundu bilgileri ve gönderim tarihleri.
 
----
-
 ## Deployment
 
 Proje Next.js standartlarında hazırlanmış olup Vercel veya Node.js destekleyen herhangi bir sunucu ortamında derlenebilir.
@@ -183,8 +151,6 @@ npm run build
 npm start
 ```
 
----
-
 ## Tasarım Yaklaşımı
 
 Tasarımda Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği'nin kurumsal kimliğini yansıtan modern, sade ve kullanıcı odaklı bir arayüz hedeflenmiştir. 
@@ -193,22 +159,14 @@ Tasarımda Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi M
 - Tüm içerik alanlarında okunabilirliği yüksek tipografi tercih edilmiştir.
 - Mobil cihazlarda kolay kullanım için 44px dokunma hedefleri, özel çekmece (drawer) gezinme menüsü ve dokunmatik kart tasarımları uygulanmıştır.
 
----
-
 ## Geliştirme Notları
 
 - **Strict TypeScript:** Kod tabanındaki tüm bileşenler ve veri modelleri TypeScript ile tiplendirilmiştir. Yeni sayfa ve bileşen eklerken tür tanımlarına dikkat edilmelidir.
 - **Next.js Middleware:** Admin yetkilendirme mantığı `src/proxy.ts` dosyasında yer almaktadır. Rota değişikliklerinde bu dosyadaki eşleşme kuralları göz önünde bulundurulmalıdır.
 - **Client/Server Ayrımı:** Supabase istemci fonksiyonları `src/lib/supabase/client.ts` ve `src/lib/supabase/server.ts` dosyaları üzerinden ayrıştırılmıştır.
 
----
-
 ## Lisans
 
 Bu proje Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği adına özel olarak geliştirilmiştir. Tüm hakları saklıdır.
 
----
-
-## Geliştirici
-
-- Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği Geliştirme Ekibi
+- **İletişim:** kaaflmezunder@gmail.com
