@@ -110,7 +110,7 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Maha
               <Fragment key={item.href}>
                 {index > 0 ? (
                   <span className="text-zinc-500" aria-hidden="true">
-                    •
+                    ·
                   </span>
                 ) : null}
                 <Link
