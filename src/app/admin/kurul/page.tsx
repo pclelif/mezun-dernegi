@@ -151,10 +151,10 @@ export default function AdminBoardMembersPage() {
               <thead className="border-b border-zinc-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500 select-none">
                 <tr>
                   <th className="w-12 px-4 py-3.5 text-center"></th>
-                  <th className="w-full px-6 py-3.5 font-semibold">Ad Soyad</th>
-                  <th className="whitespace-nowrap px-6 py-3.5 font-semibold">Görev</th>
-                  <th className="whitespace-nowrap px-6 py-3.5 font-semibold">Kurul</th>
-                  <th className="whitespace-nowrap px-6 py-3.5 font-semibold">İşlemler</th>
+                  <th className="px-6 py-3.5 font-semibold">Ad Soyad</th>
+                  <th className="px-6 py-3.5 font-semibold">Görev</th>
+                  <th className="px-6 py-3.5 font-semibold">Kurul</th>
+                  <th className="px-6 py-3.5 font-semibold">İşlemler</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-zinc-100">
