@@ -183,9 +183,9 @@ export default function AdminFaqsPage() {
               className="h-10 appearance-none rounded-md border border-zinc-300 bg-white pl-9 pr-9 text-sm font-semibold text-zinc-800 shadow-sm outline-none transition focus:border-red-500 cursor-pointer"
               aria-label="Sıralama ölçütü"
             >
-              <option value="manual">Manuel Sıralama</option>
               <option value="created-desc">Eklenme Tarihine Göre</option>
               <option value="title-asc">Başlığa Göre</option>
+              <option value="manual">Manuel Sıralama</option>
             </select>
             <ChevronDown className="pointer-events-none absolute right-3 size-4 text-slate-500" aria-hidden="true" />
           </div>
