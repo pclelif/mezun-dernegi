@@ -83,14 +83,17 @@ export default function AdminAnnouncementsPage() {
   }
 
   // Drag and drop handlers
-  function handleDragStart(index: number) {
+  function handleDragStart(e: React.DragEvent, index: number) {
     if (sortBy !== "manual") return;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.dropEffect = "move";
     setDraggedIndex(index);
   }
 
   function handleDragOver(e: React.DragEvent, index: number) {
     if (sortBy !== "manual") return;
     e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
     if (draggedIndex === null || draggedIndex === index) return;
     setDragOverIndex(index);
   }
@@ -192,7 +195,7 @@ export default function AdminAnnouncementsPage() {
                     <tr
                       key={item.id}
                       draggable={sortBy === "manual"}
-                      onDragStart={() => handleDragStart(index)}
+                      onDragStart={(e) => handleDragStart(e, index)}
                       onDragOver={(e) => handleDragOver(e, index)}
                       onDrop={() => handleDrop(index)}
                       onDragEnd={handleDragEnd}
@@ -208,7 +211,7 @@ export default function AdminAnnouncementsPage() {
                     >
                       {sortBy === "manual" && (
                         <td className="w-10 px-3 py-3 text-center">
-                          <GripVertical className="mx-auto size-4 text-slate-400 hover:text-zinc-700 transition-colors" />
+                          <GripVertical className="mx-auto size-4 text-slate-400 hover:text-red-600 transition-colors" />
                         </td>
                       )}
                       <td className="px-4 py-3 font-medium text-zinc-900">{item.title}</td>
