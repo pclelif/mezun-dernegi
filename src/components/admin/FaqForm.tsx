@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, LoaderCircle } from "lucide-react";
+import { ArrowLeft, ChevronDown, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
@@ -92,7 +92,7 @@ export function FaqForm({ initial }: FaqFormProps) {
         className="space-y-5 rounded-xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6"
       >
         <label className="block text-sm font-semibold text-zinc-800">
-          Soru *
+          Soru
           <textarea
             name="question"
             rows={3}
@@ -102,7 +102,7 @@ export function FaqForm({ initial }: FaqFormProps) {
           />
         </label>
         <label className="block text-sm font-semibold text-zinc-800">
-          Cevap *
+          Cevap
           <textarea
             name="answer"
             rows={8}
@@ -113,15 +113,18 @@ export function FaqForm({ initial }: FaqFormProps) {
         </label>
         <label className="block text-sm font-semibold text-zinc-800">
           Gösterileceği bölüm
-          <select
-            name="category"
-            defaultValue={initial?.category ?? "general"}
-            className={fieldClass}
-          >
-            <option value="general">Genel SSS sayfası</option>
-            <option value="membership">Üyelik işlemleri</option>
-            <option value="dues">Aidat ve bağış</option>
-          </select>
+          <div className="relative mt-2">
+            <select
+              name="category"
+              defaultValue={initial?.category ?? "general"}
+              className={`${fieldClass} appearance-none pr-10 mt-0 cursor-pointer`}
+            >
+              <option value="general">Genel SSS sayfası</option>
+              <option value="membership">Üyelik işlemleri</option>
+              <option value="dues">Aidat ve bağış</option>
+            </select>
+            <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-zinc-500" aria-hidden="true" />
+          </div>
         </label>
         <label className="block text-sm font-semibold text-zinc-800">
           Görüntülenme Sırası

@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, LoaderCircle } from "lucide-react";
+import { ArrowLeft, ChevronDown, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
@@ -93,27 +93,30 @@ export function BoardMemberForm({ initial }: BoardMemberFormProps) {
         className="space-y-5 rounded-xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6"
       >
         <label className="block text-sm font-semibold text-zinc-800">
-          Ad Soyad *
+          Ad Soyad
           <input name="name" required defaultValue={initial?.name ?? ""} className={fieldClass} />
         </label>
 
         <label className="block text-sm font-semibold text-zinc-800">
-          Görev/Unvan *
+          Görev/Unvan
           <input name="role" required defaultValue={initial?.role ?? ""} className={fieldClass} />
         </label>
 
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block text-sm font-semibold text-zinc-800">
-            Kurul Tipi *
-            <select
-              name="board_type"
-              required
-              defaultValue={initial?.board_type ?? "management"}
-              className={fieldClass}
-            >
-              <option value="management">Yönetim Kurulu</option>
-              <option value="audit">Denetim Kurulu</option>
-            </select>
+            Kurul Tipi
+            <div className="relative mt-2">
+              <select
+                name="board_type"
+                required
+                defaultValue={initial?.board_type ?? "management"}
+                className={`${fieldClass} appearance-none pr-10 mt-0 cursor-pointer`}
+              >
+                <option value="management">Yönetim Kurulu</option>
+                <option value="audit">Denetim Kurulu</option>
+              </select>
+              <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-zinc-500" aria-hidden="true" />
+            </div>
           </label>
 
           <label className="block text-sm font-semibold text-zinc-800">
