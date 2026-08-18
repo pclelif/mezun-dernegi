@@ -7,9 +7,9 @@ export default async function Page() {
   const content = await getSiteContent("hakkimizda", contentSections.hakkimizda.defaults);
   return (
     <ContentPage
-      eyebrow="Yol Haritamız"
-      title="Vizyon ve Misyon"
-      description="Vizyonumuz geleceğe bakışımızı, misyonumuz ise bu hedef doğrultusunda üstlendiğimiz sorumlulukları ifade eder."
+      eyebrow="YOL HARİTAMIZ"
+      title="Vizyonumuz ve Misyonumuz"
+      description="Vizyonumuz geleceğe bakışımızı, misyonumuz ise bu doğrultuda üstlendiğimiz sorumlulukları ifade eder."
       titleClassName="panel-title--compact"
       descriptionClassName="panel-copy--compact"
     >

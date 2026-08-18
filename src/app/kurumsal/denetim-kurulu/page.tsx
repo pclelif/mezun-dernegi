@@ -18,9 +18,9 @@ export default async function AuditBoardPage() {
   return (
     <>
       <PageHero
-        eyebrow="Kurullarımız"
+        eyebrow="DERNEĞİMİZİN KURULLARI"
         title="Denetim Kurulu"
-        description="Derneğimizin denetim çalışmalarını yürüten kurul üyeleri."
+        description="Derneğimizin yönetim ve denetim çalışmalarını yürüten kurul üyelerimiz."
         titleClassName="panel-title--compact"
         descriptionClassName="panel-copy--compact"
       />

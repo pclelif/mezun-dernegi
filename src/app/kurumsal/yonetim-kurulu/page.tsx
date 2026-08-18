@@ -18,9 +18,9 @@ export default async function BoardPage() {
   return (
     <>
       <PageHero
-        eyebrow="Kurullarımız"
+        eyebrow="DERNEĞİMİZİN KURULLARI"
         title="Yönetim Kurulu"
-        description="Derneğimizin yönetim çalışmalarını yürüten kurul üyeleri."
+        description="Derneğimizin yönetim ve denetim çalışmalarını yürüten kurul üyelerimiz."
         titleClassName="panel-title--compact"
         descriptionClassName="panel-copy--compact"
       />

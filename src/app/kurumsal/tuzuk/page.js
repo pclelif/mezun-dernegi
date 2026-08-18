@@ -7,8 +7,8 @@ export default async function Page() {
   const about = await getSiteContent("hakkimizda", contentSections.hakkimizda.defaults);
   return (
     <ContentPage
-      eyebrow="Kurumsal Yapımız"
-      title="Dernek Tüzüğü"
+      eyebrow="DERNEĞİMİZİN İLKELERİ"
+      title="Tüzük"
       description="Derneğimizin amaç, kapsam ve çalışma esasları."
       titleClassName="panel-title--compact"
       descriptionClassName="panel-copy--compact"

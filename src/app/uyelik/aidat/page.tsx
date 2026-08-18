@@ -23,9 +23,9 @@ export default async function DuesPage() {
   return (
     <>
       <PageHero
-        eyebrow="Dayanışmayı Birlikte Büyütelim"
+        eyebrow="YOLCULUĞUMUZU BİRLİKTE SÜRDÜRELİM"
         title="Aidat ve Bağış Bilgileri"
-        description="Üyelik aidatı dönemleri, dernek hesap bilgileri ve bağış katkılarına dair ayrıntılar."
+        description="Derneğimizin çalışmalarına destek olmak ve aidat işlemlerini yürütmek için izlenecek adımlar."
         titleClassName="panel-title--compact"
         descriptionClassName="panel-copy--compact"
       />

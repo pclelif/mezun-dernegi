@@ -37,7 +37,7 @@ export const contentSections = {
       { key: "vision", label: "Vizyon", type: "textarea", rows: 6 }, { key: "mission", label: "Misyon", type: "textarea", rows: 6 },
       { key: "president_message", label: "Başkanın mesajı", type: "textarea", rows: 10 }, { key: "president_image_url", label: "Başkan fotoğrafı", type: "image" },
     ],
-    defaults: { about_title: "Geçmişin Güçlü Temelleriyle Geleceğe Uzanan Köprü", about_text: "Mezunlarımızı bir araya getiriyor, okulumuzla olan bağımızı ve birbirimizle olan iletişimimizi canlı tutuyoruz.", vision: "Mezunlarımız arasındaki iletişimi ve dayanışmayı güçlendiren, okulumuza ve mezun topluluğumuza değer katan sürdürülebilir bir dernek olmak.", mission: "Mezunlarımızı ortak bir platformda buluşturmak, sosyal ve mesleki iletişimi desteklemek ve okulumuzla olan bağı güçlendirmek.", president_message: "Değerli Mezunlarımız,\n\nOkulumuzda başlayan ortak hikâyemizi mezuniyet sonrasında da dayanışma, paylaşım ve aidiyet duygusuyla sürdürmek için bir aradayız. Derneğimizin; mezunlarımız arasında güçlü bağlar kuran, öğrencilerimize destek olan ve okulumuzun değerlerini geleceğe taşıyan canlı bir buluşma noktası olmasını amaçlıyoruz.\n\nHer mezunumuzun katkısı ve katılımı bu yapıyı daha güçlü kılacaktır. Birlikte üreteceğimiz çalışmaların mezun topluluğumuza ve okulumuza kalıcı değer katacağına inanıyor, hepinizi sevgi ve saygıyla selamlıyorum.", president_image_url: "", charter_url: "" },
+    defaults: { about_title: "GEÇMİŞİN GÜÇLÜ TEMELLERİYLE GELECEĞE UZANAN KÖPRÜ", about_text: "Mezunlarımızı bir araya getiriyor, okulumuzla olan bağımızı ve birbirimizle olan iletişimimizi canlı tutuyoruz.", vision: "Okuluyla bağını sürdüren, mezunları arasında güçlü ilişkiler kuran ve aktif bir mezun ağına sahip bir topluluk olmak.", mission: "Mezunlarımızı bir araya getirmek, iletişim ve dayanışmayı geliştirmek, mezunlar ile okul arasındaki etkileşimi desteklemek.", president_message: "Değerli Mezunlarımız,\n\nOkulumuzda başlayan ortak hikâyemizi mezuniyet sonrasında da dayanışma, paylaşım ve aidiyet duygusuyla sürdürmek için bir aradayız. Derneğimizin; mezunlarımız arasında güçlü bağlar kuran, öğrencilerimize destek olan ve okulumuzun değerlerini geleceğe taşıyan canlı bir buluşma noktası olmasını amaçlıyoruz.\n\nHer mezunumuzun katkısı ve katılımı bu yapıyı daha güçlü kılacaktır. Birlikte üreteceğimiz çalışmaların mezun topluluğumuza ve okulumuza kalıcı değer katacağına inanıyor, hepinizi sevgi ve saygıyla selamlıyorum.", president_image_url: "", charter_url: "" },
   },
   uyelik: {
     title: "Üyelik Bilgileri", description: "Üyelik sayfasının giriş açıklamasını ve indirilebilir üyelik formunu yönetin. Aidat ve banka bilgileri ayrı bölümde yönetilir.",
@@ -45,7 +45,7 @@ export const contentSections = {
       { key: "intro", label: "Sayfa açıklaması", type: "textarea", rows: 3 },
       { key: "form_url", label: "Üyelik formu bağlantısı", type: "url" },
     ],
-    defaults: { intro: "Derneğimize üye olmak için aşağıdaki adımları takip edebilirsiniz.", form_url: "/UYE_KAYIT_FORMU.pdf" },
+    defaults: { intro: "Derneğimize katılmak için izlenecek adımlar.", form_url: "/UYE_KAYIT_FORMU.pdf" },
   },
   "aidat-bagis": {
     title: "Aidat ve Bağış",

@@ -28,7 +28,7 @@ export async function HomeEventsSection() {
               <CalendarDays className="size-4" aria-hidden="true" />
             </span>
             <div>
-              <p className="text-xs font-semibold uppercase leading-tight tracking-[0.02em] text-red-600">Sıradaki Buluşmalar</p>
+              <p className="text-xs font-semibold uppercase leading-tight tracking-[0.02em] text-red-600">SIRADAKİ BULUŞMALAR</p>
               <h2 className="mt-0.5 text-2xl font-bold leading-tight tracking-tight text-zinc-950 md:text-[1.75rem]">Etkinlikler</h2>
             </div>
           </div>

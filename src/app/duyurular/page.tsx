@@ -20,9 +20,9 @@ export default async function AnnouncementsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Güncel Gelişmeler"
+        eyebrow="GÜNCEL GELİŞMELER"
         title="Duyurular"
-        description="Derneğimizden haberler, gelişmeler ve önemli bilgilendirmeler."
+        description="Derneğimizden güncel haberler ve önemli bilgilendirmeler."
         titleClassName="panel-title--compact"
         descriptionClassName="panel-copy--compact"
       />

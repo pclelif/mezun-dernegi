@@ -65,9 +65,9 @@ export default async function MembershipPage() {
   return (
     <>
       <PageHero
-        eyebrow="Mezun Ailemize Katılın"
+        eyebrow="YOLCULUĞUMUZUN BİR PARÇASI OLUN"
         title="Üyelik İşlemleri"
-        description={content.intro}
+        description={content.intro || "Derneğimize katılmak için izlenecek adımlar."}
         titleClassName="panel-title--compact"
         descriptionClassName="panel-copy--compact"
       />

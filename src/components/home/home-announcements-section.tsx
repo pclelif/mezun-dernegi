@@ -27,7 +27,7 @@ export async function HomeAnnouncementsSection() {
                 <Megaphone className="size-4" aria-hidden="true" />
               </span>
               <div>
-                <p className="text-xs font-semibold uppercase leading-tight tracking-[0.02em] text-red-600">Güncel Gelişmeler</p>
+                <p className="text-xs font-semibold uppercase leading-tight tracking-[0.02em] text-red-600">GÜNCEL GELİŞMELER</p>
                 <h2 id="home-announcements-title" className="mt-0.5 text-2xl font-bold leading-tight tracking-tight text-zinc-950 md:text-[1.75rem]">
                   Duyurular
                 </h2>

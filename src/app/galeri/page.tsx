@@ -26,9 +26,9 @@ export default async function GalleryPage() {
   return (
     <>
       <PageHero
-        eyebrow="Anılarımızdan Seçkiler"
+        eyebrow="ANILARIMIZDAN SEÇKİLER"
         title="Galeri"
-        description="Etkinliklerimizden ve buluşmalarımızdan geriye kalan güzel anılar."
+        description="Derneğimizle birlikte biriktirdiğimiz hatıralardan geriye kalan kareler."
         titleClassName="panel-title--compact"
         descriptionClassName="panel-copy--compact"
       />

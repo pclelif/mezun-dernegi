@@ -19,9 +19,9 @@ export default async function EventsPage() {
   return (
     <>
       <PageHero
-        eyebrow="Sıradaki Buluşmalar"
+        eyebrow="SIRADAKİ BULUŞMALAR"
         title="Etkinlikler"
-        description="Mezunlarımızı bir araya getiren etkinlikler ve buluşmalar."
+        description="Derneğimizin gerçekleştirdiği çalışmalar ve buluşmalar."
         titleClassName="panel-title--compact"
         descriptionClassName="panel-copy--compact"
       />

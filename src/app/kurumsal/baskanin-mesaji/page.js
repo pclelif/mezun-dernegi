@@ -14,7 +14,7 @@ Her mezunumuzun katkısı ve katılımı bu yapıyı daha güçlü kılacaktır.
 export default async function Page() {
   const content = await getSiteContent("hakkimizda", contentSections.hakkimizda.defaults);
   return <ContentPage
-    eyebrow="Mezunlarımıza"
+    eyebrow="MEZUNLARIMIZ İÇİN"
     title="Başkanın Mesajı"
     description="Başkanımızın mezunlarımıza ve derneğimize dair mesajı."
     titleClassName="panel-title--compact"

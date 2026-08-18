@@ -101,7 +101,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
                 <Images className="size-4" aria-hidden="true" />
               </span>
               <div>
-                <p className="text-xs font-semibold uppercase leading-tight tracking-[0.02em] text-red-600">Anılarımızdan Seçkiler</p>
+                <p className="text-xs font-semibold uppercase leading-tight tracking-[0.02em] text-red-600">ANILARIMIZDAN SEÇKİLER</p>
                 <h2 id="gallery-showcase-title" className="mt-0.5 text-2xl font-bold leading-tight tracking-tight text-zinc-950 md:text-[1.75rem]">
                   {title}
                 </h2>
