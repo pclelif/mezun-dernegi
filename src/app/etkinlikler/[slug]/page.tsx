@@ -36,66 +36,85 @@ export default async function EventDetailPage({ params }: PageProps) {
   const isUpcoming = event.status !== "past";
 
   return (
-    <article>
-      <section className="border-b border-zinc-200 bg-slate-50">
-        <div className="mx-auto w-[min(100%-2rem,75rem)] py-10 md:w-[min(100%-4rem,75rem)] md:py-14">
-          <Link
-            href="/etkinlikler"
-            className="inline-flex touch-manipulation items-center gap-2 text-sm font-semibold text-zinc-700 transition-colors hover:text-red-600 active:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
-          >
-            <ArrowLeft className="size-4" aria-hidden="true" />
-            <span className="relative top-[1.5px]">Geri Dön</span>
-          </Link>
-
-          <div className="mt-8">
+    <div className="min-h-[80vh] bg-slate-100/70 px-4 py-8 sm:py-12 flex items-center justify-center">
+      <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-xl transition-all">
+        {/* Top Header Bar */}
+        <div className="flex items-center justify-between border-b border-zinc-100 bg-slate-50/80 px-6 py-4">
+          <div className="flex items-center gap-2">
             <span
-              className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-wide ${
-                isUpcoming ? "bg-red-600 text-white" : "bg-zinc-300 text-zinc-700"
+              className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
+                isUpcoming ? "bg-red-100 text-red-700" : "bg-zinc-200 text-zinc-700"
               }`}
             >
               {isUpcoming ? "Yaklaşan Etkinlik" : "Geçmiş Etkinlik"}
             </span>
-
-            <div className="mt-5 flex flex-col gap-3 text-sm text-slate-600 sm:flex-row sm:flex-wrap sm:gap-x-6">
-              <span className="inline-flex items-center gap-2">
-                <CalendarDays className="size-4 shrink-0" aria-hidden="true" />
-                <time dateTime={event.date ?? undefined}>{formatTurkishDate(event.date) || "Tarih yok"}</time>
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <Clock3 className="size-4 shrink-0" aria-hidden="true" />
-                {event.time || "—"}
-              </span>
-              <span className="inline-flex items-center gap-2">
-                <MapPin className="size-4 shrink-0" aria-hidden="true" />
-                {event.location || "—"}
-              </span>
-            </div>
-
-            <h1 className="mt-4 max-w-5xl text-2xl font-bold leading-tight tracking-tight text-zinc-950 md:text-3xl">
-              {event.title}
-            </h1>
           </div>
-        </div>
-      </section>
 
-      <section className="mx-auto w-[min(100%-2rem,75rem)] py-12 md:w-[min(100%-4rem,75rem)] md:py-16">
-        <div className={event.image_url ? "grid items-start gap-8 lg:grid-cols-[22rem_minmax(0,1fr)]" : undefined}>
+          <Link
+            href="/etkinlikler"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 transition hover:bg-slate-50 hover:text-zinc-950"
+          >
+            <ArrowLeft className="size-3.5" aria-hidden="true" />
+            Etkinliklere Dön
+          </Link>
+        </div>
+
+        {/* Card Body */}
+        <div className="p-6 sm:p-8 space-y-5">
+          {/* Optional Image */}
           {event.image_url ? (
-            <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-zinc-200 bg-slate-50">
+            <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-zinc-100 bg-slate-50 shadow-xs">
               <Image
                 src={event.image_url}
                 alt={`${event.title} etkinlik görseli`}
                 fill
-                sizes="(max-width: 1023px) calc(100vw - 2rem), 22rem"
+                sizes="(max-width: 640px) 100vw, 650px"
                 className="object-contain"
               />
             </div>
           ) : null}
-          <p className="whitespace-pre-line text-base leading-7 text-zinc-700 md:text-lg md:leading-8">
-            {event.description || "Bu etkinlik için henüz açıklama eklenmemiş."}
-          </p>
+
+          {/* Title */}
+          <h1 className="text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl leading-snug">
+            {event.title}
+          </h1>
+
+          {/* Meta Information Pills */}
+          <div className="flex flex-wrap items-center gap-3 text-xs font-semibold text-slate-600">
+            <div className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-slate-50 px-3 py-1.5">
+              <CalendarDays className="size-3.5 text-[#ec1c24]" />
+              <time dateTime={event.date ?? undefined}>{formatTurkishDate(event.date) || "Tarih belirtilmedi"}</time>
+            </div>
+            {event.time && (
+              <div className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-slate-50 px-3 py-1.5">
+                <Clock3 className="size-3.5 text-[#ec1c24]" />
+                {event.time}
+              </div>
+            )}
+            {event.location && (
+              <div className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-slate-50 px-3 py-1.5">
+                <MapPin className="size-3.5 text-[#ec1c24]" />
+                {event.location}
+              </div>
+            )}
+          </div>
+
+          {/* Description */}
+          <div className="rounded-xl border border-zinc-100 bg-slate-50/50 p-4 sm:p-5 text-sm leading-relaxed text-zinc-700 whitespace-pre-line">
+            {event.description || "Bu etkinlik için henüz detaylı açıklama eklenmemiş."}
+          </div>
         </div>
-      </section>
-    </article>
+
+        {/* Footer Actions */}
+        <div className="flex items-center justify-between border-t border-zinc-100 bg-slate-50/50 px-6 py-4">
+          <Link
+            href="/etkinlikler"
+            className="text-xs font-bold text-[#ec1c24] hover:underline"
+          >
+            ← Tüm Etkinlikleri İncele
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }

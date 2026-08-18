@@ -1,4 +1,4 @@
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, CalendarDays, Megaphone, Share2 } from "lucide-react";
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,48 +34,72 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
   if (!announcement) notFound();
 
   return (
-    <article>
-      <section className="border-b border-zinc-200 bg-slate-50">
-        <div className="mx-auto w-[min(100%-2rem,75rem)] py-10 md:w-[min(100%-4rem,75rem)] md:py-14">
+    <div className="min-h-[80vh] bg-slate-100/70 px-4 py-8 sm:py-12 flex items-center justify-center">
+      <div className="w-full max-w-2xl overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-xl transition-all">
+        {/* Top Header Bar */}
+        <div className="flex items-center justify-between border-b border-zinc-100 bg-slate-50/80 px-6 py-4">
+          <div className="flex items-center gap-2">
+            <span className="grid size-7 place-items-center rounded-lg bg-red-50 text-[#ec1c24]">
+              <Megaphone className="size-4" />
+            </span>
+            <span className="text-xs font-extrabold uppercase tracking-wider text-[#ec1c24]">
+              Duyuru Detayı
+            </span>
+          </div>
+
           <Link
             href="/duyurular"
-            className="inline-flex touch-manipulation items-center gap-2 text-sm font-semibold text-zinc-700 transition-colors hover:text-red-600 active:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+            className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 transition hover:bg-slate-50 hover:text-zinc-950"
           >
-            <ArrowLeft className="size-4" aria-hidden="true" />
-            <span className="relative top-[1.5px]">Geri Dön</span>
+            <ArrowLeft className="size-3.5" aria-hidden="true" />
+            Duyurulara Dön
           </Link>
-
-          <div className="mt-8">
-            <p className="text-sm font-semibold text-[#ec1c24] md:text-base">
-              <time dateTime={announcement.date ?? undefined}>
-                {formatTurkishDate(announcement.date) || "Tarih belirtilmedi"}
-              </time>
-            </p>
-            <h1 className="mt-3 max-w-5xl text-2xl font-bold leading-tight tracking-tight text-zinc-950 md:text-3xl">
-              {announcement.title}
-            </h1>
-          </div>
         </div>
-      </section>
 
-      <section className="mx-auto w-[min(100%-2rem,75rem)] py-12 md:w-[min(100%-4rem,75rem)] md:py-16">
-        <div className={announcement.image_url ? "grid items-start gap-8 lg:grid-cols-[22rem_minmax(0,1fr)]" : undefined}>
+        {/* Card Body */}
+        <div className="p-6 sm:p-8 space-y-5">
+          {/* Optional Image */}
           {announcement.image_url ? (
-            <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-zinc-200 bg-slate-50">
+            <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-zinc-100 bg-slate-50 shadow-xs">
               <Image
                 src={announcement.image_url}
                 alt={`${announcement.title} duyuru görseli`}
                 fill
-                sizes="(max-width: 1023px) calc(100vw - 2rem), 22rem"
+                sizes="(max-width: 640px) 100vw, 650px"
                 className="object-contain"
               />
             </div>
           ) : null}
-          <p className="whitespace-pre-line text-base leading-7 text-zinc-700 md:text-lg md:leading-8">
-            {announcement.content || "Bu duyuru için henüz içerik eklenmemiş."}
-          </p>
+
+          {/* Date Badge */}
+          <div className="flex items-center gap-2 text-xs font-bold text-slate-500">
+            <CalendarDays className="size-4 text-[#ec1c24]" />
+            <time dateTime={announcement.date ?? undefined}>
+              {formatTurkishDate(announcement.date) || "Tarih belirtilmedi"}
+            </time>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl leading-snug">
+            {announcement.title}
+          </h1>
+
+          {/* Content */}
+          <div className="rounded-xl border border-zinc-100 bg-slate-50/50 p-4 sm:p-5 text-sm leading-relaxed text-zinc-700 whitespace-pre-line">
+            {announcement.content || "Bu duyuru için henüz detaylı açıklama eklenmemiş."}
+          </div>
         </div>
-      </section>
-    </article>
+
+        {/* Footer Actions */}
+        <div className="flex items-center justify-between border-t border-zinc-100 bg-slate-50/50 px-6 py-4">
+          <Link
+            href="/duyurular"
+            className="text-xs font-bold text-[#ec1c24] hover:underline"
+          >
+            ← Tüm Duyuruları İncele
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }
