@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowUpDown, GripVertical, LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
+import { ArrowUpDown, ChevronDown, GripVertical, LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { createClient, formatTurkishDate, type DbAnnouncement } from "@/lib/supabase/client";
@@ -142,13 +142,14 @@ export default function AdminAnnouncementsPage() {
             <select
               value={sortBy}
               onChange={(e) => handleSortChange(e.target.value)}
-              className="h-10 rounded-md border border-zinc-300 bg-white pl-9 pr-4 text-sm font-semibold text-zinc-800 shadow-sm outline-none transition focus:border-red-500 cursor-pointer"
+              className="h-10 appearance-none rounded-md border border-zinc-300 bg-white pl-9 pr-9 text-sm font-semibold text-zinc-800 shadow-sm outline-none transition focus:border-red-500 cursor-pointer"
               aria-label="Sıralama ölçütü"
             >
               <option value="created-desc">Eklenme Tarihine Göre</option>
               <option value="title-asc">Başlığa Göre</option>
               <option value="manual">Manuel Sıralama</option>
             </select>
+            <ChevronDown className="pointer-events-none absolute right-3 size-4 text-slate-500" aria-hidden="true" />
           </div>
           <Link
             href="/admin/duyurular/yeni"

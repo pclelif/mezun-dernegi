@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, ArrowUpDown, LoaderCircle, Trash2, X } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpDown, ChevronDown, LoaderCircle, Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { createClient, type DbGalleryImage } from "@/lib/supabase/client";
@@ -119,13 +119,14 @@ export default function AdminGalleryPage() {
           <select
             value={sortBy}
             onChange={(e) => handleSortChange(e.target.value)}
-            className="h-10 rounded-md border border-zinc-300 bg-white pl-9 pr-4 text-sm font-semibold text-zinc-800 shadow-sm outline-none transition focus:border-red-500 cursor-pointer"
+            className="h-10 appearance-none rounded-md border border-zinc-300 bg-white pl-9 pr-9 text-sm font-semibold text-zinc-800 shadow-sm outline-none transition focus:border-red-500 cursor-pointer"
             aria-label="Sıralama ölçütü"
           >
-            <option value="created-desc">Son Eklenen Fotoğraflar (En Yeni)</option>
-            <option value="created-asc">İlk Eklenen Fotoğraflar (En Eski)</option>
-            <option value="manual">Serbest (Manuel Sıralama)</option>
+            <option value="created-desc">Eklenme Tarihine Göre</option>
+            <option value="created-asc">İlk Eklenen Fotoğraflar</option>
+            <option value="manual">Manuel Sıralama</option>
           </select>
+          <ChevronDown className="pointer-events-none absolute right-3 size-4 text-slate-500" aria-hidden="true" />
         </div>
       </div>
 
