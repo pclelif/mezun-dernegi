@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, LoaderCircle } from "lucide-react";
+import { ArrowLeft, CalendarDays, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
@@ -80,7 +80,10 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
         </label>
         <label className="block text-sm font-semibold text-zinc-800">
           Tarih
-          <input name="date" type="date" defaultValue={initial?.date ?? ""} className={fieldClass} />
+          <div className="relative mt-1.5">
+            <input name="date" type="date" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 pr-10`} />
+            <CalendarDays className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+          </div>
         </label>
 
         <ImageUploader value={images} onChange={setImages} label="Duyuru görseli" />

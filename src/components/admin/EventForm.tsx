@@ -84,7 +84,10 @@ export function EventForm({ initial }: EventFormProps) {
         <div className="grid gap-4 sm:grid-cols-2">
           <label className="block text-sm font-semibold text-zinc-800">
             Tarih
-            <input name="date" type="date" defaultValue={initial?.date ?? ""} className={fieldClass} />
+            <div className="relative mt-1.5">
+              <input name="date" type="date" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 pr-10`} />
+              <CalendarDays className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+            </div>
           </label>
           <label className="block text-sm font-semibold text-zinc-800">
             Saat
