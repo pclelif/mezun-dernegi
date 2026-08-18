@@ -49,7 +49,7 @@ export async function HomeAnnouncementsSection() {
                 date={formatTurkishDate(announcement.date ?? announcement.created_at) || "Tarih belirtilmedi"}
                 dateTime={announcement.date ?? announcement.created_at}
                 summary={announcement.content || ""}
-                href={`/duyurular/${announcement.slug}`}
+                href={`/duyurular/${announcement.slug}?from=home`}
               />
             ))}
           </div>

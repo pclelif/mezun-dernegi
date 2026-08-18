@@ -41,7 +41,12 @@ export async function HomeEventsSection() {
       {upcomingEvents.length > 0 ? (
         <div className="grid gap-5 md:grid-cols-2">
           {upcomingEvents.map((event) => (
-            <EventCard key={event.id} headingLevel="h3" {...mapEventToCardProps(event)} />
+            <EventCard
+              key={event.id}
+              headingLevel="h3"
+              {...mapEventToCardProps(event)}
+              href={`/etkinlikler/${event.slug}?from=home`}
+            />
           ))}
         </div>
       ) : (

@@ -15,7 +15,20 @@ export function ReturnButton({
   const [label, setLabel] = useState(defaultLabel);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && document.referrer) {
+    if (typeof window === "undefined") return;
+
+    // Check search params first (e.g. ?from=home)
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("from") === "home") {
+        setHref("/");
+        setLabel("Anasayfaya Dön");
+        return;
+      }
+    } catch {}
+
+    // Check document.referrer fallback
+    if (document.referrer) {
       try {
         const refUrl = new URL(document.referrer);
         const currentUrl = new URL(window.location.href);
