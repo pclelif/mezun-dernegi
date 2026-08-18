@@ -36,7 +36,7 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
       content: String(form.get("content") ?? "").trim() || null,
       date: String(form.get("date") ?? "").trim() || null,
       image_url: images[0] || null,
-      is_published: form.get("is_published") === "on",
+      is_published: initial?.is_published ?? true,
     };
 
     try {
@@ -87,10 +87,6 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
         </label>
 
         <ImageUploader value={images} onChange={setImages} label="Duyuru görseli" />
-        <label className="-mt-1 flex items-center justify-between text-sm font-semibold text-zinc-800">
-          <span>Web sitesinde yayınla</span>
-          <input name="is_published" type="checkbox" defaultChecked={initial?.is_published ?? true} className="size-4.5 cursor-pointer accent-red-600" />
-        </label>
 
         {error ? <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
         <button
