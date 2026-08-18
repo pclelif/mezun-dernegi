@@ -25,7 +25,9 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
         <nav className="w-full sm:w-fit sm:max-w-full lg:translate-x-20 lg:justify-self-center" aria-label="Hakkımızda bağlantıları">
           <div className="w-full sm:w-fit sm:max-w-full">
             <h2 className="relative w-full pb-2 text-left text-sm font-semibold text-white after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/20 after:content-['']">Hakkımızda</h2>
-            <ul className="mt-3 grid gap-y-2 text-sm leading-5 sm:grid-cols-[max-content_max-content] sm:gap-x-6">
+            
+            {/* Mobil görünüm (Tek sütun alt alta) */}
+            <ul className="mt-3 grid gap-y-2 text-sm leading-5 sm:hidden">
               {corporateNavigation.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -37,6 +39,34 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
                 </li>
               ))}
             </ul>
+
+            {/* Masaüstü görünüm (2 Sütunlu Dağılım) */}
+            <div className="mt-3 hidden sm:grid sm:grid-cols-2 sm:gap-x-6 text-sm leading-5">
+              <ul className="grid gap-y-2">
+                {[corporateNavigation[0], corporateNavigation[2], corporateNavigation[4]].map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="touch-manipulation rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+              <ul className="grid gap-y-2">
+                {[corporateNavigation[1], corporateNavigation[3], corporateNavigation[5]].map((item) => (
+                  <li key={item.href}>
+                    <Link
+                      href={item.href}
+                      className="touch-manipulation rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </nav>
 
