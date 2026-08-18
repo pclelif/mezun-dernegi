@@ -3,11 +3,7 @@ import { createServerAnonClient } from "@/lib/supabase/server";
 
 export async function getEvents(limit?: number) {
   const supabase = createServerAnonClient();
-  let query = supabase
-    .from("events")
-    .select("*")
-    .order("display_order", { ascending: true, nullsFirst: false })
-    .order("created_at", { ascending: false });
+  let query = supabase.from("events").select("*").order("created_at", { ascending: false });
   if (limit) query = query.limit(limit);
   const { data, error } = await query;
   if (error) throw error;
@@ -23,11 +19,7 @@ export async function getEventBySlug(slug: string) {
 
 export async function getAnnouncements(limit?: number) {
   const supabase = createServerAnonClient();
-  let query = supabase
-    .from("announcements")
-    .select("*")
-    .order("display_order", { ascending: true, nullsFirst: false })
-    .order("created_at", { ascending: false });
+  let query = supabase.from("announcements").select("*").order("created_at", { ascending: false });
   if (limit) query = query.limit(limit);
   const { data, error } = await query;
   if (error) throw error;
@@ -61,7 +53,6 @@ export async function getGalleryImages(galleryId: string) {
     .from("gallery_images")
     .select("*")
     .eq("gallery_id", galleryId)
-    .order("display_order", { ascending: true, nullsFirst: false })
     .order("created_at", { ascending: true });
   if (error) throw error;
   return data ?? [];
@@ -72,7 +63,6 @@ export async function getAllGalleryImages() {
   const { data, error } = await supabase
     .from("gallery_images")
     .select("*")
-    .order("display_order", { ascending: true, nullsFirst: false })
     .order("created_at", { ascending: false });
   if (error) throw error;
   return data ?? [];
@@ -83,8 +73,7 @@ export async function getBoardMembers() {
   const { data, error } = await supabase
     .from("board_members")
     .select("*")
-    .order("display_order", { ascending: true, nullsFirst: false })
-    .order("created_at", { ascending: true });
+    .order("display_order", { ascending: true });
   if (error) throw error;
   return data ?? [];
 }
@@ -94,8 +83,7 @@ export async function getFaqs(category?: DbFaq["category"]) {
   let query = supabase
     .from("faqs")
     .select("*")
-    .order("display_order", { ascending: true, nullsFirst: false })
-    .order("created_at", { ascending: true });
+    .order("display_order", { ascending: true });
   if (category) query = query.eq("category", category);
   let { data, error } = await query;
 
@@ -103,7 +91,7 @@ export async function getFaqs(category?: DbFaq["category"]) {
     const fallback = await supabase
       .from("faqs")
       .select("*")
-      .order("display_order", { ascending: true, nullsFirst: false });
+      .order("display_order", { ascending: true });
     data = fallback.data;
     error = fallback.error;
   }
