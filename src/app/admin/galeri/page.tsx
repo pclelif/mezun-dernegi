@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowLeft, ArrowRight, ArrowUpDown, ChevronDown, LoaderCircle, Trash2, X } from "lucide-react";
+import { ArrowUpDown, ChevronDown, GripVertical, LoaderCircle, Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { createClient, type DbGalleryImage } from "@/lib/supabase/client";
@@ -28,12 +28,14 @@ export default function AdminGalleryPage() {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [sortBy, setSortBy] = useState<string>("created-desc");
 
+  // Drag and drop state
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
   const sortPhotos = useCallback((list: DbGalleryImage[], key: string) => {
     const sorted = [...list];
     if (key === "created-desc") {
       sorted.sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
-    } else if (key === "created-asc") {
-      sorted.sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)));
     }
     return sorted;
   }, []);
@@ -72,15 +74,36 @@ export default function AdminGalleryPage() {
     }
   }
 
-  function movePhoto(index: number, direction: "left" | "right") {
-    const targetIndex = direction === "left" ? index - 1 : index + 1;
-    if (targetIndex < 0 || targetIndex >= images.length) return;
-    setSortBy("manual");
+  // Drag and drop handlers for photos grid
+  function handleDragStart(e: React.DragEvent, index: number) {
+    if (sortBy !== "manual") return;
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.dropEffect = "move";
+    setDraggedIndex(index);
+  }
+
+  function handleDragOver(e: React.DragEvent, index: number) {
+    if (sortBy !== "manual") return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (draggedIndex === null || draggedIndex === index) return;
+    setDragOverIndex(index);
+  }
+
+  function handleDrop(index: number) {
+    if (sortBy !== "manual" || draggedIndex === null || draggedIndex === index) return;
     const updated = [...images];
-    const [moved] = updated.splice(index, 1);
-    updated.splice(targetIndex, 0, moved);
+    const [moved] = updated.splice(draggedIndex, 1);
+    updated.splice(index, 0, moved);
     setImages(updated);
+    setDraggedIndex(null);
+    setDragOverIndex(null);
     void saveDisplayOrder("gallery_images", updated);
+  }
+
+  function handleDragEnd() {
+    setDraggedIndex(null);
+    setDragOverIndex(null);
   }
 
   async function handleAddPhotos() {
@@ -89,16 +112,24 @@ export default function AdminGalleryPage() {
     setError(null);
     try {
       const supabase = createClient();
+
+      // Ensure a default gallery row exists
+      const defaultGalleryId = "00000000-0000-0000-0000-000000000000";
+      await supabase
+        .from("galleries")
+        .upsert({ id: defaultGalleryId, title: "Ana Galeri", slug: "ana-galeri" }, { onConflict: "id" });
+
       const { data, error: insertError } = await supabase
         .from("gallery_images")
         .insert(
-          uploads.map((image_url) => ({
-            gallery_id: "00000000-0000-0000-0000-000000000000",
+          uploads.map((image_url, idx) => ({
+            gallery_id: defaultGalleryId,
             image_url,
-            display_order: images.length + uploads.indexOf(image_url),
+            display_order: images.length + idx,
           }))
         )
         .select("*");
+
       if (insertError) throw insertError;
       setImages((current) => [...(data as DbGalleryImage[]), ...current]);
       setUploads([]);
@@ -140,7 +171,6 @@ export default function AdminGalleryPage() {
             aria-label="Sıralama ölçütü"
           >
             <option value="created-desc">Eklenme Tarihine Göre</option>
-            <option value="created-asc">İlk Eklenen Fotoğraflar</option>
             <option value="manual">Manuel Sıralama</option>
           </select>
           <ChevronDown className="pointer-events-none absolute right-3 size-4 text-slate-500" aria-hidden="true" />
@@ -173,47 +203,61 @@ export default function AdminGalleryPage() {
         </p>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
-          {images.map((photo, index) => (
-            <article key={photo.id} className="group overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
-              <div
-                className="aspect-square bg-slate-200 bg-cover bg-center cursor-pointer hover:opacity-90 transition-opacity"
-                style={{ backgroundImage: `url(${photo.image_url})` }}
-                aria-hidden="true"
-                onClick={() => setSelectedImage(photo.image_url)}
-              />
-              <div className="flex items-center justify-between gap-1 p-2 bg-slate-50 border-t border-zinc-100">
-                <div className="flex items-center gap-0.5 text-slate-400">
+          {images.map((photo, index) => {
+            const isDragging = draggedIndex === index;
+            const isOver = dragOverIndex === index;
+
+            return (
+              <article
+                key={photo.id}
+                draggable={sortBy === "manual"}
+                onDragStart={(e) => handleDragStart(e, index)}
+                onDragOver={(e) => handleDragOver(e, index)}
+                onDrop={() => handleDrop(index)}
+                onDragEnd={handleDragEnd}
+                className={`group relative overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm transition-all duration-150 ${
+                  sortBy === "manual" ? "cursor-grab active:cursor-grabbing" : ""
+                } ${
+                  isDragging
+                    ? "opacity-30 bg-slate-100 scale-[0.98]"
+                    : isOver
+                    ? "border-2 border-red-500 bg-red-50/50"
+                    : "hover:shadow-md"
+                }`}
+              >
+                <div
+                  className="relative aspect-square bg-slate-200 bg-cover bg-center cursor-pointer"
+                  style={{ backgroundImage: `url(${photo.image_url})` }}
+                  aria-hidden="true"
+                  onClick={() => setSelectedImage(photo.image_url)}
+                >
+                  {sortBy === "manual" && (
+                    <div className="absolute top-2 left-2 z-10 rounded-md bg-black/60 p-1.5 text-white backdrop-blur-sm transition-colors hover:text-red-500">
+                      <GripVertical className="size-4" />
+                    </div>
+                  )}
+                </div>
+                <div className="flex items-center justify-between p-2.5 bg-slate-50 border-t border-zinc-100">
                   <button
                     type="button"
-                    onClick={() => movePhoto(index, "left")}
-                    disabled={index === 0}
-                    className="rounded p-1 hover:bg-zinc-200 hover:text-zinc-800 disabled:opacity-30"
-                    title="Öne taşı"
+                    onClick={() => setSelectedImage(photo.image_url)}
+                    className="text-xs font-semibold text-zinc-700 hover:text-zinc-900"
                   >
-                    <ArrowLeft className="size-3.5" />
+                    Büyüt
                   </button>
                   <button
                     type="button"
-                    onClick={() => movePhoto(index, "right")}
-                    disabled={index === images.length - 1}
-                    className="rounded p-1 hover:bg-zinc-200 hover:text-zinc-800 disabled:opacity-30"
-                    title="Arkaya taşı"
+                    onClick={() => void handleDelete(photo.id)}
+                    disabled={deletingId === photo.id}
+                    className="inline-flex items-center gap-1 rounded-md border border-red-200 px-2.5 py-1 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:opacity-50"
                   >
-                    <ArrowRight className="size-3.5" />
+                    <Trash2 className="size-3.5" aria-hidden="true" />
+                    {deletingId === photo.id ? "Siliniyor…" : "Sil"}
                   </button>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => void handleDelete(photo.id)}
-                  disabled={deletingId === photo.id}
-                  className="inline-flex items-center gap-1 rounded-md border border-red-200 px-2 py-1 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:opacity-50"
-                >
-                  <Trash2 className="size-3.5" aria-hidden="true" />
-                  {deletingId === photo.id ? "Siliniyor…" : "Sil"}
-                </button>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </div>
       )}
 
