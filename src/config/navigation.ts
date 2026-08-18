@@ -9,8 +9,7 @@ export const corporateNavigation: NavigationItem[] = [
   { label: "Aydoğan Aydın Kimdir?", href: "/hakkimizda/aydogan-aydin" },
   { label: "Vizyon ve Misyon", href: "/kurumsal/vizyon-misyon" },
   { label: "Başkanın Mesajı", href: "/kurumsal/baskanin-mesaji" },
-  { label: "Yönetim Kurulu", href: "/kurumsal/yonetim-kurulu" },
-  { label: "Denetim Kurulu", href: "/kurumsal/denetim-kurulu" },
+  { label: "Yönetim ve Denetim Kurulları", href: "/kurumsal/yonetim-ve-denetim-kurullari" },
   { label: "Dernek Tüzüğü", href: "/kurumsal/tuzuk" },
 ];
 
