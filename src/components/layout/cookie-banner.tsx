@@ -60,15 +60,15 @@ export function CookieBanner() {
     >
       <div className="mx-auto flex max-w-7xl flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-6">
         <p className="text-xs leading-5 text-zinc-700">
-          Sitemizde çerezler kullanılmaktadır. Tercihinizi belirleyebilir; ayrıntılar için{" "}
+          Sitemizde çerezler kullanılmaktadır. Tercihinizi belirleyebilir, ayrıntılar için{" "}
           <Link href="/cerez-politikasi" className={linkClass}>
             Çerez Politikası
           </Link>{" "}
           ve{" "}
           <Link href="/kvkk" className={linkClass}>
             KVKK Aydınlatma Metni
-          </Link>{" "}
-          sayfalarımızı inceleyebilirsiniz.
+          </Link>
+          ’ni inceleyebilirsiniz.
         </p>
 
         <div className="flex w-full shrink-0 gap-2 sm:w-auto">
