@@ -1,18 +1,13 @@
 "use client";
 
 import {
-  ArrowLeft,
   CalendarDays,
   CircleHelp,
-  Images,
-  Home,
-  Building2,
   Contact,
-  BadgeDollarSign,
-  Palette,
-  UserRoundCheck,
+  Images,
   LayoutDashboard,
   Megaphone,
+  Undo2,
   UsersRound,
   type LucideIcon,
 } from "lucide-react";
@@ -51,30 +46,36 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             </div>
           </div>
 
-          <nav className="flex gap-1 overflow-x-auto px-3 pb-4 lg:min-h-[calc(100vh-5rem)] lg:flex-col lg:overflow-visible lg:px-3 lg:pb-6" aria-label="Admin menü">
-            {navItems.map(({ href, label, icon: Icon }) => {
-              const active = href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  className={`inline-flex shrink-0 items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium transition-colors ${
-                    active ? "bg-red-600 text-white" : "text-zinc-300 hover:bg-zinc-800 hover:text-white"
-                  }`}
-                >
-                  <Icon className="size-4" aria-hidden="true" />
-                  {label}
-                </Link>
-              );
-            })}
-            <Link
-              href="/"
-              className="mt-1 inline-flex shrink-0 items-center gap-2 rounded-md px-3 py-2.5 text-sm font-medium text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white lg:mt-4"
-            >
-              <ArrowLeft className="size-4" aria-hidden="true" />
-              Siteye Dön
-            </Link>
-            <LogoutButton />
+          <nav className="flex flex-col justify-between px-3 pb-6 lg:min-h-[calc(100vh-8rem)]" aria-label="Admin menü">
+            <div className="flex flex-col gap-1">
+              {navItems.map(({ href, label, icon: Icon }) => {
+                const active = href === "/admin" ? pathname === "/admin" : pathname.startsWith(href);
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={`inline-flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
+                      active ? "bg-[#ec1c24] text-white shadow-sm font-semibold" : "text-zinc-300 hover:bg-zinc-800 hover:text-white"
+                    }`}
+                  >
+                    <Icon className="size-4" aria-hidden="true" />
+                    {label}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Bottom Actions: Siteye Dön & Çıkış Yap Stacked Vertically */}
+            <div className="mt-6 flex flex-col gap-1 border-t border-zinc-800/80 pt-3">
+              <Link
+                href="/"
+                className="inline-flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white"
+              >
+                <Undo2 className="size-4 text-red-500" aria-hidden="true" />
+                Siteye Dön
+              </Link>
+              <LogoutButton />
+            </div>
           </nav>
         </aside>
 
