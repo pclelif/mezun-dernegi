@@ -7,7 +7,7 @@ import { getSiteContent } from "@/lib/supabase/queries";
 import "./globals.css";
 
 export const viewport: Viewport = {
-  colorScheme: "light",
+  colorScheme: "only light",
   themeColor: "#ffffff",
 };
 
@@ -22,10 +22,10 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
     getSiteContent("iletisim", { address: "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420 Çankaya/Ankara", email: "kaaflmezunder@gmail.com", instagram_url: "https://www.instagram.com/kaaflmezunder", linkedin_url: "https://www.linkedin.com/company/ke%C3%A7i%C3%B6ren-vatansever-%C5%9Fehit-t%C3%BCmgeneral-aydo%C4%9Fan-ayd%C4%B1n-fen-lisesi-mezunlar-derne%C4%9Fi/" }),
   ]);
   return (
-    <html lang="tr" data-scroll-behavior="smooth" className="light" style={{ colorScheme: "light" }}>
+    <html lang="tr" data-scroll-behavior="smooth" className="light" style={{ colorScheme: "only light" }}>
       <head>
-        <meta name="color-scheme" content="light" />
-        <meta name="supported-color-schemes" content="light" />
+        <meta name="color-scheme" content="only light" />
+        <meta name="supported-color-schemes" content="only light" />
         <meta name="theme-color" content="#ffffff" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)" />
