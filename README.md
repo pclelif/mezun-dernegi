@@ -129,4 +129,3 @@ npm start
 Bu yazılım Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği adına geliştirilmiştir. Tüm hakları saklıdır.
 
 - **E-posta:** kaaflmezunder@gmail.com
-- **Instagram:** https://www.instagram.com/kaaflmezunder
