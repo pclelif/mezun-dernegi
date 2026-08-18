@@ -63,9 +63,9 @@ export function EventForm({ initial }: EventFormProps) {
   return (
     <div className="mx-auto max-w-2xl space-y-6">
       <div>
-        <Link href="/admin/etkinlikler" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-red-600">
-          <ArrowLeft className="size-4 -translate-y-[1px]" aria-hidden="true" />
-          Listeye dön
+        <Link href="/admin/etkinlikler" className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-red-600">
+          <ArrowLeft className="size-4 shrink-0 -translate-y-[2px]" aria-hidden="true" />
+          <span>Listeye dön</span>
         </Link>
         <h1 className="mt-4 text-2xl font-bold text-zinc-950">
           {initial ? "Etkinliği Düzenle" : "Yeni Etkinlik"}

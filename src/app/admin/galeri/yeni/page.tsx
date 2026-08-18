@@ -48,9 +48,9 @@ export default function NewGalleryPage() {
   return (
     <div className="space-y-6">
       <div>
-        <Link href="/admin/galeri" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600">
-          <ArrowLeft className="size-4" />
-          Galeriye dön
+        <Link href="/admin/galeri" className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-red-600">
+          <ArrowLeft className="size-4 shrink-0 -translate-y-[2px]" aria-hidden="true" />
+          <span>Galeriye dön</span>
         </Link>
         <h1 className="mt-4 text-2xl font-bold tracking-tight text-zinc-950">Fotoğraf Ekle</h1>
       </div>

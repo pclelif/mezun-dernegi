@@ -77,10 +77,10 @@ export function FaqForm({ initial }: FaqFormProps) {
       <div>
         <Link
           href="/admin/sss"
-          className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-red-600"
+          className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-red-600"
         >
-          <ArrowLeft className="size-4 -translate-y-[1px]" aria-hidden="true" />
-          Listeye dön
+          <ArrowLeft className="size-4 shrink-0 -translate-y-[2px]" aria-hidden="true" />
+          <span>Listeye dön</span>
         </Link>
         <h1 className="mt-4 text-2xl font-bold text-zinc-950">
           {initial ? "S.S.S. Kaydını Düzenle" : "Yeni S.S.S. Kaydı"}
