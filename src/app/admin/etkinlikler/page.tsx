@@ -5,6 +5,19 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { createClient, formatTurkishDate, type DbEvent } from "@/lib/supabase/client";
 
+async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
+  try {
+    const supabase = createClient();
+    await Promise.all(
+      itemsList.map((item, idx) =>
+        supabase.from(table).update({ display_order: idx }).eq("id", item.id)
+      )
+    );
+  } catch (err) {
+    console.error(`Failed to save order to ${table}:`, err);
+  }
+}
+
 export default function AdminEventsPage() {
   const [events, setEvents] = useState<DbEvent[]>([]);
   const [loading, setLoading] = useState(true);
@@ -33,14 +46,24 @@ export default function AdminEventsPage() {
     setError(null);
     try {
       const supabase = createClient();
-      const { data, error: queryError } = await supabase
+      let { data, error: queryError } = await supabase
         .from("events")
         .select("*")
+        .order("display_order", { ascending: true, nullsFirst: false })
         .order("created_at", { ascending: false });
+
+      if (queryError) {
+        const fallback = await supabase
+          .from("events")
+          .select("*")
+          .order("created_at", { ascending: false });
+        data = fallback.data;
+        queryError = fallback.error;
+      }
 
       if (queryError) throw queryError;
       const loaded = (data ?? []) as DbEvent[];
-      setEvents(sortItems(loaded, sortBy));
+      setEvents(sortBy === "manual" ? loaded : sortItems(loaded, sortBy));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Etkinlikler yüklenemedi.");
       setEvents([]);
@@ -52,21 +75,32 @@ export default function AdminEventsPage() {
   useEffect(() => {
     let active = true;
     const supabase = createClient();
-    void supabase
-      .from("events")
-      .select("*")
-      .order("created_at", { ascending: false })
-      .then(({ data, error: queryError }) => {
-        if (!active) return;
-        if (queryError) {
-          setError(queryError.message);
-          setEvents([]);
-        } else {
-          const loaded = (data ?? []) as DbEvent[];
-          setEvents(sortItems(loaded, sortBy));
-        }
-        setLoading(false);
-      });
+    void (async () => {
+      let { data, error: queryError } = await supabase
+        .from("events")
+        .select("*")
+        .order("display_order", { ascending: true, nullsFirst: false })
+        .order("created_at", { ascending: false });
+
+      if (queryError) {
+        const fallback = await supabase
+          .from("events")
+          .select("*")
+          .order("created_at", { ascending: false });
+        data = fallback.data;
+        queryError = fallback.error;
+      }
+
+      if (!active) return;
+      if (queryError) {
+        setError(queryError.message);
+        setEvents([]);
+      } else {
+        const loaded = (data ?? []) as DbEvent[];
+        setEvents(sortBy === "manual" ? loaded : sortItems(loaded, sortBy));
+      }
+      setLoading(false);
+    })();
 
     return () => {
       active = false;
@@ -76,7 +110,9 @@ export default function AdminEventsPage() {
   function handleSortChange(key: string) {
     setSortBy(key);
     if (key !== "manual") {
-      setEvents((current) => sortItems(current, key));
+      const sorted = sortItems(events, key);
+      setEvents(sorted);
+      void saveDisplayOrder("events", sorted);
     }
   }
 
@@ -104,6 +140,7 @@ export default function AdminEventsPage() {
     setEvents(updated);
     setDraggedIndex(null);
     setDragOverIndex(null);
+    void saveDisplayOrder("events", updated);
   }
 
   function handleDragEnd() {

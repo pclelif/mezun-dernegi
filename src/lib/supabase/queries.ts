@@ -3,6 +3,16 @@ import { createServerAnonClient } from "@/lib/supabase/server";
 
 export async function getEvents(limit?: number) {
   const supabase = createServerAnonClient();
+  const { data: orderedData, error: orderError } = await supabase
+    .from("events")
+    .select("*")
+    .order("display_order", { ascending: true, nullsFirst: false })
+    .order("created_at", { ascending: false });
+
+  if (!orderError && orderedData) {
+    return (limit ? orderedData.slice(0, limit) : orderedData) as DbEvent[];
+  }
+
   let query = supabase.from("events").select("*").order("created_at", { ascending: false });
   if (limit) query = query.limit(limit);
   const { data, error } = await query;
@@ -19,6 +29,16 @@ export async function getEventBySlug(slug: string) {
 
 export async function getAnnouncements(limit?: number) {
   const supabase = createServerAnonClient();
+  const { data: orderedData, error: orderError } = await supabase
+    .from("announcements")
+    .select("*")
+    .order("display_order", { ascending: true, nullsFirst: false })
+    .order("created_at", { ascending: false });
+
+  if (!orderError && orderedData) {
+    return (limit ? orderedData.slice(0, limit) : orderedData) as DbAnnouncement[];
+  }
+
   let query = supabase.from("announcements").select("*").order("created_at", { ascending: false });
   if (limit) query = query.limit(limit);
   const { data, error } = await query;
@@ -53,6 +73,7 @@ export async function getGalleryImages(galleryId: string) {
     .from("gallery_images")
     .select("*")
     .eq("gallery_id", galleryId)
+    .order("display_order", { ascending: true, nullsFirst: false })
     .order("created_at", { ascending: true });
   if (error) throw error;
   return data ?? [];
@@ -63,6 +84,7 @@ export async function getAllGalleryImages() {
   const { data, error } = await supabase
     .from("gallery_images")
     .select("*")
+    .order("display_order", { ascending: true, nullsFirst: false })
     .order("created_at", { ascending: false });
   if (error) throw error;
   return data ?? [];
