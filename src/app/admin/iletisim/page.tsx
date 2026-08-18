@@ -166,18 +166,6 @@ export default function AdminContactPage() {
           </div>
         </div>
 
-        <div className="rounded-xl border border-red-200 bg-red-50/40 p-4 shadow-sm">
-          <div className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-lg bg-red-100 text-[#ec1c24]">
-              <MessageSquare className="size-5" />
-            </span>
-            <div>
-              <p className="text-xs font-semibold text-red-700 uppercase tracking-wider">Okunmamış</p>
-              <p className="text-xl font-bold text-red-700">{unreadCount}</p>
-            </div>
-          </div>
-        </div>
-
         <div className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
           <div className="flex items-center gap-3">
             <span className="grid size-10 place-items-center rounded-lg bg-red-50 text-[#ec1c24]">
@@ -186,6 +174,18 @@ export default function AdminContactPage() {
             <div>
               <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Okunmuş</p>
               <p className="text-xl font-bold text-zinc-950">{readCount}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="rounded-xl border border-red-200 bg-red-50/40 p-4 shadow-sm">
+          <div className="flex items-center gap-3">
+            <span className="grid size-10 place-items-center rounded-lg bg-red-100 text-[#ec1c24]">
+              <MessageSquare className="size-5" />
+            </span>
+            <div>
+              <p className="text-xs font-semibold text-red-700 uppercase tracking-wider">Okunmamış</p>
+              <p className="text-xl font-bold text-red-700">{unreadCount}</p>
             </div>
           </div>
         </div>
