@@ -1,4 +1,5 @@
 :root {
+  color-scheme: light !important;
   --color-primary: #6c757d;
   --color-primary-light: #f1f3f5;
   --color-accent: #ec1c24;
