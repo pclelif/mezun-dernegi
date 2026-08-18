@@ -22,9 +22,9 @@ export default async function Page() {
   ].filter(Boolean);
 
   return <ContentPage
-    eyebrow="Bağımız Hep Güçlü Kalsın"
+    eyebrow="BAĞIMIZ HEP GÜÇLÜ KALSIN"
     title="İletişim"
-    description="Sorularınız, görüşleriniz ve önerileriniz için bize ulaşın."
+    description="Sorularınız, görüşleriniz ve önerileriniz için bize ulaşabilirsiniz."
     titleClassName="panel-title--compact"
     descriptionClassName="panel-copy--compact"
   >
