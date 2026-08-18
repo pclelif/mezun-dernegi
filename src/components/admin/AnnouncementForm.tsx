@@ -62,7 +62,7 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
       <div>
         <Link href="/admin/duyurular" className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-red-600">
           <ArrowLeft className="size-4 shrink-0" aria-hidden="true" />
-          <span className="translate-y-[1.5px]">Listeye dön</span>
+          <span>Listeye dön</span>
         </Link>
         <h1 className="mt-4 text-2xl font-bold text-zinc-950">
           {initial ? "Duyuruyu Düzenle" : "Yeni Duyuru"}
@@ -81,8 +81,8 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
         <label className="block text-sm font-semibold text-zinc-800">
           Tarih
           <div className="relative mt-1.5">
-            <input name="date" type="date" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 pr-10`} />
-            <CalendarDays className="pointer-events-none absolute right-3 top-[calc(50%+0.5px)] size-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+            <input name="date" type="date" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 cursor-pointer pr-10`} />
+            <CalendarDays className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
           </div>
         </label>
 

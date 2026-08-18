@@ -1,10 +1,6 @@
 @import "tailwindcss";
 @import "../styles/tokens.css";
 
-:where(svg[class*="lucide-arrow-"], svg[class*="lucide-chevron-"]) {
-  translate: 0 1px;
-}
-
 /*
  * These resets live in `@layer base` (rather than as plain/unlayered rules)
  * so that Tailwind utility classes - which Tailwind itself emits inside
@@ -56,13 +52,13 @@
   button { font-family: inherit; }
   button { cursor: pointer; }
   input[type="date"]::-webkit-calendar-picker-indicator,
-  input[type="time"]::-webkit-calendar-picker-indicator {
-    opacity: 0;
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    cursor: pointer;
+  input[type="time"]::-webkit-calendar-picker-indicator,
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="time"]::-webkit-inner-spin-button {
+    display: none !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    opacity: 0 !important;
   }
 }
 

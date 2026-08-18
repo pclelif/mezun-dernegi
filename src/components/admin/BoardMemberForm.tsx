@@ -81,7 +81,7 @@ export function BoardMemberForm({ initial }: BoardMemberFormProps) {
           className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-red-600"
         >
           <ArrowLeft className="size-4 shrink-0" aria-hidden="true" />
-          <span className="translate-y-[1px]">Listeye dön</span>
+          <span>Listeye dön</span>
         </Link>
         <h1 className="mt-4 text-2xl font-bold text-zinc-950">
           {initial ? "Kurul Üyesini Düzenle" : "Yeni Kurul Üyesi"}

@@ -30,14 +30,18 @@ export function EventForm({ initial }: EventFormProps) {
       return;
     }
 
+    const dateVal = String(form.get("date") ?? "").trim();
+    const todayStr = new Date().toISOString().split("T")[0];
+    const autoStatus = dateVal && dateVal < todayStr ? "past" : "upcoming";
+
     const payload = {
       title,
       slug: slugify(title) || `etkinlik-${Date.now()}`,
       description: String(form.get("description") ?? "").trim() || null,
-      date: String(form.get("date") ?? "").trim() || null,
+      date: dateVal || null,
       time: String(form.get("time") ?? "").trim() || null,
       location: String(form.get("location") ?? "").trim() || null,
-      status: String(form.get("status") ?? "upcoming"),
+      status: autoStatus,
       image_url: images[0] || null,
       is_published: form.get("is_published") === "on",
     };
@@ -65,7 +69,7 @@ export function EventForm({ initial }: EventFormProps) {
       <div>
         <Link href="/admin/etkinlikler" className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-red-600">
           <ArrowLeft className="size-4 shrink-0" aria-hidden="true" />
-          <span className="translate-y-[1px]">Listeye dön</span>
+          <span>Listeye dön</span>
         </Link>
         <h1 className="mt-4 text-2xl font-bold text-zinc-950">
           {initial ? "Etkinliği Düzenle" : "Yeni Etkinlik"}
@@ -85,28 +89,21 @@ export function EventForm({ initial }: EventFormProps) {
           <label className="block text-sm font-semibold text-zinc-800">
             Tarih
             <div className="relative mt-1.5">
-              <input name="date" type="date" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 pr-10`} />
-              <CalendarDays className="pointer-events-none absolute right-3 top-[calc(50%+0.5px)] size-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+              <input name="date" type="date" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 cursor-pointer pr-10`} />
+              <CalendarDays className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
             </div>
           </label>
           <label className="block text-sm font-semibold text-zinc-800">
             Saat
             <div className="relative mt-1.5">
-              <input name="time" defaultValue={initial?.time ?? ""} className={`${fieldClass} mt-0 pr-10`} placeholder="15.00" />
-              <Clock className="pointer-events-none absolute right-3 top-[calc(50%+0.5px)] size-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+              <input name="time" type="time" defaultValue={initial?.time ?? ""} className={`${fieldClass} mt-0 cursor-pointer pr-10`} placeholder="15:00" />
+              <Clock className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
             </div>
           </label>
         </div>
         <label className="block text-sm font-semibold text-zinc-800">
           Konum
           <input name="location" defaultValue={initial?.location ?? ""} className={fieldClass} />
-        </label>
-        <label className="block text-sm font-semibold text-zinc-800">
-          Durum
-          <select name="status" defaultValue={initial?.status ?? "upcoming"} className={fieldClass}>
-            <option value="upcoming">Yaklaşan</option>
-            <option value="past">Geçmiş</option>
-          </select>
         </label>
 
         <ImageUploader value={images} onChange={setImages} label="Etkinlik görseli" />
