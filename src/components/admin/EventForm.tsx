@@ -64,8 +64,8 @@ export function EventForm({ initial }: EventFormProps) {
     <div className="mx-auto max-w-2xl space-y-6">
       <div>
         <Link href="/admin/etkinlikler" className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-600 hover:text-red-600">
-          <ArrowLeft className="size-4 shrink-0 -translate-y-[2px]" aria-hidden="true" />
-          <span>Listeye dön</span>
+          <ArrowLeft className="size-4 shrink-0" aria-hidden="true" />
+          <span className="translate-y-[1px]">Listeye dön</span>
         </Link>
         <h1 className="mt-4 text-2xl font-bold text-zinc-950">
           {initial ? "Etkinliği Düzenle" : "Yeni Etkinlik"}
@@ -86,7 +86,7 @@ export function EventForm({ initial }: EventFormProps) {
             Tarih
             <div className="relative mt-1.5">
               <input name="date" type="date" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 pr-10`} />
-              <CalendarDays className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
+              <CalendarDays className="pointer-events-none absolute right-3 top-[calc(50%+0.5px)] size-4 -translate-y-1/2 text-slate-500" aria-hidden="true" />
             </div>
           </label>
           <label className="block text-sm font-semibold text-zinc-800">
