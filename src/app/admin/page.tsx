@@ -26,8 +26,8 @@ export default async function AdminDashboardPage() {
   ]);
 
   const stats: { label: string; value: number; href: string; icon: LucideIcon }[] = [
-    { label: "Toplam Etkinlik", value: events.count ?? 0, href: "/admin/etkinlikler", icon: CalendarDays },
     { label: "Toplam Duyuru", value: announcements.count ?? 0, href: "/admin/duyurular", icon: Megaphone },
+    { label: "Toplam Etkinlik", value: events.count ?? 0, href: "/admin/etkinlikler", icon: CalendarDays },
     { label: "Toplam Fotoğraf", value: photos.count ?? 0, href: "/admin/galeri", icon: Image },
     { label: "Toplam Mesaj", value: messages.count ?? 0, href: "/admin/iletisim", icon: Mail },
     { label: "Okunmamış Mesaj", value: unread.count ?? 0, href: "/admin/iletisim", icon: MessageSquare },
