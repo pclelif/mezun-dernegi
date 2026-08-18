@@ -112,7 +112,7 @@ export function ContentEditor({
         <button
           type="submit"
           disabled={saving}
-          className="inline-flex min-h-11 items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-6 font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
+          className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#ec1c24] px-5 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-60"
         >
           {saving ? <LoaderCircle className="size-4 animate-spin" /> : <Save className="size-4" />}
           {saving ? "Kaydediliyor…" : "Değişiklikleri Kaydet"}

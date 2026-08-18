@@ -137,7 +137,7 @@ export function BoardMemberForm({ initial }: BoardMemberFormProps) {
         <button
           type="submit"
           disabled={saving}
-          className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-4 font-semibold text-white hover:bg-red-700 disabled:opacity-60 sm:w-auto"
+          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#ec1c24] px-4 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-60 sm:w-auto"
         >
           {saving ? <LoaderCircle className="size-4 animate-spin" aria-hidden="true" /> : null}
           {saving ? "Kaydediliyor…" : initial ? "Değişiklikleri Kaydet" : "Kurul Üyesini Kaydet"}

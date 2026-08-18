@@ -87,13 +87,16 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
         </label>
 
         <ImageUploader value={images} onChange={setImages} label="Duyuru görseli" />
-        <label className="flex items-center gap-3 text-sm font-semibold text-zinc-800"><input name="is_published" type="checkbox" defaultChecked={initial?.is_published ?? true} className="size-4 accent-red-600" />Web sitesinde yayınla</label>
+        <label className="flex items-center justify-between gap-3 text-sm font-semibold text-zinc-800">
+          <span>Web sitesinde yayınla</span>
+          <input name="is_published" type="checkbox" defaultChecked={initial?.is_published ?? true} className="size-4.5 cursor-pointer accent-red-600" />
+        </label>
 
         {error ? <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
         <button
           type="submit"
           disabled={saving}
-          className="inline-flex min-h-11 w-full items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-4 font-semibold text-white hover:bg-red-700 disabled:opacity-60 sm:w-auto"
+          className="inline-flex h-10 w-full items-center justify-center gap-2 rounded-lg bg-[#ec1c24] px-4 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-60 sm:w-auto"
         >
           {saving ? <LoaderCircle className="size-4 animate-spin" aria-hidden="true" /> : null}
           {saving ? "Kaydediliyor…" : initial ? "Değişiklikleri Kaydet" : "Duyuruyu Kaydet"}
