@@ -13,18 +13,18 @@ const legalLinks = [
 
 export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420\nÇankaya/Ankara" }: { logoUrl?: string; address?: string }) {
   return (
-    <footer className="border-t border-zinc-200 bg-zinc-100 font-sans text-zinc-900">
+    <footer className="bg-[#18181b] font-sans text-white">
       <div className="mx-auto grid w-[min(100%-2rem,80rem)] items-start gap-8 py-7 md:grid-cols-2 md:gap-10 md:py-8 lg:grid-cols-[1fr_auto_1fr] lg:gap-16">
         <div>
-          <Link href="/" className="inline-flex items-center gap-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600" aria-label={`${associationName} ana sayfa`}>
-            <Image src={logoUrl} alt="" width={56} height={56} className="size-14 shrink-0 rounded-full border border-zinc-200 bg-white object-cover" />
-            <span className="max-w-lg text-sm font-semibold leading-6 text-zinc-950 text-balance">{associationName}</span>
+          <Link href="/" className="inline-flex items-center gap-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`${associationName} ana sayfa`}>
+            <Image src={logoUrl} alt="" width={56} height={56} className="size-14 shrink-0 rounded-full bg-white object-cover" />
+            <span className="max-w-lg text-sm font-semibold leading-6 text-balance">{associationName}</span>
           </Link>
         </div>
 
         <nav className="w-full sm:w-fit sm:max-w-full lg:translate-x-20 lg:justify-self-center" aria-label="Hakkımızda bağlantıları">
           <div className="w-full sm:w-fit sm:max-w-full">
-            <h2 className="relative w-full pb-2 text-left text-sm font-semibold text-zinc-950 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-zinc-300 after:content-['']">Hakkımızda</h2>
+            <h2 className="relative w-full pb-2 text-left text-sm font-semibold text-white after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/20 after:content-['']">Hakkımızda</h2>
             
             {/* Mobil görünüm (Tek sütun alt alta) */}
             <ul className="mt-3 grid gap-y-2 text-sm leading-5 sm:hidden">
@@ -32,7 +32,7 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="touch-manipulation rounded-sm text-zinc-600 transition-colors hover:text-red-600 active:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                    className="touch-manipulation rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                   >
                     {item.label}
                   </Link>
@@ -47,7 +47,7 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="touch-manipulation rounded-sm text-zinc-600 transition-colors hover:text-red-600 active:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                      className="touch-manipulation rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                     >
                       {item.label}
                     </Link>
@@ -59,7 +59,7 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="touch-manipulation rounded-sm text-zinc-600 transition-colors hover:text-red-600 active:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                      className="touch-manipulation rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                     >
                       {item.label}
                     </Link>
@@ -72,10 +72,10 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
 
         <div className="w-full sm:w-fit sm:max-w-full md:col-span-2 lg:col-span-1 lg:justify-self-end lg:ml-auto lg:-translate-x-4">
           <div className="w-full sm:w-fit sm:max-w-full lg:ml-auto text-left">
-            <h2 className="relative w-full pb-2 text-left text-sm font-semibold text-zinc-950 after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-zinc-300 after:content-['']">
+            <h2 className="relative w-full pb-2 text-left text-sm font-semibold text-white after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/20 after:content-['']">
               Adres
             </h2>
-            <address className="mt-3 text-sm not-italic leading-6 text-zinc-600">
+            <address className="mt-3 text-sm not-italic leading-6 text-zinc-200">
               <span className="block sm:w-max sm:max-w-full">Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420</span>
               <span className="block">Çankaya/Ankara</span>
             </address>
@@ -83,8 +83,8 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
         </div>
       </div>
 
-      <div className="border-t border-zinc-200">
-        <div className="mx-auto flex w-[min(100%-2rem,52rem)] flex-col items-start justify-start gap-2 py-3 text-left text-xs leading-5 text-zinc-600 md:items-center md:justify-center md:text-center">
+      <div className="border-t border-white/15">
+        <div className="mx-auto flex w-[min(100%-2rem,52rem)] flex-col items-start justify-start gap-2 py-3 text-left text-xs leading-5 text-zinc-300 md:items-center md:justify-center md:text-center">
           <p className="w-full text-left md:text-center">
             © {new Date().getFullYear()} {associationName}. Tüm hakları saklıdır.
           </p>
@@ -92,13 +92,13 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
             {[legalLinks[0], legalLinks[1], legalLinks[3], legalLinks[2]].map((item, index) => (
               <Fragment key={item.href}>
                 {index > 0 ? (
-                  <span className="text-zinc-400" aria-hidden="true">
+                  <span className="text-zinc-500" aria-hidden="true">
                     ·
                   </span>
                 ) : null}
                 <Link
                   href={item.href}
-                  className="touch-manipulation rounded-sm text-zinc-600 transition-colors hover:text-red-600 active:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                  className="touch-manipulation rounded-sm text-zinc-400 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   {item.label}
                 </Link>
@@ -109,13 +109,13 @@ export function Footer({ logoUrl = "/mezunderlogo.jpg", address = "Kızılay Mah
             {legalLinks.map((item, index) => (
               <Fragment key={item.href}>
                 {index > 0 ? (
-                  <span className="text-zinc-400" aria-hidden="true">
+                  <span className="text-zinc-500" aria-hidden="true">
                     •
                   </span>
                 ) : null}
                 <Link
                   href={item.href}
-                  className="touch-manipulation rounded-sm text-zinc-600 transition-colors hover:text-red-600 active:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                  className="touch-manipulation rounded-sm text-zinc-400 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                 >
                   {item.label}
                 </Link>
