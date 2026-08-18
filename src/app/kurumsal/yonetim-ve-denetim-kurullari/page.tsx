@@ -28,8 +28,8 @@ export default async function BoardsPage() {
       />
       <div className="mx-auto w-[min(100%-2rem,75rem)] py-12 md:w-[min(100%-4rem,75rem)] md:py-16 space-y-10 md:space-y-12">
         <section aria-labelledby="management-board-heading">
-          <div className="mb-5 border-b border-zinc-200 pb-2.5">
-            <h2 id="management-board-heading" className="text-base font-bold tracking-tight text-zinc-950 md:text-lg">
+          <div className="mb-5 border-b border-zinc-200 pb-3">
+            <h2 id="management-board-heading" className="text-lg font-bold tracking-tight text-black md:text-xl">
               Yönetim Kurulu
             </h2>
           </div>
@@ -52,8 +52,8 @@ export default async function BoardsPage() {
         </section>
 
         <section aria-labelledby="audit-board-heading">
-          <div className="mb-5 border-b border-zinc-200 pb-2.5">
-            <h2 id="audit-board-heading" className="text-base font-bold tracking-tight text-zinc-950 md:text-lg">
+          <div className="mb-5 border-b border-zinc-200 pb-3">
+            <h2 id="audit-board-heading" className="text-lg font-bold tracking-tight text-black md:text-xl">
               Denetim Kurulu
             </h2>
           </div>
