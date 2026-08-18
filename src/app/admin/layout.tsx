@@ -41,7 +41,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <div className="flex items-center justify-between px-5 py-5 lg:block">
             <div>
               <AdminBrandLogo />
-              <p className="text-xs font-bold uppercase tracking-[0.16em] text-red-400">Yönetim Paneli</p>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#ec1c24]">Yönetim Paneli</p>
               <p className="mt-2 max-w-52 text-xs font-semibold leading-5 text-white">Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği</p>
             </div>
           </div>
@@ -71,7 +71,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
                 href="/"
                 className="inline-flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-medium text-zinc-400 transition-colors hover:bg-zinc-800 hover:text-white"
               >
-                <Undo2 className="size-4 text-red-500" aria-hidden="true" />
+                <Undo2 className="size-4 text-zinc-400" aria-hidden="true" />
                 Siteye Dön
               </Link>
               <LogoutButton />
