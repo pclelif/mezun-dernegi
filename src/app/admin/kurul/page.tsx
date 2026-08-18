@@ -184,7 +184,7 @@ export default function AdminBoardMembersPage() {
                       <td className="px-6 py-3.5 font-medium text-zinc-900 align-middle">{member.name}</td>
                       <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap align-middle">{(member.role && roleLabels[member.role]) || member.role || "—"}</td>
                       <td className="px-6 py-3.5 whitespace-nowrap align-middle">
-                        <span className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${member.board_type === "audit" ? "bg-purple-50 text-purple-700" : "bg-blue-50 text-blue-700"}`}>
+                        <span className={`-ml-2.5 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold -translate-x-[0.25px] ${member.board_type === "audit" ? "bg-purple-50 text-purple-700" : "bg-blue-50 text-blue-700"}`}>
                           {member.board_type === "audit" ? "Denetim Kurulu" : "Yönetim Kurulu"}
                         </span>
                       </td>
