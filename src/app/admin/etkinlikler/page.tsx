@@ -211,22 +211,22 @@ export default function AdminEventsPage() {
                       }`}
                     >
                       {sortBy === "manual" && (
-                        <td className="w-12 px-4 py-3.5 text-center">
+                        <td className="w-12 px-4 py-3.5 text-center align-middle">
                           <GripVertical className="mx-auto size-4 text-slate-400 hover:text-red-600 transition-colors" />
                         </td>
                       )}
-                      <td className="px-6 py-3.5 font-medium text-zinc-900">{event.title}</td>
-                      <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap">{formatTurkishDate(event.date) || "—"}</td>
-                      <td className="px-6 py-3.5 whitespace-nowrap">
+                      <td className="px-6 py-3.5 font-medium text-zinc-900 align-middle">{event.title}</td>
+                      <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap align-middle">{formatTurkishDate(event.date) || "—"}</td>
+                      <td className="px-6 py-3.5 whitespace-nowrap align-middle">
                         <span
-                          className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${
+                          className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold -translate-x-[0.5px] ${
                             event.status === "past" ? "bg-zinc-200 text-zinc-700" : "bg-red-50 text-red-700"
                           }`}
                         >
                           {event.status === "past" ? "Geçmiş" : "Yaklaşan"}
                         </span>
                       </td>
-                      <td className="px-6 py-3.5 whitespace-nowrap">
+                      <td className="px-6 py-3.5 whitespace-nowrap align-middle">
                         <div className="flex items-center gap-2">
                           <Link
                             href={`/admin/etkinlikler/${event.id}`}

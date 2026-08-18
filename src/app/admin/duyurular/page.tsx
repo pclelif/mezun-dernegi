@@ -211,13 +211,13 @@ export default function AdminAnnouncementsPage() {
                       }`}
                     >
                       {sortBy === "manual" && (
-                        <td className="w-12 px-4 py-3.5 text-center">
+                        <td className="w-12 px-4 py-3.5 text-center align-middle">
                           <GripVertical className="mx-auto size-4 text-slate-400 hover:text-red-600 transition-colors" />
                         </td>
                       )}
-                      <td className="px-6 py-3.5 font-medium text-zinc-900">{item.title}</td>
-                      <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap">{formatTurkishDate(item.date) || "—"}</td>
-                      <td className="px-6 py-3.5 whitespace-nowrap">
+                      <td className="px-6 py-3.5 font-medium text-zinc-900 align-middle">{item.title}</td>
+                      <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap align-middle">{formatTurkishDate(item.date) || "—"}</td>
+                      <td className="px-6 py-3.5 whitespace-nowrap align-middle">
                         <div className="flex items-center gap-2">
                           <Link
                             href={`/admin/duyurular/${item.id}`}
