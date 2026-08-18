@@ -44,19 +44,21 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="min-h-screen w-full bg-slate-100 text-zinc-900">
-      {/* Mobile Header (Fixed/Sticky on top for mobile screens) */}
-      <header className="sticky top-0 z-40 flex h-14 w-full items-center justify-between border-b border-zinc-800 bg-[#18181b] px-3.5 text-white shadow-md lg:hidden">
-        <div className="flex min-w-0 items-center gap-2.5">
+      {/* Mobile Header (Thicker, spacious design so full name fits nicely) */}
+      <header className="sticky top-0 z-40 flex min-h-[4.25rem] w-full items-center justify-between border-b border-zinc-800 bg-[#18181b] px-4 py-3 text-white shadow-md lg:hidden">
+        <div className="flex min-w-0 items-center gap-3">
           <AdminBrandLogo compact />
           <div className="min-w-0 flex-1">
-            <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#ec1c24]">Yönetim Paneli</p>
-            <p className="truncate text-xs font-semibold text-zinc-300">Keçiören Mezunlar Derneği</p>
+            <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#ec1c24]">Yönetim Paneli</p>
+            <p className="mt-0.5 text-xs font-semibold leading-snug text-white line-clamp-2">
+              Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği
+            </p>
           </div>
         </div>
         <button
           type="button"
           onClick={() => setMobileMenuOpen((prev) => !prev)}
-          className="ml-2 grid size-9 shrink-0 place-items-center rounded-lg bg-zinc-800 text-white transition hover:bg-zinc-700 active:scale-95 cursor-pointer"
+          className="ml-3 grid size-10 shrink-0 place-items-center rounded-lg bg-zinc-800 text-white transition hover:bg-zinc-700 active:scale-95 cursor-pointer"
           aria-label={mobileMenuOpen ? "Menüyü Kapat" : "Menüyü Aç"}
         >
           {mobileMenuOpen ? <X className="size-5" /> : <Menu className="size-5" />}
@@ -73,7 +75,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
 
       {/* Mobile Navigation Drawer Content */}
       <div
-        className={`fixed inset-x-0 top-14 z-30 max-h-[calc(100vh-3.5rem)] overflow-y-auto border-b border-zinc-800 bg-[#18181b] p-4 text-white shadow-2xl transition-all duration-200 lg:hidden ${
+        className={`fixed inset-x-0 top-[68px] z-30 max-h-[calc(100vh-4.25rem)] overflow-y-auto border-b border-zinc-800 bg-[#18181b] p-4 text-white shadow-2xl transition-all duration-200 lg:hidden ${
           mobileMenuOpen ? "block" : "hidden"
         }`}
       >
