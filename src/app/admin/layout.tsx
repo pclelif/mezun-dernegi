@@ -24,7 +24,7 @@ const navItems: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/admin/duyurular", label: "Duyurular", icon: Megaphone },
   { href: "/admin/etkinlikler", label: "Etkinlikler", icon: CalendarDays },
   { href: "/admin/galeri", label: "Galeri", icon: Images },
-  { href: "/admin/kurul", label: "Kurul Üyeleri", icon: UsersRound },
+  { href: "/admin/kurul", label: "Yönetim ve Denetim Kurulu", icon: UsersRound },
   { href: "/admin/sss", label: "Sıkça Sorulanlar", icon: CircleHelp },
   { href: "/admin/iletisim", label: "İletişim Formu", icon: Contact },
 ];
@@ -112,7 +112,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
       {/* Main Page Layout Wrapper */}
       <div className="flex w-full min-h-screen flex-col lg:flex-row">
         {/* Desktop Sidebar (Visible >= 1024px) */}
-        <aside className="hidden border-r border-zinc-800 bg-[#18181b] text-white lg:flex lg:w-64 lg:shrink-0 lg:flex-col">
+        <aside className="hidden border-r border-zinc-800 bg-[#18181b] text-white lg:flex lg:w-[17.5rem] lg:shrink-0 lg:flex-col">
           <div className="px-5 py-5">
             <AdminBrandLogo />
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#ec1c24]">Yönetim Paneli</p>
