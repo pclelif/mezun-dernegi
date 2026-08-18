@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight, ChevronLeft, ChevronRight, Images } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, Images, X } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 
@@ -27,6 +27,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
   const lastTouchRef = useRef(0);
   const pressTimerRef = useRef<number | null>(null);
   const [pressedDirection, setPressedDirection] = useState<-1 | 1 | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   function move(direction: -1 | 1) {
     const track = trackRef.current;
@@ -74,7 +75,11 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
         <div className="mx-auto max-w-7xl">
           <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:gap-6">
             {items.map((item) => (
-              <figure key={item.id} className="relative aspect-square overflow-hidden rounded-lg border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-shadow" onClick={() => window.open(item.imageUrl || '', '_blank')}>
+              <figure
+                key={item.id}
+                className="relative aspect-square overflow-hidden rounded-lg border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-shadow"
+                onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
+              >
                 {item.imageUrl ? (
                   <div className="absolute inset-0 bg-cover bg-center hover:scale-105 transition-transform duration-300" style={{ backgroundImage: `url(${item.imageUrl})` }} role="img" aria-label={item.title} />
                 ) : (
@@ -86,6 +91,28 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
             ))}
           </div>
         </div>
+
+        {/* Lightbox Modal */}
+        {selectedImage && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <button
+              type="button"
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-4 right-4 z-10 rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors"
+            >
+              <X className="size-6 text-white" />
+            </button>
+            <img
+              src={selectedImage}
+              alt="Büyütülmüş fotoğraf"
+              className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        )}
       </section>
     );
   }
@@ -119,9 +146,13 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
         <div className="relative">
           <div ref={trackRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" tabIndex={0} aria-label="Fotoğraf galerisi">
             {items.map((item) => (
-              <figure key={item.id} className="relative aspect-[4/3] min-w-[78%] snap-start overflow-hidden rounded-lg border border-zinc-200 bg-white sm:min-w-[43%] lg:min-w-[29%]">
+              <figure
+                key={item.id}
+                className="relative aspect-[4/3] min-w-[78%] snap-start overflow-hidden rounded-lg border border-zinc-200 bg-white cursor-pointer sm:min-w-[43%] lg:min-w-[29%]"
+                onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
+              >
                 {item.imageUrl ? (
-                  <div className="absolute inset-0 bg-contain bg-center bg-no-repeat" style={{ backgroundImage: `url(${item.imageUrl})` }} role="img" aria-label={item.title} />
+                  <div className="absolute inset-0 bg-cover bg-center hover:scale-105 transition-transform duration-300" style={{ backgroundImage: `url(${item.imageUrl})` }} role="img" aria-label={item.title} />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
                     <Images className="size-12" />
@@ -155,6 +186,28 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
           ) : null}
         </div>
       </div>
+
+      {/* Lightbox Modal */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
+          onClick={() => setSelectedImage(null)}
+        >
+          <button
+            type="button"
+            onClick={() => setSelectedImage(null)}
+            className="absolute top-4 right-4 z-10 rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors"
+          >
+            <X className="size-6 text-white" />
+          </button>
+          <img
+            src={selectedImage}
+            alt="Büyütülmüş fotoğraf"
+            className="max-h-[90vh] max-w-[90vw] rounded-lg object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+        </div>
+      )}
     </section>
   );
 }

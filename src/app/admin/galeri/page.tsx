@@ -226,7 +226,7 @@ export default function AdminGalleryPage() {
                 }`}
               >
                 <div
-                  className="relative aspect-square bg-slate-200 bg-cover bg-center cursor-pointer"
+                  className="relative aspect-square bg-slate-200 bg-cover bg-center cursor-pointer hover:opacity-95 transition-opacity"
                   style={{ backgroundImage: `url(${photo.image_url})` }}
                   aria-hidden="true"
                   onClick={() => setSelectedImage(photo.image_url)}
@@ -237,14 +237,7 @@ export default function AdminGalleryPage() {
                     </div>
                   )}
                 </div>
-                <div className="flex items-center justify-between p-2.5 bg-slate-50 border-t border-zinc-100">
-                  <button
-                    type="button"
-                    onClick={() => setSelectedImage(photo.image_url)}
-                    className="text-xs font-semibold text-zinc-700 hover:text-zinc-900"
-                  >
-                    Büyüt
-                  </button>
+                <div className="flex items-center justify-end p-2.5 bg-slate-50 border-t border-zinc-100">
                   <button
                     type="button"
                     onClick={() => void handleDelete(photo.id)}
