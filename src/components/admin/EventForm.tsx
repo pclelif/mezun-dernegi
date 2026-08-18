@@ -90,14 +90,14 @@ export function EventForm({ initial }: EventFormProps) {
             Tarih
             <div className="relative mt-1.5">
               <input name="date" type="date" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 cursor-pointer pr-10`} />
-              <CalendarDays className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
+              <CalendarDays className="pointer-events-none absolute right-3 top-[calc(50%+1px)] size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
             </div>
           </label>
           <label className="block text-sm font-semibold text-zinc-800">
             Saat
             <div className="relative mt-1.5">
               <input name="time" type="time" defaultValue={initial?.time ?? ""} className={`${fieldClass} mt-0 cursor-pointer pr-10`} placeholder="15:00" />
-              <Clock className="pointer-events-none absolute right-3 top-1/2 size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
+              <Clock className="pointer-events-none absolute right-3 top-[calc(50%+1px)] size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
             </div>
           </label>
         </div>
