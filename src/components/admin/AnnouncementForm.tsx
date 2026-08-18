@@ -61,7 +61,7 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
     <div className="mx-auto max-w-2xl space-y-6">
       <div>
         <Link href="/admin/duyurular" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-red-600">
-          <ArrowLeft className="size-4" aria-hidden="true" />
+          <ArrowLeft className="size-4 -translate-y-[1px]" aria-hidden="true" />
           Listeye dön
         </Link>
         <h1 className="mt-4 text-2xl font-bold text-zinc-950">
@@ -71,7 +71,7 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
 
       <form onSubmit={handleSubmit} className="space-y-5 rounded-xl border border-zinc-200 bg-white p-5 shadow-sm sm:p-6">
         <label className="block text-sm font-semibold text-zinc-800">
-          Başlık *
+          Başlık
           <input name="title" required defaultValue={initial?.title} className={fieldClass} />
         </label>
         <label className="block text-sm font-semibold text-zinc-800">

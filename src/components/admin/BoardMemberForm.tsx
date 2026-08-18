@@ -80,7 +80,7 @@ export function BoardMemberForm({ initial }: BoardMemberFormProps) {
           href="/admin/kurul"
           className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-red-600"
         >
-          <ArrowLeft className="size-4" aria-hidden="true" />
+          <ArrowLeft className="size-4 -translate-y-[1px]" aria-hidden="true" />
           Listeye dön
         </Link>
         <h1 className="mt-4 text-2xl font-bold text-zinc-950">
