@@ -51,7 +51,9 @@ export function Header({ logoUrl = "/mezunderlogo.jpg", email = "kaaflmezunder@g
       <div className="bg-[var(--color-accent)] text-white">
         <div className="mx-auto flex min-h-11 w-[min(100%-2rem,75rem)] items-center justify-between gap-4 xl:w-[min(100%-3rem,84rem)]">
           <a
-            href={`mailto:${email}`}
+            href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(email)}`}
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex min-w-0 touch-manipulation items-center gap-2 rounded-sm py-1 text-xs font-medium transition-opacity hover:opacity-80 active:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-sm"
           >
             <Mail className="size-4 shrink-0" aria-hidden="true" />

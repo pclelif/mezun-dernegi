@@ -290,13 +290,21 @@ export default function AdminContactPage() {
                   <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-600">
                     <span className="font-semibold text-zinc-900">{item.name}</span>
                     <span>•</span>
-                    <a href={`mailto:${item.email}`} className="text-slate-600 hover:text-red-600 hover:underline">
+                    <a
+                      href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(item.email)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-slate-600 hover:text-red-600 hover:underline"
+                    >
                       {item.email}
                     </a>
                     {item.phone && (
                       <>
                         <span>•</span>
-                        <a href={`tel:${item.phone}`} className="text-slate-600 hover:text-red-600 hover:underline">
+                        <a
+                          href={`tel:${item.phone.replace(/\s+/g, "")}`}
+                          className="text-slate-600 hover:text-red-600 hover:underline"
+                        >
                           {item.phone}
                         </a>
                       </>
@@ -309,7 +317,9 @@ export default function AdminContactPage() {
                 {/* Actions */}
                 <div className="flex items-center gap-2 pt-2 sm:pt-0">
                   <a
-                    href={`mailto:${item.email}?subject=Re: ${encodeURIComponent(item.subject || "İletişim Mesajınız")}`}
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(item.email)}&su=Re:%20${encodeURIComponent(item.subject || "İletişim Mesajınız")}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-slate-50"
                   >
                     <Mail className="size-3.5 text-red-600" />

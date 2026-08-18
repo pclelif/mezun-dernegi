@@ -15,8 +15,8 @@ export default async function Page() {
   const contactRows = [
     content.address ? { label: "Adres", value: content.address, href: mapLink, Icon: MapPin } : null,
     content.phone ? { label: "Telefon", value: content.phone, href: `tel:${content.phone.replace(/\s/g, "")}`, Icon: Phone } : null,
-    content.email ? { label: "E-posta", value: content.email, href: `mailto:${content.email}`, Icon: Mail } : null,
-    content.secondary_email ? { label: "E-posta", value: content.secondary_email, href: `mailto:${content.secondary_email}`, Icon: Mail } : null,
+    content.email ? { label: "E-posta", value: content.email, href: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(content.email)}`, Icon: Mail } : null,
+    content.secondary_email ? { label: "E-posta", value: content.secondary_email, href: `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(content.secondary_email)}`, Icon: Mail } : null,
     content.instagram_url ? { label: "Instagram", value: "Instagram hesabımız", href: content.instagram_url, Icon: InstagramIcon } : null,
     content.linkedin_url ? { label: "LinkedIn", value: "LinkedIn hesabımız", href: content.linkedin_url, Icon: LinkedinIcon } : null,
   ].filter(Boolean);
