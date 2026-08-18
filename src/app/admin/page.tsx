@@ -160,20 +160,20 @@ export default async function AdminDashboardPage() {
       {/* Alt Kısım: İstatistikler */}
       <section className="space-y-3">
         <h2 className="text-base font-bold text-zinc-950">İstatistikler</h2>
-        <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5">
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 xl:grid-cols-5">
           {stats.map(({ label, value, href, icon: Icon }) => (
             <Link
               href={href}
               key={label}
-              className="group rounded-xl border border-zinc-200 bg-white p-4.5 shadow-sm transition hover:border-red-200 hover:shadow-md"
+              className="group rounded-xl border border-zinc-200 bg-white p-3.5 sm:p-4.5 shadow-sm transition hover:border-red-200 hover:shadow-md"
             >
-              <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center justify-between gap-2 sm:gap-3">
                 <div>
                   <p className="text-xs font-medium text-slate-500">{label}</p>
-                  <p className="mt-1.5 text-2xl font-bold tracking-tight text-zinc-950">{value}</p>
+                  <p className="mt-1 sm:mt-1.5 text-xl sm:text-2xl font-bold tracking-tight text-zinc-950">{value}</p>
                 </div>
-                <span className="grid size-9 place-items-center rounded-lg bg-red-50 text-red-600 transition group-hover:bg-red-600 group-hover:text-white">
-                  <Icon className="size-4.5" />
+                <span className="grid size-8 sm:size-9 shrink-0 place-items-center rounded-lg bg-red-50 text-red-600 transition group-hover:bg-red-600 group-hover:text-white">
+                  <Icon className="size-4 sm:size-4.5" />
                 </span>
               </div>
             </Link>
