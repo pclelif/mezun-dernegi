@@ -144,7 +144,7 @@ export default function AdminContactPage() {
             type="button"
             onClick={() => void markAllAsRead()}
             disabled={bulkActionLoading}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#ec1c24] px-4 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-50 cursor-pointer"
+            className="inline-flex h-8 items-center justify-center gap-1.5 rounded-md border border-red-200 bg-red-50 px-3 text-xs font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50 cursor-pointer"
           >
             {bulkActionLoading ? <LoaderCircle className="size-4 animate-spin" /> : <CheckCheck className="size-4" />}
             Tümünü Okundu İşaretle ({unreadCount})
