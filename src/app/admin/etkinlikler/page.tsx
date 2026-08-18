@@ -185,12 +185,12 @@ export default function AdminEventsPage() {
           <p className="mt-1 text-sm text-slate-600">Etkinlikleri listeleyin, sıralayın, ekleyin veya silin.</p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
-          <div className="relative inline-flex items-center">
+          <div className="relative inline-flex flex-1 sm:flex-none items-center">
             <ArrowUpDown className="pointer-events-none absolute left-3 size-4 text-slate-500" aria-hidden="true" />
             <select
               value={sortBy}
               onChange={(e) => handleSortChange(e.target.value)}
-              className="h-10 appearance-none rounded-md border border-zinc-300 bg-white pl-9 pr-9 text-sm font-semibold text-zinc-800 shadow-sm outline-none transition focus:border-red-500 cursor-pointer"
+              className="h-10 w-full sm:w-auto appearance-none rounded-md border border-zinc-300 bg-white pl-9 pr-9 text-sm font-semibold text-zinc-800 shadow-sm outline-none transition focus:border-red-500 cursor-pointer"
               aria-label="Sıralama ölçütü"
             >
               <option value="created-desc">Eklenme Tarihine Göre</option>
@@ -202,7 +202,7 @@ export default function AdminEventsPage() {
           </div>
           <Link
             href="/admin/etkinlikler/yeni"
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-4 text-sm font-semibold text-white transition-colors hover:bg-red-700"
+            className="inline-flex h-10 w-full sm:w-auto items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-4 text-sm font-semibold text-white transition-colors hover:bg-red-700"
           >
             <Plus className="size-4" aria-hidden="true" />
             Yeni Ekle
@@ -226,82 +226,150 @@ export default function AdminEventsPage() {
         ) : events.length === 0 ? (
           <p className="px-6 py-12 text-center text-sm text-slate-500">Henüz etkinlik yok. Yeni bir etkinlik ekleyin.</p>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="min-w-full text-left text-sm">
-              <thead className="border-b border-zinc-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500 select-none">
-                <tr>
-                  {sortBy === "manual" && <th className="w-12 px-4 py-3.5 text-center"></th>}
-                  <th className="px-6 py-3.5 font-semibold">Başlık</th>
-                  <th className="px-6 py-3.5 font-semibold">Tarih</th>
-                  <th className="px-6 py-3.5 font-semibold">Durum</th>
-                  <th className="px-6 py-3.5 font-semibold">İşlemler</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-zinc-100">
-                {events.map((event, index) => {
-                  const isDragging = draggedIndex === index;
-                  const isOver = dragOverIndex === index;
+          <>
+            {/* Mobile Touch Cards View (< sm) */}
+            <div className="divide-y divide-zinc-100 sm:hidden">
+              {events.map((event, index) => {
+                const isDragging = draggedIndex === index;
+                const isOver = dragOverIndex === index;
 
-                  return (
-                    <tr
-                      key={event.id}
-                      draggable={sortBy === "manual"}
-                      onDragStart={(e) => handleDragStart(e, index)}
-                      onDragOver={(e) => handleDragOver(e, index)}
-                      onDrop={() => handleDrop(index)}
-                      onDragEnd={handleDragEnd}
-                      className={`transition-all duration-150 ${
-                        sortBy === "manual" ? "cursor-grab active:cursor-grabbing" : ""
-                      } ${
-                        isDragging
-                          ? "opacity-30 bg-slate-100 scale-[0.99]"
-                          : isOver
-                          ? "border-t-2 border-t-red-500 bg-red-50/50"
-                          : "hover:bg-slate-50/60"
-                      }`}
-                    >
+                return (
+                  <article
+                    key={event.id}
+                    draggable={sortBy === "manual"}
+                    onDragStart={(e) => handleDragStart(e, index)}
+                    onDragOver={(e) => handleDragOver(e, index)}
+                    onDrop={() => handleDrop(index)}
+                    onDragEnd={handleDragEnd}
+                    className={`p-4 transition-all duration-150 ${
+                      sortBy === "manual" ? "cursor-grab active:cursor-grabbing" : ""
+                    } ${
+                      isDragging
+                        ? "opacity-30 bg-slate-100"
+                        : isOver
+                        ? "border-l-4 border-l-red-500 bg-red-50/50"
+                        : "hover:bg-slate-50/60"
+                    }`}
+                  >
+                    <div className="flex items-start gap-2.5 min-w-0">
                       {sortBy === "manual" && (
-                        <td className="w-12 px-4 py-3.5 text-center align-middle">
-                          <GripVertical className="mx-auto size-4 text-slate-400 hover:text-red-600 transition-colors" />
-                        </td>
+                        <GripVertical className="mt-0.5 size-4 shrink-0 text-slate-400" />
                       )}
-                      <td className="px-6 py-3.5 font-medium text-zinc-900 align-middle">{event.title}</td>
-                      <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap align-middle">{formatTurkishDate(event.date) || "—"}</td>
-                      <td className="px-6 py-3.5 whitespace-nowrap align-middle">
-                        <span
-                          className={`-ml-2.5 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold -translate-x-[0.75px] ${
-                            event.status === "past" ? "bg-zinc-200 text-zinc-700" : "bg-red-50 text-red-700"
-                          }`}
-                        >
-                          {event.status === "past" ? "Geçmiş" : "Yaklaşan"}
-                        </span>
-                      </td>
-                      <td className="px-6 py-3.5 whitespace-nowrap align-middle">
-                        <div className="flex items-center gap-2">
-                          <Link
-                            href={`/admin/etkinlikler/${event.id}`}
-                            className="inline-flex items-center gap-1.5 rounded-md border border-zinc-300 px-2.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-slate-50"
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center justify-between gap-2">
+                          <h3 className="font-semibold text-zinc-950 text-sm leading-snug">{event.title}</h3>
+                          <span
+                            className={`shrink-0 rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                              event.status === "past" ? "bg-zinc-200 text-zinc-700" : "bg-red-50 text-red-700"
+                            }`}
                           >
-                            <Pencil className="size-3.5" aria-hidden="true" />
-                            Düzenle
-                          </Link>
-                          <button
-                            type="button"
-                            onClick={() => setDeleteConfirmItem({ id: event.id, title: event.title })}
-                            disabled={deletingId === event.id}
-                            className="inline-flex items-center gap-1.5 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-700 transition-colors hover:bg-red-50 disabled:opacity-50 cursor-pointer"
-                          >
-                            <Trash2 className="size-3.5" aria-hidden="true" />
-                            {deletingId === event.id ? "Siliniyor…" : "Sil"}
-                          </button>
+                            {event.status === "past" ? "Geçmiş" : "Yaklaşan"}
+                          </span>
                         </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
+                        <p className="mt-1 text-xs text-slate-500">{formatTurkishDate(event.date) || "—"}</p>
+                      </div>
+                    </div>
+                    <div className="mt-3 flex items-center justify-end gap-2 pt-2.5 border-t border-zinc-100">
+                      <Link
+                        href={`/admin/etkinlikler/${event.id}`}
+                        className="inline-flex items-center gap-1 rounded-md border border-zinc-300 px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-slate-50"
+                      >
+                        <Pencil className="size-3.5" aria-hidden="true" />
+                        Düzenle
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => setDeleteConfirmItem({ id: event.id, title: event.title })}
+                        disabled={deletingId === event.id}
+                        className="inline-flex items-center gap-1 rounded-md border border-red-200 px-3 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:opacity-50 cursor-pointer"
+                      >
+                        <Trash2 className="size-3.5" aria-hidden="true" />
+                        {deletingId === event.id ? "Siliniyor…" : "Sil"}
+                      </button>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            {/* Desktop Table View (>= sm) */}
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="min-w-full text-left text-sm">
+                <thead className="border-b border-zinc-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500 select-none">
+                  <tr>
+                    {sortBy === "manual" && <th className="w-12 px-4 py-3.5 text-center"></th>}
+                    <th className="px-6 py-3.5 font-semibold">Başlık</th>
+                    <th className="px-6 py-3.5 font-semibold">Tarih</th>
+                    <th className="px-6 py-3.5 font-semibold">Durum</th>
+                    <th className="px-6 py-3.5 font-semibold">İşlemler</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-100">
+                  {events.map((event, index) => {
+                    const isDragging = draggedIndex === index;
+                    const isOver = dragOverIndex === index;
+
+                    return (
+                      <tr
+                        key={event.id}
+                        draggable={sortBy === "manual"}
+                        onDragStart={(e) => handleDragStart(e, index)}
+                        onDragOver={(e) => handleDragOver(e, index)}
+                        onDrop={() => handleDrop(index)}
+                        onDragEnd={handleDragEnd}
+                        className={`transition-all duration-150 ${
+                          sortBy === "manual" ? "cursor-grab active:cursor-grabbing" : ""
+                        } ${
+                          isDragging
+                            ? "opacity-30 bg-slate-100 scale-[0.99]"
+                            : isOver
+                            ? "border-t-2 border-t-red-500 bg-red-50/50"
+                            : "hover:bg-slate-50/60"
+                        }`}
+                      >
+                        {sortBy === "manual" && (
+                          <td className="w-12 px-4 py-3.5 text-center align-middle">
+                            <GripVertical className="mx-auto size-4 text-slate-400 hover:text-red-600 transition-colors" />
+                          </td>
+                        )}
+                        <td className="px-6 py-3.5 font-medium text-zinc-900 align-middle">{event.title}</td>
+                        <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap align-middle">{formatTurkishDate(event.date) || "—"}</td>
+                        <td className="px-6 py-3.5 whitespace-nowrap align-middle">
+                          <span
+                            className={`-ml-2.5 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold -translate-x-[0.75px] ${
+                              event.status === "past" ? "bg-zinc-200 text-zinc-700" : "bg-red-50 text-red-700"
+                            }`}
+                          >
+                            {event.status === "past" ? "Geçmiş" : "Yaklaşan"}
+                          </span>
+                        </td>
+                        <td className="px-6 py-3.5 whitespace-nowrap align-middle">
+                          <div className="flex items-center gap-2">
+                            <Link
+                              href={`/admin/etkinlikler/${event.id}`}
+                              className="inline-flex items-center gap-1.5 rounded-md border border-zinc-300 px-2.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-slate-50"
+                            >
+                              <Pencil className="size-3.5" aria-hidden="true" />
+                              Düzenle
+                            </Link>
+                            <button
+                              type="button"
+                              onClick={() => setDeleteConfirmItem({ id: event.id, title: event.title })}
+                              disabled={deletingId === event.id}
+                              className="inline-flex items-center gap-1.5 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-700 transition-colors hover:bg-red-50 disabled:opacity-50 cursor-pointer"
+                            >
+                              <Trash2 className="size-3.5" aria-hidden="true" />
+                              {deletingId === event.id ? "Siliniyor…" : "Sil"}
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 
