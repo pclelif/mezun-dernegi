@@ -10,7 +10,7 @@ export default function AdminEventsPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  const [sortBy, setSortBy] = useState<string>("date-desc");
+  const [sortBy, setSortBy] = useState<string>("created-desc");
 
   // Drag and drop state
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
@@ -18,18 +18,12 @@ export default function AdminEventsPage() {
 
   const sortItems = useCallback((dataList: DbEvent[], key: string) => {
     const list = [...dataList];
-    if (key === "date-desc") {
-      list.sort((a, b) => String(b.date || b.created_at).localeCompare(String(a.date || a.created_at)));
-    } else if (key === "date-asc") {
-      list.sort((a, b) => String(a.date || a.created_at).localeCompare(String(b.date || b.created_at)));
-    } else if (key === "created-desc") {
+    if (key === "created-desc") {
       list.sort((a, b) => String(b.created_at).localeCompare(String(a.created_at)));
-    } else if (key === "created-asc") {
-      list.sort((a, b) => String(a.created_at).localeCompare(String(b.created_at)));
+    } else if (key === "date-desc") {
+      list.sort((a, b) => String(b.date || b.created_at).localeCompare(String(a.date || a.created_at)));
     } else if (key === "title-asc") {
       list.sort((a, b) => a.title.localeCompare(b.title, "tr"));
-    } else if (key === "title-desc") {
-      list.sort((a, b) => b.title.localeCompare(a.title, "tr"));
     }
     return list;
   }, []);
@@ -186,14 +180,14 @@ export default function AdminEventsPage() {
             <table className="min-w-full text-left text-sm">
               <thead className="border-b border-zinc-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500 select-none">
                 <tr>
-                  {sortBy === "manual" && <th className="w-10 px-3 py-3 text-center"></th>}
-                  <th className="px-4 py-3 font-semibold">Başlık</th>
-                  <th className="px-4 py-3 font-semibold">Tarih</th>
-                  <th className="px-4 py-3 font-semibold">Durum</th>
-                  <th className="px-4 py-3 font-semibold">İşlemler</th>
+                  {sortBy === "manual" && <th className="w-12 px-4 py-3.5 text-center"></th>}
+                  <th className="px-6 py-3.5 font-semibold">Başlık</th>
+                  <th className="px-6 py-3.5 font-semibold">Tarih</th>
+                  <th className="px-6 py-3.5 font-semibold">Durum</th>
+                  <th className="px-6 py-3.5 font-semibold">İşlemler</th>
                 </tr>
               </thead>
-              <tbody>
+              <tbody className="divide-y divide-zinc-100">
                 {events.map((event, index) => {
                   const isDragging = draggedIndex === index;
                   const isOver = dragOverIndex === index;
@@ -206,7 +200,7 @@ export default function AdminEventsPage() {
                       onDragOver={(e) => handleDragOver(e, index)}
                       onDrop={() => handleDrop(index)}
                       onDragEnd={handleDragEnd}
-                      className={`border-b border-zinc-100 last:border-0 transition-all duration-150 ${
+                      className={`transition-all duration-150 ${
                         sortBy === "manual" ? "cursor-grab active:cursor-grabbing" : ""
                       } ${
                         isDragging
@@ -217,13 +211,13 @@ export default function AdminEventsPage() {
                       }`}
                     >
                       {sortBy === "manual" && (
-                        <td className="w-10 px-3 py-3 text-center">
+                        <td className="w-12 px-4 py-3.5 text-center">
                           <GripVertical className="mx-auto size-4 text-slate-400 hover:text-red-600 transition-colors" />
                         </td>
                       )}
-                      <td className="px-4 py-3 font-medium text-zinc-900">{event.title}</td>
-                      <td className="px-4 py-3 text-slate-600">{formatTurkishDate(event.date) || "—"}</td>
-                      <td className="px-4 py-3">
+                      <td className="px-6 py-3.5 font-medium text-zinc-900">{event.title}</td>
+                      <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap">{formatTurkishDate(event.date) || "—"}</td>
+                      <td className="px-6 py-3.5 whitespace-nowrap">
                         <span
                           className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${
                             event.status === "past" ? "bg-zinc-200 text-zinc-700" : "bg-red-50 text-red-700"
@@ -232,23 +226,25 @@ export default function AdminEventsPage() {
                           {event.status === "past" ? "Geçmiş" : "Yaklaşan"}
                         </span>
                       </td>
-                      <td className="flex items-center gap-2 px-4 py-3">
-                        <Link
-                          href={`/admin/etkinlikler/${event.id}`}
-                          className="inline-flex items-center gap-1.5 rounded-md border border-zinc-300 px-2.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-slate-50"
-                        >
-                          <Pencil className="size-3.5" aria-hidden="true" />
-                          Düzenle
-                        </Link>
-                        <button
-                          type="button"
-                          onClick={() => void handleDelete(event.id, event.title)}
-                          disabled={deletingId === event.id}
-                          className="inline-flex items-center gap-1.5 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-700 transition-colors hover:bg-red-50 disabled:opacity-50"
-                        >
-                          <Trash2 className="size-3.5" aria-hidden="true" />
-                          {deletingId === event.id ? "Siliniyor…" : "Sil"}
-                        </button>
+                      <td className="px-6 py-3.5 whitespace-nowrap">
+                        <div className="flex items-center gap-2">
+                          <Link
+                            href={`/admin/etkinlikler/${event.id}`}
+                            className="inline-flex items-center gap-1.5 rounded-md border border-zinc-300 px-2.5 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-slate-50"
+                          >
+                            <Pencil className="size-3.5" aria-hidden="true" />
+                            Düzenle
+                          </Link>
+                          <button
+                            type="button"
+                            onClick={() => void handleDelete(event.id, event.title)}
+                            disabled={deletingId === event.id}
+                            className="inline-flex items-center gap-1.5 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-700 transition-colors hover:bg-red-50 disabled:opacity-50"
+                          >
+                            <Trash2 className="size-3.5" aria-hidden="true" />
+                            {deletingId === event.id ? "Siliniyor…" : "Sil"}
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   );
