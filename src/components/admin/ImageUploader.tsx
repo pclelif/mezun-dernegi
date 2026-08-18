@@ -103,7 +103,7 @@ export function ImageUploader({
   const visibleImages = uploading ? [...value, ...previewUrls] : value;
 
   return (
-    <div className="space-y-2.5">
+    <div className="space-y-2">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <label htmlFor={inputId} className="text-sm font-semibold text-zinc-800">
           {label}
@@ -115,21 +115,25 @@ export function ImageUploader({
         {visibleImages.map((url, index) => {
           const isTemporary = previewUrls.includes(url);
           return (
-            <div key={`${url}-${index}`} className="relative group size-24 shrink-0 overflow-hidden rounded-lg border border-zinc-200 bg-slate-100 shadow-sm sm:size-28">
-              <div
-                className="absolute inset-0 bg-contain bg-center bg-no-repeat p-1"
-                style={{ backgroundImage: `url(${url})` }}
-                aria-hidden="true"
+            <div
+              key={`${url}-${index}`}
+              className="relative group size-24 shrink-0 overflow-hidden rounded-xl border border-zinc-200 bg-slate-50 p-1 shadow-sm transition hover:shadow-md"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={url}
+                alt=""
+                className="size-full rounded-lg object-contain"
               />
               {isTemporary ? (
-                <div className="absolute inset-0 grid place-items-center bg-zinc-950/60 text-white">
+                <div className="absolute inset-0 grid place-items-center rounded-xl bg-zinc-950/60 text-white">
                   <LoaderCircle className="size-5 animate-spin" aria-label="Yükleniyor" />
                 </div>
               ) : (
                 <button
                   type="button"
                   onClick={() => void removeImage(url)}
-                  className="absolute right-1.5 top-1.5 grid size-7 place-items-center rounded-full bg-white/90 text-red-600 shadow transition hover:bg-red-600 hover:text-white"
+                  className="absolute right-1 top-1 grid size-6 place-items-center rounded-full bg-white/95 text-red-600 shadow hover:bg-red-600 hover:text-white"
                   aria-label="Görseli sil"
                 >
                   <Trash2 className="size-3.5" aria-hidden="true" />
@@ -141,21 +145,17 @@ export function ImageUploader({
 
         <label
           htmlFor={inputId}
-          className={`inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-zinc-300 bg-white px-4 py-2.5 text-sm font-semibold text-zinc-700 shadow-sm transition-colors hover:border-red-500 hover:bg-red-50/50 hover:text-red-700 ${
+          className={`flex size-24 cursor-pointer flex-col items-center justify-center gap-1 rounded-xl border-2 border-dashed border-zinc-300 bg-white p-2 text-center text-zinc-600 transition hover:border-red-500 hover:bg-red-50/50 hover:text-red-700 ${
             uploading ? "pointer-events-none opacity-60" : ""
           }`}
         >
           {uploading ? (
-            <LoaderCircle className="size-4 animate-spin text-red-600" aria-hidden="true" />
+            <LoaderCircle className="size-5 animate-spin text-red-600" aria-hidden="true" />
           ) : (
-            <ImagePlus className="size-4 text-red-600" aria-hidden="true" />
+            <ImagePlus className="size-5 text-red-600" aria-hidden="true" />
           )}
-          <span>
-            {uploading
-              ? "Yükleniyor…"
-              : visibleImages.length > 0
-              ? (multiple ? "Görsel Ekle" : "Görseli Değiştir")
-              : (multiple ? "Görselleri Seç" : "Görsel Seç")}
+          <span className="text-[11px] font-semibold leading-tight">
+            {uploading ? "Yükleniyor" : visibleImages.length > 0 ? (multiple ? "Ekle" : "Değiştir") : "Görsel Seç"}
           </span>
         </label>
       </div>
