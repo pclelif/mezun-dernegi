@@ -322,7 +322,7 @@ export default function AdminContactPage() {
                     className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-slate-50 cursor-pointer"
                   >
                     {item.is_read ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5 text-red-600" />}
-                    {item.is_read ? "Okunmadı yap" : "Okundu yap"}
+                    {item.is_read ? "Okunmadı İşaretle" : "Okundu İşaretle"}
                   </button>
 
                   <button
