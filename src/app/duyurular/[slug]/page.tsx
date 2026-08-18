@@ -85,8 +85,8 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Footer Actions - Right Aligned with Arrow on the Right */}
-        <div className="flex items-center justify-end border-t border-zinc-100 bg-slate-50/50 px-6 py-4">
+        {/* Footer Actions - Left Aligned with Arrow on the Right */}
+        <div className="flex items-center justify-start border-t border-zinc-100 bg-slate-50/50 px-6 py-4">
           <Link
             href="/duyurular"
             className="inline-flex items-center gap-1.5 text-xs font-bold text-[#ec1c24] hover:underline"

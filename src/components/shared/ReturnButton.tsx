@@ -22,7 +22,7 @@ export function ReturnButton({
       const params = new URLSearchParams(window.location.search);
       if (params.get("from") === "home") {
         setHref("/");
-        setLabel("Anasayfaya Dön");
+        setLabel("Ana Sayfaya Dön");
         return;
       }
     } catch {}
@@ -36,7 +36,7 @@ export function ReturnButton({
         if (refUrl.origin === currentUrl.origin) {
           if (refUrl.pathname === "/" || refUrl.pathname === "") {
             setHref("/");
-            setLabel("Anasayfaya Dön");
+            setLabel("Ana Sayfaya Dön");
           }
         }
       } catch {}
