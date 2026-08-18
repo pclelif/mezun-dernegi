@@ -138,7 +138,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
               </div>
             </div>
             {showAllLink ? (
-              <Link href="/galeri" className="inline-flex touch-manipulation items-center gap-2 self-start rounded-sm text-sm font-bold text-zinc-900 transition-colors hover:text-red-700 active:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 sm:self-auto -translate-x-[0.5px] -translate-y-[1.5px]">
+              <Link href="/galeri" className="inline-flex touch-manipulation items-center gap-2 self-start rounded-sm text-sm font-bold text-zinc-900 transition-colors hover:text-red-700 active:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 sm:self-auto -translate-x-[1.5px] -translate-y-[2.5px]">
                 Tüm Fotoğraflar <ArrowRight className="size-4 text-zinc-900" aria-hidden="true" />
               </Link>
             ) : null}
