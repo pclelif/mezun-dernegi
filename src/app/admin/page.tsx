@@ -150,7 +150,7 @@ export default async function AdminDashboardPage() {
             </div>
           </div>
 
-          <div className="mt-4 border-t border-zinc-100 pt-3 flex gap-4 text-xs font-bold text-red-600">
+          <div className="mt-4 border-t border-zinc-100 pt-3 flex flex-wrap gap-x-4 gap-y-2 text-xs font-bold text-red-600">
             <Link href="/admin/duyurular" className="hover:underline">Duyuruları Yönet →</Link>
             <Link href="/admin/etkinlikler" className="hover:underline">Etkinlikleri Yönet →</Link>
           </div>
