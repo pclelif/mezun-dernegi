@@ -254,20 +254,20 @@ export default function AdminGalleryPage() {
         </div>
       )}
 
-      {/* Delete Confirmation Modal */}
+      {/* Brand-Themed Delete Confirmation Modal */}
       {deleteConfirmId && (
         <div
-          className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm animate-in fade-in duration-150"
+          className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm animate-in fade-in duration-150 select-none"
           onClick={() => setDeleteConfirmId(null)}
         >
           <div
             className="w-full max-w-sm overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all border border-zinc-100"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-red-100 text-red-600">
+            <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-red-50 text-[#ec1c24]">
               <Trash2 className="size-6" />
             </div>
-            <h3 className="text-center text-lg font-bold text-zinc-900">Fotoğrafı Sil?</h3>
+            <h3 className="text-center text-lg font-bold text-zinc-950">Fotoğrafı Sil?</h3>
             <p className="mt-2 text-center text-sm text-slate-600">
               Bu fotoğraf galeriden kalıcı olarak silinecektir. Bu işlem geri alınamaz.
             </p>
@@ -287,7 +287,7 @@ export default function AdminGalleryPage() {
                   if (id) void handleDelete(id);
                 }}
                 disabled={Boolean(deletingId)}
-                className="flex-1 h-10 rounded-lg bg-red-600 font-semibold text-white hover:bg-red-700 transition-colors text-sm disabled:opacity-50 cursor-pointer"
+                className="flex-1 h-10 rounded-lg bg-[#ec1c24] font-semibold text-white hover:bg-red-700 transition-colors text-sm disabled:opacity-50 cursor-pointer shadow-sm"
               >
                 {deletingId ? "Siliniyor…" : "Evet, Sil"}
               </button>

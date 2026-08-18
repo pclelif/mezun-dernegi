@@ -5,24 +5,12 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { createClient, formatTurkishDate, type DbAnnouncement } from "@/lib/supabase/client";
 
-async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
-  try {
-    const supabase = createClient();
-    await Promise.all(
-      itemsList.map((item, idx) =>
-        supabase.from(table).update({ display_order: idx }).eq("id", item.id)
-      )
-    );
-  } catch (err) {
-    console.error(`Failed to save order to ${table}:`, err);
-  }
-}
-
 export default function AdminAnnouncementsPage() {
   const [items, setItems] = useState<DbAnnouncement[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteConfirmItem, setDeleteConfirmItem] = useState<{ id: string; title: string } | null>(null);
   const [sortBy, setSortBy] = useState<string>("created-desc");
 
   // Drag and drop state
@@ -112,9 +100,7 @@ export default function AdminAnnouncementsPage() {
   function handleSortChange(key: string) {
     setSortBy(key);
     if (key !== "manual") {
-      const sorted = sortItems(items, key);
-      setItems(sorted);
-      void saveDisplayOrder("announcements", sorted);
+      setItems((current) => sortItems(current, key));
     }
   }
 
@@ -142,7 +128,6 @@ export default function AdminAnnouncementsPage() {
     setItems(updated);
     setDraggedIndex(null);
     setDragOverIndex(null);
-    void saveDisplayOrder("announcements", updated);
   }
 
   function handleDragEnd() {
@@ -150,9 +135,7 @@ export default function AdminAnnouncementsPage() {
     setDragOverIndex(null);
   }
 
-  async function handleDelete(id: string, title: string) {
-    if (!window.confirm(`"${title}" duyurusunu silmek istediğinize emin misiniz?`)) return;
-
+  async function handleDelete(id: string) {
     setDeletingId(id);
     try {
       const supabase = createClient();
@@ -265,9 +248,9 @@ export default function AdminAnnouncementsPage() {
                           </Link>
                           <button
                             type="button"
-                            onClick={() => void handleDelete(item.id, item.title)}
+                            onClick={() => setDeleteConfirmItem({ id: item.id, title: item.title })}
                             disabled={deletingId === item.id}
-                            className="inline-flex items-center gap-1.5 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-700 transition-colors hover:bg-red-50 disabled:opacity-50"
+                            className="inline-flex items-center gap-1.5 rounded-md border border-red-200 px-2.5 py-1.5 text-xs font-semibold text-red-700 transition-colors hover:bg-red-50 disabled:opacity-50 cursor-pointer"
                           >
                             <Trash2 className="size-3.5" aria-hidden="true" />
                             {deletingId === item.id ? "Siliniyor…" : "Sil"}
@@ -282,6 +265,48 @@ export default function AdminAnnouncementsPage() {
           </div>
         )}
       </div>
+
+      {/* Brand-Themed Delete Confirmation Modal */}
+      {deleteConfirmItem && (
+        <div
+          className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm animate-in fade-in duration-150 select-none"
+          onClick={() => setDeleteConfirmItem(null)}
+        >
+          <div
+            className="w-full max-w-sm overflow-hidden rounded-2xl bg-white p-6 shadow-2xl transition-all border border-zinc-100"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="mx-auto mb-4 flex size-12 items-center justify-center rounded-full bg-red-50 text-[#ec1c24]">
+              <Trash2 className="size-6" />
+            </div>
+            <h3 className="text-center text-lg font-bold text-zinc-950">Duyuruyu Sil?</h3>
+            <p className="mt-2 text-center text-sm text-slate-600">
+              “{deleteConfirmItem.title}” duyurusu kalıcı olarak silinecektir. Bu işlem geri alınamaz.
+            </p>
+            <div className="mt-6 flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => setDeleteConfirmItem(null)}
+                className="flex-1 h-10 rounded-lg border border-zinc-300 font-semibold text-zinc-700 hover:bg-slate-50 transition-colors text-sm cursor-pointer"
+              >
+                İptal
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const target = deleteConfirmItem;
+                  setDeleteConfirmItem(null);
+                  if (target) void handleDelete(target.id);
+                }}
+                disabled={Boolean(deletingId)}
+                className="flex-1 h-10 rounded-lg bg-[#ec1c24] font-semibold text-white hover:bg-red-700 transition-colors text-sm disabled:opacity-50 cursor-pointer shadow-sm"
+              >
+                {deletingId ? "Siliniyor…" : "Evet, Sil"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
