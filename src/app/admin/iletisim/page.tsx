@@ -112,11 +112,9 @@ export default function AdminContactPage() {
   const filteredItems = useMemo(() => {
     return items
       .filter((item) => {
-        // Status filter
         if (statusFilter === "unread" && item.is_read) return false;
         if (statusFilter === "read" && !item.is_read) return false;
 
-        // Search query filter
         if (!searchQuery.trim()) return true;
         const q = searchQuery.toLowerCase();
         return (
@@ -139,15 +137,15 @@ export default function AdminContactPage() {
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-zinc-950">İletişim Formu Mesajları</h1>
-          <p className="mt-1 text-sm text-slate-600">Web sitesindeki iletişim formundan gönderilen tüm gelen mesajları görüntüleyin ve yanıtlayın.</p>
+          <h1 className="text-2xl font-bold tracking-tight text-zinc-950">İletişim Formu</h1>
+          <p className="mt-1 text-sm text-slate-600">Gelen iletişim mesajlarını listeleyin, okuyun ve yönetin.</p>
         </div>
         {unreadCount > 0 && (
           <button
             type="button"
             onClick={() => void markAllAsRead()}
             disabled={bulkActionLoading}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-red-200 bg-red-50 px-4 text-sm font-semibold text-red-700 transition hover:bg-red-100 disabled:opacity-50 cursor-pointer"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-[#ec1c24] px-4 text-sm font-semibold text-white transition hover:bg-red-700 disabled:opacity-50 cursor-pointer"
           >
             {bulkActionLoading ? <LoaderCircle className="size-4 animate-spin" /> : <CheckCheck className="size-4" />}
             Tümünü Okundu İşaretle ({unreadCount})
@@ -155,27 +153,27 @@ export default function AdminContactPage() {
         )}
       </div>
 
-      {/* Summary Dashboard Cards */}
+      {/* Summary Stat Badges - All Unified Red Icons */}
       <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         <div className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
           <div className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-lg bg-slate-100 text-slate-700">
+            <span className="grid size-10 place-items-center rounded-lg bg-red-50 text-[#ec1c24]">
               <Inbox className="size-5" />
             </span>
             <div>
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Toplam</p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Toplam</p>
               <p className="text-xl font-bold text-zinc-950">{totalCount}</p>
             </div>
           </div>
         </div>
 
-        <div className="rounded-xl border border-red-200 bg-red-50/50 p-4 shadow-sm">
+        <div className="rounded-xl border border-red-200 bg-red-50/40 p-4 shadow-sm">
           <div className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-lg bg-red-100 text-red-700">
+            <span className="grid size-10 place-items-center rounded-lg bg-red-100 text-[#ec1c24]">
               <MessageSquare className="size-5" />
             </span>
             <div>
-              <p className="text-xs font-semibold text-red-700 uppercase tracking-wider">Okunmamış (Yeni)</p>
+              <p className="text-xs font-semibold text-red-700 uppercase tracking-wider">Okunmamış</p>
               <p className="text-xl font-bold text-red-700">{unreadCount}</p>
             </div>
           </div>
@@ -183,11 +181,11 @@ export default function AdminContactPage() {
 
         <div className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
           <div className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-lg bg-emerald-50 text-emerald-700">
+            <span className="grid size-10 place-items-center rounded-lg bg-red-50 text-[#ec1c24]">
               <CheckCheck className="size-5" />
             </span>
             <div>
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Okunmuş</p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Okunmuş</p>
               <p className="text-xl font-bold text-zinc-950">{readCount}</p>
             </div>
           </div>
@@ -195,11 +193,11 @@ export default function AdminContactPage() {
 
         <div className="rounded-xl border border-zinc-200 bg-white p-4 shadow-sm">
           <div className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-lg bg-blue-50 text-blue-700">
+            <span className="grid size-10 place-items-center rounded-lg bg-red-50 text-[#ec1c24]">
               <Phone className="size-5" />
             </span>
             <div>
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wider">Telefon Nolu</p>
+              <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider">Telefon Nolu</p>
               <p className="text-xl font-bold text-zinc-950">{phoneCount}</p>
             </div>
           </div>
@@ -215,14 +213,13 @@ export default function AdminContactPage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="İsim, e-posta, konu veya mesaj içeriğinde ara…"
-            className="h-10 w-full rounded-lg border border-zinc-300 bg-white pl-9 pr-4 text-sm outline-none transition focus:border-red-500 focus:ring-1 focus:ring-red-500"
+            placeholder="İsim, e-posta veya mesajda ara…"
+            className="h-10 w-full rounded-lg border border-zinc-300 bg-white pl-9 pr-4 text-sm outline-none transition focus:border-red-500"
           />
         </div>
 
         {/* Filters */}
         <div className="flex flex-wrap items-center gap-3">
-          {/* Status Tabs */}
           <div className="inline-flex rounded-lg border border-zinc-200 bg-slate-100 p-1 text-xs font-semibold">
             <button
               type="button"
@@ -253,7 +250,6 @@ export default function AdminContactPage() {
             </button>
           </div>
 
-          {/* Sort Dropdown */}
           <div className="relative inline-flex items-center">
             <Filter className="pointer-events-none absolute left-3 size-4 text-slate-400" />
             <select
@@ -277,69 +273,57 @@ export default function AdminContactPage() {
         </div>
       ) : filteredItems.length === 0 ? (
         <div className="rounded-xl border border-dashed border-zinc-300 bg-white p-12 text-center text-sm text-slate-500">
-          {searchQuery ? "Arama kriterlerine uygun mesaj bulunamadı." : "Henüz iletişim mesajı yok."}
+          {searchQuery ? "Arama kriterlerine uygun mesaj bulunamadı." : "Henüz mesaj yok."}
         </div>
       ) : (
         <div className="space-y-4">
           {filteredItems.map((item) => (
             <article
               key={item.id}
-              className={`group relative rounded-xl border bg-white p-5 shadow-sm transition-all ${
+              className={`rounded-xl border bg-white p-5 shadow-sm transition-all ${
                 !item.is_read
-                  ? "border-red-300 bg-red-50/20 ring-1 ring-red-200"
-                  : "border-zinc-200 hover:border-zinc-300"
+                  ? "border-red-300 bg-red-50/10 ring-1 ring-red-200"
+                  : "border-zinc-200"
               }`}
             >
-              {/* Top Row: Subject & Status Badges & Date */}
+              {/* Header Info */}
               <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
                 <div>
-                  <div className="flex items-center gap-2.5 flex-wrap">
+                  <div className="flex items-center gap-2 flex-wrap">
                     <h2 className="text-base font-bold text-zinc-950">
                       {item.subject && item.subject.trim() !== "" ? item.subject : "Konusuz Mesaj"}
                     </h2>
                     {!item.is_read ? (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-red-600 px-2.5 py-0.5 text-xs font-bold text-white shadow-xs">
-                        Yeni Mesaj
+                      <span className="rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-bold text-red-700">
+                        Yeni
                       </span>
-                    ) : (
-                      <span className="inline-flex items-center gap-1 rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-600">
-                        Okundu
-                      </span>
-                    )}
+                    ) : null}
                   </div>
 
-                  {/* Sender Details */}
-                  <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-600">
+                  <div className="mt-1.5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-600">
                     <span className="font-semibold text-zinc-900">{item.name}</span>
-                    <a
-                      href={`mailto:${item.email}`}
-                      className="inline-flex items-center gap-1 text-slate-600 hover:text-red-600 hover:underline transition-colors"
-                      title="E-posta gönder"
-                    >
-                      <Mail className="size-3.5 text-slate-400" />
+                    <span>•</span>
+                    <a href={`mailto:${item.email}`} className="text-slate-600 hover:text-red-600 hover:underline">
                       {item.email}
                     </a>
                     {item.phone && (
-                      <a
-                        href={`tel:${item.phone}`}
-                        className="inline-flex items-center gap-1 text-slate-600 hover:text-red-600 hover:underline transition-colors"
-                        title="Telefon et"
-                      >
-                        <Phone className="size-3.5 text-slate-400" />
-                        {item.phone}
-                      </a>
+                      <>
+                        <span>•</span>
+                        <a href={`tel:${item.phone}`} className="text-slate-600 hover:text-red-600 hover:underline">
+                          {item.phone}
+                        </a>
+                      </>
                     )}
-                    <span className="text-slate-400">•</span>
-                    <span className="text-slate-500">{formatTurkishDate(item.created_at)}</span>
+                    <span>•</span>
+                    <span className="text-slate-400">{formatTurkishDate(item.created_at)}</span>
                   </div>
                 </div>
 
-                {/* Quick Action Buttons */}
-                <div className="flex items-center gap-2 self-end sm:self-start pt-2 sm:pt-0">
+                {/* Actions */}
+                <div className="flex items-center gap-2 pt-2 sm:pt-0">
                   <a
                     href={`mailto:${item.email}?subject=Re: ${encodeURIComponent(item.subject || "İletişim Mesajınız")}`}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 shadow-xs hover:bg-slate-50 hover:text-zinc-900 transition-colors"
-                    title="E-posta ile Yanıtla"
+                    className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-slate-50"
                   >
                     <Mail className="size-3.5 text-red-600" />
                     Yanıtla
@@ -348,18 +332,17 @@ export default function AdminContactPage() {
                   <button
                     type="button"
                     onClick={() => void toggleReadStatus(item)}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 shadow-xs hover:bg-slate-50 transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-3 py-1.5 text-xs font-semibold text-zinc-700 hover:bg-slate-50 cursor-pointer"
                   >
-                    {item.is_read ? <EyeOff className="size-3.5 text-slate-500" /> : <Eye className="size-3.5 text-red-600" />}
-                    {item.is_read ? "Okunmadı Yap" : "Okundu İşaretle"}
+                    {item.is_read ? <EyeOff className="size-3.5" /> : <Eye className="size-3.5 text-red-600" />}
+                    {item.is_read ? "Okunmadı yap" : "Okundu yap"}
                   </button>
 
                   <button
                     type="button"
                     onClick={() => setDeleteConfirmItem({ id: item.id, name: item.name })}
                     disabled={deletingId === item.id}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-red-700 shadow-xs hover:bg-red-50 disabled:opacity-50 transition-colors cursor-pointer"
-                    title="Mesajı Sil"
+                    className="inline-flex items-center gap-1.5 rounded-md border border-red-200 bg-white px-2.5 py-1.5 text-xs font-semibold text-red-700 hover:bg-red-50 disabled:opacity-50 cursor-pointer"
                   >
                     <Trash2 className="size-3.5" />
                     {deletingId === item.id ? "Siliniyor…" : "Sil"}
@@ -367,10 +350,10 @@ export default function AdminContactPage() {
                 </div>
               </div>
 
-              {/* Message Content Body */}
-              <div className="mt-4 rounded-lg bg-slate-50 p-4 border border-zinc-100 text-sm leading-relaxed text-zinc-800 whitespace-pre-line">
+              {/* Message Body */}
+              <p className="mt-4 text-sm leading-relaxed text-zinc-700 whitespace-pre-line">
                 {item.message}
-              </div>
+              </p>
             </article>
           ))}
         </div>
