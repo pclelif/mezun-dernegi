@@ -103,56 +103,63 @@ export function ImageUploader({
   const visibleImages = uploading ? [...value, ...previewUrls] : value;
 
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between gap-3">
+    <div className="space-y-2.5">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <label htmlFor={inputId} className="text-sm font-semibold text-zinc-800">
           {label}
         </label>
         <span className="text-xs text-slate-500">JPEG, PNG, WebP · en fazla 5 MB</span>
       </div>
 
-      {visibleImages.length > 0 ? (
-        <div className={`grid gap-3 ${multiple ? "grid-cols-2 sm:grid-cols-3" : "max-w-sm grid-cols-1"}`}>
-          {visibleImages.map((url, index) => {
-            const isTemporary = previewUrls.includes(url);
-            return (
-              <div key={`${url}-${index}`} className="relative aspect-video overflow-hidden rounded-lg bg-slate-200">
-                <div
-                  className="absolute inset-0 bg-cover bg-center"
-                  style={{ backgroundImage: `url(${url})` }}
-                  aria-hidden="true"
-                />
-                {isTemporary ? (
-                  <div className="absolute inset-0 grid place-items-center bg-zinc-950/50 text-white">
-                    <LoaderCircle className="size-6 animate-spin" aria-label="Yükleniyor" />
-                  </div>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => void removeImage(url)}
-                    className="absolute right-2 top-2 grid size-9 place-items-center rounded-full bg-white/95 text-red-600 shadow hover:bg-red-600 hover:text-white"
-                    aria-label="Görseli sil"
-                  >
-                    <Trash2 className="size-4" aria-hidden="true" />
-                  </button>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      ) : null}
+      <div className="flex flex-wrap items-center gap-3">
+        {visibleImages.map((url, index) => {
+          const isTemporary = previewUrls.includes(url);
+          return (
+            <div key={`${url}-${index}`} className="relative group size-24 shrink-0 overflow-hidden rounded-lg border border-zinc-200 bg-slate-100 shadow-sm sm:size-28">
+              <div
+                className="absolute inset-0 bg-contain bg-center bg-no-repeat p-1"
+                style={{ backgroundImage: `url(${url})` }}
+                aria-hidden="true"
+              />
+              {isTemporary ? (
+                <div className="absolute inset-0 grid place-items-center bg-zinc-950/60 text-white">
+                  <LoaderCircle className="size-5 animate-spin" aria-label="Yükleniyor" />
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={() => void removeImage(url)}
+                  className="absolute right-1.5 top-1.5 grid size-7 place-items-center rounded-full bg-white/90 text-red-600 shadow transition hover:bg-red-600 hover:text-white"
+                  aria-label="Görseli sil"
+                >
+                  <Trash2 className="size-3.5" aria-hidden="true" />
+                </button>
+              )}
+            </div>
+          );
+        })}
 
-      <label
-        htmlFor={inputId}
-        className={`flex min-h-28 cursor-pointer flex-col items-center justify-center rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-4 py-5 text-center transition-colors hover:border-red-400 hover:bg-red-50/30 ${
-          uploading ? "pointer-events-none opacity-60" : ""
-        }`}
-      >
-        <ImagePlus className="size-6 text-red-600" aria-hidden="true" />
-        <span className="mt-2 text-sm font-semibold text-zinc-800">
-          {uploading ? "Yükleniyor…" : multiple ? "Görselleri seç" : "Görsel seç"}
-        </span>
-      </label>
+        <label
+          htmlFor={inputId}
+          className={`inline-flex min-h-10 cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-zinc-300 bg-white px-4 py-2.5 text-sm font-semibold text-zinc-700 shadow-sm transition-colors hover:border-red-500 hover:bg-red-50/50 hover:text-red-700 ${
+            uploading ? "pointer-events-none opacity-60" : ""
+          }`}
+        >
+          {uploading ? (
+            <LoaderCircle className="size-4 animate-spin text-red-600" aria-hidden="true" />
+          ) : (
+            <ImagePlus className="size-4 text-red-600" aria-hidden="true" />
+          )}
+          <span>
+            {uploading
+              ? "Yükleniyor…"
+              : visibleImages.length > 0
+              ? (multiple ? "Görsel Ekle" : "Görseli Değiştir")
+              : (multiple ? "Görselleri Seç" : "Görsel Seç")}
+          </span>
+        </label>
+      </div>
+
       <input
         id={inputId}
         type="file"
@@ -167,7 +174,7 @@ export function ImageUploader({
       />
 
       {error ? (
-        <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">
+        <p role="alert" className="rounded-md bg-red-50 px-3 py-1.5 text-xs text-red-700">
           {error}
         </p>
       ) : null}
