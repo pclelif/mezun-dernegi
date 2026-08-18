@@ -219,7 +219,7 @@ export default function AdminEventsPage() {
                       <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap align-middle">{formatTurkishDate(event.date) || "—"}</td>
                       <td className="px-6 py-3.5 whitespace-nowrap align-middle">
                         <span
-                          className={`inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold -translate-x-[0.5px] ${
+                          className={`-ml-2.5 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold -translate-x-[0.5px] ${
                             event.status === "past" ? "bg-zinc-200 text-zinc-700" : "bg-red-50 text-red-700"
                           }`}
                         >
