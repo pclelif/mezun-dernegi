@@ -3,9 +3,9 @@ import Image from "next/image";
 import aydoganAydinPortrait from "./aydogan-aydin.jpg";
 
 export const metadata: Metadata = {
-  title: "Aydoğan Aydın Kimdir?",
+  title: "Vatansever Şehit Tümgeneral Aydoğan Aydın Kimdir?",
   description:
-    "Şehit Tümgeneral Aydoğan Aydın’ın hayatı, askerî hizmeti ve adının okulumuzda yaşatılan hatırası.",
+    "Vatansever Şehit Tümgeneral Aydoğan Aydın’ın hayatı, askerî hizmeti ve adının okulumuzda yaşatılan hatırası.",
 };
 
 const biographySections = [
@@ -13,7 +13,7 @@ const biographySections = [
     number: "01",
     title: "Hayatından",
     paragraphs: [
-      "Şehit Tümgeneral Aydoğan Aydın, Türk Silahlı Kuvvetleri bünyesinde uzun yıllar görev yapmış; meslek hayatı boyunca vatan hizmetini, sorumluluk bilincini ve silah arkadaşlarıyla dayanışmayı öncelemiş bir komutandır.",
+      "Vatansever Şehit Tümgeneral Aydoğan Aydın, Türk Silahlı Kuvvetleri bünyesinde uzun yıllar görev yapmış; meslek hayatı boyunca vatan hizmetini, sorumluluk bilincini ve silah arkadaşlarıyla dayanışmayı öncelemiş bir komutandır.",
       "Üstlendiği görevlerde edindiği tecrübe, sahadaki liderliği ve personeliyle kurduğu güçlü bağ sayesinde saygıyla anılan bir isim olmuştur.",
     ],
   },
@@ -21,7 +21,7 @@ const biographySections = [
     number: "02",
     title: "Hatırasından",
     paragraphs: [
-      "Tümgeneral Aydoğan Aydın, 31 Mayıs 2017 tarihinde Şırnak’ın Uludere ilçesine bağlı Şenoba bölgesinde görev uçuşu yapan askerî helikopterin düşmesi sonucu silah arkadaşlarıyla birlikte şehit olmuştur.",
+      "Vatansever Tümgeneral Aydoğan Aydın, 31 Mayıs 2017 tarihinde Şırnak’ın Uludere ilçesine bağlı Şenoba bölgesinde görev uçuşu yapan askerî helikopterin düşmesi sonucu silah arkadaşlarıyla birlikte şehit olmuştur.",
       "Aziz hatırası; ailesi, silah arkadaşları ve milletimiz tarafından minnet ve saygıyla yaşatılmaktadır.",
     ],
   },
@@ -29,7 +29,7 @@ const biographySections = [
     number: "03",
     title: "Adı okulumuzda yaşıyor.",
     paragraphs: [
-      "Şehit Tümgeneral Aydoğan Aydın’ın adı okulumuzda yaşatılırken; vatan sevgisi, görev bilinci, cesaret ve fedakârlık gibi temsil ettiği değerler öğrencilerimize ve mezun topluluğumuza ilham vermeye devam etmektedir.",
+      "Vatansever Şehit Tümgeneral Aydoğan Aydın’ın adı okulumuzda yaşatılırken; vatan sevgisi, görev bilinci, cesaret ve fedakârlık gibi temsil ettiği değerler öğrencilerimize ve mezun topluluğumuza ilham vermeye devam etmektedir.",
       "Kendisini ve vatan uğruna şehit olan tüm kahramanlarımızı rahmet, minnet ve saygıyla anıyoruz.",
     ],
   },
@@ -42,19 +42,19 @@ export default function AydoganAydinPage() {
         <div className="grid items-stretch gap-8 lg:grid-cols-[22rem_minmax(0,1fr)] lg:gap-10">
           <div className="flex flex-col gap-7">
             <header>
-            <p className="text-[0.8125rem] font-semibold uppercase leading-tight tracking-[0.02em] text-zinc-500">Hatırasına saygıyla</p>
-            <h1 className="mt-1.5 text-2xl font-bold leading-tight tracking-tight text-zinc-950">Aydoğan Aydın Kimdir?</h1>
-            <p className="mt-3 text-base leading-7 text-zinc-600">
-              Vatan hizmetine adanmış bir ömür ve gelecek nesillere emanet edilen kıymetli bir hatıra.
-            </p>
-            <div className="mt-5 h-px w-16 bg-zinc-950" aria-hidden="true" />
-            <p className="mt-3 text-xs font-medium tracking-[0.14em] text-zinc-500">1966–2017</p>
+              <p className="text-[0.8125rem] font-semibold uppercase leading-tight tracking-[0.02em] text-zinc-500">Hatırasına saygıyla</p>
+              <h1 className="mt-1.5 text-2xl font-bold leading-tight tracking-tight text-zinc-950">Vatansever Şehit Tümgeneral Aydoğan Aydın Kimdir?</h1>
+              <p className="mt-3 text-base leading-7 text-zinc-600">
+                Vatan hizmetine adanmış bir ömür ve gelecek nesillere emanet edilen kıymetli bir hatıra.
+              </p>
+              <div className="mt-5 h-px w-16 bg-zinc-950" aria-hidden="true" />
+              <p className="mt-3 text-xs font-medium tracking-[0.14em] text-zinc-500">1966–2017</p>
             </header>
 
             <figure className="mt-auto w-full overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900 p-2 shadow-xl shadow-black/20">
               <Image
                 src={aydoganAydinPortrait}
-                alt="Şehit Tümgeneral Aydoğan Aydın askerî üniformasıyla selam verirken"
+                alt="Vatansever Şehit Tümgeneral Aydoğan Aydın askerî üniformasıyla selam verirken"
                 className="aspect-[548/446] h-auto w-full object-cover grayscale"
                 sizes="(max-width: 1024px) 100vw, 22rem"
                 priority
