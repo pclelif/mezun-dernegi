@@ -3,10 +3,28 @@ import { contentSections } from "@/config/content";
 import { getSiteContent } from "@/lib/supabase/queries";
 export const dynamic = "force-dynamic";
 
+const DEFAULT_VISION = "Okulumuzla bağını sürdüren, mezunlarımız arasında dayanışmanın güçlendiği ve iletişimin güçlü olduğu bir mezun topluluğu oluşturmak.";
+const DEFAULT_MISSION = "Bu doğrultuda mezunlarımızı bir araya getirmek, iletişim ve dayanışmayı desteklemek.";
+
 export default async function Page() {
   const content = await getSiteContent("hakkimizda", contentSections.hakkimizda.defaults);
-  const visionText = content.vision || contentSections.hakkimizda.defaults.vision;
-  const missionText = content.mission || contentSections.hakkimizda.defaults.mission;
+
+  const oldVisions = [
+    "Mezunlarımız arasındaki iletişimi ve dayanışmayı güçlendiren, okulumuza ve mezun topluluğumuza değer katan sürdürülebilir bir dernek olmak.",
+    "Okuluyla bağını sürdüren, mezunları arasında güçlü ilişkiler kuran ve aktif bir mezun ağına sahip bir topluluk olmak."
+  ];
+  const oldMissions = [
+    "Mezunlarımızı ortak bir platformda buluşturmak, sosyal ve mesleki iletişimi desteklemek ve okulumuzla olan bağı güçlendirmek.",
+    "Mezunlarımızı bir araya getirmek, iletişim ve dayanışmayı geliştirmek, mezunlar ile okul arasındaki etkileşimi desteklemek."
+  ];
+
+  const visionText = (content.vision && !oldVisions.includes(content.vision.trim()))
+    ? content.vision
+    : DEFAULT_VISION;
+
+  const missionText = (content.mission && !oldMissions.includes(content.mission.trim()))
+    ? content.mission
+    : DEFAULT_MISSION;
 
   return (
     <ContentPage
