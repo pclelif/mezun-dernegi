@@ -2,7 +2,7 @@
 
 import { Undo2 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function ReturnButton({
   defaultHref,
@@ -11,50 +11,28 @@ export function ReturnButton({
   defaultHref: string;
   defaultLabel: string;
 }) {
-  const [buttonState] = useState(() => {
-    if (typeof window === "undefined") {
-      return { href: defaultHref, label: defaultLabel };
-    }
+  const [buttonState, setButtonState] = useState({
+    href: defaultHref,
+    label: defaultLabel,
+  });
 
-    // 1. Check search params first (e.g. ?from=home, ?from=duyurular, ?from=etkinlikler)
+  useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
       const fromParam = params.get("from");
       if (fromParam === "home") {
-        return { href: "/", label: "Ana Sayfaya Dön" };
+        setButtonState({ href: "/", label: "Ana Sayfaya Dön" });
+      } else if (fromParam === "duyurular") {
+        setButtonState({ href: "/duyurular", label: "Duyurulara Dön" });
+      } else if (fromParam === "etkinlikler") {
+        setButtonState({ href: "/etkinlikler", label: "Etkinliklere Dön" });
+      } else {
+        setButtonState({ href: defaultHref, label: defaultLabel });
       }
-      if (fromParam === "duyurular") {
-        return { href: "/duyurular", label: "Duyurulara Dön" };
-      }
-      if (fromParam === "etkinlikler") {
-        return { href: "/etkinlikler", label: "Etkinliklere Dön" };
-      }
-    } catch {}
-
-    // 2. Check document.referrer fallback
-    if (typeof document !== "undefined" && document.referrer) {
-      try {
-        const refUrl = new URL(document.referrer);
-        const currentUrl = new URL(window.location.href);
-
-        if (refUrl.origin === currentUrl.origin) {
-          const path = refUrl.pathname;
-          if (path === "/" || path === "") {
-            return { href: "/", label: "Ana Sayfaya Dön" };
-          }
-          if (path === "/duyurular" || path === "/duyurular/") {
-            return { href: "/duyurular", label: "Duyurulara Dön" };
-          }
-          if (path === "/etkinlikler" || path === "/etkinlikler/") {
-            return { href: "/etkinlikler", label: "Etkinliklere Dön" };
-          }
-        }
-      } catch {}
+    } catch {
+      setButtonState({ href: defaultHref, label: defaultLabel });
     }
-
-    // 3. Fallback to passed defaults
-    return { href: defaultHref, label: defaultLabel };
-  });
+  }, [defaultHref, defaultLabel]);
 
   return (
     <Link
