@@ -1,5 +1,6 @@
 "use client";
 
+import { Check, Copy } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 type IbanCopyButtonProps = {
@@ -10,18 +11,48 @@ export function IbanCopyButton({ value }: IbanCopyButtonProps) {
   const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => () => {
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
   }, []);
 
   async function copyIban() {
-    try {
-      await navigator.clipboard.writeText(value.replaceAll(" ", ""));
+    const textToCopy = value.replaceAll(" ", "");
+    let success = false;
+
+    if (typeof navigator !== "undefined" && navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(textToCopy);
+        success = true;
+      } catch {
+        success = false;
+      }
+    }
+
+    if (!success) {
+      try {
+        const textarea = document.createElement("textarea");
+        textarea.value = textToCopy;
+        textarea.style.position = "fixed";
+        textarea.style.left = "-9999px";
+        textarea.style.top = "-9999px";
+        textarea.setAttribute("readonly", "");
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        textarea.setSelectionRange(0, 99999);
+        success = document.execCommand("copy");
+        document.body.removeChild(textarea);
+      } catch {
+        success = false;
+      }
+    }
+
+    if (success) {
       setCopied(true);
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => setCopied(false), 1800);
-    } catch {
-      setCopied(false);
+      timeoutRef.current = setTimeout(() => setCopied(false), 2000);
     }
   }
 
@@ -30,9 +61,23 @@ export function IbanCopyButton({ value }: IbanCopyButtonProps) {
       type="button"
       onClick={() => void copyIban()}
       aria-live="polite"
-      className="inline-flex min-h-10 touch-manipulation shrink-0 items-center justify-center rounded-md border border-zinc-300 bg-white px-4 text-sm font-semibold text-zinc-900 transition-colors hover:border-red-600 hover:text-red-600 active:border-red-600 active:text-red-600 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+      className={`inline-flex h-8 touch-manipulation shrink-0 items-center justify-center gap-1.5 rounded-md border px-3 text-xs font-semibold transition-all cursor-pointer ${
+        copied
+          ? "border-emerald-600 bg-emerald-50 text-emerald-700 shadow-xs"
+          : "border-zinc-200 bg-white text-zinc-700 hover:border-zinc-300 hover:bg-slate-50 hover:text-zinc-950 active:bg-slate-100 shadow-xs"
+      }`}
     >
-      {copied ? "Kopyalandı" : "Kopyala"}
+      {copied ? (
+        <>
+          <Check className="size-3.5 text-emerald-600 shrink-0" aria-hidden="true" />
+          <span>Kopyalandı</span>
+        </>
+      ) : (
+        <>
+          <Copy className="size-3.5 text-zinc-500 shrink-0" aria-hidden="true" />
+          <span>Kopyala</span>
+        </>
+      )}
     </button>
   );
 }

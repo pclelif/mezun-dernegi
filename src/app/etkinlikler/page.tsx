@@ -36,9 +36,17 @@ export default async function EventsPage() {
           </p>
         ) : (
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {events.map((event) => (
-              <EventCard key={event.id} headingLevel="h2" {...mapEventToCardProps(event)} />
-            ))}
+            {events.map((event) => {
+              const cardProps = mapEventToCardProps(event);
+              return (
+                <EventCard
+                  key={event.id}
+                  headingLevel="h2"
+                  {...cardProps}
+                  href={`${cardProps.href}?from=etkinlikler`}
+                />
+              );
+            })}
           </div>
         )}
       </section>

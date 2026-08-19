@@ -44,7 +44,7 @@ export default async function AnnouncementsPage() {
                 date={formatTurkishDate(announcement.date) || "Tarih belirtilmedi"}
                 dateTime={announcement.date ?? undefined}
                 summary={announcement.content || ""}
-                href={`/duyurular/${announcement.slug}`}
+                href={`/duyurular/${announcement.slug}?from=duyurular`}
               />
             ))}
           </div>
