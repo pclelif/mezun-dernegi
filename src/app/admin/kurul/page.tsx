@@ -144,7 +144,7 @@ export default function AdminBoardMembersPage() {
             </button>
           </div>
         ) : members.length === 0 ? (
-          <p className="px-6 py-12 text-center text-sm text-slate-500">Henüz kurul üyesi eklenmemiş. Yeni üye ekleyin.</p>
+          <div className="px-6 py-12" />
         ) : (
           <>
             {/* Mobile Touch Cards View (< sm) */}

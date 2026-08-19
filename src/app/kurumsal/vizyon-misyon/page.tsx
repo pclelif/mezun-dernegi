@@ -5,6 +5,9 @@ export const dynamic = "force-dynamic";
 
 export default async function Page() {
   const content = await getSiteContent("hakkimizda", contentSections.hakkimizda.defaults);
+  const visionText = content.vision || contentSections.hakkimizda.defaults.vision;
+  const missionText = content.mission || contentSections.hakkimizda.defaults.mission;
+
   return (
     <ContentPage
       eyebrow="YOL HARİTAMIZ"
@@ -17,13 +20,13 @@ export default async function Page() {
         <section className="border-l-2 border-red-600 pl-5">
           <h2 className="text-xl font-semibold leading-7 tracking-tight text-zinc-950">Vizyonumuz</h2>
           <p className="mt-4 text-base leading-7 text-zinc-600">
-            {content.vision}
+            {visionText}
           </p>
         </section>
         <section className="border-l-2 border-red-600 pl-5">
           <h2 className="text-xl font-semibold leading-7 tracking-tight text-zinc-950">Misyonumuz</h2>
           <p className="mt-4 text-base leading-7 text-zinc-600">
-            {content.mission}
+            {missionText}
           </p>
         </section>
       </div>
