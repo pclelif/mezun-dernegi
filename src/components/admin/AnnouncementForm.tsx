@@ -81,7 +81,7 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
         <label className="block text-sm font-semibold text-zinc-800">
           Tarih
           <div className="relative mt-1.5">
-            <input name="date" type="date" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 cursor-pointer pr-10`} />
+            <input name="date" type="date" lang="tr" placeholder="gg.aa.yyyy" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 cursor-pointer pr-10`} />
             <CalendarDays className="pointer-events-none absolute right-3 top-[calc(50%+1px)] size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
           </div>
         </label>

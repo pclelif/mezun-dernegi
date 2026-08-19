@@ -227,3 +227,24 @@
   .site-header__toggle, .site-header__mobile-nav { display: none; }
   .two-column { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+
+/* Style HTML5 date & time input placeholders to be elegantly dimmed */
+input[type="date"]::-webkit-datetime-edit-fields-wrapper,
+input[type="date"]::-webkit-datetime-edit-text,
+input[type="date"]::-webkit-datetime-edit-month-field,
+input[type="date"]::-webkit-datetime-edit-day-field,
+input[type="date"]::-webkit-datetime-edit-year-field,
+input[type="time"]::-webkit-datetime-edit-fields-wrapper,
+input[type="time"]::-webkit-datetime-edit-text,
+input[type="time"]::-webkit-datetime-edit-hour-field,
+input[type="time"]::-webkit-datetime-edit-minute-field,
+input[type="time"]::-webkit-datetime-edit-ampm-field {
+  color: #94a3b8;
+}
+
+input[type="date"]:focus::-webkit-datetime-edit-fields-wrapper,
+input[type="date"]:valid::-webkit-datetime-edit-fields-wrapper,
+input[type="time"]:focus::-webkit-datetime-edit-fields-wrapper,
+input[type="time"]:valid::-webkit-datetime-edit-fields-wrapper {
+  color: #18181b;
+}
