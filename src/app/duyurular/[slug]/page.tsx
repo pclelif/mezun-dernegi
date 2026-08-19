@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { DetailFooterLink } from "@/components/shared/DetailFooterLink";
 import { ReturnButton } from "@/components/shared/ReturnButton";
 import { formatTurkishDate } from "@/lib/supabase/client";
 import { getAnnouncementBySlug } from "@/lib/supabase/queries";
@@ -85,16 +86,8 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
           </div>
         </div>
 
-        {/* Footer Actions - Left Aligned with Arrow on the Right */}
-        <div className="flex items-center justify-start border-t border-zinc-100 bg-slate-50/50 px-6 py-4">
-          <Link
-            href="/duyurular"
-            className="inline-flex items-center gap-1.5 text-xs font-bold text-[#ec1c24] hover:underline"
-          >
-            Tüm Duyuruları İncele
-            <ArrowRight className="size-3.5 text-[#ec1c24] -translate-y-[0.5px]" aria-hidden="true" />
-          </Link>
-        </div>
+        {/* Footer Actions - Rendered only when navigated from homepage */}
+        <DetailFooterLink href="/duyurular" label="Tüm Duyuruları İncele" />
       </div>
     </div>
   );
