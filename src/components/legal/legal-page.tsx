@@ -25,7 +25,7 @@ export function LegalPage({ title, description, children }: LegalPageProps) {
         descriptionClassName="panel-copy--compact"
       />
 
-      <main className="container-site py-8 md:py-10">
+      <main className="container-site py-10 md:py-14">
         <article className="max-w-3xl space-y-4 text-sm leading-6 text-zinc-600 sm:text-[0.9375rem] sm:leading-7 [&_strong]:font-semibold [&_strong]:text-zinc-950">
           {children}
         </article>
