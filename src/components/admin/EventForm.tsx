@@ -17,6 +17,9 @@ export function EventForm({ initial }: EventFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [images, setImages] = useState<string[]>(initial?.image_url ? [initial.image_url] : []);
 
+  const [dateType, setDateType] = useState(initial?.date ? "date" : "text");
+  const [timeType, setTimeType] = useState(initial?.time ? "time" : "text");
+
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setSaving(true);
@@ -89,14 +92,34 @@ export function EventForm({ initial }: EventFormProps) {
           <label className="block text-sm font-semibold text-zinc-800">
             Tarih
             <div className="relative mt-1.5">
-              <input name="date" type="date" defaultValue={initial?.date ?? ""} className={`${fieldClass} mt-0 cursor-pointer pr-10`} />
+              <input
+                name="date"
+                type={dateType}
+                onFocus={() => setDateType("date")}
+                onBlur={(e) => {
+                  if (!e.target.value) setDateType("text");
+                }}
+                placeholder="gg.aa.yyyy"
+                defaultValue={initial?.date ?? ""}
+                className={`${fieldClass} mt-0 cursor-pointer pr-10`}
+              />
               <CalendarDays className="pointer-events-none absolute right-3 top-[calc(50%+1px)] size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
             </div>
           </label>
           <label className="block text-sm font-semibold text-zinc-800">
             Saat
             <div className="relative mt-1.5">
-              <input name="time" type="time" lang="tr" placeholder="ss:dd" defaultValue={initial?.time ?? ""} className={`${fieldClass} mt-0 cursor-pointer pr-10`} />
+              <input
+                name="time"
+                type={timeType}
+                onFocus={() => setTimeType("time")}
+                onBlur={(e) => {
+                  if (!e.target.value) setTimeType("text");
+                }}
+                placeholder="ss:dd"
+                defaultValue={initial?.time ?? ""}
+                className={`${fieldClass} mt-0 cursor-pointer pr-10`}
+              />
               <Clock className="pointer-events-none absolute right-3 top-[calc(50%+1px)] size-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
             </div>
           </label>
