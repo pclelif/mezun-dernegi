@@ -22,10 +22,12 @@ export function DetailFooterLink({
     } catch {}
   }, []);
 
-  if (!show) return null;
+  if (!show) {
+    return <div className="min-h-[53px] border-t border-zinc-100 bg-slate-50/50 px-6 py-4" />;
+  }
 
   return (
-    <div className="flex items-center justify-start border-t border-zinc-100 bg-slate-50/50 px-6 py-4">
+    <div className="min-h-[53px] flex items-center justify-start border-t border-zinc-100 bg-slate-50/50 px-6 py-4">
       <Link
         href={href}
         className="inline-flex items-center gap-1.5 text-xs font-bold text-[#ec1c24] hover:underline"
