@@ -63,13 +63,13 @@ export function IbanCopyButton({ value }: IbanCopyButtonProps) {
       aria-live="polite"
       className={`inline-flex h-8 touch-manipulation shrink-0 items-center justify-center gap-1.5 rounded-md border px-3 text-xs font-semibold transition-all cursor-pointer ${
         copied
-          ? "border-emerald-600 bg-emerald-50 text-emerald-700 shadow-xs"
+          ? "border-red-600 bg-red-50 text-red-600 font-bold shadow-xs"
           : "border-zinc-200 bg-white text-zinc-700 hover:border-zinc-300 hover:bg-slate-50 hover:text-zinc-950 active:bg-slate-100 shadow-xs"
       }`}
     >
       {copied ? (
         <>
-          <Check className="size-3.5 text-emerald-600 shrink-0" aria-hidden="true" />
+          <Check className="size-3.5 text-red-600 shrink-0" aria-hidden="true" />
           <span>Kopyalandı</span>
         </>
       ) : (
