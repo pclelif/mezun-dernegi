@@ -248,3 +248,10 @@ input[type="time"]:focus::-webkit-datetime-edit-fields-wrapper,
 input[type="time"]:valid::-webkit-datetime-edit-fields-wrapper {
   color: #18181b;
 }
+
+/* Style native select options for crisp light palette */
+select option {
+  background-color: #ffffff;
+  color: #18181b;
+  padding: 8px 12px;
+}

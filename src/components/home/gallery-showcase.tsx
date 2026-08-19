@@ -73,11 +73,11 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
     return (
       <section className="overflow-hidden border-t border-zinc-200 bg-white px-4 py-14 text-zinc-950 md:py-20" aria-label="Fotoğraflar">
         <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-2 gap-4 sm:grid-cols-4 md:gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             {items.map((item) => (
               <figure
                 key={item.id}
-                className="relative aspect-square overflow-hidden rounded-lg border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-shadow"
+                className="relative aspect-[4/3] overflow-hidden rounded-lg border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-shadow"
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (

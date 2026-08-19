@@ -2,6 +2,7 @@
 
 import { ChevronDown, LoaderCircle, Send } from "lucide-react";
 import { type FormEvent, useState } from "react";
+import { CustomSelect } from "@/components/ui/custom-select";
 import { createClient } from "@/lib/supabase/client";
 
 export function ContactForm() {
@@ -61,22 +62,19 @@ export function ContactForm() {
         </label>
         <label className="text-sm font-semibold text-zinc-800">
           Konu
-          <div className="relative mt-2">
-            <select
-              name="subject"
-              defaultValue="Genel bilgi"
-              className="min-h-12 w-full appearance-none rounded-lg border border-zinc-300 bg-white pl-4 pr-10 text-base font-normal text-zinc-900 outline-none transition focus:border-red-500 focus:ring-2 focus:ring-red-500/20 cursor-pointer"
-            >
-              <option>Genel bilgi</option>
-              <option>Üyelik</option>
-              <option>Aidat ve bağış</option>
-              <option>Etkinlikler</option>
-              <option>Öneri</option>
-              <option>Şikâyet</option>
-              <option>Diğer</option>
-            </select>
-            <ChevronDown className="pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 text-zinc-500" aria-hidden="true" />
-          </div>
+          <CustomSelect
+            name="subject"
+            defaultValue="Genel bilgi"
+            options={[
+              "Genel bilgi",
+              "Üyelik",
+              "Aidat ve bağış",
+              "Etkinlikler",
+              "Öneri",
+              "Şikâyet",
+              "Diğer",
+            ]}
+          />
         </label>
       </div>
 
