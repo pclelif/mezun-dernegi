@@ -84,7 +84,7 @@ export default async function MembershipPage() {
               target="_blank"
               rel="noopener noreferrer"
               download
-              className="btn-shimmer mt-7 inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-7 text-sm font-semibold text-white transition-colors hover:bg-red-700 active:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+              className="mt-7 inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-7 text-sm font-semibold text-white transition-colors hover:bg-red-700 active:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
             >
               <Download className="size-5 shrink-0" aria-hidden="true" />
               Üyelik Formunu İndir

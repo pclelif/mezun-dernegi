@@ -100,7 +100,7 @@ export function ContactForm() {
 
       <button
         disabled={saving}
-        className="btn-shimmer inline-flex min-h-12 touch-manipulation items-center justify-center gap-2 rounded-lg bg-red-600 px-6 font-semibold text-white transition hover:bg-red-700 active:bg-red-700 disabled:opacity-60 sm:justify-self-start cursor-pointer"
+        className="inline-flex min-h-12 touch-manipulation items-center justify-center gap-2 rounded-lg bg-red-600 px-6 font-semibold text-white transition hover:bg-red-700 active:bg-red-700 disabled:opacity-60 sm:justify-self-start cursor-pointer"
       >
         {saving ? <LoaderCircle className="size-4 animate-spin" /> : <Send className="size-4" />}
         {saving ? "Gönderiliyor…" : "Mesaj Gönder"}
