@@ -1,6 +1,7 @@
 "use client";
 
 import { ChevronDown, LoaderCircle, Send } from "lucide-react";
+import Link from "next/link";
 import { type FormEvent, useState } from "react";
 import { CustomSelect } from "@/components/ui/custom-select";
 import { createClient } from "@/lib/supabase/client";
@@ -82,6 +83,14 @@ export function ContactForm() {
         Mesaj
         <textarea name="message" required rows={7} className={`${inputClass} py-3`} />
       </label>
+
+      <p className="text-xs leading-5 text-slate-500">
+        Bu formu doldurarak ilettiğiniz kişisel verileriniz, talebinizin yanıtlanması ve sizinle iletişim kurulması amacıyla{" "}
+        <Link href="/kvkk" className="font-semibold text-red-600 underline underline-offset-2 transition hover:text-red-700 active:text-red-700">
+          KVKK Aydınlatma Metni
+        </Link>{" "}
+        kapsamında işlenmektedir.
+      </p>
 
       {notice ? (
         <p role="status" className={`rounded-lg px-4 py-3 text-sm ${notice.ok ? "bg-emerald-50 text-emerald-800" : "bg-red-50 text-red-700"}`}>

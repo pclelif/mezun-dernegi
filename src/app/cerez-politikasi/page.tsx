@@ -20,11 +20,12 @@ export default function CookiePolicyPage() {
       description="İnternet sitemizde kullanılan çerezler ve bunlara ilişkin tercihlerinize dair bilgilendirme."
     >
       <section className={legalSectionClass}>
-        <h2 className={legalHeadingClass}>1. Çerez nedir?</h2>
+        <h2 className={legalHeadingClass}>1. Çerez ve yerel depolama nedir?</h2>
         <p>
-          Çerezler, ziyaret ettiğiniz internet siteleri tarafından tarayıcınız aracılığıyla cihazınıza
-          kaydedilen küçük metin dosyalarıdır. Çerezler sitenin çalışmasını, güvenli oturumların
-          sürdürülmesini ve tercihlerin hatırlanmasını sağlayabilir.
+          Çerezler ve yerel depolama araçları (localStorage), ziyaret ettiğiniz internet siteleri tarafından
+          tarayıcınız aracılığıyla cihazınıza kaydedilen küçük metin dosyaları veya verilerdir. Bu teknolojiler
+          sitenin güvenli çalışmasını, yönetici oturumlarının sürdürülmesini ve kullanıcı tercihlerinin
+          (örneğin çerez onayı veya tema tercihleri) hatırlanmasını sağlar.
         </p>
       </section>
 
@@ -41,27 +42,27 @@ export default function CookiePolicyPage() {
       </section>
 
       <section className={legalSectionClass}>
-        <h2 className={legalHeadingClass}>3. Kullanılan çerez türleri</h2>
-        <h3 className={legalSubheadingClass}>Zorunlu çerezler</h3>
+        <h2 className={legalHeadingClass}>3. Kullanılan çerez ve depolama türleri</h2>
+        <h3 className={legalSubheadingClass}>Zorunlu çerezler ve yerel depolama</h3>
         <p>
-          Sitenin temel işlevleri, güvenliği ve yönetici oturumunun sürdürülebilmesi için gereklidir.
-          Bu çerezler olmadan ilgili hizmetler sağlıklı çalışmayabilir ve kullanımları için ayrıca
-          rıza aranmayabilir.
+          Sitenin temel işlevleri, güvenliği, çerez onay durumunun (cookieConsent) hatırlanması ve yönetici
+          oturumunun sürdürülebilmesi için gereklidir. Bu araçlar olmadan ilgili hizmetler sağlıklı çalışmayabilir
+          ve kullanımları için ayrıca rıza aranmayabilir.
         </p>
         <h3 className={legalSubheadingClass}>İşlevsel çerezler</h3>
         <p>
-          Dil veya görünüm gibi tercihleri hatırlamak için kullanılabilir. Bu tür çerezler devreye
-          alınırsa, gerekli olduğu durumlarda tercihiniz veya açık rızanız alınır.
+          Görünüm ve tema gibi tercihleri hatırlamak için kullanılabilir. Bu tür tercihler tarayıcınızın
+          yerel depolama alanında güvenli şekilde saklanır.
         </p>
-        <h3 className={legalSubheadingClass}>Performans ve analitik çerezleri</h3>
+        <h3 className={legalSubheadingClass}>Üçüncü taraf harita bileşenleri</h3>
         <p>
-          Site kullanımını toplu olarak anlamaya ve hizmeti geliştirmeye yardımcı olabilir. Zorunlu
-          olmayan analitik çerezler, kullanılmaları hâlinde onayınız alınmadan etkinleştirilmez.
+          İletişim sayfasında yer alan Google Maps harita bileşeni, sayfa yüklendiğinde hizmetin sunulması
+          amacıyla harici teknik çerezler veya erişim kayıtları oluşturabilir.
         </p>
-        <h3 className={legalSubheadingClass}>Reklam ve pazarlama çerezleri</h3>
+        <h3 className={legalSubheadingClass}>Performans, analitik ve reklam çerezleri</h3>
         <p>
-          Dernek sitesi hâlihazırda kişiselleştirilmiş reklam amacıyla çerez kullanmayı hedeflemez.
-          Böyle bir kullanım başlatılırsa bu politika güncellenir ve gerekli rıza mekanizması sağlanır.
+          Dernek sitesi hâlihazırda kişiselleştirilmiş reklam veya izleme amacıyla çerez kullanmamaktadır.
+          Böyle bir kullanım başlatılırsa bu politika güncellenir ve gerekli onay mekanizması sağlanır.
         </p>
       </section>
 
@@ -69,9 +70,10 @@ export default function CookiePolicyPage() {
         <h2 className={legalHeadingClass}>4. Çerezlerin kullanım amaçları</h2>
         <ul className={legalListClass}>
           <li>Sayfaların ve temel site özelliklerinin doğru çalışmasını sağlamak.</li>
+          <li>Çerez bildirim tercihinizi (kabul/red) hafızada tutmak.</li>
           <li>Yetkili yönetici oturumlarını doğrulamak ve güvenliği korumak.</li>
+          <li>İletişim sayfasındaki harita bileşeninin sorunsuz görüntülenmesini sağlamak.</li>
           <li>Kötüye kullanım ve yetkisiz erişim girişimlerini tespit etmek.</li>
-          <li>İzin verilmesi hâlinde site performansını ve kullanıcı deneyimini geliştirmek.</li>
         </ul>
       </section>
 

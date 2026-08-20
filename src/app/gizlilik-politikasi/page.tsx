@@ -33,8 +33,8 @@ export default function PrivacyPolicyPage() {
         <h2 className={legalHeadingClass}>2. Toplanan bilgiler</h2>
         <p>Siteyi kullanımınıza ve Dernek ile ilişkinize göre şu bilgiler toplanabilir:</p>
         <ul className={legalListClass}>
-          <li>İletişim sırasında paylaştığınız ad, soyad, e-posta, telefon ve mesaj içeriği.</li>
-          <li>Üyelik başvurusu kapsamında ilettiğiniz kimlik, mezuniyet ve üyelik bilgileri.</li>
+          <li>İletişim formu ve e-posta üzerinden ilettiğiniz ad, soyad, e-posta, telefon ve mesaj içeriği.</li>
+          <li>Üyelik başvurusu kapsamında ilettiğiniz kimlik, mezuniyet, üyelik bilgileri ve mevzuat gereği istenen belgeler.</li>
           <li>Aidat veya bağış süreçlerine ilişkin işlem ve dekont bilgileri.</li>
           <li>IP adresi, tarayıcı türü, erişim zamanı ve güvenlik günlükleri gibi teknik kayıtlar.</li>
           <li>Açık rızanız veya hukuki dayanak bulunması hâlinde etkinlik fotoğraf ve videoları.</li>
@@ -68,11 +68,11 @@ export default function PrivacyPolicyPage() {
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>5. Hizmet sağlayıcılar ve aktarım</h2>
         <p>
-          Bilgiler; barındırma, veri tabanı, dosya depolama, e-posta, güvenlik, muhasebe ve ödeme
-          hizmetlerinin yürütülmesi için gerekli olduğu ölçüde hizmet sağlayıcılarla paylaşılabilir.
-          Ayrıca mevzuat gerektirdiğinde yetkili kamu kurum ve kuruluşlarına aktarılabilir. Hizmet
-          sağlayıcıların yurt dışında bulunması hâlinde KVKK’nın yurt dışına aktarıma ilişkin hükümleri
-          ve uygun güvenceler gözetilir.
+          Bilgiler; barındırma (Vercel), veri tabanı ve bulut altyapısı (Supabase), dosya depolama, e-posta,
+          güvenlik, muhasebe ve ödeme hizmetlerinin yürütülmesi için gerekli olduğu ölçüde güvenli hizmet
+          sağlayıcılarla paylaşılabilir. Ayrıca mevzuat gerektirdiğinde yetkili kamu kurum ve kuruluşlarına
+          aktarılabilir. İnternet sitesi altyapısı ve bulut veri tabanlarının yurt dışında bulunması hâlinde
+          KVKK’nın yurt dışına aktarıma ilişkin hükümleri ve uygun güvenceler gözetilir.
         </p>
       </section>
 
@@ -87,11 +87,12 @@ export default function PrivacyPolicyPage() {
       </section>
 
       <section className={legalSectionClass}>
-        <h2 className={legalHeadingClass}>7. Üçüncü taraf bağlantıları</h2>
+        <h2 className={legalHeadingClass}>7. Üçüncü taraf bağlantıları ve servisler</h2>
         <p>
-          Site, üçüncü taraf internet sitelerine bağlantı verebilir. Bu sitelerin içerik ve gizlilik
-          uygulamaları Derneğin kontrolünde değildir. Bağlantı verilen sitelerin politikalarını ayrıca
-          incelemenizi öneririz.
+          Site, üçünçü taraf internet sitelerine bağlantı verebilir veya sayfa içerisinde harita (Google Maps)
+          gibi harici servis bileşenleri sunabilir. Bu servislerin kullanımı sırasında ilgili sağlayıcılar
+          tarafından teknik veriler işlenebilir. Bağlantı verilen sitelerin ve servislerin gizlilik
+          politikalarını ayrıca incelemenizi öneririz.
         </p>
       </section>
 

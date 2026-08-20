@@ -35,15 +35,17 @@ export default function KvkkPage() {
         <p>Dernek ile ilişkinize bağlı olarak aşağıdaki veri kategorileri işlenebilir:</p>
         <ul className={legalListClass}>
           <li>Kimlik bilgileri: ad, soyad, T.C. kimlik numarası, doğum tarihi ve imza.</li>
-          <li>İletişim bilgileri: telefon numarası, e-posta adresi ve adres.</li>
-          <li>Üyelik bilgileri: mezuniyet, üyelik başvurusu, üyelik durumu ve kurul görevi.</li>
+          <li>İletişim bilgileri: telefon numarası, e-posta adresi, adres ile iletişim formu üzerinden iletilen konu ve mesaj içerikleri.</li>
+          <li>Üyelik bilgileri: mezuniyet yılı, üyelik başvurusu, üyelik durumu ve kurul görevi.</li>
           <li>Finansal bilgiler: aidat veya bağış ödemelerine ilişkin dekont ve işlem bilgileri.</li>
           <li>Görsel ve işitsel kayıtlar: etkinlik fotoğrafları ile açık rızaya tabi tanıtım içerikleri.</li>
           <li>İşlem güvenliği bilgileri: internet sitesi erişim, oturum ve güvenlik kayıtları.</li>
         </ul>
         <p>
-          Özel nitelikli kişisel veriler yalnızca mevzuatın izin verdiği veya açık rızanızın bulunduğu
-          hâllerde, amaçla sınırlı olarak işlenir.
+          Üyelik başvurusu sürecinde Dernek tüzüğü ve ilgili mevzuat uyarınca üyelik şartlarının tespiti
+          amacıyla talep edilen adli sicil kaydı (ceza mahkûmiyeti ve güvenlik tedbirlerine ilişkin özel
+          nitelikli kişisel veri) mevzuatın izin verdiği hâllerde, tüzük yükümlülükleri veya açık rızanız
+          bulunduğu takdirde amaçla sınırlı olarak işlenir.
         </p>
       </section>
 
@@ -52,10 +54,11 @@ export default function KvkkPage() {
         <p>Kişisel verileriniz aşağıdaki amaçlarla işlenebilir:</p>
         <ul className={legalListClass}>
           <li>Üyelik başvurularının alınması, değerlendirilmesi ve üyelik kayıtlarının tutulması.</li>
+          <li>İnternet sitesindeki iletişim formu vasıtasıyla iletilen talep, soru ve önerilerin değerlendirilmesi ve yanıtlanması.</li>
           <li>Dernek faaliyetleri, genel kurul, etkinlik ve duyurular hakkında iletişim kurulması.</li>
           <li>Aidat ve bağış süreçlerinin yürütülmesi, muhasebe ve yasal kayıtların tutulması.</li>
           <li>Dernek tüzüğü ve ilgili mevzuattan doğan yükümlülüklerin yerine getirilmesi.</li>
-          <li>Bilgi ve sistem güvenliğinin sağlanması ile taleplerin cevaplandırılması.</li>
+          <li>Bilgi ve sistem güvenliğinin sağlanması ile yetkisiz erişimlerin önlenmesi.</li>
         </ul>
         <p>
           Veriler; KVKK’nın 5 ve 6’ncı maddelerinde yer alan kanunlarda açıkça öngörülme, hukuki
@@ -78,9 +81,10 @@ export default function KvkkPage() {
         <h2 className={legalHeadingClass}>5. Kişisel verilerin aktarılması</h2>
         <p>
           Verileriniz; hukuki yükümlülüklerin yerine getirilmesi amacıyla yetkili kamu kurumlarına,
-          bankalara, mali müşavirlere ve yalnızca gerekli olduğu ölçüde barındırma, e-posta, güvenlik ve
-          bilişim hizmeti sağlayıcılarına aktarılabilir. Yurt dışına aktarım gereken hâllerde KVKK’nın
-          9’uncu maddesindeki şartlar ve uygun güvenceler uygulanır.
+          bankalara, mali müşavirlere ve hizmet sunumunun sürdürülebilmesi için zorunlu olan barındırma (Vercel),
+          veri tabanı ve bulut altyapısı (Supabase), e-posta, güvenlik ve bilişim hizmeti sağlayıcılarına
+          aktarılabilir. İnternet sitesi altyapısı ve veri tabanı sunucularının yurt dışında bulunması
+          nedeniyle yapılan aktarımlarda KVKK’nın 9’uncu maddesindeki şartlar ve uygun güvenceler gözetilir.
         </p>
       </section>
 
