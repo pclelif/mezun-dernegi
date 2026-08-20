@@ -168,6 +168,34 @@
 .button--secondary { border-color: var(--color-accent); color: var(--color-accent); background: white; }
 .home-hero .button { margin-top: 1.5rem; }
 
+/* Minimalist Apple / Vercel Style Button Interactions */
+button,
+a.button,
+.button {
+  touch-action: manipulation;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.2s ease,
+              background-color 0.2s ease;
+  will-change: transform;
+}
+
+@media (hover: hover) {
+  button:not(:disabled):hover,
+  a.button:hover,
+  .button:hover {
+    transform: scale(1.012);
+    opacity: 0.96;
+  }
+}
+
+button:not(:disabled):active,
+a.button:active,
+.button:not(:disabled):active {
+  transform: scale(0.985) !important;
+  opacity: 1 !important;
+  transition-duration: 0.08s !important;
+}
+
 .page-hero { padding-block: 3rem; border-bottom: 1px solid rgb(108 117 125 / 20%); background: var(--color-surface); }
 .page-hero__title { max-width: 56rem; margin: 0; font-size: 1.75rem; font-weight: 700; line-height: 1.2; }
 .page-hero__description { max-width: 42rem; margin: 1rem 0 0; color: var(--color-muted); font-size: 1.125rem; line-height: 1.6; }
