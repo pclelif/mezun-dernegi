@@ -171,7 +171,14 @@
 /* Minimalist Apple / Vercel Style Button Interactions */
 button,
 a.button,
-.button {
+.button,
+.btn-animate,
+[role="button"],
+a[class*="bg-[#ec1c24]"],
+a[class*="bg-red-600"],
+a[class*="bg-red-700"],
+a[class*="rounded-md"][class*="px-"],
+a[class*="rounded-lg"][class*="px-"] {
   touch-action: manipulation;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
               opacity 0.2s ease,
@@ -182,7 +189,14 @@ a.button,
 @media (hover: hover) {
   button:not(:disabled):hover,
   a.button:hover,
-  .button:hover {
+  .button:hover,
+  .btn-animate:hover,
+  [role="button"]:hover,
+  a[class*="bg-[#ec1c24]"]:hover,
+  a[class*="bg-red-600"]:hover,
+  a[class*="bg-red-700"]:hover,
+  a[class*="rounded-md"][class*="px-"]:hover,
+  a[class*="rounded-lg"][class*="px-"]:hover {
     transform: scale(1.012);
     opacity: 0.96;
   }
@@ -190,7 +204,14 @@ a.button,
 
 button:not(:disabled):active,
 a.button:active,
-.button:not(:disabled):active {
+.button:active,
+.btn-animate:active,
+[role="button"]:active,
+a[class*="bg-[#ec1c24]"]:active,
+a[class*="bg-red-600"]:active,
+a[class*="bg-red-700"]:active,
+a[class*="rounded-md"][class*="px-"]:active,
+a[class*="rounded-lg"][class*="px-"]:active {
   transform: scale(0.985) !important;
   opacity: 1 !important;
   transition-duration: 0.08s !important;
