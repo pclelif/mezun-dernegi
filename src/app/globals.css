@@ -24,6 +24,7 @@
     color-scheme: only light !important;
     background-color: #ffffff !important;
     color: #000000 !important;
+    overscroll-behavior-y: none;
   }
   body {
     margin: 0;
@@ -32,6 +33,7 @@
     font-family: Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
     color-scheme: only light !important;
+    overscroll-behavior-y: none;
   }
 
   @media (prefers-color-scheme: dark) {
