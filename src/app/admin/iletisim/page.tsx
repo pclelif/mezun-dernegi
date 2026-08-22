@@ -348,9 +348,7 @@ export default function AdminContactPage() {
               </div>
 
               {/* Message Body */}
-              <p className="mt-4 text-sm leading-relaxed text-zinc-700 whitespace-pre-line">
-                {item.message}
-              </p>
+              <MessageBody text={item.message} />
             </article>
           ))}
         </div>
@@ -396,6 +394,28 @@ export default function AdminContactPage() {
             </div>
           </div>
         </div>
+      )}
+    </div>
+  );
+}
+
+function MessageBody({ text }: { text: string }) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const isLong = text.length > 280;
+
+  return (
+    <div className="mt-4">
+      <p className="text-sm leading-relaxed text-zinc-700 whitespace-pre-line break-words">
+        {isLong && !isExpanded ? `${text.slice(0, 280)}…` : text}
+      </p>
+      {isLong && (
+        <button
+          type="button"
+          onClick={() => setIsExpanded((prev) => !prev)}
+          className="mt-2 text-xs font-semibold text-red-600 hover:text-red-700 hover:underline cursor-pointer"
+        >
+          {isExpanded ? "Daha Az Göster" : "Devamını Oku"}
+        </button>
       )}
     </div>
   );
