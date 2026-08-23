@@ -27,11 +27,11 @@ export default async function EventsPage() {
       />
       <section className="container-site section-space" aria-label="Etkinlik listesi">
         {loadError ? (
-          <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-slate-600">
+          <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-5 py-3.5 text-center text-sm font-medium text-slate-500">
             Etkinlikler şu anda yüklenemiyor. Lütfen daha sonra tekrar deneyin.
           </p>
         ) : events.length === 0 ? (
-          <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-slate-600">
+          <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-5 py-3.5 text-center text-sm font-medium text-slate-500">
             Henüz yayınlanmış etkinlik bulunmuyor.
           </p>
         ) : (

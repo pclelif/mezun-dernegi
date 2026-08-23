@@ -3,14 +3,19 @@
 import { ArrowUpDown, ChevronDown, GripVertical, LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
 import { createClient, formatTurkishDate, type DbEvent } from "@/lib/supabase/client";
 
 async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
   try {
-    const supabase = createClient();
     await Promise.all(
       itemsList.map((item, idx) =>
-        supabase.from(table).update({ display_order: idx }).eq("id", item.id)
+        adminDbMutate({
+          table,
+          action: "update",
+          data: { display_order: idx },
+          match: { id: item.id },
+        })
       )
     );
   } catch (err) {
@@ -165,9 +170,11 @@ export default function AdminEventsPage() {
   async function handleDelete(id: string) {
     setDeletingId(id);
     try {
-      const supabase = createClient();
-      const { error: deleteError } = await supabase.from("events").delete().eq("id", id);
-      if (deleteError) throw deleteError;
+      await adminDbMutate({
+        table: "events",
+        action: "delete",
+        match: { id },
+      });
       setEvents((current) => current.filter((event) => event.id !== id));
     } catch (err) {
       window.alert(err instanceof Error ? err.message : "Silme işlemi başarısız.");
@@ -297,10 +304,10 @@ export default function AdminEventsPage() {
                 <thead className="border-b border-zinc-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500 select-none">
                   <tr>
                     {sortBy === "manual" && <th className="w-12 px-4 py-3.5 text-center"></th>}
-                    <th className="px-6 py-3.5 font-semibold">Başlık</th>
-                    <th className="px-6 py-3.5 font-semibold">Tarih</th>
-                    <th className="px-6 py-3.5 font-semibold">Durum</th>
-                    <th className="px-6 py-3.5 font-semibold">İşlemler</th>
+                    <th className="w-2/5 px-6 py-3.5 font-semibold">Başlık</th>
+                    <th className="w-1/5 px-6 py-3.5 font-semibold whitespace-nowrap">Tarih</th>
+                    <th className="w-1/6 px-6 py-3.5 font-semibold whitespace-nowrap">Durum</th>
+                    <th className="px-6 py-3.5 font-semibold whitespace-nowrap">İşlemler</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-100">
@@ -331,11 +338,11 @@ export default function AdminEventsPage() {
                             <GripVertical className="mx-auto size-4 text-slate-400 hover:text-red-600 transition-colors" />
                           </td>
                         )}
-                        <td className="px-6 py-3.5 font-medium text-zinc-900 align-middle">{event.title}</td>
-                        <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap align-middle">{formatTurkishDate(event.date) || "—"}</td>
-                        <td className="px-6 py-3.5 whitespace-nowrap align-middle">
+                        <td className="w-2/5 px-6 py-3.5 font-medium text-zinc-900 align-middle">{event.title}</td>
+                        <td className="w-1/5 px-6 py-3.5 text-slate-600 whitespace-nowrap align-middle">{formatTurkishDate(event.date) || "—"}</td>
+                        <td className="w-1/6 px-6 py-3.5 whitespace-nowrap align-middle">
                           <span
-                            className={`-ml-2.5 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold -translate-x-[0.75px] ${
+                            className={`-ml-2.5 inline-flex rounded-full px-2.5 py-0.5 text-xs font-semibold ${
                               event.status === "past" ? "bg-zinc-200 text-zinc-700" : "bg-red-50 text-red-700"
                             }`}
                           >

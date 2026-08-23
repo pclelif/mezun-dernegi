@@ -4,7 +4,8 @@ import { ArrowLeft, ChevronDown, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
-import { createClient, type DbFaq } from "@/lib/supabase/client";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
+import { type DbFaq } from "@/lib/supabase/client";
 
 type FaqFormProps = {
   initial?: DbFaq;
@@ -46,20 +47,12 @@ export function FaqForm({ initial }: FaqFormProps) {
     };
 
     try {
-      const supabase = createClient();
-      const save = (data: Omit<typeof payload, "category"> | typeof payload) => initial
-        ? supabase.from("faqs").update(data).eq("id", initial.id)
-        : supabase.from("faqs").insert(data);
-      let { error: saveError } = await save(payload);
-
-      if (saveError?.code === "PGRST204") {
-        const { category: _category, ...legacyPayload } = payload;
-        void _category;
-        const fallback = await save(legacyPayload);
-        saveError = fallback.error;
-      }
-
-      if (saveError) throw saveError;
+      await adminDbMutate({
+        table: "faqs",
+        action: initial ? "update" : "insert",
+        data: payload,
+        match: initial ? { id: initial.id } : undefined,
+      });
 
       router.push("/admin/sss");
       router.refresh();

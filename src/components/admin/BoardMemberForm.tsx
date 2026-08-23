@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
-import { createClient, type DbBoardMember } from "@/lib/supabase/client";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
+import { type DbBoardMember } from "@/lib/supabase/client";
 
 type BoardMemberFormProps = {
   initial?: DbBoardMember;
@@ -55,12 +56,12 @@ export function BoardMemberForm({ initial }: BoardMemberFormProps) {
     };
 
     try {
-      const supabase = createClient();
-      const query = initial
-        ? supabase.from("board_members").update(payload).eq("id", initial.id)
-        : supabase.from("board_members").insert(payload);
-      const { error: saveError } = await query;
-      if (saveError) throw saveError;
+      await adminDbMutate({
+        table: "board_members",
+        action: initial ? "update" : "insert",
+        data: payload,
+        match: initial ? { id: initial.id } : undefined,
+      });
 
       router.push("/admin/kurul");
       router.refresh();

@@ -5,6 +5,14 @@ import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
+function isSupabaseConfigured() {
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!url || !key) return false;
+  if (url.includes("placeholder.supabase.co") || key === "placeholder_key") return false;
+  return true;
+}
+
 export default function AdminLoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -19,20 +27,45 @@ export default function AdminLoginPage() {
     const email = String(form.get("email") ?? "").trim();
     const password = String(form.get("password") ?? "");
 
-    try {
-      const supabase = createClient();
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+    const tempEmail = process.env.NEXT_PUBLIC_TEMP_ADMIN_EMAIL || "kaafladmin@gmail.com";
+    const tempPass = process.env.NEXT_PUBLIC_TEMP_ADMIN_PASSWORD || "kaaflmezunder06";
 
-      if (signInError) throw signInError;
-      router.replace("/admin");
-      router.refresh();
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Giriş yapılamadı.");
-      setLoading(false);
+    // Instant offline / temp admin authentication
+    if (!isSupabaseConfigured() || email === tempEmail) {
+      if (email === tempEmail && password === tempPass) {
+        document.cookie = "admin_session=true; path=/; max-age=86400; SameSite=Lax";
+        router.replace("/admin");
+        router.refresh();
+        return;
+      }
+      if (!isSupabaseConfigured()) {
+        setError("Geçersiz e-posta veya şifre.");
+        setLoading(false);
+        return;
+      }
     }
+
+    if (isSupabaseConfigured()) {
+      try {
+        const supabase = createClient();
+        const { error: signInError } = await supabase.auth.signInWithPassword({
+          email,
+          password,
+        });
+
+        if (signInError) throw signInError;
+        router.replace("/admin");
+        router.refresh();
+        return;
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Giriş yapılamadı.");
+        setLoading(false);
+        return;
+      }
+    }
+
+    setError("Giriş yapılamadı.");
+    setLoading(false);
   }
 
   const fieldClass =

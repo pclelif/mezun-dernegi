@@ -14,20 +14,22 @@ const legalLinks = [
 export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420\nÇankaya/Ankara" }: { logoUrl?: string; address?: string }) {
   return (
     <footer className="bg-[#18181b] font-sans text-white">
-      <div className="mx-auto grid w-[min(100%-2rem,80rem)] items-start gap-8 py-7 md:grid-cols-2 md:gap-10 md:py-8 lg:grid-cols-[1fr_auto_1fr] lg:gap-16">
-        <div>
+      <div className="mx-auto grid w-[min(100%-2rem,80rem)] grid-cols-1 items-start gap-8 py-7 md:grid-cols-2 md:gap-10 lg:grid-cols-[1fr_auto_auto] lg:gap-x-12 lg:gap-y-8 md:py-8">
+        {/* Sütun 1: Logo ve Dernek Adı */}
+        <div className="w-full md:col-span-2 lg:col-span-1">
           <Link href="/" className="inline-flex items-center gap-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`${associationName} ana sayfa`}>
             <Image src={logoUrl} alt="" width={56} height={56} className="size-14 shrink-0 rounded-full bg-white object-cover" />
-            <span className="max-w-lg text-sm font-semibold leading-6 text-balance">{associationName}</span>
+            <span className="max-w-lg text-sm font-semibold leading-6 text-zinc-100 lg:max-w-[240px]">{associationName}</span>
           </Link>
         </div>
 
-        <nav className="w-full sm:w-fit sm:max-w-full lg:translate-x-20 lg:justify-self-center" aria-label="Hakkımızda bağlantıları">
-          <div className="w-full sm:w-fit sm:max-w-full">
+        {/* Sütun 2: Hakkımızda Bağlantıları */}
+        <nav aria-label="Hakkımızda bağlantıları" className="w-full sm:w-auto">
+          <div className="w-full">
             <h2 className="relative w-full pb-2 text-left text-sm font-semibold text-white after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/20 after:content-['']">Hakkımızda</h2>
             
-            {/* Mobil görünüm (Tek sütun alt alta) */}
-            <ul className="mt-3 grid gap-y-2 text-sm leading-5 sm:hidden">
+            {/* Mobil Görünüm (Doğal sıralı tek sütun) */}
+            <ul className="mt-3 grid gap-y-2.5 text-sm leading-5 sm:hidden">
               {corporateNavigation.map((item) => (
                 <li key={item.href}>
                   <Link
@@ -40,14 +42,14 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Maha
               ))}
             </ul>
 
-            {/* Masaüstü görünüm (2 Sütunlu Dağılım) */}
-            <div className="mt-3 hidden sm:grid sm:grid-cols-[max-content_max-content] sm:gap-x-5 text-sm leading-5">
+            {/* Masaüstü Görünüm (2 Sütunlu Yan Yana Dağılım) */}
+            <div className="mt-3 hidden sm:grid sm:grid-cols-[max-content_max-content] sm:gap-x-6 text-sm leading-5">
               <ul className="grid gap-y-2">
                 {[corporateNavigation[0], corporateNavigation[2], corporateNavigation[5]].map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="touch-manipulation rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                      className="touch-manipulation whitespace-nowrap rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                     >
                       {item.label}
                     </Link>
@@ -59,7 +61,7 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Maha
                   <li key={item.href}>
                     <Link
                       href={item.href}
-                      className="touch-manipulation rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                      className="touch-manipulation whitespace-nowrap rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
                     >
                       {item.label}
                     </Link>
@@ -70,8 +72,9 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Maha
           </div>
         </nav>
 
-        <div className="w-full sm:w-fit sm:max-w-full md:col-span-2 lg:col-span-1 lg:justify-self-end lg:ml-auto lg:-translate-x-4">
-          <div className="w-full sm:w-fit sm:max-w-full lg:ml-auto text-left">
+        {/* Sütun 3: Adres */}
+        <div className="w-full sm:w-auto">
+          <div className="w-full">
             <h2 className="relative w-full pb-2 text-left text-sm font-semibold text-white after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-white/20 after:content-['']">
               Adres
             </h2>
@@ -83,6 +86,7 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Maha
         </div>
       </div>
 
+      {/* Alt Telif ve Yasal Bağlantılar Çubuğu */}
       <div className="border-t border-white/15">
         <div className="mx-auto flex w-[min(100%-2rem,52rem)] flex-col items-start justify-start gap-2 py-3 text-left text-xs leading-5 text-zinc-300 md:items-center md:justify-center md:text-center">
           <p className="w-full text-left md:text-center">

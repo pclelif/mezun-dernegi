@@ -44,7 +44,11 @@ export default async function BoardsPage() {
                 />
               ))}
             </div>
-          ) : null}
+          ) : (
+            <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-5 py-3.5 text-center text-sm font-medium text-zinc-500">
+              Henüz yönetim kurulu üyesi eklenmemiş.
+            </p>
+          )}
         </section>
 
         <section aria-labelledby="audit-board-heading">
@@ -64,7 +68,11 @@ export default async function BoardsPage() {
                 />
               ))}
             </div>
-          ) : null}
+          ) : (
+            <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-5 py-3.5 text-center text-sm font-medium text-zinc-500">
+              Henüz denetim kurulu üyesi eklenmemiş.
+            </p>
+          )}
         </section>
       </div>
     </>

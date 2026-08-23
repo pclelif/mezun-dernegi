@@ -1,10 +1,18 @@
+import dns from "node:dns";
 import { createClient as createSupabaseJsClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
+try {
+  dns.setServers(["8.8.8.8", "1.1.1.1"]);
+} catch {}
+
 function getPublicEnv() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const anonKey =
+    process.env.SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY ||
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
   if (!url || !anonKey) {
     throw new Error(
@@ -18,7 +26,12 @@ function getPublicEnv() {
 /** RSC / Server Actions için anon istemci */
 export function createServerAnonClient() {
   const { url, anonKey } = getPublicEnv();
-  return createSupabaseJsClient(url, anonKey);
+  return createSupabaseJsClient(url, anonKey, {
+    auth: { persistSession: false },
+    global: {
+      fetch: (input, init) => fetch(input, { ...init, cache: "no-store" }),
+    },
+  });
 }
 
 /** Cookie tabanlı Supabase Auth istemcisi (Server Components / Actions). */

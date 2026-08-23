@@ -50,7 +50,7 @@ export async function HomeEventsSection() {
           ))}
         </div>
       ) : (
-        <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-zinc-600">
+        <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-5 py-3.5 text-center text-sm font-medium text-zinc-500">
           {loadError ? "Etkinlikler şu anda yüklenemiyor." : "Henüz yaklaşan etkinlik bulunmuyor."}
         </p>
       )}

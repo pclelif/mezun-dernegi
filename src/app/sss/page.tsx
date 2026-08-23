@@ -32,8 +32,8 @@ export default async function FAQPage() {
       <section className="container-site section-space">
         <div className="w-full">
           {items.length === 0 ? (
-            <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-slate-600">
-              SSS içerikleri henüz eklenmemiş.
+            <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-5 py-3.5 text-center text-sm font-medium text-slate-500">
+              Henüz sıkça sorulan soru eklenmedi.
             </p>
           ) : (
             <FAQAccordion items={items} defaultOpenIds={[items[0].id]} />

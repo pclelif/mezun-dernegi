@@ -26,7 +26,7 @@ export const contentSections = {
       logo_url: "/logo-dernek.jpg",
       hero_title: "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği",
       hero_description: "Bir okul. Binlerce hikâye. Tek bir aile.\nGeçmişimizin değerlerini koruyor, geleceğe yönelik yeni adımlar atıyoruz.",
-      hero_image_url: "",
+      hero_image_url: "/hero-bg.jpg",
     },
   },
   hakkimizda: {

@@ -33,8 +33,8 @@ export default async function GalleryPage() {
         descriptionClassName="panel-copy--compact"
       />
       {loadError || images.length === 0 ? (
-        <section className="mx-auto w-[min(100%-2rem,75rem)] py-12 md:w-[min(100%-4rem,75rem)] md:py-16" aria-label="Fotoğraflar">
-          <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-slate-600">
+        <section className="mx-auto w-[min(100%-2rem,75rem)] py-8 md:w-[min(100%-4rem,75rem)] md:py-12" aria-label="Fotoğraflar">
+          <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-5 py-3.5 text-center text-sm font-medium text-slate-500">
             {loadError ? "Galeri şu anda yüklenemiyor. Lütfen daha sonra tekrar deneyin." : "Henüz fotoğraf eklenmemiş."}
           </p>
         </section>

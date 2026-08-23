@@ -46,8 +46,8 @@ export async function HomeFaqSection() {
           {items.length > 0 ? (
             <FAQAccordion items={items} defaultOpenIds={[items[0].id]} />
           ) : (
-            <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50 px-6 py-10 text-center text-zinc-600">
-              Sıkça sorulan sorular yakında eklenecek.
+            <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-5 py-3.5 text-center text-sm font-medium text-zinc-500">
+              Henüz sıkça sorulan soru eklenmedi.
             </p>
           )}
         </div>

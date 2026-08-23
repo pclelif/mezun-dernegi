@@ -3,14 +3,19 @@
 import { ArrowUpDown, ChevronDown, GripVertical, LoaderCircle, Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
 import { createClient, type DbGalleryImage } from "@/lib/supabase/client";
 
 async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
   try {
-    const supabase = createClient();
     await Promise.all(
       itemsList.map((item, idx) =>
-        supabase.from(table).update({ display_order: idx }).eq("id", item.id)
+        adminDbMutate({
+          table,
+          action: "update",
+          data: { display_order: idx },
+          match: { id: item.id },
+        })
       )
     );
   } catch (err) {
@@ -125,27 +130,25 @@ export default function AdminGalleryPage() {
     setSaving(true);
     setError(null);
     try {
-      const supabase = createClient();
-
-      // Ensure a default gallery row exists
       const defaultGalleryId = "00000000-0000-0000-0000-000000000000";
-      await supabase
-        .from("galleries")
-        .upsert({ id: defaultGalleryId, title: "Ana Galeri", slug: "ana-galeri" }, { onConflict: "id" });
+      await adminDbMutate({
+        table: "galleries",
+        action: "upsert",
+        data: { id: defaultGalleryId, title: "Ana Galeri", slug: "ana-galeri" },
+        onConflict: "id",
+      });
 
-      const { data, error: insertError } = await supabase
-        .from("gallery_images")
-        .insert(
-          uploads.map((image_url, idx) => ({
-            gallery_id: defaultGalleryId,
-            image_url,
-            display_order: images.length + idx,
-          }))
-        )
-        .select("*");
+      const inserted = await adminDbMutate({
+        table: "gallery_images",
+        action: "insert",
+        data: uploads.map((image_url, idx) => ({
+          gallery_id: defaultGalleryId,
+          image_url,
+          display_order: images.length + idx,
+        })),
+      });
 
-      if (insertError) throw insertError;
-      setImages((current) => [...(data as DbGalleryImage[]), ...current]);
+      setImages((current) => [...(inserted as DbGalleryImage[]), ...current]);
       setUploads([]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Fotoğraflar yüklenemedi.");
@@ -157,9 +160,11 @@ export default function AdminGalleryPage() {
   async function handleDelete(id: string) {
     setDeletingId(id);
     try {
-      const supabase = createClient();
-      const { error: deleteError } = await supabase.from("gallery_images").delete().eq("id", id);
-      if (deleteError) throw deleteError;
+      await adminDbMutate({
+        table: "gallery_images",
+        action: "delete",
+        match: { id },
+      });
       setImages((current) => current.filter((item) => item.id !== id));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Fotoğraf silinemedi.");

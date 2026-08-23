@@ -3,7 +3,7 @@
 import { LoaderCircle, Save } from "lucide-react";
 import { type FormEvent, useState } from "react";
 import type { ContentSection, ContentSectionKey } from "@/config/content";
-import { createClient } from "@/lib/supabase/client";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
 import { ImageUploader } from "./ImageUploader";
 import { PdfUploader } from "./PdfUploader";
 
@@ -31,14 +31,20 @@ export function ContentEditor({
     section.fields.forEach(({ key, type }) => {
       if (type !== "image" && key !== "charter_url") content[key] = String(form.get(key) ?? "").trim();
     });
-    const { error } = await createClient()
-      .from("site_content")
-      .upsert({ section: sectionKey, content, updated_at: new Date().toISOString() }, { onConflict: "section" });
-    setSaving(false);
-    if (error) setMessage(`Kaydedilemedi: ${error.message}`);
-    else {
+
+    try {
+      await adminDbMutate({
+        table: "site_content",
+        action: "upsert",
+        data: { section: sectionKey, content, updated_at: new Date().toISOString() },
+        onConflict: "section",
+      });
       setValues(content);
       setMessage("Değişiklikler kaydedildi.");
+    } catch (err) {
+      setMessage(`Kaydedilemedi: ${err instanceof Error ? err.message : "Hata oluştu."}`);
+    } finally {
+      setSaving(false);
     }
   }
 

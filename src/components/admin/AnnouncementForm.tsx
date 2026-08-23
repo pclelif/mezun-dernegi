@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
-import { createClient, slugify, type DbAnnouncement } from "@/lib/supabase/client";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
+import { slugify, type DbAnnouncement } from "@/lib/supabase/client";
 
 type AnnouncementFormProps = {
   initial?: DbAnnouncement;
@@ -42,12 +43,12 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
     };
 
     try {
-      const supabase = createClient();
-      const query = initial
-        ? supabase.from("announcements").update(payload).eq("id", initial.id)
-        : supabase.from("announcements").insert(payload);
-      const { error: saveError } = await query;
-      if (saveError) throw saveError;
+      await adminDbMutate({
+        table: "announcements",
+        action: initial ? "update" : "insert",
+        data: payload,
+        match: initial ? { id: initial.id } : undefined,
+      });
       router.push("/admin/duyurular");
       router.refresh();
     } catch (err) {

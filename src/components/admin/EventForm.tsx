@@ -5,7 +5,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
-import { createClient, slugify, type DbEvent } from "@/lib/supabase/client";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
+import { slugify, type DbEvent } from "@/lib/supabase/client";
 
 type EventFormProps = {
   initial?: DbEvent;
@@ -50,12 +51,12 @@ export function EventForm({ initial }: EventFormProps) {
     };
 
     try {
-      const supabase = createClient();
-      const query = initial
-        ? supabase.from("events").update(payload).eq("id", initial.id)
-        : supabase.from("events").insert(payload);
-      const { error: saveError } = await query;
-      if (saveError) throw saveError;
+      await adminDbMutate({
+        table: "events",
+        action: initial ? "update" : "insert",
+        data: payload,
+        match: initial ? { id: initial.id } : undefined,
+      });
       router.push("/admin/etkinlikler");
       router.refresh();
     } catch (err) {

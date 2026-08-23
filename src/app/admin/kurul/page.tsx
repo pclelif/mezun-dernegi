@@ -3,6 +3,7 @@
 import { GripVertical, LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
 import { createClient, type DbBoardMember } from "@/lib/supabase/client";
 
 const roleLabels: Record<string, string> = {
@@ -103,9 +104,11 @@ export default function AdminBoardMembersPage() {
   async function handleDelete(id: string) {
     setDeletingId(id);
     try {
-      const supabase = createClient();
-      const { error: deleteError } = await supabase.from("board_members").delete().eq("id", id);
-      if (deleteError) throw deleteError;
+      await adminDbMutate({
+        table: "board_members",
+        action: "delete",
+        match: { id },
+      });
       setMembers((current) => current.filter((member) => member.id !== id));
     } catch (err) {
       window.alert(err instanceof Error ? err.message : "Silme işlemi başarısız.");
@@ -210,10 +213,10 @@ export default function AdminBoardMembersPage() {
                 <thead className="border-b border-zinc-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500 select-none">
                   <tr>
                     <th className="w-12 px-4 py-3.5 text-center"></th>
-                    <th className="px-6 py-3.5 font-semibold">Ad Soyad</th>
-                    <th className="px-6 py-3.5 font-semibold">Görev</th>
-                    <th className="px-6 py-3.5 font-semibold">Kurul</th>
-                    <th className="px-6 py-3.5 font-semibold">İşlemler</th>
+                    <th className="w-2/5 px-6 py-3.5 font-semibold">Ad Soyad</th>
+                    <th className="w-1/4 px-6 py-3.5 font-semibold">Görev</th>
+                    <th className="w-1/5 px-6 py-3.5 font-semibold">Kurul</th>
+                    <th className="px-6 py-3.5 font-semibold whitespace-nowrap">İşlemler</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-100">
@@ -240,10 +243,10 @@ export default function AdminBoardMembersPage() {
                         <td className="w-12 px-4 py-3.5 text-center align-middle">
                           <GripVertical className="mx-auto size-4 text-slate-400 hover:text-red-600 transition-colors" />
                         </td>
-                        <td className="px-6 py-3.5 font-medium text-zinc-900 align-middle">{member.name}</td>
-                        <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap align-middle">{(member.role && roleLabels[member.role]) || member.role || "—"}</td>
-                        <td className="px-6 py-3.5 whitespace-nowrap align-middle">
-                          <span className="-ml-2.5 inline-flex rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-semibold text-red-700 -translate-x-[0.75px]">
+                        <td className="w-2/5 px-6 py-3.5 font-medium text-zinc-900 align-middle">{member.name}</td>
+                        <td className="w-1/4 px-6 py-3.5 text-slate-600 align-middle">{(member.role && roleLabels[member.role]) || member.role || "—"}</td>
+                        <td className="w-1/5 px-6 py-3.5 whitespace-nowrap align-middle">
+                          <span className="-ml-2.5 inline-flex rounded-full bg-red-50 px-2.5 py-0.5 text-xs font-semibold text-red-700">
                             {member.board_type === "audit" ? "Denetim Kurulu" : "Yönetim Kurulu"}
                           </span>
                         </td>

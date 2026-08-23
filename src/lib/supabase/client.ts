@@ -15,7 +15,6 @@ function getPublicEnv() {
 
 /**
  * Tarayıcıda kullanılacak Supabase istemcisi.
- * Yalnızca anon key kullanır.
  */
 export function createClient() {
   const { url, anonKey } = getPublicEnv();

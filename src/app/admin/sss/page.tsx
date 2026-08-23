@@ -3,6 +3,7 @@
 import { ArrowUpDown, ChevronDown, GripVertical, LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
 import { createClient, type DbFaq } from "@/lib/supabase/client";
 
 const categoryLabels: Record<DbFaq["category"], string> = {
@@ -13,10 +14,14 @@ const categoryLabels: Record<DbFaq["category"], string> = {
 
 async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
   try {
-    const supabase = createClient();
     await Promise.all(
       itemsList.map((item, idx) =>
-        supabase.from(table).update({ display_order: idx }).eq("id", item.id)
+        adminDbMutate({
+          table,
+          action: "update",
+          data: { display_order: idx },
+          match: { id: item.id },
+        })
       )
     );
   } catch (err) {
@@ -153,9 +158,11 @@ export default function AdminFaqsPage() {
   async function handleDelete(id: string) {
     setDeletingId(id);
     try {
-      const supabase = createClient();
-      const { error: deleteError } = await supabase.from("faqs").delete().eq("id", id);
-      if (deleteError) throw deleteError;
+      await adminDbMutate({
+        table: "faqs",
+        action: "delete",
+        match: { id },
+      });
       setItems((current) => current.filter((item) => item.id !== id));
     } catch (err) {
       window.alert(err instanceof Error ? err.message : "Silme işlemi başarısız.");
@@ -216,8 +223,8 @@ export default function AdminFaqsPage() {
             </button>
           </div>
         ) : items.length === 0 ? (
-          <p className="px-6 py-12 text-center text-sm text-slate-500">
-            Henüz S.S.S. kaydı yok. Yeni bir soru ekleyin.
+          <p className="px-6 py-10 text-center text-sm text-slate-500">
+            Henüz sıkça sorulan soru eklenmedi. Yeni bir soru ekleyin.
           </p>
         ) : (
           <>
@@ -288,10 +295,10 @@ export default function AdminFaqsPage() {
                 <thead className="border-b border-zinc-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500 select-none">
                   <tr>
                     {sortBy === "manual" && <th className="w-12 px-4 py-3.5 text-center"></th>}
-                    <th className="px-6 py-3.5 font-semibold">Bölüm</th>
-                    <th className="px-6 py-3.5 font-semibold">Soru</th>
-                    <th className="px-6 py-3.5 font-semibold">Cevap</th>
-                    <th className="px-6 py-3.5 font-semibold">İşlemler</th>
+                    <th className="w-1/6 px-6 py-3.5 font-semibold whitespace-nowrap">Bölüm</th>
+                    <th className="w-1/3 px-6 py-3.5 font-semibold">Soru</th>
+                    <th className="w-2/5 px-6 py-3.5 font-semibold">Cevap</th>
+                    <th className="px-6 py-3.5 font-semibold whitespace-nowrap">İşlemler</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-100">
@@ -322,13 +329,13 @@ export default function AdminFaqsPage() {
                             <GripVertical className="mx-auto size-4 text-slate-400 hover:text-red-600 transition-colors" />
                           </td>
                         )}
-                        <td className="whitespace-nowrap px-6 py-3.5 text-slate-600 align-middle">
+                        <td className="w-1/6 whitespace-nowrap px-6 py-3.5 text-slate-600 align-middle">
                           {categoryLabels[item.category ?? "general"]}
                         </td>
-                        <td className="max-w-xs px-6 py-3.5 font-medium text-zinc-900 align-middle">
+                        <td className="w-1/3 px-6 py-3.5 font-medium text-zinc-900 align-middle">
                           {item.question}
                         </td>
-                        <td className="max-w-md px-6 py-3.5 text-slate-600 align-middle">
+                        <td className="w-2/5 px-6 py-3.5 text-slate-600 align-middle">
                           <p className="line-clamp-2">{item.answer}</p>
                         </td>
                         <td className="px-6 py-3.5 whitespace-nowrap align-middle">

@@ -3,14 +3,19 @@
 import { ArrowUpDown, ChevronDown, GripVertical, LoaderCircle, Pencil, Plus, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
 import { createClient, formatTurkishDate, type DbAnnouncement } from "@/lib/supabase/client";
 
 async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
   try {
-    const supabase = createClient();
     await Promise.all(
       itemsList.map((item, idx) =>
-        supabase.from(table).update({ display_order: idx }).eq("id", item.id)
+        adminDbMutate({
+          table,
+          action: "update",
+          data: { display_order: idx },
+          match: { id: item.id },
+        })
       )
     );
   } catch (err) {
@@ -167,9 +172,11 @@ export default function AdminAnnouncementsPage() {
   async function handleDelete(id: string) {
     setDeletingId(id);
     try {
-      const supabase = createClient();
-      const { error: deleteError } = await supabase.from("announcements").delete().eq("id", id);
-      if (deleteError) throw deleteError;
+      await adminDbMutate({
+        table: "announcements",
+        action: "delete",
+        match: { id },
+      });
       setItems((current) => current.filter((item) => item.id !== id));
     } catch (err) {
       window.alert(err instanceof Error ? err.message : "Silme işlemi başarısız.");
@@ -289,9 +296,9 @@ export default function AdminAnnouncementsPage() {
                 <thead className="border-b border-zinc-200 bg-slate-50 text-xs uppercase tracking-wide text-slate-500 select-none">
                   <tr>
                     {sortBy === "manual" && <th className="w-12 px-4 py-3.5 text-center"></th>}
-                    <th className="px-6 py-3.5 font-semibold">Başlık</th>
-                    <th className="px-6 py-3.5 font-semibold">Tarih</th>
-                    <th className="px-6 py-3.5 font-semibold">İşlemler</th>
+                    <th className="w-3/5 px-6 py-3.5 font-semibold">Başlık</th>
+                    <th className="w-1/4 px-6 py-3.5 font-semibold whitespace-nowrap">Tarih</th>
+                    <th className="px-6 py-3.5 font-semibold whitespace-nowrap">İşlemler</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-zinc-100">
@@ -322,8 +329,8 @@ export default function AdminAnnouncementsPage() {
                             <GripVertical className="mx-auto size-4 text-slate-400 hover:text-red-600 transition-colors" />
                           </td>
                         )}
-                        <td className="px-6 py-3.5 font-medium text-zinc-900 align-middle">{item.title}</td>
-                        <td className="px-6 py-3.5 text-slate-600 whitespace-nowrap align-middle">{formatTurkishDate(item.date) || "—"}</td>
+                        <td className="w-3/5 px-6 py-3.5 font-medium text-zinc-900 align-middle">{item.title}</td>
+                        <td className="w-1/4 px-6 py-3.5 text-slate-600 whitespace-nowrap align-middle">{formatTurkishDate(item.date) || "—"}</td>
                         <td className="px-6 py-3.5 whitespace-nowrap align-middle">
                           <div className="flex items-center gap-2">
                             <Link
