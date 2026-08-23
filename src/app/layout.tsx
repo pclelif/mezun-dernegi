@@ -7,6 +7,9 @@ import { getSiteContent } from "@/lib/supabase/queries";
 import "./globals.css";
 
 export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
   colorScheme: "only light",
   themeColor: "#ffffff",
 };
@@ -22,11 +25,11 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   const [brand, contact, home] = await Promise.all([
-    getSiteContent("marka", { logo_url: "/mezunderlogo.jpg", favicon_url: "/logo-dernek.svg" }),
+    getSiteContent("marka", { logo_url: "/logo-dernek.jpg", favicon_url: "/logo-dernek.svg" }),
     getSiteContent("iletisim", { address: "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420 Çankaya/Ankara", email: "kaaflmezunder@gmail.com", instagram_url: "https://www.instagram.com/kaaflmezunder", linkedin_url: "https://www.linkedin.com/company/ke%C3%A7i%C3%B6ren-vatansever-%C5%9Fehit-t%C3%BCmgeneral-aydo%C4%9Fan-ayd%C4%B1n-fen-lisesi-mezunlar-derne%C4%9Fi/" }),
-    getSiteContent("ana-sayfa", { logo_url: "/mezunderlogo.jpg" }),
+    getSiteContent("ana-sayfa", { logo_url: "/logo-dernek.jpg" }),
   ]);
-  const logoUrl = home.logo_url || brand.logo_url || "/mezunderlogo.jpg";
+  const logoUrl = home.logo_url || brand.logo_url || "/logo-dernek.jpg";
   return (
     <html lang="tr" data-scroll-behavior="smooth" className="light" style={{ colorScheme: "only light" }}>
       <head>

@@ -13,6 +13,8 @@
     color-scheme: only light !important;
     forced-color-adjust: none !important;
     -webkit-forced-color-adjust: none !important;
+    overscroll-behavior: none;
+    overscroll-behavior-y: none;
   }
   * {
     box-sizing: border-box;
@@ -24,6 +26,7 @@
     color-scheme: only light !important;
     background-color: #ffffff !important;
     color: #000000 !important;
+    overscroll-behavior: none;
     overscroll-behavior-y: none;
   }
   body {
@@ -33,6 +36,7 @@
     font-family: Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
     color-scheme: only light !important;
+    overscroll-behavior: none;
     overscroll-behavior-y: none;
   }
 
