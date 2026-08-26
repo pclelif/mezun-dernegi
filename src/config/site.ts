@@ -13,7 +13,7 @@ export const siteConfig = {
   name: associationName,
   shortName: associationShortName,
   url: siteUrl,
-  ogImage: `${siteUrl}/images/og-image.jpg?v=13`,
+  ogImage: `${siteUrl}/images/og-image.jpg?v=14`,
   logoUrl: `${siteUrl}/logo-dernek.jpg`,
   faviconUrl: `${siteUrl}/logo-dernek.svg`,
   description: associationDescription,

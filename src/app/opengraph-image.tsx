@@ -93,7 +93,7 @@ export default async function OpenGraphImage() {
         {/* Top spacing */}
         <div style={{ height: "30px" }} />
 
-        {/* Center Content: Larger Logo + 3-line typography */}
+        {/* Center Content: Borderless Natural Logo + 3-line typography */}
         <div
           style={{
             display: "flex",
@@ -110,13 +110,12 @@ export default async function OpenGraphImage() {
               src={logoBase64}
               alt="Dernek Logosu"
               style={{
-                width: "195px",
-                height: "195px",
+                width: "190px",
+                height: "190px",
                 borderRadius: "50%",
-                boxShadow: "0 16px 40px rgba(0, 0, 0, 0.22)",
-                border: "5px solid #ffffff",
                 marginBottom: "20px",
                 objectFit: "cover",
+                boxShadow: "0 8px 24px rgba(0, 0, 0, 0.12)",
               }}
             />
           ) : (
@@ -133,7 +132,6 @@ export default async function OpenGraphImage() {
                 fontSize: "52px",
                 fontWeight: 700,
                 marginBottom: "20px",
-                border: "5px solid #ffffff",
               }}
             >
               KAAFL
@@ -166,13 +164,13 @@ export default async function OpenGraphImage() {
           </h1>
         </div>
 
-        {/* Bottom clean red domain badge with identical Inter Bold typography */}
+        {/* Bottom clean borderless red domain badge */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            paddingBottom: "24px",
+            paddingBottom: "26px",
           }}
         >
           <div
@@ -181,9 +179,8 @@ export default async function OpenGraphImage() {
               alignItems: "center",
               justifyContent: "center",
               background: brandRed,
-              padding: "8px 28px",
+              padding: "10px 30px",
               borderRadius: "9999px",
-              border: "2px solid #ffffff",
             }}
           >
             <span
