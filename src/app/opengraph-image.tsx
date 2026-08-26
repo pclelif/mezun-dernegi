@@ -166,7 +166,7 @@ export default async function OpenGraphImage() {
           </h1>
         </div>
 
-        {/* Bottom clean red domain badge with white text */}
+        {/* Bottom clean red domain badge with identical Inter Bold typography */}
         <div
           style={{
             display: "flex",
@@ -175,22 +175,31 @@ export default async function OpenGraphImage() {
             paddingBottom: "24px",
           }}
         >
-          <span
+          <div
             style={{
-              fontSize: "20px",
-              fontWeight: 700,
-              color: "#ffffff",
-              letterSpacing: "1.2px",
-              fontFamily: "Inter",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
               background: brandRed,
-              padding: "8px 24px",
+              padding: "8px 28px",
               borderRadius: "9999px",
               boxShadow: "0 4px 15px rgba(236, 28, 36, 0.35)",
               border: "2px solid #ffffff",
             }}
           >
-            www.kaaflmezunder.org.tr
-          </span>
+            <span
+              style={{
+                fontSize: "22px",
+                fontWeight: 700,
+                color: "#ffffff",
+                letterSpacing: "-0.3px",
+                fontFamily: "Inter",
+                lineHeight: 1,
+              }}
+            >
+              www.kaaflmezunder.org.tr
+            </span>
+          </div>
         </div>
       </div>
     ),
