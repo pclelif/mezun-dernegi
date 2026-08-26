@@ -131,20 +131,36 @@ export default async function DernekUyeligiPage() {
               iban={dues.iban}
               paymentNote={dues.payment_note}
             />
-
-            <p className="mt-6 rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4 text-sm leading-6 text-zinc-700">
-              Giriş ücreti ve girdiğiniz döneme ait üyelik aidatı ödemesinin banka dekontunu, üyelik
-              formunun ıslak imzalı halini ve adli sicil kaydını ayrı ayrı PDF dosyaları olarak
-              belirtilen e-posta adresine gönderebilir veya belgeleri derneğimize elden
-              ulaştırabilirsiniz.
-            </p>
           </Step>
 
-          <Step step={3} title="Başvurunuzu Tamamlayın" isLast>
+          <Step step={3} title="Belgelerinizi İletin">
             <p className="mt-4 text-base leading-7 text-slate-600">
-              Üyelik formunuzu doldurup gerekli ödeme ve belgeleri ilettikten sonra başvurunuz
+              Üyelik formunun ıslak imzalı hâlini, giriş ücreti ile girdiğiniz döneme ait üyelik
+              aidatı ödemesinin banka dekontunu ve{" "}
+              <strong className="font-semibold text-zinc-900">adli sicil kaydını</strong> ayrı ayrı
+              PDF dosyaları olarak belirtilen e-posta adresine gönderebilir veya belgeleri
+              derneğimize elden ulaştırabilirsiniz.
+            </p>
+
+            <div className="mt-6 rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4 text-sm leading-6 text-zinc-700">
+              <p>
+                e-Devlet üzerinden adli sicil kaydınızı oluştururken “Belgenin Verileceği Kurum”
+                alanında “Resmi Kurum” seçeneğini seçiniz.
+              </p>
+              <p className="mt-2">
+                Kurum Adı:{" "}
+                <span className="font-semibold text-black break-words">
+                  {associationName}
+                </span>
+              </p>
+            </div>
+          </Step>
+
+          <Step step={4} title="Başvurunuzu Tamamlayın" isLast>
+            <p className="mt-4 text-base leading-7 text-slate-600">
+              Üyelik formunuzu doldurup gerekli belgeleri ve ödemeyi ilettikten sonra başvurunuz
               tamamlanacaktır. Başvurunuz dernek yönetimi tarafından incelendikten sonra üyelik
-              durumunuzla ilgili bilgilendirme yapılacaktır.
+              durumunuzla ilgili tarafınıza bilgilendirme yapılacaktır.
             </p>
           </Step>
         </ol>

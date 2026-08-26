@@ -92,7 +92,7 @@ export default async function AidatVeBagisPage() {
           <p className="mt-4 text-sm leading-6 text-zinc-700">
             {content.donation || (
               <>
-                Derneğimize ve okulumuz öğrencilerine destek olmak için aynı IBAN numarasına{" "}
+                Derneğimize destek olmak için aynı IBAN numarasına{" "}
                 <strong className="font-semibold text-zinc-900">“Bağış”</strong> açıklaması ile
                 dilediğiniz tutarda katkıda bulunabilirsiniz.
               </>
