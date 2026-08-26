@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
@@ -10,6 +12,27 @@ export const size = {
 export const contentType = "image/png";
 
 export default async function OpenGraphImage() {
+  const heroPath = path.join(process.cwd(), "public", "hero-bg.jpg");
+  const logoPath = path.join(process.cwd(), "public", "logo-dernek.jpg");
+
+  let heroBase64 = "";
+  try {
+    if (fs.existsSync(heroPath)) {
+      heroBase64 = `data:image/jpeg;base64,${fs.readFileSync(heroPath).toString("base64")}`;
+    }
+  } catch {
+    heroBase64 = "";
+  }
+
+  let logoBase64 = "";
+  try {
+    if (fs.existsSync(logoPath)) {
+      logoBase64 = `data:image/jpeg;base64,${fs.readFileSync(logoPath).toString("base64")}`;
+    }
+  } catch {
+    logoBase64 = "";
+  }
+
   return new ImageResponse(
     (
       <div
@@ -19,164 +42,163 @@ export default async function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          padding: "60px 70px",
-          background: "linear-gradient(135deg, #18181b 0%, #09090b 100%)",
-          color: "#ffffff",
-          fontFamily: "sans-serif",
+          alignItems: "center",
           position: "relative",
+          backgroundColor: "#0a0b10",
+          overflow: "hidden",
+          fontFamily: "sans-serif",
         }}
       >
-        {/* Subtle decorative background circle */}
+        {/* Background Image: School Photo */}
+        {heroBase64 ? (
+          <img
+            src={heroBase64}
+            alt="Okul Binası"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              opacity: 0.28,
+            }}
+          />
+        ) : null}
+
+        {/* Gradient Overlay for elegance & high contrast legibility */}
         <div
           style={{
             position: "absolute",
-            top: "-150px",
-            right: "-150px",
-            width: "550px",
-            height: "550px",
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(236, 28, 36, 0.25) 0%, rgba(236, 28, 36, 0) 70%)",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            background:
+              "linear-gradient(135deg, rgba(80, 8, 16, 0.90) 0%, rgba(18, 14, 26, 0.93) 45%, rgba(8, 12, 24, 0.96) 100%)",
           }}
         />
 
-        {/* Top bar with Badge and Short name */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "16px",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "60px",
-                height: "60px",
-                borderRadius: "50%",
-                background: "#ec1c24",
-                color: "#ffffff",
-                fontSize: "24px",
-                fontWeight: 900,
-                letterSpacing: "1px",
-              }}
-            >
-              K
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-              }}
-            >
-              <span style={{ fontSize: "20px", fontWeight: 800, letterSpacing: "2px", color: "#ec1c24" }}>
-                KAAFL
-              </span>
-              <span style={{ fontSize: "14px", fontWeight: 600, color: "#a1a1aa", textTransform: "uppercase", letterSpacing: "1px" }}>
-                Mezunları Derneği
-              </span>
-            </div>
-          </div>
+        {/* Subtle decorative glow behind logo */}
+        <div
+          style={{
+            position: "absolute",
+            top: "90px",
+            left: "450px",
+            width: "300px",
+            height: "300px",
+            borderRadius: "50%",
+            background: "radial-gradient(circle, rgba(236, 28, 36, 0.35) 0%, rgba(236, 28, 36, 0) 70%)",
+          }}
+        />
 
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              padding: "8px 20px",
-              background: "rgba(255, 255, 255, 0.08)",
-              borderRadius: "9999px",
-              border: "1px solid rgba(255, 255, 255, 0.15)",
-              fontSize: "15px",
-              fontWeight: 600,
-              color: "#e4e4e7",
-              letterSpacing: "0.5px",
-            }}
-          >
-            Resmî Web Sitesi
-          </div>
-        </div>
+        {/* Top spacer */}
+        <div style={{ height: "40px" }} />
 
-        {/* Center Content: Long official title & description */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "20px", maxWidth: "1000px" }}>
-          <div
-            style={{
-              display: "flex",
-              width: "80px",
-              height: "4px",
-              background: "#ec1c24",
-              borderRadius: "2px",
-            }}
-          />
-          <h1
-            style={{
-              fontSize: "44px",
-              fontWeight: 900,
-              lineHeight: 1.2,
-              letterSpacing: "-0.5px",
-              color: "#ffffff",
-              margin: 0,
-              display: "flex",
-              flexDirection: "column",
-            }}
-          >
-            <span>Keçiören Vatansever Şehit Tümgeneral</span>
-            <span style={{ color: "#ffffff" }}>Aydoğan Aydın Fen Lisesi</span>
-            <span style={{ color: "#ec1c24" }}>Mezunları Derneği</span>
-          </h1>
-
-          <p
-            style={{
-              fontSize: "20px",
-              lineHeight: 1.5,
-              color: "#d4d4d8",
-              margin: 0,
-            }}
-          >
-            Bir okul. Binlerce hikâye. Tek bir aile. Mezunlarımızı bir araya getiren dayanışma ve iletişim platformu.
-          </p>
-        </div>
-
-        {/* Bottom bar: Website URL and Established */}
+        {/* Center Content: Logo + Official Association Name */}
         <div
           style={{
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
-            justifyContent: "space-between",
-            borderTop: "1px solid rgba(255, 255, 255, 0.12)",
-            paddingTop: "24px",
+            justifyContent: "center",
+            textAlign: "center",
+            padding: "0 70px",
           }}
         >
+          {/* Logo */}
+          {logoBase64 ? (
+            <img
+              src={logoBase64}
+              alt="Dernek Logosu"
+              style={{
+                width: "165px",
+                height: "165px",
+                borderRadius: "50%",
+                boxShadow: "0 12px 35px rgba(0, 0, 0, 0.7)",
+                border: "4px solid rgba(255, 255, 255, 0.95)",
+                marginBottom: "32px",
+                objectFit: "cover",
+              }}
+            />
+          ) : (
+            <div
+              style={{
+                width: "150px",
+                height: "150px",
+                borderRadius: "50%",
+                background: "#ec1c24",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#ffffff",
+                fontSize: "44px",
+                fontWeight: 900,
+                marginBottom: "32px",
+                border: "4px solid #ffffff",
+              }}
+            >
+              KAAFL
+            </div>
+          )}
+
+          {/* Association Full Official Name */}
+          <h1
+            style={{
+              fontSize: "36px",
+              fontWeight: 800,
+              lineHeight: 1.35,
+              color: "#ffffff",
+              margin: 0,
+              maxWidth: "960px",
+              textAlign: "center",
+              letterSpacing: "-0.3px",
+              textShadow: "0 3px 12px rgba(0, 0, 0, 0.8)",
+            }}
+          >
+            Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği
+          </h1>
+        </div>
+
+        {/* Bottom Banner Bar with Website URL & Top Accent Line */}
+        <div
+          style={{
+            width: "100%",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          {/* Accent Line */}
           <div
             style={{
+              width: "100%",
+              height: "2px",
+              background: "linear-gradient(90deg, transparent 0%, #ec1c24 30%, #ec1c24 70%, transparent 100%)",
+            }}
+          />
+
+          {/* Red banner stripe */}
+          <div
+            style={{
+              width: "100%",
+              height: "48px",
+              background: "rgba(180, 15, 25, 0.80)",
               display: "flex",
               alignItems: "center",
-              fontSize: "18px",
-              fontWeight: 700,
-              color: "#ec1c24",
-              letterSpacing: "0.5px",
+              justifyContent: "center",
             }}
           >
-            kaaflmezunder.org.tr
-          </div>
-
-          <div
-            style={{
-              display: "flex",
-              gap: "24px",
-              fontSize: "15px",
-              fontWeight: 600,
-              color: "#a1a1aa",
-            }}
-          >
-            <span>Duyurular</span>
-            <span>•</span>
-            <span>Etkinlikler</span>
-            <span>•</span>
-            <span>Üyelik</span>
-            <span>•</span>
-            <span>Dayanışma</span>
+            <span
+              style={{
+                fontSize: "20px",
+                fontWeight: 700,
+                color: "#ffffff",
+                letterSpacing: "1.2px",
+              }}
+            >
+              www.kaaflmezunder.org.tr
+            </span>
           </div>
         </div>
       </div>

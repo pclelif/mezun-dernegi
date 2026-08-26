@@ -31,7 +31,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${associationName} | ${associationShortName}`,
+    default: `${associationName} | KAAFL Mezunları Derneği`,
     template: `%s | ${associationName}`,
   },
   description: associationDescription,
@@ -59,7 +59,7 @@ export const metadata: Metadata = {
     locale: "tr_TR",
     url: siteUrl,
     siteName: associationName,
-    title: `${associationName} | ${associationShortName}`,
+    title: `${associationName} | KAAFL Mezunları Derneği`,
     description: associationDescription,
     images: [
       {
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: `${associationName} | ${associationShortName}`,
+    title: `${associationName} | KAAFL Mezunları Derneği`,
     description: associationDescription,
     images: ["/images/og-image.jpg"],
   },
