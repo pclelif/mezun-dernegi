@@ -13,9 +13,9 @@ export const siteConfig = {
   name: associationName,
   shortName: associationShortName,
   url: siteUrl,
-  ogImage: `${siteUrl}/images/og-image.jpg?v=14`,
-  logoUrl: `${siteUrl}/logo-dernek.jpg`,
-  faviconUrl: `${siteUrl}/logo-dernek.svg`,
+  ogImage: `${siteUrl}/images/og-image.jpg?v=15`,
+  logoUrl: `${siteUrl}/logo-dernek.png`,
+  faviconUrl: `${siteUrl}/logo-dernek.png`,
   description: associationDescription,
   address: {
     streetAddress: "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33",

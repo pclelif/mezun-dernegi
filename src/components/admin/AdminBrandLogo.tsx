@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 export function AdminBrandLogo({ compact = false }: { compact?: boolean }) {
-  const [url, setUrl] = useState("/logo-dernek.jpg");
+  const [url, setUrl] = useState("/logo-dernek.png");
 
   useEffect(() => {
     let active = true;
@@ -16,7 +16,7 @@ export function AdminBrandLogo({ compact = false }: { compact?: boolean }) {
       if (!active) return;
       const homeLogo = (homeRes.data?.content as { logo_url?: string } | null)?.logo_url;
       const brandLogo = (brandRes.data?.content as { logo_url?: string } | null)?.logo_url;
-      const validUrl = (homeLogo && homeLogo.trim()) || (brandLogo && brandLogo.trim()) || "/logo-dernek.jpg";
+      const validUrl = (homeLogo && homeLogo.trim()) || (brandLogo && brandLogo.trim()) || "/logo-dernek.png";
       setUrl(validUrl);
     });
 
@@ -29,15 +29,15 @@ export function AdminBrandLogo({ compact = false }: { compact?: boolean }) {
     <div
       className={
         compact
-          ? "size-9 shrink-0 overflow-hidden rounded-full bg-white p-0.5 shadow-sm ring-1 ring-white/20"
-          : "mb-3 size-16 shrink-0 overflow-hidden rounded-full bg-white p-0.5 shadow-md ring-2 ring-white/30"
+          ? "size-9 shrink-0 overflow-hidden rounded-full"
+          : "mb-3 size-16 shrink-0 overflow-hidden rounded-full"
       }
     >
       <img
         src={url}
         alt="Dernek logosu"
-        onError={() => setUrl("/logo-dernek.jpg")}
-        className="size-full rounded-full object-cover"
+        onError={() => setUrl("/logo-dernek.png")}
+        className="size-full rounded-full object-contain"
       />
     </div>
   );

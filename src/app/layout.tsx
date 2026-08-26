@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     description: associationDescription,
     images: [
       {
-        url: "/images/og-image.jpg?v=14",
+        url: "/images/og-image.jpg?v=15",
         width: 1200,
         height: 630,
         type: "image/jpeg",
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${associationName} | KAAFL Mezunları Derneği`,
     description: associationDescription,
-    images: ["/images/og-image.jpg?v=14"],
+    images: ["/images/og-image.jpg?v=15"],
   },
   robots: {
     index: true,
@@ -91,9 +91,11 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico" },
-      { url: "/logo-dernek.svg", type: "image/svg+xml" },
+      { url: "/logo-dernek.png", type: "image/png" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
     ],
-    apple: "/logo-dernek.jpg",
+    apple: "/apple-touch-icon.png",
   },
 };
 
@@ -102,8 +104,8 @@ export default async function RootLayout({
 }: Readonly<{ children: ReactNode }>) {
   const [brand, contact, home] = await Promise.all([
     getSiteContent("marka", {
-      logo_url: "/logo-dernek.jpg",
-      favicon_url: "/logo-dernek.svg",
+      logo_url: "/logo-dernek.png",
+      favicon_url: "/logo-dernek.png",
     }),
     getSiteContent("iletisim", {
       address: "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420 Çankaya/Ankara",
@@ -112,10 +114,10 @@ export default async function RootLayout({
       linkedin_url:
         "https://www.linkedin.com/company/ke%C3%A7i%C3%B6ren-vatansever-%C5%9Fehit-t%C3%BCmgeneral-aydo%C4%9Fan-ayd%C4%B1n-fen-lisesi-mezunlar-derne%C4%9Fi/",
     }),
-    getSiteContent("ana-sayfa", { logo_url: "/logo-dernek.jpg" }),
+    getSiteContent("ana-sayfa", { logo_url: "/logo-dernek.png" }),
   ]);
 
-  const logoUrl = home.logo_url || brand.logo_url || "/logo-dernek.jpg";
+  const logoUrl = home.logo_url || brand.logo_url || "/logo-dernek.png";
 
   return (
     <html

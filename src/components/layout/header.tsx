@@ -16,7 +16,7 @@ function labelClass(active: boolean, underline = true) {
   return `inline-block w-fit justify-self-center border-b-2 pb-1 ${active && underline ? "border-red-600" : "border-transparent"}`;
 }
 
-export function Header({ logoUrl = "/logo-dernek.jpg", email = "kaaflmezunder@gmail.com", instagramUrl = "https://www.instagram.com/kaaflmezunder", linkedinUrl = "" }: { logoUrl?: string; email?: string; instagramUrl?: string; linkedinUrl?: string }) {
+export function Header({ logoUrl = "/logo-dernek.png", email = "kaaflmezunder@gmail.com", instagramUrl = "https://www.instagram.com/kaaflmezunder", linkedinUrl = "" }: { logoUrl?: string; email?: string; instagramUrl?: string; linkedinUrl?: string }) {
   const [openDesktopMenu, setOpenDesktopMenu] = useState<string | null>(null);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const [openMobileMenu, setOpenMobileMenu] = useState<string | null>(null);
@@ -89,10 +89,10 @@ export function Header({ logoUrl = "/logo-dernek.jpg", email = "kaaflmezunder@gm
           <Image
             src={logoUrl}
             alt=""
-            width={96}
-            height={96}
+            width={80}
+            height={80}
             priority
-            className="size-[4.5rem] shrink-0 rounded-full bg-white object-contain ring-2 ring-white/90 sm:size-20 xl:size-[5.5rem]"
+            className="size-14 shrink-0 rounded-full object-contain sm:size-16 xl:size-[4.5rem]"
           />
           <span className="min-w-0 text-[13px] font-bold leading-snug tracking-tight text-zinc-900 sm:text-[15px]">
             <span className="block sm:whitespace-nowrap">Keçiören Vatansever Şehit Tümgeneral</span>

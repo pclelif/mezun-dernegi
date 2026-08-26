@@ -13,7 +13,7 @@ export const contentType = "image/png";
 
 export default async function OpenGraphImage() {
   const heroPath = path.join(process.cwd(), "public", "hero-bg.jpg");
-  const logoPath = path.join(process.cwd(), "public", "logo-dernek.jpg");
+  const logoPath = path.join(process.cwd(), "public", "logo-dernek.png");
   const fontPath = path.join(process.cwd(), "public", "fonts", "Inter-Bold.ttf");
 
   let heroBase64 = "";
@@ -28,7 +28,7 @@ export default async function OpenGraphImage() {
   let logoBase64 = "";
   try {
     if (fs.existsSync(logoPath)) {
-      logoBase64 = `data:image/jpeg;base64,${fs.readFileSync(logoPath).toString("base64")}`;
+      logoBase64 = `data:image/png;base64,${fs.readFileSync(logoPath).toString("base64")}`;
     }
   } catch {
     logoBase64 = "";
