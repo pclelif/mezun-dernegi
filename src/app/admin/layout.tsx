@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { AdminBrandLogo } from "@/components/admin/AdminBrandLogo";
 import { LogoutButton } from "@/components/admin/LogoutButton";
+import { associationName } from "@/config/site";
 
 const navItems: { href: string; label: string; icon: LucideIcon }[] = [
   { href: "/admin", label: "Genel Bakış", icon: LayoutDashboard },
@@ -52,8 +53,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <AdminBrandLogo compact />
           <div className="min-w-0 flex-1">
             <p className="text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#ec1c24]">Yönetim Paneli</p>
-            <p className="mt-0.5 text-xs font-semibold leading-snug text-white line-clamp-2">
-              Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği
+            <p className="mt-0.5 text-xs font-bold leading-snug tracking-tight text-white line-clamp-2">
+              {associationName}
             </p>
           </div>
         </div>
@@ -118,7 +119,7 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
           <div className="px-5 py-5">
             <AdminBrandLogo />
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-[#ec1c24]">Yönetim Paneli</p>
-            <p className="mt-2 max-w-52 text-xs font-semibold leading-5 text-white">Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği</p>
+            <p className="mt-2 max-w-52 text-xs font-bold leading-snug tracking-tight text-white">{associationName}</p>
           </div>
 
           <nav className="flex flex-1 flex-col justify-between px-3 pb-6" aria-label="Admin Masaüstü Menü">

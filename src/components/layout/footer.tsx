@@ -19,7 +19,7 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Maha
         <div className="w-full md:col-span-2 lg:col-span-1">
           <Link href="/" className="inline-flex items-center gap-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`${associationName} ana sayfa`}>
             <Image src={logoUrl} alt="" width={56} height={56} className="size-14 shrink-0 rounded-full bg-white object-cover" />
-            <span className="max-w-lg text-sm font-semibold leading-6 text-zinc-100 lg:max-w-[240px]">{associationName}</span>
+            <span className="max-w-lg text-sm font-bold leading-snug tracking-tight text-zinc-100 lg:max-w-[240px]">{associationName}</span>
           </Link>
         </div>
 

@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import aydoganAydinPortrait from "./aydogan-aydin.jpg";
 
 export const metadata: Metadata = {
   title: "Vatansever Şehit Tümgeneral Aydoğan Aydın Kimdir?",
@@ -53,8 +52,10 @@ export default function AydoganAydinPage() {
 
             <figure className="mt-auto w-full overflow-hidden rounded-sm border border-zinc-800 bg-zinc-900 p-2 shadow-xl shadow-black/20">
               <Image
-                src={aydoganAydinPortrait}
+                src="/images/aydogan-aydin.jpg"
                 alt="Vatansever Şehit Tümgeneral Aydoğan Aydın askerî üniformasıyla selam verirken"
+                width={548}
+                height={446}
                 className="aspect-[548/446] h-auto w-full object-cover grayscale"
                 sizes="(max-width: 1024px) 100vw, 22rem"
                 priority
