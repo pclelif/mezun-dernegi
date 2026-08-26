@@ -188,13 +188,27 @@ export async function getFaqs(category?: DbFaq["category"]) {
   }, fallback);
 }
 
+function normalizeMezunlarDernegi<T extends Record<string, string>>(obj: T): T {
+  const result: Record<string, string> = {};
+  for (const [key, val] of Object.entries(obj)) {
+    if (typeof val === "string") {
+      result[key] = val.replace(/Mezunları Derneği/g, "Mezunlar Derneği");
+    } else {
+      result[key] = val;
+    }
+  }
+  return result as T;
+}
+
 export async function getSiteContent<T extends Record<string, string>>(section: string, defaults: T): Promise<T> {
-  if (!isSupabaseConfigured()) return defaults;
+  const normalizedDefaults = normalizeMezunlarDernegi(defaults);
+  if (!isSupabaseConfigured()) return normalizedDefaults;
   return withTimeout(async () => {
     const { data, error } = await createServerAnonClient().from("site_content").select("content").eq("section", section).maybeSingle();
-    if (error || !data) return defaults;
-    return { ...defaults, ...((data?.content as Partial<T> | null) ?? {}) };
-  }, defaults);
+    if (error || !data) return normalizedDefaults;
+    const merged = { ...normalizedDefaults, ...((data?.content as Partial<T> | null) ?? {}) };
+    return normalizeMezunlarDernegi(merged);
+  }, normalizedDefaults);
 }
 
 export function mapEventToCardProps(event: DbEvent) {

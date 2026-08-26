@@ -24,7 +24,7 @@ export function HomeHero({ title, description, imageUrl }: { title: string; desc
       {/* key, rotalar arasında dönüldüğünde React'i remount'a zorlar; CSS animasyonu baştan oynar. */}
       <div key={pathname} className="mx-auto flex max-w-4xl flex-col items-center text-center">
         <h1 className="animate-fade-in-up text-balance text-2xl font-bold tracking-tight text-zinc-950 sm:text-3xl md:text-4xl lg:text-5xl">
-          {title}
+          {title.replace(/Mezunları Derneği/gi, "Mezunlar Derneği")}
         </h1>
         <p className="animate-fade-in-up animation-delay-150 mt-5 max-w-3xl text-center text-base leading-7 text-slate-600 md:text-lg md:leading-8">
           {description.split("\n").map((line) => <span key={line} className="block">{line}</span>)}

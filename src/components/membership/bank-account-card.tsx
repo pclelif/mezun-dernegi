@@ -23,7 +23,7 @@ export function BankAccountCard({ className = "", bankName = "Ziraat Bankası", 
         </div>
         <div>
           <dt className="text-sm font-semibold text-slate-500">Hesap Adı</dt>
-          <dd className="mt-1 text-sm leading-6 text-zinc-900">{accountName}</dd>
+          <dd className="mt-1 text-sm leading-6 text-zinc-900">{(accountName || associationName).replace(/Mezunları Derneği/gi, "Mezunlar Derneği")}</dd>
         </div>
         <div className="rounded-lg border border-zinc-200 bg-slate-50 p-4 md:p-5">
           <dt className="text-sm font-semibold text-slate-500">IBAN</dt>

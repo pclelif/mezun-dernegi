@@ -13,6 +13,27 @@ function isSupabaseConfigured() {
   return true;
 }
 
+function getTurkishAuthErrorMessage(msg?: string): string {
+  if (!msg) return "Geçersiz e-posta veya şifre girdiniz.";
+  const lower = msg.toLowerCase();
+  if (lower.includes("invalid login credentials") || lower.includes("invalid_grant") || lower.includes("invalid credentials")) {
+    return "Geçersiz e-posta veya şifre girdiniz.";
+  }
+  if (lower.includes("email not confirmed")) {
+    return "E-posta adresi henüz doğrulanmamış.";
+  }
+  if (lower.includes("user not found")) {
+    return "Bu e-posta adresine ait bir kullanıcı bulunamadı.";
+  }
+  if (lower.includes("too many requests") || lower.includes("rate limit") || lower.includes("exceeded")) {
+    return "Çok fazla başarısız deneme yapıldı. Lütfen biraz bekleyip tekrar deneyin.";
+  }
+  if (lower.includes("network") || lower.includes("fetch") || lower.includes("timeout")) {
+    return "Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edin.";
+  }
+  return "Geçersiz e-posta veya şifre girdiniz.";
+}
+
 export default function AdminLoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -53,18 +74,22 @@ export default function AdminLoginPage() {
           password,
         });
 
-        if (signInError) throw signInError;
+        if (signInError) {
+          setError(getTurkishAuthErrorMessage(signInError.message));
+          setLoading(false);
+          return;
+        }
         router.replace("/admin");
         router.refresh();
         return;
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Giriş yapılamadı.");
+        setError(getTurkishAuthErrorMessage(err instanceof Error ? err.message : undefined));
         setLoading(false);
         return;
       }
     }
 
-    setError("Giriş yapılamadı.");
+    setError("Geçersiz e-posta veya şifre.");
     setLoading(false);
   }
 
