@@ -14,7 +14,7 @@ export async function HomeGallerySection() {
   const items: GalleryShowcaseItem[] = images.slice(0, 12).map((image) => ({
     id: image.id,
     title: "",
-    href: "/galeri",
+    href: "/duyurular-ve-etkinlikler/galeri",
     imageUrl: image.image_url,
   }));
 

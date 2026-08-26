@@ -1,2 +1,5 @@
-import { ContentPage } from "@/components/shared/content-page";
-export default function Page() { return <ContentPage title="Üyelik Şartları" description="Üyelik koşulları ve başvuru süreci." />; }
+import { redirect } from "next/navigation";
+
+export default function Page() {
+  redirect("/uyelik/dernek-uyeligi");
+}

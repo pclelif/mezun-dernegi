@@ -204,7 +204,7 @@ export function mapEventToCardProps(event: DbEvent) {
     time: event.time || "—",
     location: event.location || "—",
     description: event.description || "",
-    href: `/etkinlikler/${event.slug}`,
+    href: `/duyurular-ve-etkinlikler/etkinlikler/${event.slug}`,
     status: (event.status === "past" ? "past" : "upcoming") as "upcoming" | "past",
     dateTime: event.date ?? undefined,
   };

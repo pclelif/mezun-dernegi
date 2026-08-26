@@ -1,19 +1,35 @@
 import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
+import type { Metadata } from "next";
 import type { ComponentType } from "react";
 import { ContactForm } from "@/components/forms/contact-form";
 import { InstagramIcon, LinkedinIcon } from "@/components/icons/social-icons";
+import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { ContentPage } from "@/components/shared/content-page";
 import { contentSections } from "@/config/content";
+import { associationName } from "@/config/site";
 import { getSiteContent } from "@/lib/supabase/queries";
 
 export const dynamic = "force-dynamic";
 
-export default async function Page() {
+export const metadata: Metadata = {
+  title: "İletişim",
+  description: `${associationName} iletişim bilgileri, dernek adresi, e-posta, harita konumu ve iletişim formu.`,
+  alternates: {
+    canonical: "/iletisim",
+  },
+  openGraph: {
+    title: `İletişim | ${associationName}`,
+    description: `${associationName} iletişim bilgileri, dernek adresi, e-posta, harita konumu ve iletişim formu.`,
+    url: "/iletisim",
+  },
+};
+
+export default async function ContactPage() {
   const content = await getSiteContent("iletisim", contentSections.iletisim.defaults);
   const mapQuery = content.map_location || content.address;
   const mapEmbedUrl = mapQuery ? `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed` : "";
   const mapLink = content.map_url || (mapQuery ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}` : "");
-  
+
   type IconComp = ComponentType<{ className?: string }>;
 
   const contactRows = [
@@ -26,84 +42,91 @@ export default async function Page() {
   ].filter((item): item is { label: string; value: string; href: string; Icon: IconComp } => item !== null);
 
   return (
-    <ContentPage
-      eyebrow="BAĞIMIZ HEP GÜÇLÜ KALSIN"
-      title="İletişim"
-      description="Sorularınız, görüşleriniz ve önerileriniz için bize ulaşabilirsiniz."
-      titleClassName="panel-title--compact"
-      descriptionClassName="panel-copy--compact"
-    >
-      <div className="grid gap-6 lg:grid-cols-[minmax(19rem,0.85fr)_minmax(0,1.25fr)]">
-        <section className="flex rounded-2xl border border-zinc-200 border-l-4 border-l-[var(--color-accent)] bg-[var(--color-white)] p-6 shadow-sm sm:p-8 lg:items-center lg:p-8" aria-label="İletişim bilgileri">
-          <div className="w-full space-y-7">
-            {contactRows.length ? (
-              contactRows.map(({ label, value, href, Icon }, index) => (
-                <div key={`${label}-${index}`} className="flex items-start gap-4">
-                  <Icon className="mt-0.5 size-6 shrink-0 text-[var(--color-accent)]" />
-                  <div className="min-w-0">
-                    <p className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink)]">{label}</p>
-                    {href ? (
-                      <a
-                        href={href}
-                        target={href.startsWith("http") ? "_blank" : undefined}
-                        rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
-                        className="mt-1 block touch-manipulation break-words whitespace-pre-line text-base font-normal leading-7 text-[var(--color-muted)] transition-colors hover:text-[var(--color-ink)] active:text-[var(--color-ink)]"
-                      >
-                        {value}
-                      </a>
-                    ) : (
-                      <p className="mt-1 whitespace-pre-line text-base leading-7 text-[var(--color-muted)]">{value}</p>
-                    )}
+    <>
+      <BreadcrumbJsonLd
+        items={[
+          { name: "İletişim", href: "/iletisim" },
+        ]}
+      />
+      <ContentPage
+        eyebrow="BAĞIMIZ HEP GÜÇLÜ KALSIN"
+        title="İletişim"
+        description="Sorularınız, görüşleriniz ve önerileriniz için bize ulaşabilirsiniz."
+        titleClassName="panel-title--compact"
+        descriptionClassName="panel-copy--compact"
+      >
+        <div className="grid gap-6 lg:grid-cols-[minmax(19rem,0.85fr)_minmax(0,1.25fr)]">
+          <section className="flex rounded-2xl border border-zinc-200 border-l-4 border-l-[var(--color-accent)] bg-[var(--color-white)] p-6 shadow-sm sm:p-8 lg:items-center lg:p-8" aria-label="İletişim bilgileri">
+            <div className="w-full space-y-7">
+              {contactRows.length ? (
+                contactRows.map(({ label, value, href, Icon }, index) => (
+                  <div key={`${label}-${index}`} className="flex items-start gap-4">
+                    <Icon className="mt-0.5 size-6 shrink-0 text-[var(--color-accent)]" />
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold uppercase tracking-wider text-[var(--color-ink)]">{label}</p>
+                      {href ? (
+                        <a
+                          href={href}
+                          target={href.startsWith("http") ? "_blank" : undefined}
+                          rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
+                          className="mt-1 block touch-manipulation break-words whitespace-pre-line text-base font-normal leading-7 text-[var(--color-muted)] transition-colors hover:text-[var(--color-ink)] active:text-[var(--color-ink)]"
+                        >
+                          {value}
+                        </a>
+                      ) : (
+                        <p className="mt-1 whitespace-pre-line text-base leading-7 text-[var(--color-muted)]">{value}</p>
+                      )}
+                    </div>
                   </div>
-                </div>
-              ))
-            ) : (
-              <p className="text-[var(--color-muted)]">İletişim bilgileri yakında eklenecek.</p>
-            )}
-          </div>
-        </section>
-
-        <section className="relative min-h-80 overflow-hidden rounded-2xl border border-zinc-200 bg-[var(--color-surface)] shadow-sm" aria-label="Harita">
-          {mapEmbedUrl ? (
-            <>
-              <iframe
-                src={mapEmbedUrl}
-                title="Dernek konumu"
-                className="absolute inset-0 size-full border-0"
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                allowFullScreen
-              />
-              {mapLink ? (
-                <a
-                  href={mapLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="absolute bottom-4 right-4 inline-flex touch-manipulation items-center gap-2 rounded-lg border border-zinc-200 bg-[var(--color-white)] px-4 py-2.5 text-sm font-semibold text-[var(--color-ink)] shadow-lg transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] active:border-[var(--color-accent)] active:text-[var(--color-accent)]"
-                >
-                  Google Maps’te Aç
-                  <ExternalLink className="size-4 text-[var(--color-accent)]" />
-                </a>
-              ) : null}
-            </>
-          ) : (
-            <div className="grid min-h-80 place-items-center p-8 text-center text-[var(--color-muted)]">
-              <div>
-                <MapPin className="mx-auto size-8 text-[var(--color-accent)]" />
-                <p className="mt-3">Harita konumu admin panelinden eklenebilir.</p>
-              </div>
+                ))
+              ) : (
+                <p className="text-[var(--color-muted)]">İletişim bilgileri yakında eklenecek.</p>
+              )}
             </div>
-          )}
-        </section>
-      </div>
+          </section>
 
-      <section className="mt-12" aria-labelledby="contact-form-title">
-        <div className="mb-6">
-          <h2 id="contact-form-title" className="text-2xl font-bold tracking-tight text-zinc-950 md:text-3xl">İletişim Formu</h2>
-          <p className="mt-2 text-slate-600">Formu doldurduğunuzda mesajınız doğrudan dernek yönetimine ulaşır.</p>
+          <section className="relative min-h-80 overflow-hidden rounded-2xl border border-zinc-200 bg-[var(--color-surface)] shadow-sm" aria-label="Harita">
+            {mapEmbedUrl ? (
+              <>
+                <iframe
+                  src={mapEmbedUrl}
+                  title="Dernek konumu"
+                  className="absolute inset-0 size-full border-0"
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  allowFullScreen
+                />
+                {mapLink ? (
+                  <a
+                    href={mapLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="absolute bottom-4 right-4 inline-flex touch-manipulation items-center gap-2 rounded-lg border border-zinc-200 bg-[var(--color-white)] px-4 py-2.5 text-sm font-semibold text-[var(--color-ink)] shadow-lg transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] active:border-[var(--color-accent)] active:text-[var(--color-accent)]"
+                  >
+                    Google Maps’te Aç
+                    <ExternalLink className="size-4 text-[var(--color-accent)]" />
+                  </a>
+                ) : null}
+              </>
+            ) : (
+              <div className="grid min-h-80 place-items-center p-8 text-center text-[var(--color-muted)]">
+                <div>
+                  <MapPin className="mx-auto size-8 text-[var(--color-accent)]" />
+                  <p className="mt-3">Harita konumu admin panelinden eklenebilir.</p>
+                </div>
+              </div>
+            )}
+          </section>
         </div>
-        <ContactForm />
-      </section>
-    </ContentPage>
+
+        <section className="mt-12" aria-labelledby="contact-form-title">
+          <div className="mb-6">
+            <h2 id="contact-form-title" className="text-2xl font-bold tracking-tight text-zinc-950 md:text-3xl">İletişim Formu</h2>
+            <p className="mt-2 text-slate-600">Formu doldurduğunuzda mesajınız doğrudan dernek yönetimine ulaşır.</p>
+          </div>
+          <ContactForm />
+        </section>
+      </ContentPage>
+    </>
   );
 }

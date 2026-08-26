@@ -34,7 +34,7 @@ export async function HomeAnnouncementsSection() {
               </div>
             </div>
           </div>
-          <Link className={`${textLinkClass} -translate-x-[1.5px] -translate-y-[2.5px]`} href="/duyurular">
+          <Link className={`${textLinkClass} -translate-x-[1.5px] -translate-y-[2.5px]`} href="/duyurular-ve-etkinlikler/duyurular">
             Tüm Duyurular <ArrowRight className="size-4 text-zinc-900" aria-hidden="true" />
           </Link>
         </div>
@@ -49,7 +49,7 @@ export async function HomeAnnouncementsSection() {
                 date={formatTurkishDate(announcement.date ?? announcement.created_at) || "Tarih belirtilmedi"}
                 dateTime={announcement.date ?? announcement.created_at}
                 summary={announcement.content || ""}
-                href={`/duyurular/${announcement.slug}?from=home`}
+                href={`/duyurular-ve-etkinlikler/duyurular/${announcement.slug}?from=home`}
               />
             ))}
           </div>

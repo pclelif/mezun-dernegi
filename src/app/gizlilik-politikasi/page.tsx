@@ -12,6 +12,9 @@ import { associationName } from "@/config/site";
 export const metadata: Metadata = {
   title: "Gizlilik Politikası",
   description: `${associationName} internet sitesi gizlilik politikası.`,
+  alternates: {
+    canonical: "/gizlilik-politikasi",
+  },
 };
 
 export default function PrivacyPolicyPage() {

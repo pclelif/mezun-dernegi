@@ -10,6 +10,9 @@ import { associationName } from "@/config/site";
 export const metadata: Metadata = {
   title: "KVKK Aydınlatma Metni",
   description: `${associationName} kişisel verilerin işlenmesine ilişkin aydınlatma metni.`,
+  alternates: {
+    canonical: "/kvkk",
+  },
 };
 
 export default function KvkkPage() {

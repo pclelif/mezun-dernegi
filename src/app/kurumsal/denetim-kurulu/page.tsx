@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
-export default function AuditBoardPage() {
-  redirect("/kurumsal/yonetim-ve-denetim-kurullari");
+export default function Page() {
+  redirect("/hakkimizda/yonetim-ve-denetim-kurulu");
 }

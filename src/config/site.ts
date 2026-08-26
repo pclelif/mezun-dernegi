@@ -2,4 +2,30 @@ export const schoolName = "Keçiören Vatansever Şehit Tümgeneral Aydoğan Ayd
 
 export const associationName = `${schoolName} Mezunları Derneği`;
 
-export const associationDescription = `${schoolName} mezunlarını bir araya getiren dayanışma ve iletişim platformu.`;
+export const associationShortName = "KAAFL";
+
+export const siteUrl = "https://kaaflmezunder.org.tr";
+
+export const associationDescription = `${associationName}'nin resmî web sitesi. Dernek, üyelik, duyurular, etkinlikler ve mezunlarımız hakkında bilgi alın.`;
+
+export const siteConfig = {
+  name: associationName,
+  shortName: associationShortName,
+  url: siteUrl,
+  ogImage: `${siteUrl}/images/og-image.png`,
+  logoUrl: `${siteUrl}/logo-dernek.jpg`,
+  faviconUrl: `${siteUrl}/logo-dernek.svg`,
+  description: associationDescription,
+  address: {
+    streetAddress: "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33",
+    postalCode: "06420",
+    addressLocality: "Çankaya",
+    addressRegion: "Ankara",
+    addressCountry: "TR",
+  },
+  contact: {
+    email: "kaaflmezunder@gmail.com",
+    instagram: "https://www.instagram.com/kaaflmezunder",
+    linkedin: "https://www.linkedin.com/company/ke%C3%A7i%C3%B6ren-vatansever-%C5%9Fehit-t%C3%BCmgeneral-aydo%C4%9Fan-ayd%C4%B1n-fen-lisesi-mezunlar-derne%C4%9Fi/",
+  },
+};

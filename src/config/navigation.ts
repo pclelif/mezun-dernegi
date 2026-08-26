@@ -5,36 +5,38 @@ export type NavigationItem = {
 };
 
 export const corporateNavigation: NavigationItem[] = [
-  { label: "Dernek Hakkında", href: "/kurumsal/hakkimizda" },
+  { label: "Dernek Hakkında", href: "/hakkimizda/dernek-hakkinda" },
   { label: "Aydoğan Aydın Kimdir?", href: "/hakkimizda/aydogan-aydin" },
-  { label: "Vizyon ve Misyon", href: "/kurumsal/vizyon-misyon" },
-  { label: "Başkanın Mesajı", href: "/kurumsal/baskanin-mesaji" },
-  { label: "Yönetim ve Denetim Kurulu", href: "/kurumsal/yonetim-ve-denetim-kurullari" },
-  { label: "Dernek Tüzüğü", href: "/kurumsal/tuzuk" },
+  { label: "Vizyon ve Misyon", href: "/hakkimizda/vizyon-ve-misyon" },
+  { label: "Başkanın Mesajı", href: "/hakkimizda/baskanin-mesaji" },
+  { label: "Yönetim ve Denetim Kurulu", href: "/hakkimizda/yonetim-ve-denetim-kurulu" },
+  { label: "Dernek Tüzüğü", href: "/hakkimizda/dernek-tuzugu" },
 ];
 
 export const newsAndEventsNavigation: NavigationItem[] = [
-  { label: "Duyurular", href: "/duyurular" },
-  { label: "Etkinlikler", href: "/etkinlikler" },
-  { label: "Galeri", href: "/galeri" },
+  { label: "Duyurular", href: "/duyurular-ve-etkinlikler/duyurular" },
+  { label: "Etkinlikler", href: "/duyurular-ve-etkinlikler/etkinlikler" },
+  { label: "Galeri", href: "/duyurular-ve-etkinlikler/galeri" },
 ];
 
 export const membershipNavigation: NavigationItem[] = [
-  { label: "Dernek Üyeliği", href: "/uyelik" },
-  { label: "Aidat ve Bağış", href: "/uyelik/aidat" },
+  { label: "Dernek Üyeliği", href: "/uyelik/dernek-uyeligi" },
+  { label: "Aidat ve Bağış", href: "/uyelik/aidat-ve-bagis" },
 ];
 
 export const footerLinks: NavigationItem[] = [
   ...corporateNavigation,
   ...newsAndEventsNavigation,
-  { label: "Sıkça Sorulan Sorular", href: "/sss" },
+  ...membershipNavigation,
+  { label: "Sıkça Sorulanlar", href: "/sikca-sorulanlar" },
+  { label: "İletişim", href: "/iletisim" },
 ];
 
 export const navigation: NavigationItem[] = [
   { label: "Ana Sayfa", href: "/" },
-  { label: "Hakkımızda", href: "/kurumsal/hakkimizda", children: corporateNavigation },
-  { label: "Duyurular ve Etkinlikler", href: "/duyurular", children: newsAndEventsNavigation },
-  { label: "Üyelik", href: "/uyelik", children: membershipNavigation },
-  { label: "Sıkça Sorulanlar", href: "/sss" },
+  { label: "Hakkımızda", href: "/hakkimizda/dernek-hakkinda", children: corporateNavigation },
+  { label: "Duyurular ve Etkinlikler", href: "/duyurular-ve-etkinlikler/duyurular", children: newsAndEventsNavigation },
+  { label: "Üyelik", href: "/uyelik/dernek-uyeligi", children: membershipNavigation },
+  { label: "Sıkça Sorulanlar", href: "/sikca-sorulanlar" },
   { label: "İletişim", href: "/iletisim" },
 ];

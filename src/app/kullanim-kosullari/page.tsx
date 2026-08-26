@@ -12,6 +12,9 @@ import { associationName } from "@/config/site";
 export const metadata: Metadata = {
   title: "Kullanım Koşulları",
   description: `${associationName} internet sitesi kullanım koşulları.`,
+  alternates: {
+    canonical: "/kullanim-kosullari",
+  },
 };
 
 export default function TermsOfUsePage() {

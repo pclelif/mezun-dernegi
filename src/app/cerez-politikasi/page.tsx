@@ -11,6 +11,9 @@ import { associationName } from "@/config/site";
 export const metadata: Metadata = {
   title: "Çerez Politikası",
   description: `${associationName} internet sitesi çerez politikası.`,
+  alternates: {
+    canonical: "/cerez-politikasi",
+  },
 };
 
 export default function CookiePolicyPage() {

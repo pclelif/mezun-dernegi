@@ -23,9 +23,9 @@ export function ReturnButton({
       if (fromParam === "home") {
         setButtonState({ href: "/", label: "Ana Sayfaya Dön" });
       } else if (fromParam === "duyurular") {
-        setButtonState({ href: "/duyurular", label: "Duyurulara Dön" });
+        setButtonState({ href: "/duyurular-ve-etkinlikler/duyurular", label: "Duyurulara Dön" });
       } else if (fromParam === "etkinlikler") {
-        setButtonState({ href: "/etkinlikler", label: "Etkinliklere Dön" });
+        setButtonState({ href: "/duyurular-ve-etkinlikler/etkinlikler", label: "Etkinliklere Dön" });
       } else {
         setButtonState({ href: defaultHref, label: defaultLabel });
       }

@@ -33,7 +33,7 @@ export async function HomeEventsSection() {
             </div>
           </div>
         </div>
-        <Link className={`${textLinkClass} -translate-x-[1.5px] -translate-y-[2.5px]`} href="/etkinlikler">
+        <Link className={`${textLinkClass} -translate-x-[1.5px] -translate-y-[2.5px]`} href="/duyurular-ve-etkinlikler/etkinlikler">
           Tüm Etkinlikler <ArrowRight className="size-4 text-zinc-900" aria-hidden="true" />
         </Link>
       </div>
@@ -45,7 +45,7 @@ export async function HomeEventsSection() {
               key={event.id}
               headingLevel="h3"
               {...mapEventToCardProps(event)}
-              href={`/etkinlikler/${event.slug}?from=home`}
+              href={`/duyurular-ve-etkinlikler/etkinlikler/${event.slug}?from=home`}
             />
           ))}
         </div>
