@@ -193,7 +193,7 @@ export default async function OpenGraphImage() {
                 lineHeight: 1,
               }}
             >
-              www.kaaslmezunder.org.tr
+              www.kaaflmezunder.org.tr
             </span>
           </div>
         </div>

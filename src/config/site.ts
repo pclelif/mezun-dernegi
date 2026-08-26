@@ -4,7 +4,7 @@ export const associationName = `${schoolName} Mezunları Derneği`;
 
 export const associationShortName = "KAAFL";
 
-export const siteUrl = "https://www.kaaslmezunder.org.tr";
+export const siteUrl = "https://www.kaaflmezunder.org.tr";
 
 export const associationDescription =
   "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği resmî web sitesidir.";
