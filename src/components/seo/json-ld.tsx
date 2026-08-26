@@ -74,13 +74,76 @@ export function WebSiteJsonLd() {
     publisher: {
       "@id": `${siteUrl}/#organization`,
     },
+    hasPart: [
+      {
+        "@type": "WebPage",
+        "@id": `${siteUrl}/uyelik/dernek-uyeligi#webpage`,
+        name: "Dernek Üyeliği",
+        url: `${siteUrl}/uyelik/dernek-uyeligi`,
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${siteUrl}/iletisim#webpage`,
+        name: "İletişim",
+        url: `${siteUrl}/iletisim`,
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${siteUrl}/duyurular-ve-etkinlikler/duyurular#webpage`,
+        name: "Duyurular",
+        url: `${siteUrl}/duyurular-ve-etkinlikler/duyurular`,
+      },
+      {
+        "@type": "WebPage",
+        "@id": `${siteUrl}/duyurular-ve-etkinlikler/etkinlikler#webpage`,
+        name: "Etkinlikler",
+        url: `${siteUrl}/duyurular-ve-etkinlikler/etkinlikler`,
+      },
+    ],
+  };
+
+  const navSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    itemListElement: [
+      {
+        "@type": "SiteNavigationElement",
+        position: 1,
+        name: "Dernek Üyeliği",
+        url: `${siteUrl}/uyelik/dernek-uyeligi`,
+      },
+      {
+        "@type": "SiteNavigationElement",
+        position: 2,
+        name: "İletişim",
+        url: `${siteUrl}/iletisim`,
+      },
+      {
+        "@type": "SiteNavigationElement",
+        position: 3,
+        name: "Duyurular",
+        url: `${siteUrl}/duyurular-ve-etkinlikler/duyurular`,
+      },
+      {
+        "@type": "SiteNavigationElement",
+        position: 4,
+        name: "Etkinlikler",
+        url: `${siteUrl}/duyurular-ve-etkinlikler/etkinlikler`,
+      },
+    ],
   };
 
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(navSchema) }}
+      />
+    </>
   );
 }
 
