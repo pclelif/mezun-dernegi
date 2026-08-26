@@ -14,6 +14,7 @@ export const contentType = "image/png";
 export default async function OpenGraphImage() {
   const heroPath = path.join(process.cwd(), "public", "hero-bg.jpg");
   const logoPath = path.join(process.cwd(), "public", "logo-dernek.jpg");
+  const fontPath = path.join(process.cwd(), "public", "fonts", "Inter-Bold.ttf");
 
   let heroBase64 = "";
   try {
@@ -33,6 +34,15 @@ export default async function OpenGraphImage() {
     logoBase64 = "";
   }
 
+  let fontData: Buffer | null = null;
+  try {
+    if (fs.existsSync(fontPath)) {
+      fontData = fs.readFileSync(fontPath);
+    }
+  } catch {
+    fontData = null;
+  }
+
   return new ImageResponse(
     (
       <div
@@ -46,7 +56,7 @@ export default async function OpenGraphImage() {
           position: "relative",
           backgroundColor: "#f1f5f9",
           overflow: "hidden",
-          fontFamily: "sans-serif",
+          fontFamily: "Inter, sans-serif",
         }}
       >
         {/* Background Image: School Photo */}
@@ -74,12 +84,12 @@ export default async function OpenGraphImage() {
             width: "100%",
             height: "100%",
             background:
-              "linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.82) 50%, rgba(255, 255, 255, 0.92) 100%)",
+              "linear-gradient(135deg, rgba(255, 255, 255, 0.93) 0%, rgba(255, 255, 255, 0.84) 50%, rgba(255, 255, 255, 0.93) 100%)",
           }}
         />
 
         {/* Top spacer */}
-        <div style={{ height: "24px" }} />
+        <div style={{ height: "14px" }} />
 
         {/* Center Content: Logo + Official Association Name in 3 lines */}
         <div
@@ -89,7 +99,7 @@ export default async function OpenGraphImage() {
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            padding: "0 50px",
+            padding: "0 40px",
           }}
         >
           {/* Logo */}
@@ -98,56 +108,57 @@ export default async function OpenGraphImage() {
               src={logoBase64}
               alt="Dernek Logosu"
               style={{
-                width: "145px",
-                height: "145px",
+                width: "175px",
+                height: "175px",
                 borderRadius: "50%",
-                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.18)",
-                border: "4px solid #ffffff",
-                marginBottom: "18px",
+                boxShadow: "0 12px 35px rgba(0, 0, 0, 0.22)",
+                border: "5px solid #ffffff",
+                marginBottom: "16px",
                 objectFit: "cover",
               }}
             />
           ) : (
             <div
               style={{
-                width: "140px",
-                height: "140px",
+                width: "160px",
+                height: "160px",
                 borderRadius: "50%",
                 background: "#ec1c24",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "#ffffff",
-                fontSize: "44px",
-                fontWeight: 900,
-                marginBottom: "18px",
-                border: "4px solid #ffffff",
+                fontSize: "48px",
+                fontWeight: 700,
+                marginBottom: "16px",
+                border: "5px solid #ffffff",
               }}
             >
               KAAFL
             </div>
           )}
 
-          {/* Association Full Official Name split into 3 clear lines */}
+          {/* Association Full Official Name split into 3 clear lines with Inter Bold */}
           <h1
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "39px",
-              fontWeight: 900,
+              fontSize: "38px",
+              fontWeight: 700,
               lineHeight: 1.25,
               color: "#09090b",
               margin: 0,
-              maxWidth: "1050px",
+              maxWidth: "1080px",
               textAlign: "center",
-              letterSpacing: "-0.5px",
+              letterSpacing: "-0.6px",
+              fontFamily: "Inter",
             }}
           >
             <span style={{ color: "#09090b" }}>Keçiören Vatansever Şehit Tümgeneral</span>
             <span style={{ color: "#09090b" }}>Aydoğan Aydın Fen Lisesi</span>
-            <span style={{ color: "#ec1c24", fontSize: "43px", marginTop: "4px" }}>
+            <span style={{ color: "#ec1c24", fontSize: "44px", marginTop: "4px" }}>
               Mezunları Derneği
             </span>
           </h1>
@@ -176,7 +187,7 @@ export default async function OpenGraphImage() {
             style={{
               width: "100%",
               height: "54px",
-              background: "rgba(236, 28, 36, 0.88)",
+              background: "rgba(236, 28, 36, 0.90)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -188,20 +199,21 @@ export default async function OpenGraphImage() {
                 alignItems: "center",
                 color: "#ffffff",
                 letterSpacing: "0.5px",
+                fontFamily: "Inter",
               }}
             >
-              <span style={{ fontSize: "21px", fontWeight: 600, opacity: 0.95 }}>www.</span>
+              <span style={{ fontSize: "21px", fontWeight: 700, opacity: 0.95 }}>www.</span>
               <span
                 style={{
                   fontSize: "27px",
-                  fontWeight: 900,
+                  fontWeight: 700,
                   letterSpacing: "1px",
                   textShadow: "0 2px 4px rgba(0,0,0,0.2)",
                 }}
               >
                 kaaflmezunder
               </span>
-              <span style={{ fontSize: "21px", fontWeight: 600, opacity: 0.95 }}>.org.tr</span>
+              <span style={{ fontSize: "21px", fontWeight: 700, opacity: 0.95 }}>.org.tr</span>
             </span>
           </div>
         </div>
@@ -209,6 +221,18 @@ export default async function OpenGraphImage() {
     ),
     {
       ...size,
+      ...(fontData
+        ? {
+            fonts: [
+              {
+                name: "Inter",
+                data: fontData,
+                style: "normal" as const,
+                weight: 700 as const,
+              },
+            ],
+          }
+        : {}),
     }
   );
 }
