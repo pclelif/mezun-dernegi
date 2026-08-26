@@ -43,6 +43,8 @@ export default async function OpenGraphImage() {
     fontData = null;
   }
 
+  const redColor = "#c81018";
+
   return new ImageResponse(
     (
       <div
@@ -84,34 +86,12 @@ export default async function OpenGraphImage() {
             width: "100%",
             height: "100%",
             background:
-              "linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.58) 50%, rgba(255, 255, 255, 0.72) 100%)",
+              "linear-gradient(180deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.55) 45%, rgba(255, 255, 255, 0.72) 100%)",
           }}
         />
 
-        {/* Top red header bar */}
-        <div
-          style={{
-            width: "100%",
-            height: "52px",
-            background: "#ec1c24",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.15)",
-          }}
-        >
-          <span
-            style={{
-              fontSize: "22px",
-              fontWeight: 700,
-              color: "#ffffff",
-              letterSpacing: "1px",
-              fontFamily: "Inter",
-            }}
-          >
-            www.kaaflmezunder.org.tr
-          </span>
-        </div>
+        {/* Top breathing space */}
+        <div style={{ height: "24px" }} />
 
         {/* Center Content: Logo + 3-line typography */}
         <div
@@ -122,7 +102,6 @@ export default async function OpenGraphImage() {
             justifyContent: "center",
             textAlign: "center",
             padding: "0 50px",
-            marginBottom: "36px",
           }}
         >
           {/* Logo */}
@@ -131,12 +110,12 @@ export default async function OpenGraphImage() {
               src={logoBase64}
               alt="Dernek Logosu"
               style={{
-                width: "175px",
-                height: "175px",
+                width: "170px",
+                height: "170px",
                 borderRadius: "50%",
-                boxShadow: "0 12px 35px rgba(0, 0, 0, 0.22)",
+                boxShadow: "0 12px 35px rgba(0, 0, 0, 0.25)",
                 border: "5px solid #ffffff",
-                marginBottom: "18px",
+                marginBottom: "16px",
                 objectFit: "cover",
               }}
             />
@@ -146,14 +125,14 @@ export default async function OpenGraphImage() {
                 width: "160px",
                 height: "160px",
                 borderRadius: "50%",
-                background: "#ec1c24",
+                background: redColor,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "#ffffff",
                 fontSize: "48px",
                 fontWeight: 700,
-                marginBottom: "18px",
+                marginBottom: "16px",
                 border: "5px solid #ffffff",
               }}
             >
@@ -170,7 +149,7 @@ export default async function OpenGraphImage() {
               justifyContent: "center",
               fontSize: "38px",
               fontWeight: 700,
-              lineHeight: 1.28,
+              lineHeight: 1.25,
               color: "#000000",
               margin: 0,
               maxWidth: "1080px",
@@ -181,14 +160,37 @@ export default async function OpenGraphImage() {
           >
             <span style={{ color: "#000000" }}>Keçiören Vatansever Şehit Tümgeneral</span>
             <span style={{ color: "#000000" }}>Aydoğan Aydın Fen Lisesi</span>
-            <span style={{ color: "#ec1c24", fontSize: "36px", marginTop: "2px" }}>
+            <span style={{ color: redColor, fontSize: "35px", marginTop: "3px" }}>
               Mezunları Derneği
             </span>
           </h1>
         </div>
 
-        {/* Bottom spacing helper */}
-        <div style={{ height: "1px" }} />
+        {/* Bottom solid red bar */}
+        <div
+          style={{
+            width: "100%",
+            height: "52px",
+            background: redColor,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.15)",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "22px",
+              fontWeight: 700,
+              color: "#ffffff",
+              letterSpacing: "1px",
+              fontFamily: "Inter",
+              textShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
+            }}
+          >
+            www.kaaflmezunder.org.tr
+          </span>
+        </div>
       </div>
     ),
     {
