@@ -31,7 +31,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${associationName} | KAAFL Mezunları Derneği`,
+    default: "KAAFL Mezunlar Derneği",
     template: `%s | ${associationName}`,
   },
   description: associationDescription,
@@ -58,8 +58,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "tr_TR",
     url: siteUrl,
-    siteName: associationName,
-    title: `${associationName} | KAAFL Mezunları Derneği`,
+    siteName: "KAAFL Mezunlar Derneği",
+    title: "KAAFL Mezunlar Derneği",
     description: associationDescription,
     images: [
       {
@@ -67,13 +67,13 @@ export const metadata: Metadata = {
         width: 1200,
         height: 630,
         type: "image/jpeg",
-        alt: associationName,
+        alt: "KAAFL Mezunlar Derneği",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${associationName} | KAAFL Mezunları Derneği`,
+    title: "KAAFL Mezunlar Derneği",
     description: associationDescription,
     images: ["/images/og-image.jpg?v=15"],
   },
@@ -91,8 +91,9 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "48x48" },
-      { url: "/icon-48.png", sizes: "48x48", type: "image/png" },
-      { url: "/icon-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
       { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
       { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
       { url: "/logo-dernek.png", type: "image/png" },
@@ -100,6 +101,7 @@ export const metadata: Metadata = {
     shortcut: "/favicon.ico",
     apple: [
       { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
   manifest: "/manifest.webmanifest",

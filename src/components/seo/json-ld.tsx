@@ -17,13 +17,19 @@ export function OrganizationJsonLd({
 
   const schema = {
     "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
+    "@type": ["EducationalOrganization", "NGO"],
     "@id": `${siteUrl}/#organization`,
-    name: associationName,
-    alternateName: associationShortName,
+    name: "KAAFL Mezunlar Derneği",
+    legalName: associationName,
+    alternateName: [
+      "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği",
+      associationShortName,
+      "KAAFL Dernek",
+      "KAAFL Mezun",
+    ],
     url: siteUrl,
     logo: logoUrl.startsWith("http") ? logoUrl : `${siteUrl}${logoUrl}`,
-    image: `${siteUrl}/images/og-image.png`,
+    image: `${siteUrl}/images/og-image.jpg?v=15`,
     description: associationDescription,
     address: {
       "@type": "PostalAddress",
@@ -55,13 +61,127 @@ export function WebSiteJsonLd() {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${siteUrl}/#website`,
-    name: associationName,
-    alternateName: associationShortName,
+    name: "KAAFL Mezunlar Derneği",
+    alternateName: associationName,
     url: siteUrl,
     inLanguage: "tr-TR",
     publisher: {
       "@id": `${siteUrl}/#organization`,
     },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function ContactPageJsonLd({
+  title = "İletişim - KAAFL Mezunlar Derneği",
+  description = "KAAFL Mezunlar Derneği iletişim bilgileri, dernek adresi, e-posta, harita konumu ve iletişim formu.",
+}: {
+  title?: string;
+  description?: string;
+} = {}) {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "@id": `${siteUrl}/iletisim#webpage`,
+    url: `${siteUrl}/iletisim`,
+    name: title,
+    description: description,
+    inLanguage: "tr-TR",
+    isPartOf: {
+      "@id": `${siteUrl}/#website`,
+    },
+    about: {
+      "@id": `${siteUrl}/#organization`,
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function WebPageJsonLd({
+  title,
+  description,
+  path,
+}: {
+  title: string;
+  description: string;
+  path: string;
+}) {
+  const fullUrl = path.startsWith("http") ? path : `${siteUrl}${path}`;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "@id": `${fullUrl}#webpage`,
+    url: fullUrl,
+    name: title,
+    description: description,
+    inLanguage: "tr-TR",
+    isPartOf: {
+      "@id": `${siteUrl}/#website`,
+    },
+    about: {
+      "@id": `${siteUrl}/#organization`,
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+export function CollectionPageJsonLd({
+  title,
+  description,
+  path,
+  items = [],
+}: {
+  title: string;
+  description: string;
+  path: string;
+  items?: Array<{ name: string; url: string }>;
+}) {
+  const fullUrl = path.startsWith("http") ? path : `${siteUrl}${path}`;
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "@id": `${fullUrl}#webpage`,
+    url: fullUrl,
+    name: title,
+    description: description,
+    inLanguage: "tr-TR",
+    isPartOf: {
+      "@id": `${siteUrl}/#website`,
+    },
+    about: {
+      "@id": `${siteUrl}/#organization`,
+    },
+    ...(items.length > 0
+      ? {
+          mainEntity: {
+            "@type": "ItemList",
+            itemListElement: items.map((item, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              name: item.name,
+              url: item.url.startsWith("http") ? item.url : `${siteUrl}${item.url}`,
+            })),
+          },
+        }
+      : {}),
   };
 
   return (
@@ -124,10 +244,10 @@ export function ArticleJsonLd({
     description: description,
     datePublished: datePublished || undefined,
     url: url.startsWith("http") ? url : `${siteUrl}${url}`,
-    image: imageUrl ? (imageUrl.startsWith("http") ? imageUrl : `${siteUrl}${imageUrl}`) : `${siteUrl}/images/og-image.png`,
+    image: imageUrl ? (imageUrl.startsWith("http") ? imageUrl : `${siteUrl}${imageUrl}`) : `${siteUrl}/images/og-image.jpg?v=15`,
     author: {
       "@type": "Organization",
-      name: associationName,
+      name: "KAAFL Mezunlar Derneği",
       url: siteUrl,
     },
     publisher: {
@@ -179,7 +299,7 @@ export function EventJsonLd({
         addressCountry: "TR",
       },
     },
-    image: imageUrl ? (imageUrl.startsWith("http") ? imageUrl : `${siteUrl}${imageUrl}`) : `${siteUrl}/images/og-image.png`,
+    image: imageUrl ? (imageUrl.startsWith("http") ? imageUrl : `${siteUrl}${imageUrl}`) : `${siteUrl}/images/og-image.jpg?v=15`,
     organizer: {
       "@id": `${siteUrl}/#organization`,
     },

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { AnnouncementCard } from "@/components/cards/announcement-card";
-import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { BreadcrumbJsonLd, CollectionPageJsonLd } from "@/components/seo/json-ld";
 import { PageHero } from "@/components/shared/page-hero";
 import { associationName } from "@/config/site";
 import { formatTurkishDate } from "@/lib/supabase/client";
@@ -31,8 +31,21 @@ export default async function AnnouncementsPage() {
     loadError = error instanceof Error ? error.message : "Duyurular yüklenemedi.";
   }
 
+  const items = announcements
+    .filter((a) => a.slug)
+    .map((a) => ({
+      name: a.title,
+      url: `/duyurular-ve-etkinlikler/duyurular/${a.slug}`,
+    }));
+
   return (
     <>
+      <CollectionPageJsonLd
+        title={`Duyurular - ${associationName}`}
+        description={`${associationName}'nden güncel haberler, resmî duyurular ve önemli bilgilendirmeler.`}
+        path="/duyurular-ve-etkinlikler/duyurular"
+        items={items}
+      />
       <BreadcrumbJsonLd
         items={[
           { name: "Duyurular ve Etkinlikler", href: "/duyurular-ve-etkinlikler/duyurular" },

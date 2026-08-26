@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import type { ComponentType } from "react";
 import { ContactForm } from "@/components/forms/contact-form";
 import { InstagramIcon, LinkedinIcon } from "@/components/icons/social-icons";
-import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { BreadcrumbJsonLd, ContactPageJsonLd } from "@/components/seo/json-ld";
 import { ContentPage } from "@/components/shared/content-page";
 import { contentSections } from "@/config/content";
 import { associationName } from "@/config/site";
@@ -45,6 +45,7 @@ export default async function ContactPage() {
 
   return (
     <>
+      <ContactPageJsonLd />
       <BreadcrumbJsonLd
         items={[
           { name: "İletişim", href: "/iletisim" },

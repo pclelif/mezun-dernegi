@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { EventCard } from "@/components/cards/event-card";
-import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { BreadcrumbJsonLd, CollectionPageJsonLd } from "@/components/seo/json-ld";
 import { PageHero } from "@/components/shared/page-hero";
 import { associationName } from "@/config/site";
 import { getEvents, mapEventToCardProps } from "@/lib/supabase/queries";
@@ -30,8 +30,21 @@ export default async function EventsPage() {
     loadError = error instanceof Error ? error.message : "Etkinlikler yüklenemedi.";
   }
 
+  const items = events
+    .filter((e) => e.slug)
+    .map((e) => ({
+      name: e.title,
+      url: `/duyurular-ve-etkinlikler/etkinlikler/${e.slug}`,
+    }));
+
   return (
     <>
+      <CollectionPageJsonLd
+        title={`Etkinlikler - ${associationName}`}
+        description={`${associationName} mezun buluşmaları, seminerler, paneller ve yaklaşan etkinlikler.`}
+        path="/duyurular-ve-etkinlikler/etkinlikler"
+        items={items}
+      />
       <BreadcrumbJsonLd
         items={[
           { name: "Duyurular ve Etkinlikler", href: "/duyurular-ve-etkinlikler/duyurular" },

@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { FAQAccordion } from "@/components/faq/faq-accordion";
 import { BankAccountCard } from "@/components/membership/bank-account-card";
-import { BreadcrumbJsonLd } from "@/components/seo/json-ld";
+import { BreadcrumbJsonLd, WebPageJsonLd } from "@/components/seo/json-ld";
 import { PageHero } from "@/components/shared/page-hero";
 import { contentSections } from "@/config/content";
 import { associationName } from "@/config/site";
@@ -74,6 +74,11 @@ export default async function DernekUyeligiPage() {
 
   return (
     <>
+      <WebPageJsonLd
+        title={`Dernek Üyeliği - ${associationName}`}
+        description={`${associationName}'ne üye olmak için başvuru adımları, gerekli belgeler ve kayıt süreci.`}
+        path="/uyelik/dernek-uyeligi"
+      />
       <BreadcrumbJsonLd
         items={[
           { name: "Üyelik", href: "/uyelik/dernek-uyeligi" },
