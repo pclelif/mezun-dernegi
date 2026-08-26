@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     description: associationDescription,
     images: [
       {
-        url: "/images/og-image.jpg?v=2",
+        url: "/images/og-image.jpg?v=3",
         width: 1200,
         height: 630,
         type: "image/jpeg",
@@ -75,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${associationName} | KAAFL Mezunları Derneği`,
     description: associationDescription,
-    images: ["/images/og-image.jpg?v=2"],
+    images: ["/images/og-image.jpg?v=3"],
   },
   robots: {
     index: true,
