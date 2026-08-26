@@ -90,13 +90,29 @@ export default async function AidatVeBagisPage() {
             <h2 id="donation-title" className="text-lg font-bold tracking-tight text-zinc-950 md:text-xl">Bağış</h2>
           </div>
           <p className="mt-4 text-base leading-7 text-slate-600">
-            {content.donation || (
-              <>
-                Derneğimize destek olmak için aynı IBAN numarasına{" "}
-                <strong className="font-semibold text-zinc-900">“Bağış”</strong> açıklaması ile
-                dilediğiniz tutarda katkıda bulunabilirsiniz.
-              </>
-            )}
+            {(() => {
+              const text = (
+                content.donation ||
+                "Derneğimize destek olmak için aynı IBAN numarasına “Bağış” açıklaması ile dilediğiniz tutarda katkıda bulunabilirsiniz."
+              )
+                .replace(/Derneğimize ve okulumuz öğrencilerine/gi, "Derneğimize")
+                .replace(/ve okulumuz öğrencilerine/gi, "")
+                .replace(/okulumuz öğrencilerine/gi, "")
+                .replace(/\s+/g, " ")
+                .trim();
+
+              if (text.includes("“Bağış”")) {
+                const parts = text.split("“Bağış”");
+                return (
+                  <>
+                    {parts[0]}
+                    <strong className="font-semibold text-zinc-900">“Bağış”</strong>
+                    {parts[1]}
+                  </>
+                );
+              }
+              return text;
+            })()}
           </p>
         </section>
 
