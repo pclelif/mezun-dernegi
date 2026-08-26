@@ -4,7 +4,7 @@ export const associationName = `${schoolName} Mezunları Derneği`;
 
 export const associationShortName = "KAAFL";
 
-export const siteUrl = "https://kaaflmezunder.org.tr";
+export const siteUrl = "https://www.kaaflmezunder.org.tr";
 
 export const associationDescription = `${associationName}'nin resmî web sitesi. Dernek, üyelik, duyurular, etkinlikler ve mezunlarımız hakkında bilgi alın.`;
 
@@ -12,7 +12,7 @@ export const siteConfig = {
   name: associationName,
   shortName: associationShortName,
   url: siteUrl,
-  ogImage: `${siteUrl}/images/og-image.png`,
+  ogImage: `${siteUrl}/images/og-image.jpg`,
   logoUrl: `${siteUrl}/logo-dernek.jpg`,
   faviconUrl: `${siteUrl}/logo-dernek.svg`,
   description: associationDescription,

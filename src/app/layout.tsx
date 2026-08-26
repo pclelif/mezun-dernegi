@@ -8,6 +8,7 @@ import {
   associationDescription,
   associationName,
   associationShortName,
+  siteConfig,
   siteUrl,
 } from "@/config/site";
 import { getSiteContent } from "@/lib/supabase/queries";
@@ -62,9 +63,10 @@ export const metadata: Metadata = {
     description: associationDescription,
     images: [
       {
-        url: "/images/og-image.png",
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
+        type: "image/jpeg",
         alt: associationName,
       },
     ],
@@ -73,7 +75,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: `${associationName} | ${associationShortName}`,
     description: associationDescription,
-    images: ["/images/og-image.png"],
+    images: ["/images/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -128,6 +130,14 @@ export default async function RootLayout({
         <meta name="theme-color" content="#ffffff" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)" />
+        {/* Explicit OpenGraph metadata for messaging crawlers (WhatsApp, Telegram, LinkedIn, Facebook) */}
+        <meta property="og:image" content={siteConfig.ogImage} />
+        <meta property="og:image:secure_url" content={siteConfig.ogImage} />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:alt" content={associationName} />
+        <meta name="twitter:image" content={siteConfig.ogImage} />
         <OrganizationJsonLd
           logoUrl={logoUrl}
           address={contact.address}
