@@ -24,7 +24,7 @@ export const contentSections = {
     ],
     defaults: {
       logo_url: "/logo-dernek.jpg",
-      hero_title: "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği",
+      hero_title: "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunlar Derneği",
       hero_description: "Bir okul. Binlerce hikâye. Tek bir aile.\nGeçmişimizin değerlerini koruyor, geleceğe yönelik yeni adımlar atıyoruz.",
       hero_image_url: "/hero-bg.jpg",
     },
@@ -57,7 +57,7 @@ export const contentSections = {
       { key: "bank_name", label: "Banka adı" }, { key: "account_name", label: "Hesap sahibi" },
       { key: "iban", label: "IBAN" }, { key: "payment_note", label: "Ödeme açıklaması", type: "textarea", rows: 3 },
     ],
-    defaults: { annual_dues: "Üyelik aidatı her dönem 300 TL olmak üzere yılda 4 dönem üzerinden ödenmektedir.", donation: "Derneğimize destek olmak için aynı IBAN numarasına “Bağış” açıklaması ile dilediğiniz tutarda katkıda bulunabilirsiniz.", bank_name: "Ziraat Bankası", account_name: "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği", iban: "TR91 0001 0016 8398 3927 3550 01", payment_note: "" },
+    defaults: { annual_dues: "Üyelik aidatı her dönem 300 TL olmak üzere yılda 4 dönem üzerinden ödenmektedir.", donation: "Derneğimize destek olmak için aynı IBAN numarasına “Bağış” açıklaması ile dilediğiniz tutarda katkıda bulunabilirsiniz.", bank_name: "Ziraat Bankası", account_name: "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunlar Derneği", iban: "TR91 0001 0016 8398 3927 3550 01", payment_note: "" },
   },
   iletisim: {
     title: "İletişim", description: "İletişim kartını, Google Maps konumunu ve sosyal medya hesaplarını yönetin. Boş bırakılan bilgiler sitede gösterilmez.",

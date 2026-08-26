@@ -1,6 +1,6 @@
 # Mezun Derneği Web Sitesi
 
-Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği için geliştirilmiş kurumsal web sitesi ve yönetim paneli uygulamasıdır. Proje; dernek faaliyetlerinin paylaşılması, duyuru ve etkinliklerin yayımlanması, üyelik ve aidat süreçleri hakkında bilgi sunulması, mezunlar ve ziyaretçilerle iletişim kurulması ve tüm bu içeriklerin yönetim paneli üzerinden dinamik olarak yönetilmesi amacıyla tasarlanmıştır.
+Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunlar Derneği için geliştirilmiş kurumsal web sitesi ve yönetim paneli uygulamasıdır. Proje; dernek faaliyetlerinin paylaşılması, duyuru ve etkinliklerin yayımlanması, üyelik ve aidat süreçleri hakkında bilgi sunulması, mezunlar ve ziyaretçilerle iletişim kurulması ve tüm bu içeriklerin yönetim paneli üzerinden dinamik olarak yönetilmesi amacıyla tasarlanmıştır.
 
 ## Proje Hakkında
 
@@ -153,7 +153,7 @@ npm start
 
 ## Tasarım Yaklaşımı
 
-Tasarımda Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği'nin kurumsal kimliğini yansıtan modern, sade ve kullanıcı odaklı bir arayüz hedeflenmiştir. 
+Tasarımda Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunlar Derneği'nin kurumsal kimliğini yansıtan modern, sade ve kullanıcı odaklı bir arayüz hedeflenmiştir. 
 
 - Dernek kurumsal kırmızısı (`#EC1C24`) vurgu rengi olarak kullanılmıştır.
 - Tüm içerik alanlarında okunabilirliği yüksek tipografi tercih edilmiştir.
@@ -167,6 +167,6 @@ Tasarımda Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi M
 
 ## Lisans
 
-Bu proje Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği adına özel olarak geliştirilmiştir. Tüm hakları saklıdır.
+Bu proje Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunlar Derneği adına özel olarak geliştirilmiştir. Tüm hakları saklıdır.
 
 - **İletişim:** kaaflmezunder@gmail.com

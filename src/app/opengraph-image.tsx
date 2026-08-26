@@ -4,7 +4,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
 
-export const alt = "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği";
+export const alt = "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunlar Derneği";
 export const size = {
   width: 1200,
   height: 630,
@@ -159,7 +159,7 @@ export default async function OpenGraphImage() {
             <span style={{ color: "#000000" }}>Keçiören Vatansever Şehit Tümgeneral</span>
             <span style={{ color: "#000000" }}>Aydoğan Aydın Fen Lisesi</span>
             <span style={{ color: brandRed, fontSize: "35px", marginTop: "4px" }}>
-              Mezunları Derneği
+              Mezunlar Derneği
             </span>
           </h1>
         </div>

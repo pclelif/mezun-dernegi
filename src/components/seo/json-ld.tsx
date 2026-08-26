@@ -22,7 +22,7 @@ export function OrganizationJsonLd({
     name: "KAAFL Mezunlar Derneği",
     legalName: associationName,
     alternateName: [
-      "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği",
+      "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunlar Derneği",
       associationShortName,
       "KAAFL Dernek",
       "KAAFL Mezun",
