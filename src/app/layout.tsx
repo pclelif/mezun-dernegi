@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import { CookieBanner } from "@/components/layout/cookie-banner";
 import { SiteShell } from "@/components/layout/site-shell";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/seo/json-ld";
@@ -175,6 +176,7 @@ export default async function RootLayout({
           {children}
         </SiteShell>
         <CookieBanner />
+        <Analytics />
       </body>
     </html>
   );
