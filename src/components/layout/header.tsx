@@ -83,7 +83,7 @@ export function Header({ logoUrl = "/logo-dernek.png", email = "kaaflmezunder@gm
             setIsMobileNavOpen(false);
             setOpenMobileMenu(null);
           }}
-          className="flex min-w-0 max-w-[calc(100%-3.5rem)] items-center gap-2.5 rounded-sm text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 sm:gap-3 xl:max-w-none xl:shrink-0"
+          className="flex min-w-0 max-w-[calc(100%-3.5rem)] items-center gap-3 rounded-sm text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 sm:gap-3.5 xl:max-w-none xl:shrink-0"
           aria-label={`${associationName} ana sayfa`}
         >
           <Image
@@ -94,7 +94,7 @@ export function Header({ logoUrl = "/logo-dernek.png", email = "kaaflmezunder@gm
             priority
             className="size-14 shrink-0 rounded-full object-contain sm:size-16 xl:size-[4.5rem]"
           />
-          <span className="min-w-0 text-[13px] font-bold leading-snug tracking-tight text-zinc-900 sm:text-[15px]">
+          <span className="flex min-w-0 flex-col justify-center text-[13px] font-bold leading-snug tracking-tight text-zinc-900 sm:text-[15px]">
             <span className="block sm:whitespace-nowrap">Keçiören Vatansever Şehit Tümgeneral</span>
             <span className="block sm:whitespace-nowrap">Aydoğan Aydın Fen Lisesi Mezunları Derneği</span>
           </span>
