@@ -43,7 +43,7 @@ export default async function OpenGraphImage() {
     fontData = null;
   }
 
-  const redColor = "#c81018";
+  const brandRed = "#ec1c24";
 
   return new ImageResponse(
     (
@@ -86,14 +86,14 @@ export default async function OpenGraphImage() {
             width: "100%",
             height: "100%",
             background:
-              "linear-gradient(180deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.55) 45%, rgba(255, 255, 255, 0.72) 100%)",
+              "linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.58) 50%, rgba(255, 255, 255, 0.74) 100%)",
           }}
         />
 
-        {/* Top breathing space */}
-        <div style={{ height: "24px" }} />
+        {/* Top spacing */}
+        <div style={{ height: "30px" }} />
 
-        {/* Center Content: Logo + 3-line typography */}
+        {/* Center Content: Larger Logo + 3-line typography */}
         <div
           style={{
             display: "flex",
@@ -110,29 +110,29 @@ export default async function OpenGraphImage() {
               src={logoBase64}
               alt="Dernek Logosu"
               style={{
-                width: "170px",
-                height: "170px",
+                width: "195px",
+                height: "195px",
                 borderRadius: "50%",
-                boxShadow: "0 12px 35px rgba(0, 0, 0, 0.25)",
+                boxShadow: "0 16px 40px rgba(0, 0, 0, 0.22)",
                 border: "5px solid #ffffff",
-                marginBottom: "16px",
+                marginBottom: "20px",
                 objectFit: "cover",
               }}
             />
           ) : (
             <div
               style={{
-                width: "160px",
-                height: "160px",
+                width: "180px",
+                height: "180px",
                 borderRadius: "50%",
-                background: redColor,
+                background: brandRed,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 color: "#ffffff",
-                fontSize: "48px",
+                fontSize: "52px",
                 fontWeight: 700,
-                marginBottom: "16px",
+                marginBottom: "20px",
                 border: "5px solid #ffffff",
               }}
             >
@@ -160,32 +160,32 @@ export default async function OpenGraphImage() {
           >
             <span style={{ color: "#000000" }}>Keçiören Vatansever Şehit Tümgeneral</span>
             <span style={{ color: "#000000" }}>Aydoğan Aydın Fen Lisesi</span>
-            <span style={{ color: redColor, fontSize: "35px", marginTop: "3px" }}>
+            <span style={{ color: brandRed, fontSize: "35px", marginTop: "4px" }}>
               Mezunları Derneği
             </span>
           </h1>
         </div>
 
-        {/* Bottom solid red bar */}
+        {/* Bottom clean domain badge */}
         <div
           style={{
-            width: "100%",
-            height: "52px",
-            background: redColor,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.15)",
+            paddingBottom: "24px",
           }}
         >
           <span
             style={{
-              fontSize: "22px",
+              fontSize: "20px",
               fontWeight: 700,
-              color: "#ffffff",
-              letterSpacing: "1px",
+              color: "#1e293b",
+              letterSpacing: "1.5px",
               fontFamily: "Inter",
-              textShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
+              background: "rgba(255, 255, 255, 0.75)",
+              padding: "6px 20px",
+              borderRadius: "9999px",
+              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.08)",
             }}
           >
             www.kaaflmezunder.org.tr
