@@ -69,13 +69,20 @@ export const metadata: Metadata = {
         type: "image/jpeg",
         alt: "KAAFL Mezunlar Derneği",
       },
+      {
+        url: "/logo-dernek.png",
+        width: 800,
+        height: 800,
+        type: "image/png",
+        alt: "KAAFL Mezunlar Derneği",
+      },
     ],
   },
   twitter: {
     card: "summary_large_image",
     title: "KAAFL Mezunlar Derneği",
     description: associationDescription,
-    images: ["/images/og-image.jpg?v=15"],
+    images: ["/images/og-image.jpg?v=15", "/logo-dernek.png"],
   },
   robots: {
     index: true,
@@ -90,13 +97,15 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: [
-      { url: "/favicon.ico", sizes: "48x48" },
+      { url: "/icon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/icon-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
       { url: "/favicon.svg", type: "image/svg+xml" },
       { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
-      { url: "/icon-512.png", sizes: "512x512", type: "image/png" },
-      { url: "/logo-dernek.png", type: "image/png" },
+      { url: "/logo-dernek.png", sizes: "800x800", type: "image/png" },
     ],
     shortcut: "/favicon.ico",
     apple: [
@@ -140,19 +149,29 @@ export default async function RootLayout({
         <meta name="theme-color" content="#ffffff" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)" />
+        <meta name="description" content={associationDescription} />
         {/* Explicit OpenGraph metadata for messaging crawlers (WhatsApp, Telegram, LinkedIn, Facebook) */}
         <meta property="og:image" content={siteConfig.ogImage} />
         <meta property="og:image:secure_url" content={siteConfig.ogImage} />
         <meta property="og:image:type" content="image/jpeg" />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
-        {/* Explicit Favicon and Touch Icon tags */}
+        {/* Square thumbnail for Google Search and crawlers to avoid gray letterbox padding */}
+        <meta name="thumbnail" content={`${siteUrl}/logo-dernek.png`} />
+        <meta property="og:image:square" content={`${siteUrl}/logo-dernek.png`} />
+        <link rel="image_src" href={`${siteUrl}/logo-dernek.png`} />
+        {/* Google-compliant Favicon tags (48px multiples and standard icons) */}
+        <link rel="icon" sizes="48x48" href="/icon-48.png" type="image/png" />
+        <link rel="icon" sizes="96x96" href="/icon-96.png" type="image/png" />
+        <link rel="icon" sizes="192x192" href="/icon-192.png" type="image/png" />
+        <link rel="icon" sizes="512x512" href="/icon-512.png" type="image/png" />
         <link rel="icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon.png" />
         <OrganizationJsonLd
           logoUrl={logoUrl}
           address={contact.address}

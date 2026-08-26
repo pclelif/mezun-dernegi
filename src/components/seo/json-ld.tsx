@@ -29,7 +29,11 @@ export function OrganizationJsonLd({
     ],
     url: siteUrl,
     logo: logoUrl.startsWith("http") ? logoUrl : `${siteUrl}${logoUrl}`,
-    image: `${siteUrl}/images/og-image.jpg?v=15`,
+    image: [
+      `${siteUrl}/logo-dernek.png`,
+      `${siteUrl}/images/og-image.jpg?v=15`,
+    ],
+    thumbnailUrl: `${siteUrl}/logo-dernek.png`,
     description: associationDescription,
     address: {
       "@type": "PostalAddress",
@@ -65,6 +69,8 @@ export function WebSiteJsonLd() {
     alternateName: associationName,
     url: siteUrl,
     inLanguage: "tr-TR",
+    thumbnailUrl: `${siteUrl}/logo-dernek.png`,
+    image: `${siteUrl}/logo-dernek.png`,
     publisher: {
       "@id": `${siteUrl}/#organization`,
     },
