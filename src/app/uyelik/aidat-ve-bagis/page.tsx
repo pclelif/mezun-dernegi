@@ -87,9 +87,9 @@ export default async function AidatVeBagisPage() {
         <section className="rounded-xl border-l-2 border-[#ec1c24] bg-red-50/60 p-6 md:p-8" aria-labelledby="donation-title">
           <div className="flex items-center gap-3">
             <HeartHandshake className="size-5 shrink-0 text-[#ec1c24]" aria-hidden="true" />
-            <h2 id="donation-title" className="text-base font-bold tracking-tight text-zinc-950 md:text-lg">Bağış</h2>
+            <h2 id="donation-title" className="text-lg font-bold tracking-tight text-zinc-950 md:text-xl">Bağış</h2>
           </div>
-          <p className="mt-4 text-sm leading-6 text-zinc-700">
+          <p className="mt-4 text-base leading-7 text-slate-600">
             {content.donation || (
               <>
                 Derneğimize destek olmak için aynı IBAN numarasına{" "}

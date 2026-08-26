@@ -142,7 +142,7 @@ export default async function DernekUyeligiPage() {
               derneğimize elden ulaştırabilirsiniz.
             </p>
 
-            <div className="mt-6 rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4 text-sm leading-6 text-zinc-700">
+            <div className="mt-6 rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4 text-base leading-7 text-slate-600">
               <p>
                 e-Devlet üzerinden adli sicil kaydınızı oluştururken “Belgenin Verileceği Kurum”
                 alanında “Resmi Kurum” seçeneğini seçiniz.
