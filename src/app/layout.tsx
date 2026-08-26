@@ -1,5 +1,6 @@
 import { Inter } from "next/font/google";
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import type { ReactNode } from "react";
 import { CookieBanner } from "@/components/layout/cookie-banner";
 import { SiteShell } from "@/components/layout/site-shell";
@@ -182,6 +183,24 @@ export default async function RootLayout({
         <WebSiteJsonLd />
       </head>
       <body className={`${inter.className} bg-white text-black`}>
+        {siteConfig.googleAnalyticsId ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.googleAnalyticsId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${siteConfig.googleAnalyticsId}', {
+                  page_path: window.location.pathname,
+                });
+              `}
+            </Script>
+          </>
+        ) : null}
         <SiteShell
           settings={{
             logo_url: logoUrl,

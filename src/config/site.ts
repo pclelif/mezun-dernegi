@@ -29,4 +29,5 @@ export const siteConfig = {
     instagram: "https://www.instagram.com/kaaflmezunder",
     linkedin: "https://www.linkedin.com/company/ke%C3%A7i%C3%B6ren-vatansever-%C5%9Fehit-t%C3%BCmgeneral-aydo%C4%9Fan-ayd%C4%B1n-fen-lisesi-mezunlar-derne%C4%9Fi/",
   },
+  googleAnalyticsId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "G-NQQVL7JPZ2",
 };
