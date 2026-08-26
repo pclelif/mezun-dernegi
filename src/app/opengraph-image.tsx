@@ -75,7 +75,7 @@ export default async function OpenGraphImage() {
           />
         ) : null}
 
-        {/* Light subtle translucent overlay so school photo is clearly seen while text remains 100% readable */}
+        {/* Light subtle translucent overlay so school photo is clearly seen */}
         <div
           style={{
             position: "absolute",
@@ -84,14 +84,36 @@ export default async function OpenGraphImage() {
             width: "100%",
             height: "100%",
             background:
-              "linear-gradient(180deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.55) 45%, rgba(255, 255, 255, 0.72) 100%)",
+              "linear-gradient(180deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0.58) 50%, rgba(255, 255, 255, 0.72) 100%)",
           }}
         />
 
-        {/* Top breathing space */}
-        <div style={{ height: "24px" }} />
+        {/* Top red header bar */}
+        <div
+          style={{
+            width: "100%",
+            height: "52px",
+            background: "#ec1c24",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            boxShadow: "0 2px 10px rgba(0, 0, 0, 0.15)",
+          }}
+        >
+          <span
+            style={{
+              fontSize: "22px",
+              fontWeight: 700,
+              color: "#ffffff",
+              letterSpacing: "1px",
+              fontFamily: "Inter",
+            }}
+          >
+            www.kaaflmezunder.org.tr
+          </span>
+        </div>
 
-        {/* Center Content: Logo + Unified 3-line typography */}
+        {/* Center Content: Logo + 3-line typography */}
         <div
           style={{
             display: "flex",
@@ -100,6 +122,7 @@ export default async function OpenGraphImage() {
             justifyContent: "center",
             textAlign: "center",
             padding: "0 50px",
+            marginBottom: "36px",
           }}
         >
           {/* Logo */}
@@ -108,12 +131,12 @@ export default async function OpenGraphImage() {
               src={logoBase64}
               alt="Dernek Logosu"
               style={{
-                width: "170px",
-                height: "170px",
+                width: "175px",
+                height: "175px",
                 borderRadius: "50%",
-                boxShadow: "0 12px 35px rgba(0, 0, 0, 0.25)",
+                boxShadow: "0 12px 35px rgba(0, 0, 0, 0.22)",
                 border: "5px solid #ffffff",
-                marginBottom: "16px",
+                marginBottom: "18px",
                 objectFit: "cover",
               }}
             />
@@ -130,7 +153,7 @@ export default async function OpenGraphImage() {
                 color: "#ffffff",
                 fontSize: "48px",
                 fontWeight: 700,
-                marginBottom: "16px",
+                marginBottom: "18px",
                 border: "5px solid #ffffff",
               }}
             >
@@ -138,7 +161,7 @@ export default async function OpenGraphImage() {
             </div>
           )}
 
-          {/* 3 lines in exact same Inter Bold font and size */}
+          {/* 3 lines typography */}
           <h1
             style={{
               display: "flex",
@@ -147,48 +170,25 @@ export default async function OpenGraphImage() {
               justifyContent: "center",
               fontSize: "38px",
               fontWeight: 700,
-              lineHeight: 1.25,
+              lineHeight: 1.28,
               color: "#000000",
               margin: 0,
               maxWidth: "1080px",
               textAlign: "center",
               letterSpacing: "-0.5px",
               fontFamily: "Inter",
-              textShadow:
-                "0 2px 10px rgba(255, 255, 255, 0.95), 0 0 20px rgba(255, 255, 255, 0.9)",
             }}
           >
             <span style={{ color: "#000000" }}>Keçiören Vatansever Şehit Tümgeneral</span>
             <span style={{ color: "#000000" }}>Aydoğan Aydın Fen Lisesi</span>
-            <span style={{ color: "#ec1c24" }}>Mezunları Derneği</span>
+            <span style={{ color: "#ec1c24", fontSize: "36px", marginTop: "2px" }}>
+              Mezunları Derneği
+            </span>
           </h1>
         </div>
 
-        {/* Bottom solid red header-matching accent bar */}
-        <div
-          style={{
-            width: "100%",
-            height: "52px",
-            background: "#ec1c24",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.15)",
-          }}
-        >
-          <span
-            style={{
-              fontSize: "22px",
-              fontWeight: 700,
-              color: "#ffffff",
-              letterSpacing: "1px",
-              fontFamily: "Inter",
-              textShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
-            }}
-          >
-            www.kaaflmezunder.org.tr
-          </span>
-        </div>
+        {/* Bottom spacing helper */}
+        <div style={{ height: "1px" }} />
       </div>
     ),
     {
