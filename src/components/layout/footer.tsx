@@ -17,9 +17,12 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Maha
       <div className="mx-auto grid w-[min(100%-2rem,80rem)] grid-cols-1 items-start gap-8 py-7 md:grid-cols-2 md:gap-10 lg:grid-cols-[1fr_auto_auto] lg:gap-x-12 lg:gap-y-8 md:py-8">
         {/* Sütun 1: Logo ve Dernek Adı */}
         <div className="w-full md:col-span-2 lg:col-span-1">
-          <Link href="/" className="inline-flex items-center gap-4 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white" aria-label={`${associationName} ana sayfa`}>
+          <Link href="/" className="inline-flex items-center gap-3.5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:gap-4" aria-label={`${associationName} ana sayfa`}>
             <Image src={logoUrl} alt="" width={56} height={56} className="size-14 shrink-0 rounded-full bg-white object-cover" />
-            <span className="max-w-lg text-sm font-bold leading-snug tracking-tight text-zinc-100 lg:max-w-[240px]">{associationName}</span>
+            <span className="text-[13px] font-bold leading-tight tracking-tight text-zinc-100 sm:text-[14px] sm:leading-snug">
+              <span className="block sm:whitespace-nowrap">Keçiören Vatansever Şehit Tümgeneral</span>
+              <span className="block sm:whitespace-nowrap">Aydoğan Aydın Fen Lisesi Mezunları Derneği</span>
+            </span>
           </Link>
         </div>
 
