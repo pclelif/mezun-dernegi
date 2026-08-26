@@ -44,7 +44,7 @@ export default async function OpenGraphImage() {
           justifyContent: "space-between",
           alignItems: "center",
           position: "relative",
-          backgroundColor: "#0a0b10",
+          backgroundColor: "#f1f5f9",
           overflow: "hidden",
           fontFamily: "sans-serif",
         }}
@@ -61,12 +61,11 @@ export default async function OpenGraphImage() {
               width: "100%",
               height: "100%",
               objectFit: "cover",
-              opacity: 0.28,
             }}
           />
         ) : null}
 
-        {/* Gradient Overlay for elegance & high contrast legibility */}
+        {/* Gradient Overlay for elegance & high contrast legibility (Hero style) */}
         <div
           style={{
             position: "absolute",
@@ -75,27 +74,14 @@ export default async function OpenGraphImage() {
             width: "100%",
             height: "100%",
             background:
-              "linear-gradient(135deg, rgba(80, 8, 16, 0.90) 0%, rgba(18, 14, 26, 0.93) 45%, rgba(8, 12, 24, 0.96) 100%)",
-          }}
-        />
-
-        {/* Subtle decorative glow behind logo */}
-        <div
-          style={{
-            position: "absolute",
-            top: "90px",
-            left: "450px",
-            width: "300px",
-            height: "300px",
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(236, 28, 36, 0.35) 0%, rgba(236, 28, 36, 0) 70%)",
+              "linear-gradient(135deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.82) 50%, rgba(255, 255, 255, 0.92) 100%)",
           }}
         />
 
         {/* Top spacer */}
-        <div style={{ height: "40px" }} />
+        <div style={{ height: "24px" }} />
 
-        {/* Center Content: Logo + Official Association Name */}
+        {/* Center Content: Logo + Official Association Name in 3 lines */}
         <div
           style={{
             display: "flex",
@@ -103,7 +89,7 @@ export default async function OpenGraphImage() {
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            padding: "0 70px",
+            padding: "0 50px",
           }}
         >
           {/* Logo */}
@@ -112,20 +98,20 @@ export default async function OpenGraphImage() {
               src={logoBase64}
               alt="Dernek Logosu"
               style={{
-                width: "165px",
-                height: "165px",
+                width: "145px",
+                height: "145px",
                 borderRadius: "50%",
-                boxShadow: "0 12px 35px rgba(0, 0, 0, 0.7)",
-                border: "4px solid rgba(255, 255, 255, 0.95)",
-                marginBottom: "32px",
+                boxShadow: "0 10px 30px rgba(0, 0, 0, 0.18)",
+                border: "4px solid #ffffff",
+                marginBottom: "18px",
                 objectFit: "cover",
               }}
             />
           ) : (
             <div
               style={{
-                width: "150px",
-                height: "150px",
+                width: "140px",
+                height: "140px",
                 borderRadius: "50%",
                 background: "#ec1c24",
                 display: "flex",
@@ -134,7 +120,7 @@ export default async function OpenGraphImage() {
                 color: "#ffffff",
                 fontSize: "44px",
                 fontWeight: 900,
-                marginBottom: "32px",
+                marginBottom: "18px",
                 border: "4px solid #ffffff",
               }}
             >
@@ -142,21 +128,28 @@ export default async function OpenGraphImage() {
             </div>
           )}
 
-          {/* Association Full Official Name */}
+          {/* Association Full Official Name split into 3 clear lines */}
           <h1
             style={{
-              fontSize: "36px",
-              fontWeight: 800,
-              lineHeight: 1.35,
-              color: "#ffffff",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              fontSize: "39px",
+              fontWeight: 900,
+              lineHeight: 1.25,
+              color: "#09090b",
               margin: 0,
-              maxWidth: "960px",
+              maxWidth: "1050px",
               textAlign: "center",
-              letterSpacing: "-0.3px",
-              textShadow: "0 3px 12px rgba(0, 0, 0, 0.8)",
+              letterSpacing: "-0.5px",
             }}
           >
-            Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi Mezunları Derneği
+            <span style={{ color: "#09090b" }}>Keçiören Vatansever Şehit Tümgeneral</span>
+            <span style={{ color: "#09090b" }}>Aydoğan Aydın Fen Lisesi</span>
+            <span style={{ color: "#ec1c24", fontSize: "43px", marginTop: "4px" }}>
+              Mezunları Derneği
+            </span>
           </h1>
         </div>
 
@@ -173,8 +166,8 @@ export default async function OpenGraphImage() {
           <div
             style={{
               width: "100%",
-              height: "2px",
-              background: "linear-gradient(90deg, transparent 0%, #ec1c24 30%, #ec1c24 70%, transparent 100%)",
+              height: "3px",
+              background: "#ec1c24",
             }}
           />
 
@@ -182,8 +175,8 @@ export default async function OpenGraphImage() {
           <div
             style={{
               width: "100%",
-              height: "48px",
-              background: "rgba(180, 15, 25, 0.80)",
+              height: "54px",
+              background: "rgba(236, 28, 36, 0.88)",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
@@ -191,13 +184,24 @@ export default async function OpenGraphImage() {
           >
             <span
               style={{
-                fontSize: "20px",
-                fontWeight: 700,
+                display: "flex",
+                alignItems: "center",
                 color: "#ffffff",
-                letterSpacing: "1.2px",
+                letterSpacing: "0.5px",
               }}
             >
-              www.kaaflmezunder.org.tr
+              <span style={{ fontSize: "21px", fontWeight: 600, opacity: 0.95 }}>www.</span>
+              <span
+                style={{
+                  fontSize: "27px",
+                  fontWeight: 900,
+                  letterSpacing: "1px",
+                  textShadow: "0 2px 4px rgba(0,0,0,0.2)",
+                }}
+              >
+                kaaflmezunder
+              </span>
+              <span style={{ fontSize: "21px", fontWeight: 600, opacity: 0.95 }}>.org.tr</span>
             </span>
           </div>
         </div>
