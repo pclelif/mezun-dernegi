@@ -26,9 +26,11 @@ export const metadata: Metadata = {
 
 export default async function ContactPage() {
   const content = await getSiteContent("iletisim", contentSections.iletisim.defaults);
-  const mapQuery = content.map_location || content.address;
+  const mapQuery = content.map_location || content.address || "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420 Çankaya/Ankara";
   const mapEmbedUrl = mapQuery ? `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed` : "";
-  const mapLink = content.map_url || (mapQuery ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}` : "");
+  const mapLink = content.map_url && !content.map_url.includes("maps.app.goo.gl")
+    ? content.map_url
+    : `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery)}`;
 
   type IconComp = ComponentType<{ className?: string }>;
 
@@ -103,7 +105,7 @@ export default async function ContactPage() {
                     rel="noopener noreferrer"
                     className="absolute bottom-4 right-4 inline-flex touch-manipulation items-center gap-2 rounded-lg border border-zinc-200 bg-[var(--color-white)] px-4 py-2.5 text-sm font-semibold text-[var(--color-ink)] shadow-lg transition hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] active:border-[var(--color-accent)] active:text-[var(--color-accent)]"
                   >
-                    Google Maps’te Aç
+                    Yol Tarifi Al / Haritada Aç
                     <ExternalLink className="size-4 text-[var(--color-accent)]" />
                   </a>
                 ) : null}
