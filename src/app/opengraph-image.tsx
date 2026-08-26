@@ -75,7 +75,7 @@ export default async function OpenGraphImage() {
           />
         ) : null}
 
-        {/* Soft white translucent gradient overlay for clean contrast & visible school */}
+        {/* Light subtle translucent overlay so school photo is clearly seen while text remains 100% readable */}
         <div
           style={{
             position: "absolute",
@@ -84,14 +84,14 @@ export default async function OpenGraphImage() {
             width: "100%",
             height: "100%",
             background:
-              "radial-gradient(ellipse at center, rgba(255, 255, 255, 0.93) 0%, rgba(255, 255, 255, 0.83) 65%, rgba(255, 255, 255, 0.72) 100%)",
+              "linear-gradient(180deg, rgba(255, 255, 255, 0.70) 0%, rgba(255, 255, 255, 0.55) 45%, rgba(255, 255, 255, 0.72) 100%)",
           }}
         />
 
         {/* Top breathing space */}
-        <div style={{ height: "36px" }} />
+        <div style={{ height: "24px" }} />
 
-        {/* Center Content: Large Logo + School Name + Subtitle */}
+        {/* Center Content: Logo + Unified 3-line typography */}
         <div
           style={{
             display: "flex",
@@ -99,7 +99,7 @@ export default async function OpenGraphImage() {
             alignItems: "center",
             justifyContent: "center",
             textAlign: "center",
-            padding: "0 60px",
+            padding: "0 50px",
           }}
         >
           {/* Logo */}
@@ -108,20 +108,20 @@ export default async function OpenGraphImage() {
               src={logoBase64}
               alt="Dernek Logosu"
               style={{
-                width: "185px",
-                height: "185px",
+                width: "170px",
+                height: "170px",
                 borderRadius: "50%",
-                boxShadow: "0 16px 45px rgba(0, 0, 0, 0.20)",
+                boxShadow: "0 12px 35px rgba(0, 0, 0, 0.25)",
                 border: "5px solid #ffffff",
-                marginBottom: "20px",
+                marginBottom: "16px",
                 objectFit: "cover",
               }}
             />
           ) : (
             <div
               style={{
-                width: "170px",
-                height: "170px",
+                width: "160px",
+                height: "160px",
                 borderRadius: "50%",
                 background: "#ec1c24",
                 display: "flex",
@@ -130,7 +130,7 @@ export default async function OpenGraphImage() {
                 color: "#ffffff",
                 fontSize: "48px",
                 fontWeight: 700,
-                marginBottom: "20px",
+                marginBottom: "16px",
                 border: "5px solid #ffffff",
               }}
             >
@@ -138,64 +138,52 @@ export default async function OpenGraphImage() {
             </div>
           )}
 
-          {/* School Name */}
+          {/* 3 lines in exact same Inter Bold font and size */}
           <h1
             style={{
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
               justifyContent: "center",
-              fontSize: "34px",
+              fontSize: "38px",
               fontWeight: 700,
-              lineHeight: 1.3,
-              color: "#0f172a",
+              lineHeight: 1.25,
+              color: "#000000",
               margin: 0,
-              maxWidth: "1040px",
+              maxWidth: "1080px",
               textAlign: "center",
-              letterSpacing: "-0.4px",
+              letterSpacing: "-0.5px",
               fontFamily: "Inter",
+              textShadow:
+                "0 2px 10px rgba(255, 255, 255, 0.95), 0 0 20px rgba(255, 255, 255, 0.9)",
             }}
           >
-            <span style={{ color: "#0f172a" }}>Keçiören Vatansever Şehit Tümgeneral</span>
-            <span style={{ color: "#0f172a" }}>Aydoğan Aydın Fen Lisesi</span>
+            <span style={{ color: "#000000" }}>Keçiören Vatansever Şehit Tümgeneral</span>
+            <span style={{ color: "#000000" }}>Aydoğan Aydın Fen Lisesi</span>
+            <span style={{ color: "#ec1c24" }}>Mezunları Derneği</span>
           </h1>
-
-          {/* Association Subtitle */}
-          <span
-            style={{
-              fontSize: "28px",
-              fontWeight: 700,
-              color: "#ec1c24",
-              marginTop: "10px",
-              letterSpacing: "1.2px",
-              fontFamily: "Inter",
-            }}
-          >
-            Mezunları Derneği
-          </span>
         </div>
 
-        {/* Bottom semi-transparent gradient bar where school is subtly visible */}
+        {/* Bottom solid red header-matching accent bar */}
         <div
           style={{
             width: "100%",
+            height: "52px",
+            background: "#ec1c24",
             display: "flex",
-            flexDirection: "column",
             alignItems: "center",
-            background:
-              "linear-gradient(to top, rgba(215, 25, 33, 0.88) 0%, rgba(215, 25, 33, 0.65) 60%, rgba(215, 25, 33, 0.15) 95%, rgba(215, 25, 33, 0) 100%)",
-            paddingTop: "22px",
-            paddingBottom: "16px",
+            justifyContent: "center",
+            boxShadow: "0 -2px 10px rgba(0, 0, 0, 0.15)",
           }}
         >
           <span
             style={{
-              fontSize: "18px",
+              fontSize: "22px",
               fontWeight: 700,
               color: "#ffffff",
-              letterSpacing: "1.5px",
+              letterSpacing: "1px",
               fontFamily: "Inter",
-              textShadow: "0 2px 6px rgba(0, 0, 0, 0.3)",
+              textShadow: "0 1px 3px rgba(0, 0, 0, 0.3)",
             }}
           >
             www.kaaflmezunder.org.tr
