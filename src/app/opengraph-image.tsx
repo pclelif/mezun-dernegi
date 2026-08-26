@@ -166,7 +166,7 @@ export default async function OpenGraphImage() {
           </h1>
         </div>
 
-        {/* Bottom clean domain badge */}
+        {/* Bottom clean red domain badge with white text */}
         <div
           style={{
             display: "flex",
@@ -179,13 +179,14 @@ export default async function OpenGraphImage() {
             style={{
               fontSize: "20px",
               fontWeight: 700,
-              color: "#1e293b",
-              letterSpacing: "1.5px",
+              color: "#ffffff",
+              letterSpacing: "1.2px",
               fontFamily: "Inter",
-              background: "rgba(255, 255, 255, 0.75)",
-              padding: "6px 20px",
+              background: brandRed,
+              padding: "8px 24px",
               borderRadius: "9999px",
-              boxShadow: "0 2px 10px rgba(0, 0, 0, 0.08)",
+              boxShadow: "0 4px 15px rgba(236, 28, 36, 0.35)",
+              border: "2px solid #ffffff",
             }}
           >
             www.kaaflmezunder.org.tr
