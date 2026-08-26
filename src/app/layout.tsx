@@ -1,3 +1,4 @@
+import { Inter } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { CookieBanner } from "@/components/layout/cookie-banner";
@@ -5,6 +6,12 @@ import { SiteShell } from "@/components/layout/site-shell";
 import { associationDescription, associationName } from "@/config/site";
 import { getSiteContent } from "@/lib/supabase/queries";
 import "./globals.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -39,7 +46,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)" />
       </head>
-      <body className="bg-white text-black">
+      <body className={`${inter.className} bg-white text-black`}>
         <SiteShell settings={{ logo_url: logoUrl, address: contact.address, email: contact.email, instagram_url: contact.instagram_url, linkedin_url: contact.linkedin_url }}>{children}</SiteShell>
         <CookieBanner />
       </body>

@@ -94,7 +94,7 @@ export function Header({ logoUrl = "/logo-dernek.jpg", email = "kaaflmezunder@gm
             priority
             className="size-[4.5rem] shrink-0 rounded-full bg-white object-contain ring-2 ring-white/90 sm:size-20 xl:size-[5.5rem]"
           />
-          <span className="min-w-0 text-[13px] font-black leading-snug tracking-tight text-zinc-950 sm:text-[15px]">
+          <span className="min-w-0 text-[13px] font-bold leading-snug tracking-tight text-zinc-900 sm:text-[15px]">
             <span className="block sm:whitespace-nowrap">Keçiören Vatansever Şehit Tümgeneral</span>
             <span className="block sm:whitespace-nowrap">Aydoğan Aydın Fen Lisesi Mezunları Derneği</span>
           </span>
