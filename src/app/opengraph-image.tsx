@@ -183,7 +183,7 @@ export default async function OpenGraphImage() {
               background: brandRed,
               padding: "8px 28px",
               borderRadius: "9999px",
-              border: "2px solid #ffffff",
+              border: "4px solid #ffffff",
             }}
           >
             <span
