@@ -183,7 +183,6 @@ export default async function OpenGraphImage() {
               background: brandRed,
               padding: "8px 28px",
               borderRadius: "9999px",
-              boxShadow: "0 4px 15px rgba(236, 28, 36, 0.35)",
               border: "2px solid #ffffff",
             }}
           >
