@@ -29,11 +29,14 @@ export function HomeHero({ title, description, imageUrl }: { title: string; desc
         <p className="animate-fade-in-up animation-delay-150 mt-5 max-w-3xl text-center text-base leading-7 text-slate-600 md:text-lg md:leading-8">
           {description.split("\n").map((line, index) => (
             <span key={index} className="block">
-              {line}
+              {line}{" "}
             </span>
           ))}
         </p>
-        <div className="animate-fade-in-up animation-delay-300 mt-8 flex flex-wrap items-center justify-center gap-4">
+        <div
+          data-nosnippet
+          className="animate-fade-in-up animation-delay-300 mt-8 flex flex-wrap items-center justify-center gap-4"
+        >
           <Link
             href="/uyelik/dernek-uyeligi"
             className="inline-flex min-h-12 touch-manipulation items-center justify-center rounded-md bg-[#ec1c24] px-8 font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-red-700 hover:shadow-lg active:scale-95 active:bg-red-700 active:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
