@@ -26,14 +26,13 @@ export function HomeHero({ title, description, imageUrl }: { title: string; desc
         <h1 className="animate-fade-in-up text-balance text-2xl font-bold tracking-tight text-zinc-950 sm:text-3xl md:text-4xl lg:text-5xl">
           {title.replace(/Mezunları Derneği/gi, "Mezunlar Derneği")}
         </h1>
-        <div className="animate-fade-in-up animation-delay-150 mt-5 max-w-3xl space-y-2.5 text-center text-base leading-7 text-slate-600 md:text-lg md:leading-8">
-          {description
-            .split("\n")
-            .filter((line) => line.trim().length > 0)
-            .map((line, index) => (
-              <p key={index}>{line}</p>
-            ))}
-        </div>
+        <p className="animate-fade-in-up animation-delay-150 mt-5 max-w-3xl text-center text-base leading-7 text-slate-600 md:text-lg md:leading-8">
+          {description.split("\n").map((line, index) => (
+            <span key={index} className="block">
+              {line}
+            </span>
+          ))}
+        </p>
         <div className="animate-fade-in-up animation-delay-300 mt-8 flex flex-wrap items-center justify-center gap-4">
           <Link
             href="/uyelik/dernek-uyeligi"
