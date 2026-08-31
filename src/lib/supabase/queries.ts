@@ -1,21 +1,190 @@
 import { formatTurkishDate, type DbAnnouncement, type DbBoardMember, type DbEvent, type DbFaq, type DbGallery, type DbGalleryImage } from "@/lib/supabase/client";
 import { createServerAnonClient } from "@/lib/supabase/server";
 
-// Fallback demo verileri (Supabase kapalıyken veya veri henüz eklenmediğinde boş durumları temsil eder)
-const FALLBACK_EVENTS: DbEvent[] = [];
-const FALLBACK_ANNOUNCEMENTS: DbAnnouncement[] = [];
-const FALLBACK_GALLERIES: DbGallery[] = [];
-const FALLBACK_GALLERY_IMAGES: DbGalleryImage[] = [
+// Fallback demo verileri (Supabase kapalıyken veya veri henüz eklenmediğinde boş durumları engeller)
+const FALLBACK_EVENTS: DbEvent[] = [
   {
-    id: "fb-gimg-logo",
-    gallery_id: "fb-gal-logo",
-    image_url: "/logo-dernek.jpg",
-    display_order: 1,
-    created_at: new Date().toISOString(),
+    id: "fb-event-1",
+    title: "Test: Mezunlar Buluşması",
+    slug: "test-mezunlar-bulusmasi",
+    description: "Mezunlarımızı okulumuzda bir araya getirmeyi planladığımız dönem buluşması. Ayrıntılar ve buluşma saati netleştiğinde paylaşılacaktır.",
+    date: "2026-10-18",
+    time: "14:00",
+    location: "KAAFL Okul Bahçesi / Ankara",
+    status: "upcoming",
+    image_url: "/hero-bg.jpg",
+    is_published: true,
+    created_at: "2026-08-20T10:00:00.000Z",
+  },
+  {
+    id: "fb-event-2",
+    title: "Test: Mezunlar Kahvaltısı",
+    slug: "test-mezunlar-kahvaltisi",
+    description: "Dönem mezunlarımızla bir araya gelip sohbet edeceğimiz keyifli bir hafta sonu kahvaltı buluşması.",
+    date: "2026-11-15",
+    time: "10:30 - 13:00",
+    location: "Dernek Merkezi / Ankara",
+    status: "upcoming",
+    image_url: "/hero-bg.jpg",
+    is_published: true,
+    created_at: "2026-08-18T10:00:00.000Z",
+  },
+  {
+    id: "fb-event-3",
+    title: "Test: Tanışma Toplantısı",
+    slug: "test-tanisma-toplantisi",
+    description: "Derneğimizin kuruluşu sonrasında mezunlarımızla gerçekleştirdiğimiz ilk tanışma toplantısı.",
+    date: "2026-06-20",
+    time: "14:00",
+    location: "Dernek Merkezi / Ankara",
+    status: "past",
+    image_url: "/hero-bg.jpg",
+    is_published: true,
+    created_at: "2026-06-01T10:00:00.000Z",
   },
 ];
-const FALLBACK_BOARD: DbBoardMember[] = [];
-const FALLBACK_FAQS: DbFaq[] = [];
+
+const FALLBACK_ANNOUNCEMENTS: DbAnnouncement[] = [
+  {
+    id: "fb-ann-1",
+    title: "Test: Web Sitemiz Yayında",
+    slug: "test-web-sitemiz-yayinda",
+    content: "Derneğimizin resmi web sitesi mezunlarımızın kullanımına açılmıştır. Tüm duyuru ve etkinliklerimizi sitemiz üzerinden takip edebilirsiniz.",
+    date: "2026-08-25",
+    image_url: null,
+    is_published: true,
+    created_at: "2026-08-25T10:00:00.000Z",
+  },
+  {
+    id: "fb-ann-2",
+    title: "Test: Üyelik Başvuruları Hakkında",
+    slug: "test-uyelik-basvurulari-hakkinda",
+    content: "Derneğimize üye olmak isteyen mezunlarımız için üyelik formu ve başvuru adımları sitemizde yer almaktadır.",
+    date: "2026-08-20",
+    image_url: null,
+    is_published: true,
+    created_at: "2026-08-20T10:00:00.000Z",
+  },
+  {
+    id: "fb-ann-3",
+    title: "Test: İletişim Bilgileri Güncellemesi",
+    slug: "test-iletisim-bilgileri-guncellemesi",
+    content: "Mezunlarımızla daha kolay iletişim kurabilmek adına iletişim kanallarımız güncellenmiştir. Bizlere iletişim sayfamızdan ulaşabilirsiniz.",
+    date: "2026-08-15",
+    image_url: null,
+    is_published: true,
+    created_at: "2026-08-15T10:00:00.000Z",
+  },
+];
+
+const FALLBACK_GALLERIES: DbGallery[] = [
+  {
+    id: "fb-gal-1",
+    title: "Ana Galeri",
+    slug: "ana-galeri",
+    date: "2026-08-20",
+    cover_image_url: "/logo-dernek.jpg",
+    created_at: "2026-08-20T10:00:00.000Z",
+  },
+];
+
+const FALLBACK_GALLERY_IMAGES: DbGalleryImage[] = [
+  {
+    id: "fb-gimg-1",
+    gallery_id: "fb-gal-1",
+    image_url: "/logo-dernek.jpg",
+    display_order: 1,
+    created_at: "2026-08-20T10:00:00.000Z",
+  },
+  {
+    id: "fb-gimg-2",
+    gallery_id: "fb-gal-1",
+    image_url: "/hero-bg.jpg",
+    display_order: 2,
+    created_at: "2026-08-20T10:01:00.000Z",
+  },
+  {
+    id: "fb-gimg-3",
+    gallery_id: "fb-gal-1",
+    image_url: "/images/aydogan-aydin.jpg",
+    display_order: 3,
+    created_at: "2026-08-20T10:02:00.000Z",
+  },
+  {
+    id: "fb-gimg-4",
+    gallery_id: "fb-gal-1",
+    image_url: "/logo-dernek.jpg",
+    display_order: 4,
+    created_at: "2026-08-20T10:03:00.000Z",
+  },
+];
+
+const FALLBACK_BOARD: DbBoardMember[] = [
+  { id: "fb-bm-1", name: "Test", role: "Yönetim Kurulu Başkanı", board_type: "management", image_url: null, display_order: 1, created_at: "2026-08-20T10:00:00.000Z" },
+  { id: "fb-bm-2", name: "Test", role: "Yönetim Kurulu Üyesi", board_type: "management", image_url: null, display_order: 2, created_at: "2026-08-20T10:00:00.000Z" },
+  { id: "fb-bm-3", name: "Test", role: "Denetim Kurulu Başkanı", board_type: "audit", image_url: null, display_order: 1, created_at: "2026-08-20T10:00:00.000Z" },
+  { id: "fb-bm-4", name: "Test", role: "Denetim Kurulu Üyesi", board_type: "audit", image_url: null, display_order: 2, created_at: "2026-08-20T10:00:00.000Z" },
+  { id: "fb-bm-5", name: "Test", role: "Denetim Kurulu Üyesi", board_type: "audit", image_url: null, display_order: 3, created_at: "2026-08-20T10:00:00.000Z" },
+];
+
+const FALLBACK_FAQS: DbFaq[] = [
+  {
+    id: "fb-faq-1",
+    question: "Test: Mezunlar Derneği'nin amacı nedir?",
+    answer: "Derneğimiz, mezunlarımız arasındaki sosyal ve mesleki bağı kuvvetlendirmek, okulumuzun değerlerini yaşatmak ve öğrencilere destek olmak amacıyla faaliyet göstermektedir.",
+    category: "general",
+    display_order: 1,
+    created_at: "2026-08-20T10:00:00.000Z",
+  },
+  {
+    id: "fb-faq-2",
+    question: "Test: Kimler derneğimize üye olabilir?",
+    answer: "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi mezunları ve dernek tüzüğümüzde belirtilen şartları sağlayan tüm mensuplarımız üyelik başvurusunda bulunabilir.",
+    category: "general",
+    display_order: 2,
+    created_at: "2026-08-20T10:00:00.000Z",
+  },
+  {
+    id: "fb-faq-3",
+    question: "Test: Dernek tüzüğüne nereden ulaşabilirim?",
+    answer: "Dernek tüzüğümüzün güncel ve tam metnine web sitemizin Hakkımızda menüsü altında yer alan Dernek Tüzüğü sayfasından ulaşabilirsiniz.",
+    category: "general",
+    display_order: 3,
+    created_at: "2026-08-20T10:00:00.000Z",
+  },
+  {
+    id: "fb-faq-4",
+    question: "Test: Üyelik başvuru süreci nasıl işler?",
+    answer: "Web sitemizdeki üyelik formunu indirip doldurduktan sonra, adli sicil kaydı ve giriş aidatı dekontu ile birlikte derneğimize ileterek başvurunuzu başlatabilirsiniz.",
+    category: "membership",
+    display_order: 1,
+    created_at: "2026-08-20T10:00:00.000Z",
+  },
+  {
+    id: "fb-faq-5",
+    question: "Test: Üyelik başvurusu ne kadar sürede sonuçlanır?",
+    answer: "Yönetim kurulumuz tarafından yapılan inceleme sonrasında en geç 30 gün içinde tarafınıza bilgilendirme yapılır.",
+    category: "membership",
+    display_order: 2,
+    created_at: "2026-08-20T10:00:00.000Z",
+  },
+  {
+    id: "fb-faq-6",
+    question: "Test: Dernek aidatları hangi dönemlerde ödenir?",
+    answer: "Dernek aidatları yılda 4 dönem (Mart, Haziran, Eylül, Aralık) olarak belirlenen banka hesabımıza açıklama belirtilerek ödenir.",
+    category: "dues",
+    display_order: 1,
+    created_at: "2026-08-20T10:00:00.000Z",
+  },
+  {
+    id: "fb-faq-7",
+    question: "Test: Derneğe nasıl bağış yapabilirim?",
+    answer: "Resmi banka IBAN numaramıza 'Bağış' açıklaması ve ad-soyadınızı yazarak dilediğiniz miktarda bağışta bulunabilirsiniz.",
+    category: "dues",
+    display_order: 2,
+    created_at: "2026-08-20T10:00:00.000Z",
+  },
+];
 
 /** Supabase URL ve Key kontrolü - DNS zaman aşımını (10-20 sn yavaşlığı) engellemek için hızlı denetim */
 function isSupabaseConfigured(): boolean {

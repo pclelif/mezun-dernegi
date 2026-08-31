@@ -5,7 +5,7 @@ export type NavigationItem = {
 };
 
 export const corporateNavigation: NavigationItem[] = [
-  { label: "Dernek Hakkında", href: "/hakkimizda/dernek-hakkinda" },
+  { label: "Hakkımızda", href: "/hakkimizda/dernek-hakkinda" },
   { label: "Aydoğan Aydın Kimdir?", href: "/hakkimizda/aydogan-aydin" },
   { label: "Vizyon ve Misyon", href: "/hakkimizda/vizyon-ve-misyon" },
   { label: "Başkanın Mesajı", href: "/hakkimizda/baskanin-mesaji" },

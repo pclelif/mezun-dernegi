@@ -1,6 +1,6 @@
 "use client";
 
-import { LoaderCircle, LockKeyhole } from "lucide-react";
+import { Eye, EyeOff, LoaderCircle, LockKeyhole } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
@@ -38,6 +38,7 @@ export default function AdminLoginPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -112,16 +113,34 @@ export default function AdminLoginPage() {
             E-posta
             <input name="email" type="email" autoComplete="email" required className={fieldClass} />
           </label>
-          <label className="block text-sm font-semibold text-zinc-800">
-            Şifre
-            <input
-              name="password"
-              type="password"
-              autoComplete="current-password"
-              required
-              className={fieldClass}
-            />
-          </label>
+          <div className="block">
+            <label htmlFor="admin-password" className="block text-sm font-semibold text-zinc-800">
+              Şifre
+            </label>
+            <div className="relative mt-1.5">
+              <input
+                id="admin-password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="current-password"
+                required
+                className="w-full rounded-md border border-zinc-300 bg-white pl-3 pr-10 py-2.5 text-sm outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-zinc-400 transition hover:text-zinc-700 focus:outline-none"
+                aria-label={showPassword ? "Şifreyi gizle" : "Şifreyi göster"}
+                title={showPassword ? "Şifreyi gizle" : "Şifreyi göster"}
+              >
+                {showPassword ? (
+                  <EyeOff className="size-4.5 text-zinc-500" aria-hidden="true" />
+                ) : (
+                  <Eye className="size-4.5 text-zinc-500" aria-hidden="true" />
+                )}
+              </button>
+            </div>
+          </div>
 
           {error ? (
             <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">

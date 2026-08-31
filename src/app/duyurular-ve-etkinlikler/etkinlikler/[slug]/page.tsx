@@ -87,6 +87,18 @@ export default async function EventDetailPage({ params }: PageProps) {
       />
       <div className="min-h-[80vh] bg-slate-100/70 px-4 py-8 sm:py-12 flex items-center justify-center">
         <article className="w-full max-w-2xl overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-xl transition-all">
+          {/* Full-Bleed Edge-to-Edge Image */}
+          {event.image_url ? (
+            <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-900">
+              <img
+                src={event.image_url}
+                alt={`${event.title} etkinlik görseli`}
+                className="w-full h-full object-cover object-center block"
+                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
+              />
+            </div>
+          ) : null}
+
           {/* Top Header Bar */}
           <div className="flex items-center justify-between border-b border-zinc-100 bg-slate-50/80 px-6 py-4">
             <div className="flex items-center gap-2">
@@ -104,19 +116,6 @@ export default async function EventDetailPage({ params }: PageProps) {
 
           {/* Card Body */}
           <div className="p-6 sm:p-8 space-y-5">
-            {/* Optional Image */}
-            {event.image_url ? (
-              <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-zinc-100 bg-slate-50 shadow-xs">
-                <Image
-                  src={event.image_url}
-                  alt={`${event.title} etkinlik görseli`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 650px"
-                  className="object-contain"
-                />
-              </div>
-            ) : null}
-
             {/* Title */}
             <h1 className="text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl leading-snug">
               {event.title}
