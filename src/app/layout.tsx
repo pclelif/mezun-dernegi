@@ -140,7 +140,6 @@ export default async function RootLayout({
   return (
     <html
       lang="tr"
-      data-scroll-behavior="smooth"
       className="light"
       style={{ colorScheme: "only light" }}
     >

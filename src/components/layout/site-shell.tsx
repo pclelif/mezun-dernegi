@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 
@@ -10,6 +10,16 @@ type SiteSettings = { logo_url: string; address: string; email: string; instagra
 export function SiteShell({ children, settings }: { children: ReactNode; settings: SiteSettings }) {
   const pathname = usePathname();
   const isAdmin = pathname.startsWith("/admin");
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (!window.location.hash) {
+        window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+      }
+    }
+  }, [pathname]);
 
   if (isAdmin) {
     return <>{children}</>;

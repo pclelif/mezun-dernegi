@@ -22,7 +22,6 @@
     -webkit-forced-color-adjust: none !important;
   }
   html {
-    scroll-behavior: smooth;
     color-scheme: only light !important;
     background-color: #ffffff !important;
     color: #000000 !important;
