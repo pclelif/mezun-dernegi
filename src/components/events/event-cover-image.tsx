@@ -26,7 +26,7 @@ export function EventCoverImage({ photos, alt }: EventCoverImageProps) {
   return (
     <>
       <div
-        className="group relative aspect-[16/9] w-full max-w-lg cursor-pointer overflow-hidden rounded-xl border border-zinc-200/80 bg-slate-50 transition-all duration-200 hover:border-zinc-300 hover:shadow-sm"
+        className="group relative ml-[1.5px] aspect-[16/9] w-full max-w-lg cursor-pointer overflow-hidden rounded-xl border border-zinc-200/80 bg-slate-50 transition-all duration-200 hover:border-zinc-300 hover:shadow-sm"
         onClick={() => setIsOpen(true)}
       >
         {validPhotos.map((photo, index) => (
@@ -35,7 +35,7 @@ export function EventCoverImage({ photos, alt }: EventCoverImageProps) {
             key={`${photo}-${index}`}
             src={photo}
             alt={index === currentIndex ? alt : ""}
-            className={`absolute inset-0 size-full object-cover transition-opacity duration-500 ${
+            className={`absolute inset-0 size-full object-contain transition-opacity duration-500 ${
               index === currentIndex ? "opacity-100" : "opacity-0"
             }`}
           />
