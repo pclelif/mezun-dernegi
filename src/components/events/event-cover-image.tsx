@@ -16,15 +16,14 @@ export function EventCoverImage({ src, alt }: EventCoverImageProps) {
   return (
     <>
       <div
-        className="relative aspect-[16/9] max-h-64 sm:max-h-72 w-full overflow-hidden rounded-xl border border-zinc-200/80 bg-slate-50 cursor-pointer group flex items-center justify-center p-2.5 transition-all duration-200 hover:border-zinc-300 hover:shadow-sm"
+        className="group relative aspect-square w-full max-w-64 cursor-pointer overflow-hidden rounded-xl border border-zinc-200/80 bg-slate-50 transition-all duration-200 hover:border-zinc-300 hover:shadow-sm sm:max-w-72"
         onClick={() => setIsOpen(true)}
       >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={src}
           alt={alt}
-          className="size-full object-contain block transition-transform duration-300 group-hover:scale-[1.01]"
-          style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center" }}
+          className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
         />
       </div>
 
