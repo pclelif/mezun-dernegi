@@ -160,7 +160,6 @@ export function ImageUploader({
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
-  const [activeCropAspectRatio, setActiveCropAspectRatio] = useState(cropAspectRatio ?? 1);
 
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
@@ -232,7 +231,6 @@ export function ImageUploader({
         setCropFiles(filesToUpload);
         setCropIndex(0);
         setEditingIndex(null);
-        setActiveCropAspectRatio(cropAspectRatio);
         setCrop({ x: 0, y: 0 });
         setZoom(1);
         setCroppedAreaPixels(null);
@@ -247,7 +245,7 @@ export function ImageUploader({
   async function applyCrop() {
     const file = cropFiles[cropIndex];
     if (!file || !croppedAreaPixels) return;
-    const cropped = await cropImageFileByArea(file, croppedAreaPixels, activeCropAspectRatio);
+    const cropped = await cropImageFileByArea(file, croppedAreaPixels, cropAspectRatio ?? 1);
     const next = [...cropFiles];
     next[cropIndex] = cropped;
     if (cropIndex + 1 < next.length) {
@@ -275,14 +273,12 @@ export function ImageUploader({
       const response = await fetch(url);
       if (!response.ok) throw new Error("Görsel düzenleme için açılamadı.");
       const blob = await response.blob();
-      const file = new File([blob], `duzenlenmis-gorsel-${Date.now()}.jpg`, {
+      const file = new File([blob], "duzenlenmis-gorsel.jpg", {
         type: blob.type || "image/jpeg",
-        lastModified: Date.now(),
       });
       setCropFiles([file]);
       setCropIndex(0);
       setEditingIndex(index);
-      setActiveCropAspectRatio(cropAspectRatio);
       setCrop({ x: 0, y: 0 });
       setZoom(1);
       setCroppedAreaPixels(null);
@@ -492,34 +488,8 @@ export function ImageUploader({
                 {cropFiles.length > 1 ? ` (${cropIndex + 1} / ${cropFiles.length})` : ""}
               </h2>
               <p className="mt-0.5 text-sm text-zinc-500">
-                Fotoğrafı sürükleyin; yakınlaştırma ve oran seçimiyle görünmesini istediğiniz alanı ayarlayın.
+                Fotoğrafı sürükleyerek istediğiniz alanı kadraja alın. Fare tekerleğiyle yakınlaştırabilirsiniz.
               </p>
-            </div>
-
-            <div className="flex flex-wrap gap-2" aria-label="Kırpma oranı">
-              {[
-                { label: "Kare", value: 1 },
-                { label: "4:3", value: 4 / 3 },
-                { label: "4:5", value: 4 / 5 },
-                { label: "16:9", value: 16 / 9 },
-              ].map((preset) => (
-                <button
-                  key={preset.label}
-                  type="button"
-                  onClick={() => {
-                    setActiveCropAspectRatio(preset.value);
-                    setCrop({ x: 0, y: 0 });
-                    setZoom(1);
-                  }}
-                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
-                    activeCropAspectRatio === preset.value
-                      ? "bg-red-600 text-white"
-                      : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
-                  }`}
-                >
-                  {preset.label}
-                </button>
-              ))}
             </div>
 
             {/* Crop canvas area */}
@@ -531,7 +501,7 @@ export function ImageUploader({
                 image={currentCropUrl}
                 crop={crop}
                 zoom={zoom}
-                aspect={activeCropAspectRatio}
+                aspect={cropAspectRatio}
                 onCropChange={setCrop}
                 onZoomChange={setZoom}
                 onCropComplete={onCropComplete}
@@ -542,20 +512,6 @@ export function ImageUploader({
                 }}
               />
             </div>
-
-            {/* Zoom slider */}
-            <label className="flex items-center gap-3 text-sm font-semibold text-zinc-700">
-              <span className="w-20 shrink-0">Yakınlaştır</span>
-              <input
-                type="range"
-                min={1}
-                max={3}
-                step={0.05}
-                value={zoom}
-                onChange={(e) => setZoom(Number(e.target.value))}
-                className="w-full accent-red-600"
-              />
-            </label>
 
             {cropFiles.length > 1 ? (
               <div className="flex gap-2 overflow-x-auto pb-1" aria-label="Düzenlenecek fotoğraflar">
