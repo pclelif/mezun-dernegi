@@ -2,7 +2,7 @@
 
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
-import { GripVertical, ImagePlus, LoaderCircle, Trash2 } from "lucide-react";
+import { GripVertical, ImagePlus, LoaderCircle, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useId, useState, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -154,11 +154,13 @@ export function ImageUploader({
   const [error, setError] = useState<string | null>(null);
   const [cropFiles, setCropFiles] = useState<File[]>([]);
   const [cropIndex, setCropIndex] = useState(0);
+  const [editingIndex, setEditingIndex] = useState<number | null>(null);
 
   // react-easy-crop state
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
+  const [activeCropAspectRatio, setActiveCropAspectRatio] = useState(cropAspectRatio ?? 1);
 
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
@@ -171,7 +173,7 @@ export function ImageUploader({
     setCroppedAreaPixels(croppedPixels);
   }, []);
 
-  async function uploadFiles(filesToUpload: File[]) {
+  async function uploadFiles(filesToUpload: File[], replaceIndex?: number) {
     setUploading(true);
     try {
       const temporaryPreviews = filesToUpload.map((file) => URL.createObjectURL(file));
@@ -187,7 +189,13 @@ export function ImageUploader({
         if (uploadError) throw uploadError;
         uploadedUrls.push(supabase.storage.from("media").getPublicUrl(path).data.publicUrl);
       }
-      onChange(multiple ? [...value, ...uploadedUrls] : uploadedUrls);
+      if (replaceIndex !== undefined) {
+        const updated = [...value];
+        updated[replaceIndex] = uploadedUrls[0];
+        onChange(updated);
+      } else {
+        onChange(multiple ? [...value, ...uploadedUrls] : uploadedUrls);
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Görsel yüklenemedi.");
     } finally {
@@ -223,6 +231,8 @@ export function ImageUploader({
       if (cropAspectRatio) {
         setCropFiles(filesToUpload);
         setCropIndex(0);
+        setEditingIndex(null);
+        setActiveCropAspectRatio(cropAspectRatio);
         setCrop({ x: 0, y: 0 });
         setZoom(1);
         setCroppedAreaPixels(null);
@@ -236,8 +246,8 @@ export function ImageUploader({
 
   async function applyCrop() {
     const file = cropFiles[cropIndex];
-    if (!file || !cropAspectRatio || !croppedAreaPixels) return;
-    const cropped = await cropImageFileByArea(file, croppedAreaPixels, cropAspectRatio);
+    if (!file || !croppedAreaPixels) return;
+    const cropped = await cropImageFileByArea(file, croppedAreaPixels, activeCropAspectRatio);
     const next = [...cropFiles];
     next[cropIndex] = cropped;
     if (cropIndex + 1 < next.length) {
@@ -246,10 +256,38 @@ export function ImageUploader({
       setCrop({ x: 0, y: 0 });
       setZoom(1);
       setCroppedAreaPixels(null);
+    } else if (editingIndex !== null) {
+      setCropFiles([]);
+      setCropIndex(0);
+      await uploadFiles(next, editingIndex);
+      setEditingIndex(null);
     } else {
       setCropFiles([]);
       setCropIndex(0);
       await uploadFiles(next);
+    }
+  }
+
+  async function editImage(url: string, index: number) {
+    if (!cropAspectRatio) return;
+    setError(null);
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Görsel düzenleme için açılamadı.");
+      const blob = await response.blob();
+      const file = new File([blob], `duzenlenmis-gorsel-${Date.now()}.jpg`, {
+        type: blob.type || "image/jpeg",
+        lastModified: Date.now(),
+      });
+      setCropFiles([file]);
+      setCropIndex(0);
+      setEditingIndex(index);
+      setActiveCropAspectRatio(cropAspectRatio);
+      setCrop({ x: 0, y: 0 });
+      setZoom(1);
+      setCroppedAreaPixels(null);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Görsel düzenleme için açılamadı.");
     }
   }
 
@@ -343,9 +381,7 @@ export function ImageUploader({
                   className={`relative group overflow-hidden rounded-xl border bg-white shadow-xs transition-all duration-150 ${
                     multiple ? "cursor-grab active:cursor-grabbing" : ""
                   } ${
-                    isSquare
-                      ? "aspect-square w-full"
-                      : "w-full aspect-video min-h-[140px] sm:min-h-[160px]"
+                    isSquare ? "w-full" : "w-full min-h-[140px] sm:min-h-[160px]"
                   } ${
                     isDragging
                       ? "opacity-30 scale-[0.98] border-dashed border-red-400 bg-slate-100"
@@ -353,6 +389,7 @@ export function ImageUploader({
                       ? "border-2 border-red-500 ring-2 ring-red-500/20 scale-[1.02] shadow-md"
                       : "border-zinc-200 hover:border-zinc-300 hover:shadow-sm"
                   }`}
+                  style={{ aspectRatio: cropAspectRatio ?? (isSquare ? 1 : 16 / 9) }}
                 >
                   {/* Order sequence number badge */}
                   {multiple && (
@@ -366,7 +403,7 @@ export function ImageUploader({
                   <img
                     src={url}
                     alt=""
-                    className="size-full object-contain p-2.5 bg-white select-none pointer-events-none"
+                    className="size-full select-none object-cover pointer-events-none"
                   />
 
                   {isTemporary ? (
@@ -374,15 +411,28 @@ export function ImageUploader({
                       <LoaderCircle className="size-6 animate-spin" aria-label="Yükleniyor" />
                     </div>
                   ) : (
-                    <button
-                      type="button"
-                      onClick={() => void removeImage(url)}
-                      className="absolute top-2 right-2 grid size-7.5 place-items-center rounded-full bg-white/95 text-red-600 shadow-sm transition hover:bg-red-600 hover:text-white cursor-pointer z-10"
-                      aria-label="Görseli sil"
-                      title="Görseli sil"
-                    >
-                      <Trash2 className="size-3.5" aria-hidden="true" />
-                    </button>
+                    <div className="absolute right-2 top-2 z-10 flex gap-1.5 opacity-100 transition sm:opacity-0 sm:group-hover:opacity-100">
+                      {cropAspectRatio ? (
+                        <button
+                          type="button"
+                          onClick={() => void editImage(url, index)}
+                          className="grid size-7.5 place-items-center rounded-full bg-white/95 text-zinc-700 shadow-sm transition hover:bg-zinc-900 hover:text-white"
+                          aria-label="Görseli düzenle"
+                          title="Görseli düzenle"
+                        >
+                          <Pencil className="size-3.5" aria-hidden="true" />
+                        </button>
+                      ) : null}
+                      <button
+                        type="button"
+                        onClick={() => void removeImage(url)}
+                        className="grid size-7.5 place-items-center rounded-full bg-white/95 text-red-600 shadow-sm transition hover:bg-red-600 hover:text-white"
+                        aria-label="Görseli sil"
+                        title="Görseli sil"
+                      >
+                        <Trash2 className="size-3.5" aria-hidden="true" />
+                      </button>
+                    </div>
                   )}
                 </div>
               );
@@ -442,8 +492,34 @@ export function ImageUploader({
                 {cropFiles.length > 1 ? ` (${cropIndex + 1} / ${cropFiles.length})` : ""}
               </h2>
               <p className="mt-0.5 text-sm text-zinc-500">
-                Görünmesini istediğiniz alanı sürükleyerek seçin. Kaydırarak veya yakınlaştırarak ayarlayabilirsiniz.
+                Fotoğrafı sürükleyin; yakınlaştırma ve oran seçimiyle görünmesini istediğiniz alanı ayarlayın.
               </p>
+            </div>
+
+            <div className="flex flex-wrap gap-2" aria-label="Kırpma oranı">
+              {[
+                { label: "Kare", value: 1 },
+                { label: "4:3", value: 4 / 3 },
+                { label: "4:5", value: 4 / 5 },
+                { label: "16:9", value: 16 / 9 },
+              ].map((preset) => (
+                <button
+                  key={preset.label}
+                  type="button"
+                  onClick={() => {
+                    setActiveCropAspectRatio(preset.value);
+                    setCrop({ x: 0, y: 0 });
+                    setZoom(1);
+                  }}
+                  className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-colors ${
+                    activeCropAspectRatio === preset.value
+                      ? "bg-red-600 text-white"
+                      : "bg-zinc-100 text-zinc-700 hover:bg-zinc-200"
+                  }`}
+                >
+                  {preset.label}
+                </button>
+              ))}
             </div>
 
             {/* Crop canvas area */}
@@ -455,7 +531,7 @@ export function ImageUploader({
                 image={currentCropUrl}
                 crop={crop}
                 zoom={zoom}
-                aspect={cropAspectRatio}
+                aspect={activeCropAspectRatio}
                 onCropChange={setCrop}
                 onZoomChange={setZoom}
                 onCropComplete={onCropComplete}
@@ -481,13 +557,47 @@ export function ImageUploader({
               />
             </label>
 
+            {cropFiles.length > 1 ? (
+              <div className="flex gap-2 overflow-x-auto pb-1" aria-label="Düzenlenecek fotoğraflar">
+                {cropFiles.map((file, index) => (
+                  <button
+                    key={`${file.name}-${index}`}
+                    type="button"
+                    onClick={() => {
+                      setCropIndex(index);
+                      setCrop({ x: 0, y: 0 });
+                      setZoom(1);
+                    }}
+                    className={`size-12 shrink-0 overflow-hidden rounded-md border-2 ${
+                      index === cropIndex ? "border-red-600" : "border-transparent"
+                    }`}
+                    aria-label={`${index + 1}. fotoğrafı düzenle`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={URL.createObjectURL(file)} alt="" className="size-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            ) : null}
+
             <div className="flex justify-end gap-3 border-t border-zinc-100 pt-3">
               <button
                 type="button"
-                onClick={() => { setCropFiles([]); setCropIndex(0); }}
+                onClick={() => { setCropFiles([]); setCropIndex(0); setEditingIndex(null); }}
                 className="rounded-md px-3 py-2 text-sm font-semibold text-zinc-600 hover:bg-zinc-100"
               >
                 İptal
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setCrop({ x: 0, y: 0 });
+                  setZoom(1);
+                }}
+                className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-semibold text-zinc-600 hover:bg-zinc-100"
+              >
+                <RotateCcw className="size-3.5" aria-hidden="true" />
+                Sıfırla
               </button>
               <button
                 type="button"
