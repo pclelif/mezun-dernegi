@@ -42,9 +42,7 @@ export default async function DernekTuzuguPage() {
         <div className="-mt-4 sm:-mt-8">
           {about.charter_url ? (
             <a
-              href={about.charter_url}
-              target="_blank"
-              rel="noopener noreferrer"
+              href={`${about.charter_url}?download=DERNEK_TUZUGU.pdf`}
               download
               className="inline-flex min-h-11 touch-manipulation items-center justify-center gap-2 rounded-md bg-[#ec1c24] px-7 text-sm font-semibold text-white transition-colors hover:bg-red-700 active:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
             >

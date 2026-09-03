@@ -96,9 +96,8 @@ export default async function EventDetailPage({ params }: PageProps) {
         url={`/duyurular-ve-etkinlikler/etkinlikler/${slug}`}
         imageUrl={coverImage}
       />
-      <div className="min-h-[80vh] bg-slate-100/70">
-        <div className="container-site py-8 sm:py-12">
-          <article className="w-full max-w-2xl overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-xl transition-all">
+      <div className="flex min-h-[80vh] items-center justify-center bg-slate-100/70 px-4 py-8 sm:py-12">
+        <article className="w-full max-w-2xl overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-xl transition-all">
           {/* Top Header Bar */}
           <div className="flex items-center justify-between border-b border-zinc-100 bg-slate-50/80 px-6 py-4">
             <div className="flex items-center gap-2">
@@ -142,11 +141,7 @@ export default async function EventDetailPage({ params }: PageProps) {
             </div>
 
             {/* Scaled & Balanced Cover Image */}
-            {coverImage ? (
-              <div className="translate-x-[1.5px]">
-                <EventCoverImage photos={photos} alt={`${event.title} görseli`} />
-              </div>
-            ) : null}
+            {coverImage ? <EventCoverImage photos={photos} alt={`${event.title} görseli`} /> : null}
 
             {/* Description */}
             <div className="rounded-xl border border-zinc-100 bg-slate-50/50 p-4 sm:p-5 text-sm leading-relaxed text-zinc-700 whitespace-pre-line">
@@ -157,8 +152,7 @@ export default async function EventDetailPage({ params }: PageProps) {
 
           {/* Footer Actions */}
           <DetailFooterLink href="/duyurular-ve-etkinlikler/etkinlikler" label="Tüm Etkinlikleri İncele" />
-          </article>
-        </div>
+        </article>
       </div>
     </>
   );
