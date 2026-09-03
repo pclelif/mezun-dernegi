@@ -3,7 +3,7 @@
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
 import { GripVertical, ImagePlus, LoaderCircle, Pencil, RotateCcw, Trash2 } from "lucide-react";
-import { useId, useState, useCallback, useMemo } from "react";
+import { forwardRef, useId, useState, useCallback, useImperativeHandle, useMemo } from "react";
 import { createClient, type ImageCrop } from "@/lib/supabase/client";
 import { CroppedImage } from "@/components/shared/cropped-image";
 
@@ -21,6 +21,10 @@ type ImageUploaderProps = {
   cropAspectRatio?: number;
   /** Show existing images solely to edit their card crops. */
   editOnly?: boolean;
+};
+
+export type ImageUploaderHandle = {
+  edit: (url: string, index: number) => void;
 };
 
 async function normalizedCrop(file: File, pixelCrop: Area): Promise<ImageCrop> {
@@ -52,7 +56,7 @@ function generateUUID() {
   });
 }
 
-export function ImageUploader({
+export const ImageUploader = forwardRef<ImageUploaderHandle, ImageUploaderProps>(function ImageUploader({
   value,
   onChange,
   crops = [],
@@ -62,7 +66,7 @@ export function ImageUploader({
   aspectRatio,
   cropAspectRatio,
   editOnly = false,
-}: ImageUploaderProps) {
+}, ref) {
   const inputId = useId();
   const [uploading, setUploading] = useState(false);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
@@ -216,6 +220,10 @@ export function ImageUploader({
     }
   }
 
+  useImperativeHandle(ref, () => ({
+    edit: (url, index) => void editImage(url, index),
+  }));
+
   async function removeImage(url: string) {
     setError(null);
     try {
@@ -276,7 +284,7 @@ export function ImageUploader({
 
   return (
     <div className="flex flex-col justify-between space-y-4">
-      <div className="space-y-3">
+      {!editOnly ? <div className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
             <label htmlFor={inputId} className="block text-sm font-semibold text-zinc-800">
@@ -372,7 +380,7 @@ export function ImageUploader({
             })}
           </div>
         ) : null}
-      </div>
+      </div> : null}
 
       {!editOnly ? <div>
         <label
@@ -503,4 +511,4 @@ export function ImageUploader({
       ) : null}
     </div>
   );
-}
+});

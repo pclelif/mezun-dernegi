@@ -1,8 +1,8 @@
 "use client";
 
-import { ArrowUpDown, ChevronDown, GripVertical, LoaderCircle, Trash2, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
-import { ImageUploader } from "@/components/admin/ImageUploader";
+import { ArrowUpDown, ChevronDown, GripVertical, LoaderCircle, Pencil, Trash2, X } from "lucide-react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ImageUploader, type ImageUploaderHandle } from "@/components/admin/ImageUploader";
 import { adminDbMutate } from "@/lib/supabase/admin-mutate";
 import { createClient, type DbGalleryImage, type ImageCrop } from "@/lib/supabase/client";
 
@@ -33,6 +33,7 @@ export default function AdminGalleryPage() {
   const [deletingId, setDeletingId] = useState<string | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const existingImageEditorRef = useRef<ImageUploaderHandle>(null);
   const [sortBy, setSortBy] = useState<string>(() => {
     if (typeof window === "undefined") return "created-desc";
     try {
@@ -248,25 +249,16 @@ export default function AdminGalleryPage() {
         </button>
       </section>
 
-      {images.length > 0 ? (
-        <details className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
-          <summary className="cursor-pointer text-sm font-semibold text-zinc-800">
-            Mevcut fotoğrafların kart görünümünü düzenle
-          </summary>
-          <div className="mt-5 border-t border-zinc-100 pt-5">
-            <ImageUploader
-              value={images.map((image) => image.image_url)}
-              onChange={() => undefined}
-              crops={images.map((image) => image.crop ?? null)}
-              onCropsChange={(nextCrops) => void handleExistingCropsChange(nextCrops)}
-              multiple
-              editOnly
-              label="Fotoğraflar"
-              cropAspectRatio={4 / 3}
-            />
-          </div>
-        </details>
-      ) : null}
+      <ImageUploader
+        ref={existingImageEditorRef}
+        value={images.map((image) => image.image_url)}
+        onChange={() => undefined}
+        crops={images.map((image) => image.crop ?? null)}
+        onCropsChange={(nextCrops) => void handleExistingCropsChange(nextCrops)}
+        multiple
+        editOnly
+        cropAspectRatio={4 / 3}
+      />
 
       {loading ? (
         <p className="flex items-center justify-center gap-2 py-16 text-sm text-slate-500">
@@ -312,6 +304,18 @@ export default function AdminGalleryPage() {
                     className="size-full object-contain pointer-events-none select-none"
                     style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center" }}
                   />
+                  <button
+                    type="button"
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      existingImageEditorRef.current?.edit(photo.image_url, index);
+                    }}
+                    className="absolute right-2 top-2 grid size-8 place-items-center rounded-full bg-white/95 text-zinc-700 shadow-sm transition hover:bg-zinc-900 hover:text-white"
+                    aria-label="Fotoğraf görünümünü düzenle"
+                    title="Fotoğraf görünümünü düzenle"
+                  >
+                    <Pencil className="size-3.5" aria-hidden="true" />
+                  </button>
                   {sortBy === "manual" && (
                     <div className="absolute top-2 left-2 z-10 rounded-md bg-black/60 p-1.5 text-white backdrop-blur-sm transition-colors hover:text-red-500">
                       <GripVertical className="size-4" />
