@@ -3,12 +3,15 @@
 import { ArrowRight, ChevronLeft, ChevronRight, Images, X } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
+import { CroppedImage } from "@/components/shared/cropped-image";
+import type { ImageCrop } from "@/lib/supabase/client";
 
 export type GalleryShowcaseItem = {
   id: string;
   title: string;
   href: string;
   imageUrl: string | null;
+  crop?: ImageCrop | null;
   date?: string;
   dateTime?: string;
 };
@@ -81,11 +84,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
-                  <img
-                    src={item.imageUrl}
-                    alt={item.title || "Galeri fotoğrafı"}
-                    className="absolute inset-0 size-full object-contain p-3 transition-transform duration-300 hover:scale-105"
-                  />
+                  <CroppedImage src={item.imageUrl} alt={item.title || "Galeri fotoğrafı"} crop={item.crop} className={item.crop ? "" : "absolute inset-0 size-full object-contain p-3 transition-transform duration-300 hover:scale-105"} />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
                     <Images className="size-12" />
@@ -158,11 +157,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
-                  <img
-                    src={item.imageUrl}
-                    alt={item.title || "Galeri fotoğrafı"}
-                    className="absolute inset-0 size-full object-contain p-3 transition-transform duration-300 hover:scale-105"
-                  />
+                  <CroppedImage src={item.imageUrl} alt={item.title || "Galeri fotoğrafı"} crop={item.crop} className={item.crop ? "" : "absolute inset-0 size-full object-contain p-3 transition-transform duration-300 hover:scale-105"} />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
                     <Images className="size-12" />

@@ -1,5 +1,13 @@
 import { createBrowserClient } from "@supabase/ssr";
 
+/** The portion of an original image to show inside a fixed-ratio card. */
+export type ImageCrop = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
 function getPublicEnv() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -32,6 +40,7 @@ export type DbEvent = {
   status: string | null;
   image_url: string | null;
   images?: string[] | null;
+  image_crops?: (ImageCrop | null)[] | null;
   is_published?: boolean;
   display_order?: number | null;
   created_at: string;
@@ -45,6 +54,7 @@ export type DbAnnouncement = {
   date: string | null;
   image_url: string | null;
   images?: string[] | null;
+  image_crops?: (ImageCrop | null)[] | null;
   is_published?: boolean;
   created_at: string;
 };
@@ -62,6 +72,7 @@ export type DbGalleryImage = {
   id: string;
   gallery_id: string;
   image_url: string;
+  crop?: ImageCrop | null;
   display_order: number;
   created_at: string;
 };
@@ -72,6 +83,7 @@ export type DbBoardMember = {
   role: string | null;
   board_type: "management" | "audit";
   image_url: string | null;
+  image_crop?: ImageCrop | null;
   bio?: string | null;
   display_order: number;
   created_at: string;

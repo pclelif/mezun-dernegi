@@ -5,11 +5,12 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
-import { createClient } from "@/lib/supabase/client";
+import { createClient, type ImageCrop } from "@/lib/supabase/client";
 
 export default function NewGalleryPage() {
   const router = useRouter();
   const [photos, setPhotos] = useState<string[]>([]);
+  const [photoCrops, setPhotoCrops] = useState<(ImageCrop | null)[]>([]);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,12 +31,14 @@ export default function NewGalleryPage() {
         photos.map((imageUrl, index) => ({
           gallery_id: "00000000-0000-0000-0000-000000000000",
           image_url: imageUrl,
+          crop: photoCrops[index] ?? null,
           display_order: index,
         }))
       );
       if (imagesError) throw imagesError;
 
       setPhotos([]);
+      setPhotoCrops([]);
       router.push("/admin/galeri");
       router.refresh();
     } catch (err) {
@@ -59,7 +62,7 @@ export default function NewGalleryPage() {
         {error && <p className="rounded-md bg-red-50 p-4 text-sm text-red-700">{error}</p>}
 
         <section className="rounded-xl border bg-white p-5 shadow-sm">
-          <ImageUploader value={photos} onChange={setPhotos} label="Fotoğrafları seç" multiple cropAspectRatio={4 / 3} />
+          <ImageUploader value={photos} onChange={setPhotos} crops={photoCrops} onCropsChange={setPhotoCrops} label="Fotoğrafları seç" multiple cropAspectRatio={4 / 3} />
         </section>
 
         <div className="flex gap-3">

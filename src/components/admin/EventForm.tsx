@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { adminDbMutate } from "@/lib/supabase/admin-mutate";
-import { slugify, type DbEvent } from "@/lib/supabase/client";
+import { slugify, type DbEvent, type ImageCrop } from "@/lib/supabase/client";
 
 type EventFormProps = {
   initial?: DbEvent;
@@ -23,6 +23,7 @@ export function EventForm({ initial }: EventFormProps) {
       ? [initial.image_url]
       : [];
   const [images, setImages] = useState<string[]>(initialImages);
+  const [imageCrops, setImageCrops] = useState<(ImageCrop | null)[]>(initial?.image_crops ?? []);
 
   const [dateType, setDateType] = useState(initial?.date ? "date" : "text");
   const [timeType, setTimeType] = useState(initial?.time ? "time" : "text");
@@ -54,6 +55,7 @@ export function EventForm({ initial }: EventFormProps) {
       status: autoStatus,
       image_url: images[0] || null,
       images: images,
+      image_crops: imageCrops,
       is_published: initial?.is_published ?? true,
     };
 
@@ -137,7 +139,7 @@ export function EventForm({ initial }: EventFormProps) {
           <input name="location" defaultValue={initial?.location ?? ""} className={fieldClass} />
         </label>
 
-        <ImageUploader value={images} onChange={setImages} multiple label="Etkinlik fotoğrafları" cropAspectRatio={16 / 9} />
+        <ImageUploader value={images} onChange={setImages} crops={imageCrops} onCropsChange={setImageCrops} multiple label="Etkinlik fotoğrafları" cropAspectRatio={16 / 9} />
 
         {error ? <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
         <button

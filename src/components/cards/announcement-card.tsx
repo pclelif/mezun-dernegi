@@ -4,6 +4,8 @@ import { ArrowRight, Megaphone } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Card } from "./card";
+import { CroppedImage } from "@/components/shared/cropped-image";
+import type { ImageCrop } from "@/lib/supabase/client";
 
 export type AnnouncementCardProps = {
   title: string;
@@ -13,6 +15,7 @@ export type AnnouncementCardProps = {
   dateTime?: string;
   headingLevel?: "h2" | "h3";
   imageUrls?: string[];
+  imageCrops?: (ImageCrop | null)[];
   showImage?: boolean;
 };
 
@@ -24,6 +27,7 @@ export function AnnouncementCard({
   dateTime,
   headingLevel = "h2",
   imageUrls = [],
+  imageCrops = [],
   showImage = true,
 }: AnnouncementCardProps) {
   const Heading = headingLevel;
@@ -47,11 +51,11 @@ export function AnnouncementCard({
             className="group relative mb-4 block h-40 overflow-hidden rounded-md border border-zinc-200 bg-white sm:h-44"
           >
             {photos.map((photo, index) => (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <CroppedImage
                 key={`${photo}-${index}`}
                 src={photo}
                 alt=""
+                crop={imageCrops[index]}
                 className={`absolute inset-0 size-full object-cover transition-opacity duration-500 group-hover:scale-[1.02] ${
                   index === currentPhoto ? "opacity-100" : "opacity-0"
                 }`}

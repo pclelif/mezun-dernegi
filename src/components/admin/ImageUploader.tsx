@@ -4,123 +4,33 @@ import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
 import { GripVertical, ImagePlus, LoaderCircle, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useId, useState, useCallback, useMemo } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { createClient, type ImageCrop } from "@/lib/supabase/client";
+import { CroppedImage } from "@/components/shared/cropped-image";
 
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
-const MAX_RAW_FILE_SIZE = 50 * 1024 * 1024; // 50 MB before automatic client compression
-
-/**
- * Compresses an image file in the browser using HTML Canvas before upload.
- * Resizes max dimension to 1920px (full HD) and compresses to JPEG ~85% quality.
- */
-async function compressImageFile(file: File, maxDimension = 1920, quality = 0.85): Promise<File> {
-  if (!file.type.startsWith("image/") || file.type === "image/svg+xml") {
-    return file;
-  }
-
-  return new Promise((resolve) => {
-    const img = new Image();
-    const objectUrl = URL.createObjectURL(file);
-
-    img.onload = () => {
-      URL.revokeObjectURL(objectUrl);
-
-      let { width, height } = img;
-
-      if (width > maxDimension || height > maxDimension) {
-        if (width > height) {
-          height = Math.round((height * maxDimension) / width);
-          width = maxDimension;
-        } else {
-          width = Math.round((width * maxDimension) / height);
-          height = maxDimension;
-        }
-      }
-
-      const canvas = document.createElement("canvas");
-      canvas.width = width;
-      canvas.height = height;
-
-      const ctx = canvas.getContext("2d");
-      if (!ctx) {
-        resolve(file);
-        return;
-      }
-
-      // Draw white background behind transparent PNGs when converting to JPEG
-      ctx.fillStyle = "#ffffff";
-      ctx.fillRect(0, 0, width, height);
-      ctx.drawImage(img, 0, 0, width, height);
-
-      canvas.toBlob(
-        (blob) => {
-          if (!blob) {
-            resolve(file);
-            return;
-          }
-
-          // If blob is larger than original without dimension reduction, keep original
-          if (blob.size >= file.size && width === img.width && height === img.height) {
-            resolve(file);
-            return;
-          }
-
-          const newFileName = file.name.replace(/\.[^/.]+$/, ".jpg");
-          const compressedFile = new File([blob], newFileName, {
-            type: "image/jpeg",
-            lastModified: Date.now(),
-          });
-
-          resolve(compressedFile);
-        },
-        "image/jpeg",
-        quality
-      );
-    };
-
-    img.onerror = () => {
-      URL.revokeObjectURL(objectUrl);
-      resolve(file);
-    };
-
-    img.src = objectUrl;
-  });
-}
+const MAX_RAW_FILE_SIZE = 50 * 1024 * 1024;
 
 type ImageUploaderProps = {
   value: string[];
   onChange: (urls: string[]) => void;
+  crops?: (ImageCrop | null)[];
+  onCropsChange?: (crops: (ImageCrop | null)[]) => void;
   multiple?: boolean;
   label?: string;
   aspectRatio?: "square" | "video";
   cropAspectRatio?: number;
 };
 
-/** Crops a file using the pixel crop area returned by react-easy-crop */
-async function cropImageFileByArea(file: File, pixelCrop: Area, outputAspectRatio: number): Promise<File> {
+async function normalizedCrop(file: File, pixelCrop: Area): Promise<ImageCrop> {
   const bitmap = await createImageBitmap(file);
-  const canvas = document.createElement("canvas");
-  const outW = 1600;
-  const outH = Math.round(outW / outputAspectRatio);
-  canvas.width = outW;
-  canvas.height = outH;
-  const ctx = canvas.getContext("2d");
-  if (!ctx) return file;
-  ctx.drawImage(
-    bitmap,
-    pixelCrop.x,
-    pixelCrop.y,
-    pixelCrop.width,
-    pixelCrop.height,
-    0,
-    0,
-    outW,
-    outH
-  );
+  const crop = {
+    x: pixelCrop.x / bitmap.width,
+    y: pixelCrop.y / bitmap.height,
+    width: pixelCrop.width / bitmap.width,
+    height: pixelCrop.height / bitmap.height,
+  };
   bitmap.close();
-  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.88));
-  if (!blob) return file;
-  return new File([blob], file.name.replace(/\.[^/.]+$/, ".jpg"), { type: "image/jpeg", lastModified: Date.now() });
+  return crop;
 }
 
 function storagePathFromPublicUrl(url: string) {
@@ -143,6 +53,8 @@ function generateUUID() {
 export function ImageUploader({
   value,
   onChange,
+  crops = [],
+  onCropsChange,
   multiple = false,
   label = "Görsel yükle",
   aspectRatio,
@@ -155,6 +67,8 @@ export function ImageUploader({
   const [cropFiles, setCropFiles] = useState<File[]>([]);
   const [cropIndex, setCropIndex] = useState(0);
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
+  const [cropValues, setCropValues] = useState<(ImageCrop | null)[]>([]);
+  const [resetCrop, setResetCrop] = useState(false);
 
   // react-easy-crop state
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -175,7 +89,17 @@ export function ImageUploader({
     setCroppedAreaPixels(croppedPixels);
   }, []);
 
-  async function uploadFiles(filesToUpload: File[], replaceIndex?: number) {
+  function handleCropChange(nextCrop: { x: number; y: number }) {
+    setCrop(nextCrop);
+    setResetCrop(false);
+  }
+
+  function handleZoomChange(nextZoom: number) {
+    setZoom(nextZoom);
+    setResetCrop(false);
+  }
+
+  async function uploadFiles(filesToUpload: File[], newCrops: (ImageCrop | null)[]) {
     setUploading(true);
     try {
       const temporaryPreviews = filesToUpload.map((file) => URL.createObjectURL(file));
@@ -191,13 +115,8 @@ export function ImageUploader({
         if (uploadError) throw uploadError;
         uploadedUrls.push(supabase.storage.from("media").getPublicUrl(path).data.publicUrl);
       }
-      if (replaceIndex !== undefined) {
-        const updated = [...value];
-        updated[replaceIndex] = uploadedUrls[0];
-        onChange(updated);
-      } else {
-        onChange(multiple ? [...value, ...uploadedUrls] : uploadedUrls);
-      }
+      onChange(multiple ? [...value, ...uploadedUrls] : uploadedUrls);
+      onCropsChange?.(multiple ? [...crops, ...newCrops] : newCrops);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Görsel yüklenemedi.");
     } finally {
@@ -224,12 +143,7 @@ export function ImageUploader({
     }
 
     try {
-      // Auto-compress photos in browser before upload
-      const compressedFiles = await Promise.all(
-        selected.map((file) => compressImageFile(file, 1920, 0.85))
-      );
-
-      const filesToUpload = multiple ? compressedFiles : compressedFiles.slice(0, 1);
+      const filesToUpload = multiple ? selected : selected.slice(0, 1);
       if (cropAspectRatio) {
         setCropFiles(filesToUpload);
         setCropIndex(0);
@@ -237,8 +151,10 @@ export function ImageUploader({
         setCrop({ x: 0, y: 0 });
         setZoom(1);
         setCroppedAreaPixels(null);
+        setCropValues(Array(filesToUpload.length).fill(null));
+        setResetCrop(false);
       } else {
-        await uploadFiles(filesToUpload);
+        await uploadFiles(filesToUpload, Array(filesToUpload.length).fill(null));
       }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Görsel yüklenemedi.");
@@ -248,24 +164,27 @@ export function ImageUploader({
   async function applyCrop() {
     const file = cropFiles[cropIndex];
     if (!file || !croppedAreaPixels) return;
-    const cropped = await cropImageFileByArea(file, croppedAreaPixels, cropAspectRatio ?? 1);
     const next = [...cropFiles];
-    next[cropIndex] = cropped;
+    const nextCrops = [...cropValues];
+    nextCrops[cropIndex] = resetCrop ? null : await normalizedCrop(file, croppedAreaPixels);
     if (cropIndex + 1 < next.length) {
-      setCropFiles(next);
+      setCropValues(nextCrops);
       setCropIndex(cropIndex + 1);
       setCrop({ x: 0, y: 0 });
       setZoom(1);
       setCroppedAreaPixels(null);
+      setResetCrop(false);
     } else if (editingIndex !== null) {
       setCropFiles([]);
       setCropIndex(0);
-      await uploadFiles(next, editingIndex);
+      const updatedCrops = [...crops];
+      updatedCrops[editingIndex] = nextCrops[0] ?? null;
+      onCropsChange?.(updatedCrops);
       setEditingIndex(null);
     } else {
       setCropFiles([]);
       setCropIndex(0);
-      await uploadFiles(next);
+      await uploadFiles(next, nextCrops);
     }
   }
 
@@ -285,6 +204,8 @@ export function ImageUploader({
       setCrop({ x: 0, y: 0 });
       setZoom(1);
       setCroppedAreaPixels(null);
+      setCropValues([crops[index] ?? null]);
+      setResetCrop(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Görsel düzenleme için açılamadı.");
     }
@@ -299,7 +220,9 @@ export function ImageUploader({
         const { error: removeError } = await supabase.storage.from("media").remove([path]);
         if (removeError) throw removeError;
       }
+      const index = value.indexOf(url);
       onChange(value.filter((item) => item !== url));
+      onCropsChange?.(crops.filter((_, cropIndex) => cropIndex !== index));
     } catch (err) {
       setError(err instanceof Error ? err.message : "Görsel silinemedi.");
     }
@@ -331,6 +254,10 @@ export function ImageUploader({
     const [moved] = updated.splice(draggedIndex, 1);
     updated.splice(dropIndex, 0, moved);
     onChange(updated);
+    const updatedCrops = [...crops];
+    const [movedCrop] = updatedCrops.splice(draggedIndex, 1);
+    updatedCrops.splice(dropIndex, 0, movedCrop ?? null);
+    onCropsChange?.(updatedCrops);
     setDraggedIndex(null);
     setDragOverIndex(null);
   }
@@ -398,11 +325,11 @@ export function ImageUploader({
                     </div>
                   )}
 
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <CroppedImage
                     src={url}
                     alt=""
-                    className="size-full select-none object-cover pointer-events-none"
+                    crop={crops[index]}
+                    className={crops[index] ? "pointer-events-none select-none" : "size-full select-none object-cover pointer-events-none"}
                   />
 
                   {isTemporary ? (
@@ -500,8 +427,8 @@ export function ImageUploader({
                 crop={crop}
                 zoom={zoom}
                 aspect={cropAspectRatio}
-                onCropChange={setCrop}
-                onZoomChange={setZoom}
+                onCropChange={handleCropChange}
+                onZoomChange={handleZoomChange}
                 onCropComplete={onCropComplete}
                 showGrid={true}
                 style={{
@@ -521,6 +448,7 @@ export function ImageUploader({
                       setCropIndex(index);
                       setCrop({ x: 0, y: 0 });
                       setZoom(1);
+                      setResetCrop(false);
                     }}
                     className={`size-12 shrink-0 overflow-hidden rounded-md border-2 ${
                       index === cropIndex ? "border-red-600" : "border-transparent"
@@ -547,11 +475,12 @@ export function ImageUploader({
                 onClick={() => {
                   setCrop({ x: 0, y: 0 });
                   setZoom(1);
+                  setResetCrop(true);
                 }}
                 className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-semibold text-zinc-600 hover:bg-zinc-100"
               >
                 <RotateCcw className="size-3.5" aria-hidden="true" />
-                Sıfırla
+                Orijinal görünüme dön
               </button>
               <button
                 type="button"

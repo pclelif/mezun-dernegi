@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { adminDbMutate } from "@/lib/supabase/admin-mutate";
-import { type DbBoardMember } from "@/lib/supabase/client";
+import { type DbBoardMember, type ImageCrop } from "@/lib/supabase/client";
 
 type BoardMemberFormProps = {
   initial?: DbBoardMember;
@@ -17,6 +17,7 @@ export function BoardMemberForm({ initial }: BoardMemberFormProps) {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [images, setImages] = useState<string[]>(initial?.image_url ? [initial.image_url] : []);
+  const [imageCrops, setImageCrops] = useState<(ImageCrop | null)[]>(initial?.image_crop ? [initial.image_crop] : []);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -52,6 +53,7 @@ export function BoardMemberForm({ initial }: BoardMemberFormProps) {
       role,
       board_type: boardType,
       image_url: images[0] || null,
+      image_crop: imageCrops[0] || null,
       display_order: displayOrder,
     };
 
@@ -133,7 +135,7 @@ export function BoardMemberForm({ initial }: BoardMemberFormProps) {
           </label>
         </div>
 
-        <ImageUploader value={images} onChange={setImages} label="Üye fotoğrafı" cropAspectRatio={3 / 4} />
+        <ImageUploader value={images} onChange={setImages} crops={imageCrops} onCropsChange={setImageCrops} label="Üye fotoğrafı" cropAspectRatio={3 / 4} />
         {error ? (
           <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p>
         ) : null}

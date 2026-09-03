@@ -4,6 +4,8 @@ import { ArrowRight, CalendarDays, Clock3, MapPin } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Card } from "./card";
+import { CroppedImage } from "@/components/shared/cropped-image";
+import type { ImageCrop } from "@/lib/supabase/client";
 
 export type EventStatus = "upcoming" | "past";
 
@@ -15,6 +17,7 @@ export type EventCardProps = {
   description: string;
   href: string;
   imageUrls?: string[];
+  imageCrops?: (ImageCrop | null)[];
   showImage?: boolean;
   status?: EventStatus;
   dateTime?: string;
@@ -29,6 +32,7 @@ export function EventCard({
   description,
   href,
   imageUrls = [],
+  imageCrops = [],
   showImage = true,
   status = "upcoming",
   dateTime,
@@ -56,12 +60,11 @@ export function EventCard({
             className="group relative mb-4 block h-40 translate-x-[1.5px] overflow-hidden rounded-md border border-zinc-200 bg-white sm:h-44"
           >
             {photos.map((photo, index) => (
-              // Event photos are user-managed remote URLs, so native images keep the existing storage setup working.
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <CroppedImage
                 key={`${photo}-${index}`}
                 src={photo}
                 alt=""
+                crop={imageCrops[index]}
                 className={`absolute inset-0 size-full object-cover transition-opacity duration-500 group-hover:scale-[1.02] ${
                   index === currentPhoto ? "opacity-100" : "opacity-0"
                 }`}

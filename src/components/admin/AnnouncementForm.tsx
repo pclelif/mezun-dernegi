@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { adminDbMutate } from "@/lib/supabase/admin-mutate";
-import { slugify, type DbAnnouncement } from "@/lib/supabase/client";
+import { slugify, type DbAnnouncement, type ImageCrop } from "@/lib/supabase/client";
 
 type AnnouncementFormProps = {
   initial?: DbAnnouncement;
@@ -25,6 +25,7 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
       ? [initial.image_url]
       : [];
   const [images, setImages] = useState<string[]>(initialImages);
+  const [imageCrops, setImageCrops] = useState<(ImageCrop | null)[]>(initial?.image_crops ?? []);
 
   const [dateType, setDateType] = useState(initial?.date ? "date" : "text");
 
@@ -48,6 +49,7 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
       date: String(form.get("date") ?? "").trim() || null,
       image_url: images[0] || null,
       images: images,
+      image_crops: imageCrops,
       is_published: initial?.is_published ?? true,
     };
 
@@ -108,7 +110,7 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
           </div>
         </label>
 
-        <ImageUploader value={images} onChange={setImages} multiple label="Duyuru fotoğrafları" cropAspectRatio={16 / 9} />
+        <ImageUploader value={images} onChange={setImages} crops={imageCrops} onCropsChange={setImageCrops} multiple label="Duyuru fotoğrafları" cropAspectRatio={16 / 9} />
 
         {error ? <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
         <button

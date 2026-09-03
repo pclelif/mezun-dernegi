@@ -1,24 +1,25 @@
 import { UserRound } from "lucide-react";
-import Image from "next/image";
 import { Card } from "./card";
+import { CroppedImage } from "@/components/shared/cropped-image";
+import type { ImageCrop } from "@/lib/supabase/client";
 
 export type BoardMemberCardProps = {
   name: string;
   role: string;
   image?: string;
+  imageCrop?: ImageCrop | null;
 };
 
-export function BoardMemberCard({ name, role, image }: BoardMemberCardProps) {
+export function BoardMemberCard({ name, role, image, imageCrop }: BoardMemberCardProps) {
   return (
     <Card padding="none" className="w-full lg:w-[15.5rem]">
       <div className="relative aspect-[3/4] overflow-hidden bg-zinc-100">
         {image ? (
-          <Image
+          <CroppedImage
             src={image}
             alt={`${name}, ${role}`}
-            fill
-            className="object-cover"
-            sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 100vw"
+            crop={imageCrop}
+            className="absolute inset-0 size-full object-cover"
           />
         ) : (
           <div className="grid size-full place-items-center bg-zinc-100 text-zinc-400" aria-hidden="true">

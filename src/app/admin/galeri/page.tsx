@@ -4,7 +4,7 @@ import { ArrowUpDown, ChevronDown, GripVertical, LoaderCircle, Trash2, X } from 
 import { useCallback, useEffect, useState } from "react";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { adminDbMutate } from "@/lib/supabase/admin-mutate";
-import { createClient, type DbGalleryImage } from "@/lib/supabase/client";
+import { createClient, type DbGalleryImage, type ImageCrop } from "@/lib/supabase/client";
 
 async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
   try {
@@ -26,6 +26,7 @@ async function saveDisplayOrder(table: string, itemsList: { id: string }[]) {
 export default function AdminGalleryPage() {
   const [images, setImages] = useState<DbGalleryImage[]>([]);
   const [uploads, setUploads] = useState<string[]>([]);
+  const [uploadCrops, setUploadCrops] = useState<(ImageCrop | null)[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -144,12 +145,14 @@ export default function AdminGalleryPage() {
         data: uploads.map((image_url, idx) => ({
           gallery_id: defaultGalleryId,
           image_url,
+          crop: uploadCrops[idx] ?? null,
           display_order: images.length + idx,
         })),
       });
 
       setImages((current) => [...(inserted as DbGalleryImage[]), ...current]);
       setUploads([]);
+      setUploadCrops([]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Fotoğraflar yüklenemedi.");
     } finally {
@@ -198,7 +201,7 @@ export default function AdminGalleryPage() {
       {error && <p className="rounded-md bg-red-50 p-4 text-sm text-red-700">{error}</p>}
 
       <section className="rounded-xl border bg-white p-5 shadow-sm">
-        <ImageUploader value={uploads} onChange={setUploads} label="Yeni fotoğraflar" multiple cropAspectRatio={4 / 3} />
+        <ImageUploader value={uploads} onChange={setUploads} crops={uploadCrops} onCropsChange={setUploadCrops} label="Yeni fotoğraflar" multiple cropAspectRatio={4 / 3} />
         <button
           type="button"
           disabled={saving || !uploads.length}

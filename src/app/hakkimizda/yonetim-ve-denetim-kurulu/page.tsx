@@ -61,6 +61,7 @@ export default async function BoardsPage() {
                   name={member.name}
                   role={member.role ?? ""}
                   image={member.image_url ?? undefined}
+                  imageCrop={member.image_crop}
                 />
               ))}
             </div>
@@ -85,6 +86,7 @@ export default async function BoardsPage() {
                   name={member.name}
                   role={member.role ?? ""}
                   image={member.image_url ?? undefined}
+                  imageCrop={member.image_crop}
                 />
               ))}
             </div>

@@ -91,6 +91,7 @@ export default async function AnnouncementsPage() {
                   summary={flattenContent(announcement.content || "")}
                   href={`/duyurular-ve-etkinlikler/duyurular/${announcement.slug}?from=duyurular`}
                   imageUrls={imageUrls}
+                  imageCrops={announcement.image_crops ?? []}
                   showImage={true}
                 />
               );

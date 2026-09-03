@@ -35,6 +35,7 @@ export default async function GalleryPage() {
     title: "",
     href: "/duyurular-ve-etkinlikler/galeri",
     imageUrl: img.image_url,
+    crop: img.crop,
   }));
 
   return (

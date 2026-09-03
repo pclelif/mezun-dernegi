@@ -63,6 +63,7 @@ export async function HomeAnnouncementsSection() {
                   summary={flattenContent(announcement.content || "")}
                   href={`/duyurular-ve-etkinlikler/duyurular/${announcement.slug}?from=home`}
                   imageUrls={imageUrls}
+                  imageCrops={announcement.image_crops ?? []}
                   showImage={false}
                 />
               );

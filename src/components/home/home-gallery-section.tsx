@@ -16,6 +16,7 @@ export async function HomeGallerySection() {
     title: "",
     href: "/duyurular-ve-etkinlikler/galeri",
     imageUrl: image.image_url,
+    crop: image.crop,
   }));
 
   if (items.length === 0) return null;
