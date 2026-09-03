@@ -166,7 +166,9 @@ export function ImageUploader({
     if (!file || !croppedAreaPixels) return;
     const next = [...cropFiles];
     const nextCrops = [...cropValues];
-    nextCrops[cropIndex] = resetCrop ? null : await normalizedCrop(file, croppedAreaPixels);
+    nextCrops[cropIndex] = resetCrop
+      ? { x: 0, y: 0, width: 1, height: 1, fit: "contain" }
+      : await normalizedCrop(file, croppedAreaPixels);
     if (cropIndex + 1 < next.length) {
       setCropValues(nextCrops);
       setCropIndex(cropIndex + 1);
@@ -480,7 +482,7 @@ export function ImageUploader({
                 className="inline-flex items-center gap-1.5 rounded-md px-3 py-2 text-sm font-semibold text-zinc-600 hover:bg-zinc-100"
               >
                 <RotateCcw className="size-3.5" aria-hidden="true" />
-                Orijinal görünüme dön
+                Fotoğrafın tamamını göster
               </button>
               <button
                 type="button"

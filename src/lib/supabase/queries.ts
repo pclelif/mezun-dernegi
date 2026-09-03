@@ -159,8 +159,8 @@ export async function getAllGalleryImages() {
     const { data, error } = await supabase
       .from("gallery_images")
       .select("*")
-      .order("display_order", { ascending: true, nullsFirst: false })
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .order("display_order", { ascending: true, nullsFirst: false });
     if (error || !data || data.length === 0) return FALLBACK_GALLERY_IMAGES;
     return data;
   }, FALLBACK_GALLERY_IMAGES);

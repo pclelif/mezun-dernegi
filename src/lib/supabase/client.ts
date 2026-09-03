@@ -6,6 +6,8 @@ export type ImageCrop = {
   y: number;
   width: number;
   height: number;
+  /** Show the complete original image within its card instead of cropping it. */
+  fit?: "contain";
 };
 
 function getPublicEnv() {

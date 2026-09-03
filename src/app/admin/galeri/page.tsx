@@ -146,9 +146,20 @@ export default function AdminGalleryPage() {
           gallery_id: defaultGalleryId,
           image_url,
           crop: uploadCrops[idx] ?? null,
-          display_order: images.length + idx,
+          display_order: idx,
         })),
       });
+
+      await Promise.all(
+        images.map((image, index) =>
+          adminDbMutate({
+            table: "gallery_images",
+            action: "update",
+            data: { display_order: index + uploads.length },
+            match: { id: image.id },
+          })
+        )
+      );
 
       setImages((current) => [...(inserted as DbGalleryImage[]), ...current]);
       setUploads([]);

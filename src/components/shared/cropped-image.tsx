@@ -13,6 +13,13 @@ type CroppedImageProps = {
  * image is created: the same source can therefore always be opened in full.
  */
 export function CroppedImage({ src, alt, crop, className = "" }: CroppedImageProps) {
+  if (crop?.fit === "contain") {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img src={src} alt={alt} className={`absolute inset-0 size-full p-3 !object-contain ${className}`} />
+    );
+  }
+
   const isValidCrop = crop && crop.width > 0 && crop.height > 0 && crop.x >= 0 && crop.y >= 0;
   const style: CSSProperties | undefined = isValidCrop
     ? {

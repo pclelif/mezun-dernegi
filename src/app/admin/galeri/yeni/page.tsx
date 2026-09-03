@@ -27,6 +27,19 @@ export default function NewGalleryPage() {
 
     try {
       const supabase = createClient();
+      const { data: existingPhotos, error: existingPhotosError } = await supabase
+        .from("gallery_images")
+        .select("id")
+        .order("display_order", { ascending: true, nullsFirst: false })
+        .order("created_at", { ascending: false });
+      if (existingPhotosError) throw existingPhotosError;
+
+      await Promise.all(
+        (existingPhotos ?? []).map((photo, index) =>
+          supabase.from("gallery_images").update({ display_order: index + photos.length }).eq("id", photo.id)
+        )
+      );
+
       const { error: imagesError } = await supabase.from("gallery_images").insert(
         photos.map((imageUrl, index) => ({
           gallery_id: "00000000-0000-0000-0000-000000000000",
