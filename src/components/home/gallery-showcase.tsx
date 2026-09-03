@@ -77,7 +77,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
             {items.map((item) => (
               <figure
                 key={item.id}
-                className="relative aspect-square overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-all duration-200"
+                className="relative aspect-[4/3] overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-all duration-200"
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
@@ -154,7 +154,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
             {items.map((item) => (
               <figure
                 key={item.id}
-                className="relative aspect-square min-w-[64%] sm:min-w-[38%] md:min-w-[28%] lg:min-w-[23%] xl:min-w-[22%] snap-start overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-all duration-200"
+                className="relative aspect-[4/3] min-w-[64%] sm:min-w-[38%] md:min-w-[28%] lg:min-w-[23%] xl:min-w-[22%] snap-start overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-all duration-200"
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (

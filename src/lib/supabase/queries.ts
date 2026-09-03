@@ -238,7 +238,7 @@ export function mapEventToCardProps(event: DbEvent) {
     location: event.location || "—",
     description: event.description || "",
     href: `/duyurular-ve-etkinlikler/etkinlikler/${event.slug}`,
-    imageUrl: event.images?.[0] || event.image_url,
+    imageUrls: event.images && event.images.length > 0 ? event.images : event.image_url ? [event.image_url] : [],
     status: (event.status === "past" ? "past" : "upcoming") as "upcoming" | "past",
     dateTime: event.date ?? undefined,
   };

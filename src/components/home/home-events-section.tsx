@@ -30,14 +30,10 @@ export async function HomeEventsSection() {
 
   const upcomingEvents = sortByDate(events.filter((event) => event.status !== "past"), "asc");
   const pastEvents = sortByDate(events.filter((event) => event.status === "past"), "desc");
-  // Keep both status types visible, then fill the remaining homepage slots in
-  // the same date order so a sparse event list does not leave empty space.
-  const displayEvents = [
-    ...upcomingEvents.slice(0, 2),
-    ...pastEvents.slice(0, 2),
-    ...upcomingEvents.slice(2),
-    ...pastEvents.slice(2),
-  ].slice(0, 4);
+  const displayEvents =
+    upcomingEvents.length > 0 && pastEvents.length > 0
+      ? [upcomingEvents[0], pastEvents[0]]
+      : [...upcomingEvents, ...pastEvents].slice(0, 2);
 
   return (
     <section className="border-t border-zinc-200 bg-white px-4">

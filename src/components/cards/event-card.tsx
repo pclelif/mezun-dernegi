@@ -1,5 +1,8 @@
+"use client";
+
 import { ArrowRight, CalendarDays, Clock3, MapPin } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Card } from "./card";
 
 export type EventStatus = "upcoming" | "past";
@@ -11,7 +14,7 @@ export type EventCardProps = {
   location: string;
   description: string;
   href: string;
-  imageUrl?: string | null;
+  imageUrls?: string[];
   showImage?: boolean;
   status?: EventStatus;
   dateTime?: string;
@@ -25,7 +28,7 @@ export function EventCard({
   location,
   description,
   href,
-  imageUrl,
+  imageUrls = [],
   showImage = true,
   status = "upcoming",
   dateTime,
@@ -33,24 +36,42 @@ export function EventCard({
 }: EventCardProps) {
   const Heading = headingLevel;
   const isPast = status === "past";
+  const photos = imageUrls.filter((photo) => Boolean(photo?.trim()));
+  const [currentPhoto, setCurrentPhoto] = useState(0);
+
+  useEffect(() => {
+    if (!showImage || photos.length < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setInterval(() => setCurrentPhoto((index) => (index + 1) % photos.length), 5000);
+    return () => window.clearInterval(timer);
+  }, [showImage, photos.length]);
 
   return (
     <Card interactive className={isPast ? "border-l-4 border-l-zinc-400 bg-zinc-50" : "border-l-4 border-l-red-600"}>
       {showImage ? (
-        imageUrl ? (
+        photos.length > 0 ? (
           <Link
             href={href}
             tabIndex={-1}
             aria-hidden="true"
             className="group relative mb-4 block h-40 overflow-hidden rounded-md border border-zinc-200 bg-white sm:h-44"
           >
-            {/* Event photos are user-managed remote URLs, so a native image keeps the existing storage setup working. */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={imageUrl}
-              alt=""
-              className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-            />
+            {photos.map((photo, index) => (
+              // Event photos are user-managed remote URLs, so native images keep the existing storage setup working.
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                key={`${photo}-${index}`}
+                src={photo}
+                alt=""
+                className={`absolute inset-0 size-full object-cover transition-opacity duration-500 group-hover:scale-[1.02] ${
+                  index === currentPhoto ? "opacity-100" : "opacity-0"
+                }`}
+              />
+            ))}
+            {photos.length > 1 ? (
+              <span className="pointer-events-none absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+                {currentPhoto + 1} / {photos.length}
+              </span>
+            ) : null}
           </Link>
         ) : (
           <div className="mb-4 flex h-40 items-center justify-center rounded-md border border-zinc-200 bg-slate-50 text-zinc-400 sm:h-44" aria-hidden="true">
