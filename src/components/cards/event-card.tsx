@@ -11,6 +11,7 @@ export type EventCardProps = {
   location: string;
   description: string;
   href: string;
+  imageUrl?: string | null;
   status?: EventStatus;
   dateTime?: string;
   headingLevel?: "h2" | "h3";
@@ -23,6 +24,7 @@ export function EventCard({
   location,
   description,
   href,
+  imageUrl,
   status = "upcoming",
   dateTime,
   headingLevel = "h2",
@@ -32,6 +34,22 @@ export function EventCard({
 
   return (
     <Card interactive className={isPast ? "border-l-4 border-l-zinc-400 bg-zinc-50" : "border-l-4 border-l-red-600"}>
+      {imageUrl ? (
+        <Link
+          href={href}
+          tabIndex={-1}
+          aria-hidden="true"
+          className="group relative mb-4 block h-40 overflow-hidden rounded-md border border-zinc-200 bg-white sm:h-44"
+        >
+          {/* Event photos are user-managed remote URLs, so a native image keeps the existing storage setup working. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={imageUrl}
+            alt=""
+            className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+          />
+        </Link>
+      ) : null}
       <p className={`text-xs font-semibold uppercase tracking-wider ${isPast ? "text-zinc-500" : "text-red-600"}`}>
         {isPast ? "Geçmiş etkinlik" : "Yaklaşan etkinlik"}
       </p>

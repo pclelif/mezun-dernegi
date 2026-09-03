@@ -83,7 +83,7 @@ export function EventGalleryCarousel({ photos, title }: EventGalleryCarouselProp
           {validPhotos.map((photoUrl, index) => (
             <figure
               key={`${photoUrl}-${index}`}
-              className="relative aspect-square min-w-[64%] sm:min-w-[38%] md:min-w-[28%] lg:min-w-[23%] xl:min-w-[22%] shrink-0 snap-start overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer transition-all duration-200 hover:shadow-lg"
+              className="relative aspect-square min-w-[70%] sm:min-w-[260px] lg:min-w-[280px] shrink-0 snap-start overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer transition-all duration-200 hover:shadow-lg"
               onClick={() => setSelectedImage(photoUrl)}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
