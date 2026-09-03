@@ -144,9 +144,9 @@ export default async function EventDetailPage({ params }: PageProps) {
             {coverImage ? <EventCoverImage photos={photos} alt={`${event.title} görseli`} /> : null}
 
             {/* Description */}
-            <div className="rounded-xl border border-zinc-100 bg-slate-50/50 p-4 sm:p-5 text-sm leading-relaxed text-zinc-700 whitespace-pre-line">
+            <p className="whitespace-pre-line text-sm leading-relaxed text-zinc-700">
               {event.description || "Bu etkinlik için henüz detaylı açıklama eklenmemiş."}
-            </div>
+            </p>
 
           </div>
 

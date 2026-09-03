@@ -131,9 +131,9 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
             {coverImage ? <EventCoverImage photos={photos} alt={`${announcement.title} duyuru görseli`} /> : null}
 
             {/* Content */}
-            <div className="rounded-xl border border-zinc-100 bg-slate-50/50 p-4 sm:p-5 text-sm leading-relaxed text-zinc-700 whitespace-pre-line">
+            <p className="whitespace-pre-line text-sm leading-relaxed text-zinc-700">
               {announcement.content || "Bu duyuru için henüz detaylı açıklama eklenmemiş."}
-            </div>
+            </p>
           </div>
 
           {/* Footer Actions */}
