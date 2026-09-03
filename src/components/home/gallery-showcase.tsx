@@ -73,22 +73,22 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
     return (
       <section className="overflow-hidden border-t border-zinc-200 bg-white px-4 py-14 text-zinc-950 md:py-20" aria-label="Fotoğraflar">
         <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5">
             {items.map((item) => (
               <figure
                 key={item.id}
-                className="relative aspect-square overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-md transition-shadow"
+                className="relative aspect-square overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-all duration-200"
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
                   <img
                     src={item.imageUrl}
                     alt={item.title || "Galeri fotoğrafı"}
-                    className="absolute inset-0 size-full object-contain p-2.5 transition-transform duration-300 hover:scale-105"
+                    className="absolute inset-0 size-full object-contain p-3 transition-transform duration-300 hover:scale-105"
                   />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
-                    <Images className="size-10" />
+                    <Images className="size-12" />
                   </div>
                 )}
               </figure>
@@ -150,22 +150,22 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
         ) : null}
 
         <div className="relative">
-          <div ref={trackRef} className="flex snap-x snap-mandatory gap-3.5 sm:gap-4 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" tabIndex={0} aria-label="Fotoğraf galerisi">
+          <div ref={trackRef} className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden" tabIndex={0} aria-label="Fotoğraf galerisi">
             {items.map((item) => (
               <figure
                 key={item.id}
-                className="relative aspect-square min-w-[48%] sm:min-w-[30%] md:min-w-[22%] lg:min-w-[18%] xl:min-w-[15.5%] snap-start overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-md transition-shadow"
+                className="relative aspect-square min-w-[64%] sm:min-w-[38%] md:min-w-[28%] lg:min-w-[23%] xl:min-w-[22%] snap-start overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-all duration-200"
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
                   <img
                     src={item.imageUrl}
                     alt={item.title || "Galeri fotoğrafı"}
-                    className="absolute inset-0 size-full object-contain p-2.5 transition-transform duration-300 hover:scale-105"
+                    className="absolute inset-0 size-full object-contain p-3 transition-transform duration-300 hover:scale-105"
                   />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
-                    <Images className="size-10" />
+                    <Images className="size-12" />
                   </div>
                 )}
               </figure>

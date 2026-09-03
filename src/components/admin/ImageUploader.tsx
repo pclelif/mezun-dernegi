@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, GripVertical, ImagePlus, LoaderCircle, Trash2 } from "lucide-react";
+import { GripVertical, ImagePlus, LoaderCircle, Trash2 } from "lucide-react";
 import { useId, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -125,7 +125,7 @@ export function ImageUploader({
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
-  const isSquare = aspectRatio ? aspectRatio === "square" : multiple || label.toLowerCase().includes("logo") || label.toLowerCase().includes("fotoğraf");
+  const isSquare = aspectRatio ? aspectRatio === "square" : true;
 
   async function handleFiles(files: FileList | null) {
     if (!files?.length) return;
@@ -310,51 +310,15 @@ export function ImageUploader({
                       <LoaderCircle className="size-6 animate-spin" aria-label="Yükleniyor" />
                     </div>
                   ) : (
-                    <div className="absolute top-2 right-2 flex items-center gap-1.5 z-10">
-                      {multiple && index > 0 && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const updated = [...value];
-                            const temp = updated[index];
-                            updated[index] = updated[index - 1];
-                            updated[index - 1] = temp;
-                            onChange(updated);
-                          }}
-                          className="hidden sm:grid size-7 place-items-center rounded-full bg-white/95 text-zinc-700 shadow hover:bg-zinc-100 hover:text-black transition cursor-pointer"
-                          title="Sola taşı"
-                          aria-label="Sola taşı"
-                        >
-                          <ChevronLeft className="size-3.5" aria-hidden="true" />
-                        </button>
-                      )}
-                      {multiple && index < value.length - 1 && (
-                        <button
-                          type="button"
-                          onClick={() => {
-                            const updated = [...value];
-                            const temp = updated[index];
-                            updated[index] = updated[index + 1];
-                            updated[index + 1] = temp;
-                            onChange(updated);
-                          }}
-                          className="hidden sm:grid size-7 place-items-center rounded-full bg-white/95 text-zinc-700 shadow hover:bg-zinc-100 hover:text-black transition cursor-pointer"
-                          title="Sağa taşı"
-                          aria-label="Sağa taşı"
-                        >
-                          <ChevronRight className="size-3.5" aria-hidden="true" />
-                        </button>
-                      )}
-                      <button
-                        type="button"
-                        onClick={() => void removeImage(url)}
-                        className="grid size-7 place-items-center rounded-full bg-white/95 text-red-600 shadow transition hover:bg-red-600 hover:text-white cursor-pointer"
-                        aria-label="Görseli sil"
-                        title="Görseli sil"
-                      >
-                        <Trash2 className="size-3.5" aria-hidden="true" />
-                      </button>
-                    </div>
+                    <button
+                      type="button"
+                      onClick={() => void removeImage(url)}
+                      className="absolute top-2 right-2 grid size-7.5 place-items-center rounded-full bg-white/95 text-red-600 shadow-sm transition hover:bg-red-600 hover:text-white cursor-pointer z-10"
+                      aria-label="Görseli sil"
+                      title="Görseli sil"
+                    >
+                      <Trash2 className="size-3.5" aria-hidden="true" />
+                    </button>
                   )}
                 </div>
               );

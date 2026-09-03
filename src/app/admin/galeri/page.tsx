@@ -244,7 +244,7 @@ export default function AdminGalleryPage() {
                 }`}
               >
                 <div
-                  className="relative aspect-square bg-white flex items-center justify-center p-2 cursor-pointer hover:opacity-95 transition-opacity"
+                  className="relative aspect-square w-full bg-white flex items-center justify-center p-2.5 cursor-pointer hover:opacity-95 transition-opacity"
                   onClick={() => setSelectedImage(photo.image_url)}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -252,6 +252,7 @@ export default function AdminGalleryPage() {
                     src={photo.image_url}
                     alt=""
                     className="size-full object-contain pointer-events-none select-none"
+                    style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center" }}
                   />
                   {sortBy === "manual" && (
                     <div className="absolute top-2 left-2 z-10 rounded-md bg-black/60 p-1.5 text-white backdrop-blur-sm transition-colors hover:text-red-500">
