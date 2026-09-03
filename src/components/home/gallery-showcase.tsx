@@ -73,11 +73,11 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
     return (
       <section className="overflow-hidden border-t border-zinc-200 bg-white px-4 py-14 text-zinc-950 md:py-20" aria-label="Fotoğraflar">
         <div className="mx-auto max-w-7xl">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-5">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 md:gap-5 lg:grid-cols-3 xl:grid-cols-4">
             {items.map((item) => (
               <figure
                 key={item.id}
-                className="relative aspect-[4/3] overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-all duration-200"
+                className="relative aspect-[16/9] overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-all duration-200"
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
@@ -154,7 +154,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
             {items.map((item) => (
               <figure
                 key={item.id}
-                className="relative aspect-[4/3] min-w-[64%] sm:min-w-[38%] md:min-w-[28%] lg:min-w-[23%] xl:min-w-[22%] snap-start overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-all duration-200"
+                className="relative aspect-[16/9] min-w-[72%] sm:min-w-[44%] md:min-w-[32%] lg:min-w-[28%] xl:min-w-[25%] snap-start overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-all duration-200"
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (

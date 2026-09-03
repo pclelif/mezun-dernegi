@@ -26,7 +26,7 @@ export function EventCoverImage({ photos, alt }: EventCoverImageProps) {
   return (
     <>
       <div
-        className="group relative aspect-[16/9] w-full max-w-lg cursor-pointer overflow-hidden rounded-xl border border-zinc-200/80 bg-slate-50 transition-all duration-200 hover:border-zinc-300 hover:shadow-sm"
+        className="group relative mx-auto aspect-[16/9] w-full max-w-lg cursor-pointer overflow-hidden rounded-xl border border-zinc-200/80 bg-slate-50 transition-all duration-200 hover:border-zinc-300 hover:shadow-sm"
         onClick={() => setIsOpen(true)}
       >
         {validPhotos.map((photo, index) => (
