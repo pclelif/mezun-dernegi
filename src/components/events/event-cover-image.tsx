@@ -2,16 +2,21 @@
 
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
+import { CroppedImage } from "@/components/shared/cropped-image";
+import type { ImageCrop } from "@/lib/supabase/client";
 
 type EventCoverImageProps = {
   photos: string[];
+  crops?: (ImageCrop | null)[];
   alt: string;
 };
 
-export function EventCoverImage({ photos, alt }: EventCoverImageProps) {
+export function EventCoverImage({ photos, crops = [], alt }: EventCoverImageProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const validPhotos = photos.filter((photo) => Boolean(photo && photo.trim()));
+  const validPhotos = photos
+    .map((photo, index) => ({ photo, crop: crops[index] ?? null }))
+    .filter(({ photo }) => Boolean(photo && photo.trim()));
   const total = validPhotos.length;
   const currentPhoto = validPhotos[currentIndex] ?? validPhotos[0];
 
@@ -29,16 +34,20 @@ export function EventCoverImage({ photos, alt }: EventCoverImageProps) {
         className="group relative aspect-[16/9] w-full max-w-lg cursor-pointer overflow-hidden rounded-xl border border-zinc-200/80 bg-slate-50 transition-all duration-200 hover:border-zinc-300 hover:shadow-sm"
         onClick={() => setIsOpen(true)}
       >
-        {validPhotos.map((photo, index) => (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+        {validPhotos.map(({ photo, crop }, index) => (
+          <div
             key={`${photo}-${index}`}
-            src={photo}
-            alt={index === currentIndex ? alt : ""}
-            className={`absolute inset-0 size-full object-cover transition-opacity duration-500 ${
-              index === currentIndex ? "opacity-100" : "opacity-0"
+            className={`absolute inset-0 overflow-hidden transition-opacity duration-500 ${
+              index === currentIndex ? "opacity-100" : "pointer-events-none opacity-0"
             }`}
-          />
+          >
+            <CroppedImage
+              src={photo}
+              alt={index === currentIndex ? alt : ""}
+              crop={crop}
+              className={crop ? "" : "absolute inset-0 size-full object-cover"}
+            />
+          </div>
         ))}
 
         {total > 1 ? (
@@ -67,7 +76,7 @@ export function EventCoverImage({ photos, alt }: EventCoverImageProps) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={currentPhoto}
+              src={currentPhoto.photo}
               alt={alt}
               className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
             />

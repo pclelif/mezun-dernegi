@@ -141,7 +141,13 @@ export default async function EventDetailPage({ params }: PageProps) {
             </div>
 
             {/* Scaled & Balanced Cover Image */}
-            {coverImage ? <EventCoverImage photos={photos} alt={`${event.title} görseli`} /> : null}
+            {coverImage ? (
+              <EventCoverImage
+                photos={photos}
+                crops={event.image_crops ?? []}
+                alt={`${event.title} görseli`}
+              />
+            ) : null}
 
             {/* Description */}
             <p className="whitespace-pre-line text-sm leading-relaxed text-zinc-700">
