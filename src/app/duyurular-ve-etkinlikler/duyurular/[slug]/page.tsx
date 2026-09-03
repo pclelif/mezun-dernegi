@@ -129,7 +129,9 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
 
             {/* Cover image - etkinlik gibi çoklu fotoğraf carousel */}
             {coverImage ? (
-              <EventCoverImage photos={photos} alt={`${announcement.title} duyuru görseli`} />
+              <div className="translate-x-[1.5px]">
+                <EventCoverImage photos={photos} alt={`${announcement.title} duyuru görseli`} />
+              </div>
             ) : null}
 
             {/* Content */}
