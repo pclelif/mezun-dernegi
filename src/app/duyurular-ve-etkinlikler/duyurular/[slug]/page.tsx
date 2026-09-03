@@ -128,7 +128,13 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
             </h1>
 
             {/* Cover image - etkinlik gibi çoklu fotoğraf carousel */}
-            {coverImage ? <EventCoverImage photos={photos} alt={`${announcement.title} duyuru görseli`} /> : null}
+            {coverImage ? (
+              <EventCoverImage
+                photos={photos}
+                crops={announcement.image_crops ?? []}
+                alt={`${announcement.title} duyuru görseli`}
+              />
+            ) : null}
 
             {/* Content */}
             <p className="whitespace-pre-line text-sm leading-relaxed text-zinc-700">
