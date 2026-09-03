@@ -146,7 +146,7 @@ export default async function EventDetailPage({ params }: PageProps) {
 
             {/* Scaled & Balanced Cover Image */}
             {coverImage ? (
-              <EventCoverImage src={coverImage} alt={`${event.title} görseli`} />
+              <EventCoverImage photos={photos} alt={`${event.title} görseli`} />
             ) : null}
 
             {/* Description */}

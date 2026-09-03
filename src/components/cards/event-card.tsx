@@ -12,6 +12,7 @@ export type EventCardProps = {
   description: string;
   href: string;
   imageUrl?: string | null;
+  showImage?: boolean;
   status?: EventStatus;
   dateTime?: string;
   headingLevel?: "h2" | "h3";
@@ -25,6 +26,7 @@ export function EventCard({
   description,
   href,
   imageUrl,
+  showImage = true,
   status = "upcoming",
   dateTime,
   headingLevel = "h2",
@@ -34,7 +36,7 @@ export function EventCard({
 
   return (
     <Card interactive className={isPast ? "border-l-4 border-l-zinc-400 bg-zinc-50" : "border-l-4 border-l-red-600"}>
-      {imageUrl ? (
+      {showImage && imageUrl ? (
         <Link
           href={href}
           tabIndex={-1}

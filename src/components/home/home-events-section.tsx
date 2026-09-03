@@ -58,11 +58,12 @@ export async function HomeEventsSection() {
       </div>
 
       {displayEvents.length > 0 ? (
-        <div className="grid gap-5 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {displayEvents.map((event) => (
             <EventCard
               key={event.id}
               headingLevel="h3"
+              showImage={false}
               {...mapEventToCardProps(event)}
               href={`/duyurular-ve-etkinlikler/etkinlikler/${event.slug}?from=home`}
             />

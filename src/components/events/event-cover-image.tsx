@@ -1,30 +1,76 @@
 "use client";
 
-import { X } from "lucide-react";
-import { useState } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 type EventCoverImageProps = {
-  src: string;
+  photos: string[];
   alt: string;
 };
 
-export function EventCoverImage({ src, alt }: EventCoverImageProps) {
+export function EventCoverImage({ photos, alt }: EventCoverImageProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const validPhotos = photos.filter((photo) => Boolean(photo && photo.trim()));
+  const total = validPhotos.length;
+  const currentPhoto = validPhotos[currentIndex] ?? validPhotos[0];
 
-  if (!src) return null;
+  useEffect(() => {
+    if (total < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setInterval(() => setCurrentIndex((index) => (index + 1) % total), 5000);
+    return () => window.clearInterval(timer);
+  }, [total]);
+
+  if (!currentPhoto) return null;
+
+  function move(direction: -1 | 1) {
+    setCurrentIndex((index) => (index + direction + total) % total);
+  }
 
   return (
     <>
       <div
-        className="group relative aspect-square w-full max-w-64 cursor-pointer overflow-hidden rounded-xl border border-zinc-200/80 bg-slate-50 transition-all duration-200 hover:border-zinc-300 hover:shadow-sm sm:max-w-72"
+        className="group relative mx-auto aspect-square w-full max-w-64 cursor-pointer overflow-hidden rounded-xl border border-zinc-200/80 bg-slate-50 transition-all duration-200 hover:border-zinc-300 hover:shadow-sm sm:max-w-72"
         onClick={() => setIsOpen(true)}
       >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={src}
-          alt={alt}
-          className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-        />
+        {validPhotos.map((photo, index) => (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={`${photo}-${index}`}
+            src={photo}
+            alt={index === currentIndex ? alt : ""}
+            className={`absolute inset-0 size-full object-cover transition-opacity duration-500 ${
+              index === currentIndex ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ))}
+
+        {total > 1 ? (
+          <>
+            <span className="pointer-events-none absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+              {currentIndex + 1} / {total}
+            </span>
+            <div className="absolute inset-x-2 top-1/2 flex -translate-y-1/2 justify-between">
+              {([-1, 1] as const).map((direction) => {
+                const Icon = direction === -1 ? ChevronLeft : ChevronRight;
+                return (
+                  <button
+                    key={direction}
+                    type="button"
+                    aria-label={direction === -1 ? "Önceki fotoğraf" : "Sonraki fotoğraf"}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      move(direction);
+                    }}
+                    className="grid size-8 place-items-center rounded-full border border-zinc-300 bg-white/90 text-zinc-900 shadow-sm transition hover:border-red-600 hover:bg-red-600 hover:text-white"
+                  >
+                    <Icon className="size-4" aria-hidden="true" />
+                  </button>
+                );
+              })}
+            </div>
+          </>
+        ) : null}
       </div>
 
       {isOpen && (
@@ -46,7 +92,7 @@ export function EventCoverImage({ src, alt }: EventCoverImageProps) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={src}
+              src={currentPhoto}
               alt={alt}
               className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
             />
