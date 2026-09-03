@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="KAAFL Mezunlar Derneği">
+  <circle cx="256" cy="256" r="256" fill="#ec1c24"/>
+  <circle cx="256" cy="256" r="218" fill="none" stroke="#fff" stroke-width="14"/>
+  <text x="256" y="332" fill="#fff" font-family="Arial, Helvetica, sans-serif" font-size="290" font-weight="800" text-anchor="middle">K</text>
+</svg>
