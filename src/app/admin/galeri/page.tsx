@@ -244,11 +244,15 @@ export default function AdminGalleryPage() {
                 }`}
               >
                 <div
-                  className="relative aspect-square bg-slate-200 bg-cover bg-center cursor-pointer hover:opacity-95 transition-opacity"
-                  style={{ backgroundImage: `url(${photo.image_url})` }}
-                  aria-hidden="true"
+                  className="relative aspect-square bg-white flex items-center justify-center p-2 cursor-pointer hover:opacity-95 transition-opacity"
                   onClick={() => setSelectedImage(photo.image_url)}
                 >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={photo.image_url}
+                    alt=""
+                    className="size-full object-contain pointer-events-none select-none"
+                  />
                   {sortBy === "manual" && (
                     <div className="absolute top-2 left-2 z-10 rounded-md bg-black/60 p-1.5 text-white backdrop-blur-sm transition-colors hover:text-red-500">
                       <GripVertical className="size-4" />

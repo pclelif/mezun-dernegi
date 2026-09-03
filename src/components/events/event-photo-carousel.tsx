@@ -70,15 +70,15 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
     return (
       <>
         <div
-          className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-900 cursor-pointer group"
+          className="relative aspect-square w-full overflow-hidden bg-white border-b border-zinc-100 cursor-pointer group flex items-center justify-center p-3 sm:p-5"
           onClick={() => setSelectedImage(validPhotos[0])}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={validPhotos[0]}
             alt={`${title} etkinlik görseli`}
-            className="w-full h-full object-cover object-center block transition-transform duration-300 group-hover:scale-[1.02]"
-            style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
+            className="size-full object-contain object-center block transition-transform duration-300 group-hover:scale-[1.02]"
+            style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center" }}
           />
         </div>
 
@@ -117,7 +117,7 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
   return (
     <>
       <div
-        className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-900 select-none group"
+        className="relative aspect-square w-full overflow-hidden bg-white border-b border-zinc-100 select-none group"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
@@ -127,7 +127,7 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
           return (
             <div
               key={`${photoUrl}-${index}`}
-              className={`absolute inset-0 size-full transition-opacity duration-700 ease-in-out cursor-pointer ${
+              className={`absolute inset-0 size-full transition-opacity duration-700 ease-in-out cursor-pointer flex items-center justify-center p-3 sm:p-5 ${
                 isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
               }`}
               onClick={() => setSelectedImage(photoUrl)}
@@ -136,8 +136,8 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
               <img
                 src={photoUrl}
                 alt={`${title} etkinlik görseli (${index + 1}/${total})`}
-                className="size-full object-cover object-center block"
-                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
+                className="size-full object-contain object-center block"
+                style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center" }}
                 loading={index === 0 ? "eager" : "lazy"}
               />
             </div>

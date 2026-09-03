@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, ImagePlus, LoaderCircle, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, GripVertical, ImagePlus, LoaderCircle, Trash2 } from "lucide-react";
 import { useId, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -122,7 +122,10 @@ export function ImageUploader({
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
 
-  const isSquare = aspectRatio ? aspectRatio === "square" : label.toLowerCase().includes("logo");
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
+
+  const isSquare = aspectRatio ? aspectRatio === "square" : multiple || label.toLowerCase().includes("logo") || label.toLowerCase().includes("fotoğraf");
 
   async function handleFiles(files: FileList | null) {
     if (!files?.length) return;
@@ -201,37 +204,107 @@ export function ImageUploader({
     }
   }
 
+  function handleDragStart(e: React.DragEvent<HTMLDivElement>, index: number) {
+    if (!multiple) return;
+    setDraggedIndex(index);
+    e.dataTransfer.effectAllowed = "move";
+    e.dataTransfer.setData("text/plain", String(index));
+  }
+
+  function handleDragOver(e: React.DragEvent<HTMLDivElement>, index: number) {
+    if (!multiple || draggedIndex === null) return;
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    if (dragOverIndex !== index) {
+      setDragOverIndex(index);
+    }
+  }
+
+  function handleDrop(dropIndex: number) {
+    if (draggedIndex === null || draggedIndex === dropIndex) {
+      setDraggedIndex(null);
+      setDragOverIndex(null);
+      return;
+    }
+    const updated = [...value];
+    const [moved] = updated.splice(draggedIndex, 1);
+    updated.splice(dropIndex, 0, moved);
+    onChange(updated);
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  }
+
+  function handleDragEnd() {
+    setDraggedIndex(null);
+    setDragOverIndex(null);
+  }
+
   const visibleImages = uploading ? [...value, ...previewUrls] : value;
 
   return (
     <div className="flex flex-col justify-between space-y-4">
       <div className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <label htmlFor={inputId} className="block text-sm font-semibold text-zinc-800">
-            {label}
-          </label>
-          <span className="text-[11px] font-medium text-slate-400">JPEG, PNG · En fazla 5 MB</span>
+          <div>
+            <label htmlFor={inputId} className="block text-sm font-semibold text-zinc-800">
+              {label}
+            </label>
+            {multiple && visibleImages.length > 1 && (
+              <p className="text-xs text-slate-500 mt-0.5">
+                Fotoğrafların sırasını değiştirmek için sürükleyip bırakabilirsiniz.
+              </p>
+            )}
+          </div>
+          <span className="text-[11px] font-medium text-slate-400">JPEG, PNG, WebP</span>
         </div>
 
         {visibleImages.length > 0 ? (
-          <div className={`grid gap-3 ${multiple ? "grid-cols-2 sm:grid-cols-3" : "grid-cols-1"}`}>
+          <div className={`grid gap-3.5 ${multiple ? "grid-cols-2 sm:grid-cols-3 md:grid-cols-4" : "grid-cols-1"}`}>
             {visibleImages.map((url, index) => {
               const isTemporary = previewUrls.includes(url);
+              const isDragging = draggedIndex === index;
+              const isOver = dragOverIndex === index;
+
               return (
                 <div
                   key={`${url}-${index}`}
-                  className={`relative group overflow-hidden rounded-xl border border-zinc-200 bg-slate-50 shadow-sm transition hover:shadow-md ${
+                  draggable={multiple && !isTemporary}
+                  onDragStart={(e) => handleDragStart(e, index)}
+                  onDragOver={(e) => handleDragOver(e, index)}
+                  onDrop={(e) => {
+                    e.preventDefault();
+                    handleDrop(index);
+                  }}
+                  onDragEnd={handleDragEnd}
+                  className={`relative group overflow-hidden rounded-xl border bg-white shadow-xs transition-all duration-150 ${
+                    multiple ? "cursor-grab active:cursor-grabbing" : ""
+                  } ${
                     isSquare
-                      ? "mx-auto size-36 sm:size-40"
+                      ? "aspect-square w-full"
                       : "w-full aspect-video min-h-[140px] sm:min-h-[160px]"
+                  } ${
+                    isDragging
+                      ? "opacity-30 scale-[0.98] border-dashed border-red-400 bg-slate-100"
+                      : isOver
+                      ? "border-2 border-red-500 ring-2 ring-red-500/20 scale-[1.02] shadow-md"
+                      : "border-zinc-200 hover:border-zinc-300 hover:shadow-sm"
                   }`}
                 >
+                  {/* Order sequence number badge */}
+                  {multiple && (
+                    <div className="absolute top-2 left-2 z-10 flex items-center gap-1 rounded-md bg-black/70 px-2 py-0.5 text-[11px] font-bold text-white backdrop-blur-xs pointer-events-none">
+                      <GripVertical className="size-3 text-zinc-300" />
+                      <span>{index + 1}</span>
+                    </div>
+                  )}
+
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src={url}
                     alt=""
-                    className="size-full object-contain p-2 bg-white"
+                    className="size-full object-contain p-2.5 bg-white select-none pointer-events-none"
                   />
+
                   {isTemporary ? (
                     <div className="absolute inset-0 grid place-items-center rounded-xl bg-zinc-950/60 text-white">
                       <LoaderCircle className="size-6 animate-spin" aria-label="Yükleniyor" />
@@ -248,11 +321,11 @@ export function ImageUploader({
                             updated[index - 1] = temp;
                             onChange(updated);
                           }}
-                          className="grid size-7.5 place-items-center rounded-full bg-white/95 text-zinc-700 shadow hover:bg-zinc-100 hover:text-black transition"
-                          title="Sola / Başa taşı"
+                          className="hidden sm:grid size-7 place-items-center rounded-full bg-white/95 text-zinc-700 shadow hover:bg-zinc-100 hover:text-black transition cursor-pointer"
+                          title="Sola taşı"
                           aria-label="Sola taşı"
                         >
-                          <ChevronLeft className="size-4" aria-hidden="true" />
+                          <ChevronLeft className="size-3.5" aria-hidden="true" />
                         </button>
                       )}
                       {multiple && index < value.length - 1 && (
@@ -265,17 +338,17 @@ export function ImageUploader({
                             updated[index + 1] = temp;
                             onChange(updated);
                           }}
-                          className="grid size-7.5 place-items-center rounded-full bg-white/95 text-zinc-700 shadow hover:bg-zinc-100 hover:text-black transition"
-                          title="Sağa / Sona taşı"
+                          className="hidden sm:grid size-7 place-items-center rounded-full bg-white/95 text-zinc-700 shadow hover:bg-zinc-100 hover:text-black transition cursor-pointer"
+                          title="Sağa taşı"
                           aria-label="Sağa taşı"
                         >
-                          <ChevronRight className="size-4" aria-hidden="true" />
+                          <ChevronRight className="size-3.5" aria-hidden="true" />
                         </button>
                       )}
                       <button
                         type="button"
                         onClick={() => void removeImage(url)}
-                        className="grid size-7.5 place-items-center rounded-full bg-white/95 text-red-600 shadow transition hover:bg-red-600 hover:text-white"
+                        className="grid size-7 place-items-center rounded-full bg-white/95 text-red-600 shadow transition hover:bg-red-600 hover:text-white cursor-pointer"
                         aria-label="Görseli sil"
                         title="Görseli sil"
                       >
@@ -306,8 +379,8 @@ export function ImageUploader({
             {uploading
               ? "Yükleniyor…"
               : visibleImages.length > 0
-              ? (multiple ? "Yeni Görsel Ekle" : "Görseli Değiştir")
-              : (multiple ? "Görselleri Seç" : "Görsel Seç")}
+              ? (multiple ? "Yeni Fotoğraf Ekle" : "Görseli Değiştir")
+              : (multiple ? "Fotoğrafları Seç" : "Görsel Seç")}
           </span>
         </label>
       </div>
@@ -333,3 +406,4 @@ export function ImageUploader({
     </div>
   );
 }
+

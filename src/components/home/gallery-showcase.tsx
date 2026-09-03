@@ -77,14 +77,14 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
             {items.map((item) => (
               <figure
                 key={item.id}
-                className="relative aspect-[4/3] overflow-hidden rounded-lg border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-shadow"
+                className="relative aspect-square overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer hover:shadow-lg transition-shadow"
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
                   <img
                     src={item.imageUrl}
                     alt={item.title || "Galeri fotoğrafı"}
-                    className="absolute inset-0 size-full object-contain p-2 transition-transform duration-300 hover:scale-105"
+                    className="absolute inset-0 size-full object-contain p-3 transition-transform duration-300 hover:scale-105"
                   />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
@@ -154,14 +154,14 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
             {items.map((item) => (
               <figure
                 key={item.id}
-                className="relative aspect-[4/3] min-w-[78%] snap-start overflow-hidden rounded-lg border border-zinc-200 bg-white cursor-pointer sm:min-w-[43%] lg:min-w-[29%]"
+                className="relative aspect-square min-w-[75%] snap-start overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer sm:min-w-[40%] lg:min-w-[28%]"
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
                   <img
                     src={item.imageUrl}
                     alt={item.title || "Galeri fotoğrafı"}
-                    className="absolute inset-0 size-full object-contain p-2 transition-transform duration-300 hover:scale-105"
+                    className="absolute inset-0 size-full object-contain p-3 transition-transform duration-300 hover:scale-105"
                   />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
