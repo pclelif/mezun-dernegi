@@ -19,6 +19,8 @@ type ImageUploaderProps = {
   label?: string;
   aspectRatio?: "square" | "video";
   cropAspectRatio?: number;
+  /** Show existing images solely to edit their card crops. */
+  editOnly?: boolean;
 };
 
 async function normalizedCrop(file: File, pixelCrop: Area): Promise<ImageCrop> {
@@ -59,6 +61,7 @@ export function ImageUploader({
   label = "Görsel yükle",
   aspectRatio,
   cropAspectRatio,
+  editOnly = false,
 }: ImageUploaderProps) {
   const inputId = useId();
   const [uploading, setUploading] = useState(false);
@@ -351,15 +354,17 @@ export function ImageUploader({
                           <Pencil className="size-3.5" aria-hidden="true" />
                         </button>
                       ) : null}
-                      <button
-                        type="button"
-                        onClick={() => void removeImage(url)}
-                        className="grid size-7.5 place-items-center rounded-full bg-white/95 text-red-600 shadow-sm transition hover:bg-red-600 hover:text-white"
-                        aria-label="Görseli sil"
-                        title="Görseli sil"
-                      >
-                        <Trash2 className="size-3.5" aria-hidden="true" />
-                      </button>
+                      {!editOnly ? (
+                        <button
+                          type="button"
+                          onClick={() => void removeImage(url)}
+                          className="grid size-7.5 place-items-center rounded-full bg-white/95 text-red-600 shadow-sm transition hover:bg-red-600 hover:text-white"
+                          aria-label="Görseli sil"
+                          title="Görseli sil"
+                        >
+                          <Trash2 className="size-3.5" aria-hidden="true" />
+                        </button>
+                      ) : null}
                     </div>
                   )}
                 </div>
@@ -369,7 +374,7 @@ export function ImageUploader({
         ) : null}
       </div>
 
-      <div>
+      {!editOnly ? <div>
         <label
           htmlFor={inputId}
           className={`flex min-h-11 w-full cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-4 py-2.5 text-center text-sm font-semibold text-zinc-800 transition-colors hover:border-red-500 hover:bg-red-50/60 hover:text-red-700 ${
@@ -389,9 +394,9 @@ export function ImageUploader({
               : (multiple ? "Fotoğrafları Seç" : "Görsel Seç")}
           </span>
         </label>
-      </div>
+      </div> : null}
 
-      <input
+      {!editOnly ? <input
         id={inputId}
         type="file"
         accept="image/jpeg,image/png,image/webp"
@@ -402,7 +407,7 @@ export function ImageUploader({
           void handleFiles(event.target.files);
           event.target.value = "";
         }}
-      />
+      /> : null}
 
       {error ? (
         <p role="alert" className="rounded-md bg-red-50 px-3 py-2 text-xs text-red-700">

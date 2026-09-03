@@ -187,6 +187,30 @@ export default function AdminGalleryPage() {
     }
   }
 
+  async function handleExistingCropsChange(nextCrops: (ImageCrop | null)[]) {
+    const updatedImages = images.map((image, index) => ({ ...image, crop: nextCrops[index] ?? null }));
+    const changedImages = updatedImages.filter(
+      (image, index) => JSON.stringify(image.crop ?? null) !== JSON.stringify(images[index]?.crop ?? null)
+    );
+    if (!changedImages.length) return;
+
+    setImages(updatedImages);
+    try {
+      await Promise.all(
+        changedImages.map((image) =>
+          adminDbMutate({
+            table: "gallery_images",
+            action: "update",
+            data: { crop: image.crop },
+            match: { id: image.id },
+          })
+        )
+      );
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Fotoğraf görünümü güncellenemedi.");
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -223,6 +247,26 @@ export default function AdminGalleryPage() {
           {saving ? "Yükleniyor…" : "Fotoğrafları Ekle"}
         </button>
       </section>
+
+      {images.length > 0 ? (
+        <details className="rounded-xl border border-zinc-200 bg-white p-5 shadow-sm">
+          <summary className="cursor-pointer text-sm font-semibold text-zinc-800">
+            Mevcut fotoğrafların kart görünümünü düzenle
+          </summary>
+          <div className="mt-5 border-t border-zinc-100 pt-5">
+            <ImageUploader
+              value={images.map((image) => image.image_url)}
+              onChange={() => undefined}
+              crops={images.map((image) => image.crop ?? null)}
+              onCropsChange={(nextCrops) => void handleExistingCropsChange(nextCrops)}
+              multiple
+              editOnly
+              label="Fotoğraflar"
+              cropAspectRatio={4 / 3}
+            />
+          </div>
+        </details>
+      ) : null}
 
       {loading ? (
         <p className="flex items-center justify-center gap-2 py-16 text-sm text-slate-500">
