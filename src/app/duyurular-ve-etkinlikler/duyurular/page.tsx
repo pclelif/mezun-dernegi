@@ -8,6 +8,11 @@ import { getAnnouncements } from "@/lib/supabase/queries";
 
 export const dynamic = "force-dynamic";
 
+/** Kart önizlemelerinde satır sonlarının kelimeleri bitiştirmesini önler. */
+function flattenContent(text: string) {
+  return text.replace(/\r?\n/g, " ").replace(/\s{2,}/g, " ").trim();
+}
+
 export const metadata: Metadata = {
   title: "Duyurular",
   description: `${associationName}'nden güncel haberler, resmî duyurular ve önemli bilgilendirmeler.`,
@@ -83,7 +88,7 @@ export default async function AnnouncementsPage() {
                   title={announcement.title}
                   date={formatTurkishDate(announcement.date) || "Tarih belirtilmedi"}
                   dateTime={announcement.date ?? undefined}
-                  summary={announcement.content || ""}
+                  summary={flattenContent(announcement.content || "")}
                   href={`/duyurular-ve-etkinlikler/duyurular/${announcement.slug}?from=duyurular`}
                   imageUrls={imageUrls}
                   showImage={true}

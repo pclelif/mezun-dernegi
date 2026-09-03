@@ -3,7 +3,7 @@
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
 import { GripVertical, ImagePlus, LoaderCircle, Pencil, RotateCcw, Trash2 } from "lucide-react";
-import { useId, useState, useCallback } from "react";
+import { useId, useState, useCallback, useMemo } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
@@ -166,7 +166,10 @@ export function ImageUploader({
 
   const isSquare = aspectRatio ? aspectRatio === "square" : true;
   const currentCropFile = cropFiles[cropIndex];
-  const currentCropUrl = currentCropFile ? URL.createObjectURL(currentCropFile) : null;
+  const currentCropUrl = useMemo(
+    () => (currentCropFile ? URL.createObjectURL(currentCropFile) : null),
+    [currentCropFile]
+  );
 
   const onCropComplete = useCallback((_: Area, croppedPixels: Area) => {
     setCroppedAreaPixels(croppedPixels);
@@ -482,15 +485,10 @@ export function ImageUploader({
       {cropFiles.length > 0 && cropAspectRatio && currentCropUrl ? (
         <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
           <div className="flex w-full max-w-2xl flex-col gap-4 rounded-2xl bg-white p-5 shadow-2xl">
-            <div>
-              <h2 className="text-base font-bold text-zinc-950">
-                Fotoğrafı kırp
-                {cropFiles.length > 1 ? ` (${cropIndex + 1} / ${cropFiles.length})` : ""}
-              </h2>
-              <p className="mt-0.5 text-sm text-zinc-500">
-                Fotoğrafı sürükleyerek istediğiniz alanı kadraja alın. Fare tekerleğiyle yakınlaştırabilirsiniz.
-              </p>
-            </div>
+            <h2 className="text-base font-bold text-zinc-950">
+              Fotoğrafı Kırp
+              {cropFiles.length > 1 ? ` (${cropIndex + 1} / ${cropFiles.length})` : ""}
+            </h2>
 
             {/* Crop canvas area */}
             <div
