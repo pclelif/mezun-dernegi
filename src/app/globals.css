@@ -277,6 +277,11 @@ a[class*="rounded-lg"][class*="px-"]:active {
   .form-consent { grid-column: 1 / -1; }
 }
 
+/* Keep page heroes and content panels on the same desktop grid as the main navigation. */
+@media (min-width: 1280px) {
+  .container-site { width: min(calc(100% - 3rem), 84rem); }
+}
+
 @media (min-width: 1024px) {
   .site-header__nav { display: flex; }
   .site-header__toggle, .site-header__mobile-nav { display: none; }
