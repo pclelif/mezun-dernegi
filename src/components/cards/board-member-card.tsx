@@ -10,7 +10,7 @@ export type BoardMemberCardProps = {
 
 export function BoardMemberCard({ name, role, image }: BoardMemberCardProps) {
   return (
-    <Card padding="none">
+    <Card padding="none" className="w-full lg:max-w-[15.5rem]">
       <div className="relative aspect-[3/4] overflow-hidden bg-zinc-100">
         {image ? (
           <Image
