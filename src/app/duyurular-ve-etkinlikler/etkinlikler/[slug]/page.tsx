@@ -1,7 +1,8 @@
 import { CalendarDays, Clock3, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { EventPhotoCarousel } from "@/components/events/event-photo-carousel";
+import { EventCoverImage } from "@/components/events/event-cover-image";
+import { EventGalleryCarousel } from "@/components/events/event-gallery-carousel";
 import { BreadcrumbJsonLd, EventJsonLd } from "@/components/seo/json-ld";
 import { DetailFooterLink } from "@/components/shared/DetailFooterLink";
 import { ReturnButton } from "@/components/shared/ReturnButton";
@@ -77,6 +78,11 @@ export default async function EventDetailPage({ params }: PageProps) {
       ? [event.image_url]
       : [];
 
+  const coverImage = photos[0] || event.image_url || null;
+  // The first uploaded image is also used as the event cover. Keep it out of
+  // the gallery strip so the same photo is not shown twice in succession.
+  const galleryPhotos = photos.slice(1);
+
   return (
     <>
       <BreadcrumbJsonLd
@@ -92,15 +98,10 @@ export default async function EventDetailPage({ params }: PageProps) {
         startDate={event.date}
         location={event.location}
         url={`/duyurular-ve-etkinlikler/etkinlikler/${slug}`}
-        imageUrl={photos[0] || event.image_url}
+        imageUrl={coverImage}
       />
       <div className="min-h-[80vh] bg-slate-100/70 px-4 py-8 sm:py-12 flex items-center justify-center">
         <article className="w-full max-w-2xl overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-xl transition-all">
-          {/* Full-Bleed Edge-to-Edge Image / Carousel */}
-          {photos.length > 0 ? (
-            <EventPhotoCarousel photos={photos} title={event.title} />
-          ) : null}
-
           {/* Top Header Bar */}
           <div className="flex items-center justify-between border-b border-zinc-100 bg-slate-50/80 px-6 py-4">
             <div className="flex items-center gap-2">
@@ -143,10 +144,20 @@ export default async function EventDetailPage({ params }: PageProps) {
               )}
             </div>
 
+            {/* Scaled & Balanced Cover Image */}
+            {coverImage ? (
+              <EventCoverImage src={coverImage} alt={`${event.title} görseli`} />
+            ) : null}
+
             {/* Description */}
             <div className="rounded-xl border border-zinc-100 bg-slate-50/50 p-4 sm:p-5 text-sm leading-relaxed text-zinc-700 whitespace-pre-line">
               {event.description || "Bu etkinlik için henüz detaylı açıklama eklenmemiş."}
             </div>
+
+            {/* Supporting photos remain compact and are omitted when absent. */}
+            {galleryPhotos.length > 0 ? (
+              <EventGalleryCarousel photos={galleryPhotos} title={event.title} />
+            ) : null}
           </div>
 
           {/* Footer Actions */}

@@ -6,6 +6,18 @@ import { getEvents, mapEventToCardProps } from "@/lib/supabase/queries";
 const textLinkClass =
   "inline-flex touch-manipulation items-center gap-2 rounded-sm text-sm font-bold text-zinc-900 hover:text-red-700 active:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
+function eventDateValue(event: { date: string | null; created_at: string }) {
+  const value = event.date ? Date.parse(event.date) : Number.NaN;
+  return Number.isNaN(value) ? Date.parse(event.created_at) : value;
+}
+
+function sortByDate(events: Awaited<ReturnType<typeof getEvents>>, direction: "asc" | "desc") {
+  return [...events].sort((a, b) => {
+    const difference = eventDateValue(a) - eventDateValue(b);
+    return direction === "asc" ? difference : -difference;
+  });
+}
+
 export async function HomeEventsSection() {
   let events: Awaited<ReturnType<typeof getEvents>> = [];
   let loadError = false;
@@ -16,7 +28,14 @@ export async function HomeEventsSection() {
     loadError = true;
   }
 
-  const upcomingEvents = events.filter((event) => event.status !== "past").slice(0, 2);
+  const upcomingEvents = sortByDate(events.filter((event) => event.status !== "past"), "asc");
+  const pastEvents = sortByDate(events.filter((event) => event.status === "past"), "desc");
+  // When both types exist, keep one of each visible on the homepage. This
+  // preserves the status colours while giving visitors a complete snapshot.
+  const displayEvents =
+    upcomingEvents.length > 0 && pastEvents.length > 0
+      ? [upcomingEvents[0], pastEvents[0]]
+      : [...upcomingEvents, ...pastEvents].slice(0, 2);
 
   return (
     <section className="border-t border-zinc-200 bg-white px-4">
@@ -28,7 +47,7 @@ export async function HomeEventsSection() {
               <CalendarDays className="size-4" aria-hidden="true" />
             </span>
             <div>
-              <p className="text-xs font-semibold uppercase leading-tight tracking-[0.02em] text-red-600">SIRADAKİ BULUŞMALAR</p>
+              <p className="text-xs font-semibold uppercase leading-tight tracking-[0.02em] text-red-600">ETKİNLİK TAKVİMİ</p>
               <h2 className="mt-0.5 text-2xl font-bold leading-tight tracking-tight text-zinc-950 md:text-[1.75rem]">Etkinlikler</h2>
             </div>
           </div>
@@ -38,9 +57,9 @@ export async function HomeEventsSection() {
         </Link>
       </div>
 
-      {upcomingEvents.length > 0 ? (
+      {displayEvents.length > 0 ? (
         <div className="grid gap-5 md:grid-cols-2">
-          {upcomingEvents.map((event) => (
+          {displayEvents.map((event) => (
             <EventCard
               key={event.id}
               headingLevel="h3"
@@ -51,7 +70,7 @@ export async function HomeEventsSection() {
         </div>
       ) : (
         <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-5 py-3.5 text-center text-sm font-medium text-zinc-500">
-          {loadError ? "Etkinlikler şu anda yüklenemiyor." : "Henüz yaklaşan etkinlik bulunmuyor."}
+          {loadError ? "Etkinlikler şu anda yüklenemiyor." : "Henüz etkinlik bulunmuyor."}
         </p>
       )}
       </div>
