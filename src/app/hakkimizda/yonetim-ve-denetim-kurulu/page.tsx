@@ -54,7 +54,7 @@ export default async function BoardsPage() {
             </h2>
           </div>
           {managementMembers.length > 0 ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-center">
+            <div className="grid gap-5 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-start">
               {managementMembers.map((member) => (
                 <BoardMemberCard
                   key={member.id}
@@ -79,7 +79,7 @@ export default async function BoardsPage() {
             </h2>
           </div>
           {auditMembers.length > 0 ? (
-            <div className="grid gap-5 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-center">
+            <div className="grid gap-5 sm:grid-cols-2 lg:flex lg:flex-wrap lg:justify-start">
               {auditMembers.map((member) => (
                 <BoardMemberCard
                   key={member.id}
