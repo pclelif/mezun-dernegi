@@ -198,7 +198,7 @@ export default function AdminGalleryPage() {
       {error && <p className="rounded-md bg-red-50 p-4 text-sm text-red-700">{error}</p>}
 
       <section className="rounded-xl border bg-white p-5 shadow-sm">
-        <ImageUploader value={uploads} onChange={setUploads} label="Yeni fotoğraflar" multiple />
+        <ImageUploader value={uploads} onChange={setUploads} label="Yeni fotoğraflar" multiple cropAspectRatio={4 / 3} />
         <button
           type="button"
           disabled={saving || !uploads.length}

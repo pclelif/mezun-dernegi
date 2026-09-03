@@ -99,7 +99,7 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
           </div>
         </label>
 
-        <ImageUploader value={images} onChange={setImages} label="Duyuru görseli" />
+        <ImageUploader value={images} onChange={setImages} label="Duyuru görseli" cropAspectRatio={16 / 9} />
 
         {error ? <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
         <button

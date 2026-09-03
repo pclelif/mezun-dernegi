@@ -137,7 +137,7 @@ export function EventForm({ initial }: EventFormProps) {
           <input name="location" defaultValue={initial?.location ?? ""} className={fieldClass} />
         </label>
 
-        <ImageUploader value={images} onChange={setImages} multiple label="Etkinlik fotoğrafları" />
+        <ImageUploader value={images} onChange={setImages} multiple label="Etkinlik fotoğrafları" cropAspectRatio={16 / 9} />
 
         {error ? <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
         <button

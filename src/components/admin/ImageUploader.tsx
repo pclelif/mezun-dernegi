@@ -91,7 +91,27 @@ type ImageUploaderProps = {
   multiple?: boolean;
   label?: string;
   aspectRatio?: "square" | "video";
+  cropAspectRatio?: number;
 };
+
+async function cropImageFile(file: File, aspectRatio: number, xPercent: number, yPercent: number): Promise<File> {
+  const source = await createImageBitmap(file);
+  const sourceRatio = source.width / source.height;
+  const cropWidth = sourceRatio > aspectRatio ? source.height * aspectRatio : source.width;
+  const cropHeight = sourceRatio > aspectRatio ? source.height : source.width / aspectRatio;
+  const sourceX = ((source.width - cropWidth) * xPercent) / 100;
+  const sourceY = ((source.height - cropHeight) * yPercent) / 100;
+  const canvas = document.createElement("canvas");
+  canvas.width = 1600;
+  canvas.height = Math.round(1600 / aspectRatio);
+  const context = canvas.getContext("2d");
+  if (!context) return file;
+  context.drawImage(source, sourceX, sourceY, cropWidth, cropHeight, 0, 0, canvas.width, canvas.height);
+  source.close();
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.88));
+  if (!blob) return file;
+  return new File([blob], file.name.replace(/\.[^/.]+$/, ".jpg"), { type: "image/jpeg", lastModified: Date.now() });
+}
 
 function storagePathFromPublicUrl(url: string) {
   const marker = "/storage/v1/object/public/media/";
@@ -116,16 +136,46 @@ export function ImageUploader({
   multiple = false,
   label = "Görsel yükle",
   aspectRatio,
+  cropAspectRatio,
 }: ImageUploaderProps) {
   const inputId = useId();
   const [uploading, setUploading] = useState(false);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
   const [error, setError] = useState<string | null>(null);
+  const [cropFiles, setCropFiles] = useState<File[]>([]);
+  const [cropIndex, setCropIndex] = useState(0);
+  const [cropX, setCropX] = useState(50);
+  const [cropY, setCropY] = useState(50);
 
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   const isSquare = aspectRatio ? aspectRatio === "square" : true;
+
+  async function uploadFiles(filesToUpload: File[]) {
+    setUploading(true);
+    try {
+      const temporaryPreviews = filesToUpload.map((file) => URL.createObjectURL(file));
+      setPreviewUrls(temporaryPreviews);
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) throw new Error("Görsel yüklemek için oturum açmalısınız.");
+      const uploadedUrls: string[] = [];
+      for (const file of filesToUpload) {
+        const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
+        const path = `${user.id}/${Date.now()}-${generateUUID()}.${extension}`;
+        const { error: uploadError } = await supabase.storage.from("media").upload(path, file, { contentType: file.type, upsert: false });
+        if (uploadError) throw uploadError;
+        uploadedUrls.push(supabase.storage.from("media").getPublicUrl(path).data.publicUrl);
+      }
+      onChange(multiple ? [...value, ...uploadedUrls] : uploadedUrls);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Görsel yüklenemedi.");
+    } finally {
+      setPreviewUrls((current) => { current.forEach(URL.revokeObjectURL); return []; });
+      setUploading(false);
+    }
+  }
 
   async function handleFiles(files: FileList | null) {
     if (!files?.length) return;
@@ -144,8 +194,6 @@ export function ImageUploader({
       return;
     }
 
-    setUploading(true);
-
     try {
       // Auto-compress photos in browser before upload
       const compressedFiles = await Promise.all(
@@ -153,39 +201,34 @@ export function ImageUploader({
       );
 
       const filesToUpload = multiple ? compressedFiles : compressedFiles.slice(0, 1);
-      const temporaryPreviews = filesToUpload.map((file) => URL.createObjectURL(file));
-      setPreviewUrls(temporaryPreviews);
-
-      const supabase = createClient();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) throw new Error("Görsel yüklemek için oturum açmalısınız.");
-
-      const uploadedUrls: string[] = [];
-
-      for (const file of filesToUpload) {
-        const extension = file.name.split(".").pop()?.toLowerCase() || "jpg";
-        const path = `${user.id}/${Date.now()}-${generateUUID()}.${extension}`;
-        const { error: uploadError } = await supabase.storage
-          .from("media")
-          .upload(path, file, { contentType: file.type, upsert: false });
-
-        if (uploadError) throw uploadError;
-        const { data } = supabase.storage.from("media").getPublicUrl(path);
-        uploadedUrls.push(data.publicUrl);
+      if (cropAspectRatio) {
+        setCropFiles(filesToUpload);
+        setCropIndex(0);
+        setCropX(50);
+        setCropY(50);
+      } else {
+        await uploadFiles(filesToUpload);
       }
-
-      onChange(multiple ? [...value, ...uploadedUrls] : uploadedUrls);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Görsel yüklenemedi.");
-    } finally {
-      setPreviewUrls((current) => {
-        current.forEach(URL.revokeObjectURL);
-        return [];
-      });
-      setUploading(false);
+    }
+  }
+
+  async function applyCrop() {
+    const file = cropFiles[cropIndex];
+    if (!file || !cropAspectRatio) return;
+    const cropped = await cropImageFile(file, cropAspectRatio, cropX, cropY);
+    const next = [...cropFiles];
+    next[cropIndex] = cropped;
+    if (cropIndex + 1 < next.length) {
+      setCropFiles(next);
+      setCropIndex(cropIndex + 1);
+      setCropX(50);
+      setCropY(50);
+    } else {
+      setCropFiles([]);
+      setCropIndex(0);
+      await uploadFiles(next);
     }
   }
 
@@ -367,7 +410,24 @@ export function ImageUploader({
           {error}
         </p>
       ) : null}
+
+      {cropFiles.length > 0 && cropAspectRatio ? (
+        <div className="fixed inset-0 z-[100000] grid place-items-center bg-black/60 p-4">
+          <div className="w-full max-w-xl rounded-xl bg-white p-5 shadow-2xl">
+            <h2 className="text-base font-bold text-zinc-950">Fotoğraf kadrajını ayarla</h2>
+            <p className="mt-1 text-sm text-zinc-600">Görünmesini istediğiniz bölümü yatay ve dikey konumla seçin.</p>
+            <div className="mt-4 overflow-hidden rounded-lg bg-slate-100" style={{ aspectRatio: String(cropAspectRatio) }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={URL.createObjectURL(cropFiles[cropIndex])} alt="Kadraj önizlemesi" className="size-full object-cover" style={{ objectPosition: `${cropX}% ${cropY}%` }} />
+            </div>
+            <div className="mt-4 grid gap-3 sm:grid-cols-2">
+              <label className="text-sm font-semibold text-zinc-700">Yatay konum<input type="range" min="0" max="100" value={cropX} onChange={(event) => setCropX(Number(event.target.value))} className="mt-2 w-full accent-red-600" /></label>
+              <label className="text-sm font-semibold text-zinc-700">Dikey konum<input type="range" min="0" max="100" value={cropY} onChange={(event) => setCropY(Number(event.target.value))} className="mt-2 w-full accent-red-600" /></label>
+            </div>
+            <div className="mt-5 flex justify-end gap-3"><button type="button" onClick={() => setCropFiles([])} className="rounded-md px-3 py-2 text-sm font-semibold text-zinc-600">İptal</button><button type="button" onClick={() => void applyCrop()} className="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white">{cropIndex + 1 < cropFiles.length ? "Sonraki fotoğraf" : "Kadrajı uygula"}</button></div>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
-

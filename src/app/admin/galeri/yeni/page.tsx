@@ -59,7 +59,7 @@ export default function NewGalleryPage() {
         {error && <p className="rounded-md bg-red-50 p-4 text-sm text-red-700">{error}</p>}
 
         <section className="rounded-xl border bg-white p-5 shadow-sm">
-          <ImageUploader value={photos} onChange={setPhotos} label="Fotoğrafları seç" multiple />
+          <ImageUploader value={photos} onChange={setPhotos} label="Fotoğrafları seç" multiple cropAspectRatio={4 / 3} />
         </section>
 
         <div className="flex gap-3">
