@@ -142,15 +142,15 @@ export default async function AdminDashboardPage() {
                   <Link
                     key={`${item.type}-${item.id}`}
                     href={item.href}
-                    className="flex items-center justify-between gap-2 rounded-lg border border-zinc-100 bg-slate-50/40 p-2.5 sm:p-3 text-sm min-w-0 transition hover:border-red-200 hover:bg-red-50/40 group"
+                    className="flex items-center justify-between gap-2 rounded-lg border border-zinc-100 bg-slate-50/40 p-2.5 sm:p-3 text-sm min-w-0 transition hover:border-red-200 hover:bg-red-50/40"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-medium text-zinc-900 text-xs sm:text-sm group-hover:text-red-700 transition-colors">
+                      <p className="truncate font-medium text-zinc-900 text-xs sm:text-sm">
                         {item.title}
                       </p>
                       <p className="mt-0.5 text-[11px] text-slate-400">{formatTurkishDate(item.created_at)}</p>
                     </div>
-                    <span className="shrink-0 rounded-md bg-zinc-200/70 px-2 py-0.5 text-[11px] font-semibold text-zinc-700 group-hover:bg-red-100 group-hover:text-red-700 transition-colors">
+                    <span className="shrink-0 rounded-md bg-zinc-200/70 px-2 py-0.5 text-[11px] font-semibold text-zinc-700">
                       {item.type}
                     </span>
                   </Link>
