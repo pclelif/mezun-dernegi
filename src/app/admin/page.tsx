@@ -34,8 +34,16 @@ export default async function AdminDashboardPage() {
   ];
 
   const latestContent = [
-    ...(recentEvents.data ?? []).map((x) => ({ ...x, type: "Etkinlik" })),
-    ...(recentAnnouncements.data ?? []).map((x) => ({ ...x, type: "Duyuru" })),
+    ...(recentEvents.data ?? []).map((x) => ({
+      ...x,
+      type: "Etkinlik" as const,
+      href: `/admin/etkinlikler/${x.id}`,
+    })),
+    ...(recentAnnouncements.data ?? []).map((x) => ({
+      ...x,
+      type: "Duyuru" as const,
+      href: `/admin/duyurular/${x.id}`,
+    })),
   ]
     .sort((a, b) => b.created_at.localeCompare(a.created_at))
     .slice(0, 4);
@@ -131,18 +139,21 @@ export default async function AdminDashboardPage() {
             <div className="mt-3 space-y-2">
               {latestContent.length > 0 ? (
                 latestContent.map((item) => (
-                  <div
+                  <Link
                     key={`${item.type}-${item.id}`}
-                    className="flex items-center justify-between gap-2 rounded-lg border border-zinc-100 bg-slate-50/40 p-2.5 sm:p-3 text-sm min-w-0"
+                    href={item.href}
+                    className="flex items-center justify-between gap-2 rounded-lg border border-zinc-100 bg-slate-50/40 p-2.5 sm:p-3 text-sm min-w-0 transition hover:border-red-200 hover:bg-red-50/40 group"
                   >
                     <div className="min-w-0 flex-1">
-                      <p className="truncate font-medium text-zinc-900 text-xs sm:text-sm">{item.title}</p>
+                      <p className="truncate font-medium text-zinc-900 text-xs sm:text-sm group-hover:text-red-700 transition-colors">
+                        {item.title}
+                      </p>
                       <p className="mt-0.5 text-[11px] text-slate-400">{formatTurkishDate(item.created_at)}</p>
                     </div>
-                    <span className="shrink-0 rounded-md bg-zinc-200/70 px-2 py-0.5 text-[11px] font-semibold text-zinc-700">
+                    <span className="shrink-0 rounded-md bg-zinc-200/70 px-2 py-0.5 text-[11px] font-semibold text-zinc-700 group-hover:bg-red-100 group-hover:text-red-700 transition-colors">
                       {item.type}
                     </span>
-                  </div>
+                  </Link>
                 ))
               ) : (
                 <p className="py-6 text-center text-sm text-slate-500">Henüz içerik eklenmedi.</p>
