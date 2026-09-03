@@ -7,6 +7,11 @@ import { getAnnouncements } from "@/lib/supabase/queries";
 const textLinkClass =
   "inline-flex touch-manipulation items-center gap-2 rounded-sm text-sm font-bold text-zinc-900 hover:text-red-700 active:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600";
 
+/** Satır sonlarını tek boşlukla birleştirir, birden fazla boşluğu tekle indirger */
+function flattenContent(text: string) {
+  return text.replace(/\r?\n/g, " ").replace(/\s{2,}/g, " ").trim();
+}
+
 export async function HomeAnnouncementsSection() {
   let announcements: Awaited<ReturnType<typeof getAnnouncements>> = [];
   let loadError = false;
@@ -41,17 +46,27 @@ export async function HomeAnnouncementsSection() {
 
         {announcements.length > 0 ? (
           <div className="grid gap-5 md:grid-cols-2">
-            {announcements.map((announcement) => (
-              <AnnouncementCard
-                key={announcement.id}
-                headingLevel="h3"
-                title={announcement.title}
-                date={formatTurkishDate(announcement.date ?? announcement.created_at) || "Tarih belirtilmedi"}
-                dateTime={announcement.date ?? announcement.created_at}
-                summary={announcement.content || ""}
-                href={`/duyurular-ve-etkinlikler/duyurular/${announcement.slug}?from=home`}
-              />
-            ))}
+            {announcements.map((announcement) => {
+              const imageUrls =
+                announcement.images && announcement.images.length > 0
+                  ? announcement.images
+                  : announcement.image_url
+                  ? [announcement.image_url]
+                  : [];
+              return (
+                <AnnouncementCard
+                  key={announcement.id}
+                  headingLevel="h3"
+                  title={announcement.title}
+                  date={formatTurkishDate(announcement.date ?? announcement.created_at) || "Tarih belirtilmedi"}
+                  dateTime={announcement.date ?? announcement.created_at}
+                  summary={flattenContent(announcement.content || "")}
+                  href={`/duyurular-ve-etkinlikler/duyurular/${announcement.slug}?from=home`}
+                  imageUrls={imageUrls}
+                  showImage={true}
+                />
+              );
+            })}
           </div>
         ) : (
           <p className="rounded-lg border border-dashed border-zinc-300 bg-slate-50/70 px-5 py-3.5 text-center text-sm font-medium text-zinc-500">

@@ -70,16 +70,26 @@ export default async function AnnouncementsPage() {
           </p>
         ) : (
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {announcements.map((announcement) => (
-              <AnnouncementCard
-                key={announcement.id}
-                title={announcement.title}
-                date={formatTurkishDate(announcement.date) || "Tarih belirtilmedi"}
-                dateTime={announcement.date ?? undefined}
-                summary={announcement.content || ""}
-                href={`/duyurular-ve-etkinlikler/duyurular/${announcement.slug}?from=duyurular`}
-              />
-            ))}
+            {announcements.map((announcement) => {
+              const imageUrls =
+                announcement.images && announcement.images.length > 0
+                  ? announcement.images
+                  : announcement.image_url
+                  ? [announcement.image_url]
+                  : [];
+              return (
+                <AnnouncementCard
+                  key={announcement.id}
+                  title={announcement.title}
+                  date={formatTurkishDate(announcement.date) || "Tarih belirtilmedi"}
+                  dateTime={announcement.date ?? undefined}
+                  summary={announcement.content || ""}
+                  href={`/duyurular-ve-etkinlikler/duyurular/${announcement.slug}?from=duyurular`}
+                  imageUrls={imageUrls}
+                  showImage={true}
+                />
+              );
+            })}
           </div>
         )}
       </section>

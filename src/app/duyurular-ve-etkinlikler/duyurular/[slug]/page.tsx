@@ -1,7 +1,7 @@
 import { CalendarDays, Megaphone } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import { EventCoverImage } from "@/components/events/event-cover-image";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo/json-ld";
 import { DetailFooterLink } from "@/components/shared/DetailFooterLink";
 import { ReturnButton } from "@/components/shared/ReturnButton";
@@ -24,7 +24,11 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const description =
       announcement.content?.slice(0, 160) ||
       `${announcement.title} başlıklı duyuru - ${associationName}`;
-    const ogImage = announcement.image_url || `${siteUrl}/images/og-image.png`;
+
+    const ogImage =
+      (announcement.images && announcement.images.length > 0 ? announcement.images[0] : null) ||
+      announcement.image_url ||
+      `${siteUrl}/images/og-image.png`;
 
     return {
       title: announcement.title,
@@ -67,6 +71,15 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
   }
   if (!announcement) notFound();
 
+  const photos: string[] =
+    announcement.images && announcement.images.length > 0
+      ? announcement.images
+      : announcement.image_url
+      ? [announcement.image_url]
+      : [];
+
+  const coverImage = photos[0] || null;
+
   return (
     <>
       <BreadcrumbJsonLd
@@ -81,7 +94,7 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
         description={announcement.content || announcement.title}
         datePublished={announcement.date || announcement.created_at}
         url={`/duyurular-ve-etkinlikler/duyurular/${slug}`}
-        imageUrl={announcement.image_url}
+        imageUrl={coverImage}
       />
       <div className="min-h-[80vh] bg-slate-100/70 px-4 py-8 sm:py-12 flex items-center justify-center">
         <article className="w-full max-w-2xl overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-xl transition-all">
@@ -101,19 +114,6 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
 
           {/* Card Body */}
           <div className="p-6 sm:p-8 space-y-5">
-            {/* Optional Image */}
-            {announcement.image_url ? (
-              <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-zinc-100 bg-slate-50 shadow-xs">
-                <Image
-                  src={announcement.image_url}
-                  alt={`${announcement.title} duyuru görseli`}
-                  fill
-                  sizes="(max-width: 640px) 100vw, 650px"
-                  className="object-contain"
-                />
-              </div>
-            ) : null}
-
             {/* Date Badge */}
             <div className="flex items-center gap-2 text-xs font-bold text-slate-500">
               <CalendarDays className="size-4 text-[#ec1c24]" />
@@ -126,6 +126,11 @@ export default async function AnnouncementDetailPage({ params }: PageProps) {
             <h1 className="text-xl font-bold tracking-tight text-zinc-950 sm:text-2xl leading-snug">
               {announcement.title}
             </h1>
+
+            {/* Cover image - etkinlik gibi çoklu fotoğraf carousel */}
+            {coverImage ? (
+              <EventCoverImage photos={photos} alt={`${announcement.title} duyuru görseli`} />
+            ) : null}
 
             {/* Content */}
             <div className="rounded-xl border border-zinc-100 bg-slate-50/50 p-4 sm:p-5 text-sm leading-relaxed text-zinc-700 whitespace-pre-line">

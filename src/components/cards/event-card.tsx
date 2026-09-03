@@ -53,7 +53,7 @@ export function EventCard({
             href={href}
             tabIndex={-1}
             aria-hidden="true"
-            className="group relative mb-4 block h-40 overflow-hidden rounded-md border border-zinc-200 bg-white sm:h-44"
+            className="group relative mb-4 block h-40 translate-x-[1.5px] overflow-hidden rounded-md border border-zinc-200 bg-white sm:h-44"
           >
             {photos.map((photo, index) => (
               // Event photos are user-managed remote URLs, so native images keep the existing storage setup working.

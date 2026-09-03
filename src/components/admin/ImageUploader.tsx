@@ -1,7 +1,9 @@
 "use client";
 
+import Cropper from "react-easy-crop";
+import type { Area } from "react-easy-crop";
 import { GripVertical, ImagePlus, LoaderCircle, Trash2 } from "lucide-react";
-import { useId, useState } from "react";
+import { useId, useState, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 
 const ALLOWED_TYPES = new Set(["image/jpeg", "image/png", "image/webp"]);
@@ -94,20 +96,28 @@ type ImageUploaderProps = {
   cropAspectRatio?: number;
 };
 
-async function cropImageFile(file: File, aspectRatio: number, xPercent: number, yPercent: number): Promise<File> {
-  const source = await createImageBitmap(file);
-  const sourceRatio = source.width / source.height;
-  const cropWidth = sourceRatio > aspectRatio ? source.height * aspectRatio : source.width;
-  const cropHeight = sourceRatio > aspectRatio ? source.height : source.width / aspectRatio;
-  const sourceX = ((source.width - cropWidth) * xPercent) / 100;
-  const sourceY = ((source.height - cropHeight) * yPercent) / 100;
+/** Crops a file using the pixel crop area returned by react-easy-crop */
+async function cropImageFileByArea(file: File, pixelCrop: Area, outputAspectRatio: number): Promise<File> {
+  const bitmap = await createImageBitmap(file);
   const canvas = document.createElement("canvas");
-  canvas.width = 1600;
-  canvas.height = Math.round(1600 / aspectRatio);
-  const context = canvas.getContext("2d");
-  if (!context) return file;
-  context.drawImage(source, sourceX, sourceY, cropWidth, cropHeight, 0, 0, canvas.width, canvas.height);
-  source.close();
+  const outW = 1600;
+  const outH = Math.round(outW / outputAspectRatio);
+  canvas.width = outW;
+  canvas.height = outH;
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return file;
+  ctx.drawImage(
+    bitmap,
+    pixelCrop.x,
+    pixelCrop.y,
+    pixelCrop.width,
+    pixelCrop.height,
+    0,
+    0,
+    outW,
+    outH
+  );
+  bitmap.close();
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.88));
   if (!blob) return file;
   return new File([blob], file.name.replace(/\.[^/.]+$/, ".jpg"), { type: "image/jpeg", lastModified: Date.now() });
@@ -144,13 +154,22 @@ export function ImageUploader({
   const [error, setError] = useState<string | null>(null);
   const [cropFiles, setCropFiles] = useState<File[]>([]);
   const [cropIndex, setCropIndex] = useState(0);
-  const [cropX, setCropX] = useState(50);
-  const [cropY, setCropY] = useState(50);
+
+  // react-easy-crop state
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
 
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dragOverIndex, setDragOverIndex] = useState<number | null>(null);
 
   const isSquare = aspectRatio ? aspectRatio === "square" : true;
+  const currentCropFile = cropFiles[cropIndex];
+  const currentCropUrl = currentCropFile ? URL.createObjectURL(currentCropFile) : null;
+
+  const onCropComplete = useCallback((_: Area, croppedPixels: Area) => {
+    setCroppedAreaPixels(croppedPixels);
+  }, []);
 
   async function uploadFiles(filesToUpload: File[]) {
     setUploading(true);
@@ -204,8 +223,9 @@ export function ImageUploader({
       if (cropAspectRatio) {
         setCropFiles(filesToUpload);
         setCropIndex(0);
-        setCropX(50);
-        setCropY(50);
+        setCrop({ x: 0, y: 0 });
+        setZoom(1);
+        setCroppedAreaPixels(null);
       } else {
         await uploadFiles(filesToUpload);
       }
@@ -216,15 +236,16 @@ export function ImageUploader({
 
   async function applyCrop() {
     const file = cropFiles[cropIndex];
-    if (!file || !cropAspectRatio) return;
-    const cropped = await cropImageFile(file, cropAspectRatio, cropX, cropY);
+    if (!file || !cropAspectRatio || !croppedAreaPixels) return;
+    const cropped = await cropImageFileByArea(file, croppedAreaPixels, cropAspectRatio);
     const next = [...cropFiles];
     next[cropIndex] = cropped;
     if (cropIndex + 1 < next.length) {
       setCropFiles(next);
       setCropIndex(cropIndex + 1);
-      setCropX(50);
-      setCropY(50);
+      setCrop({ x: 0, y: 0 });
+      setZoom(1);
+      setCroppedAreaPixels(null);
     } else {
       setCropFiles([]);
       setCropIndex(0);
@@ -411,20 +432,72 @@ export function ImageUploader({
         </p>
       ) : null}
 
-      {cropFiles.length > 0 && cropAspectRatio ? (
-        <div className="fixed inset-0 z-[100000] grid place-items-center bg-black/60 p-4">
-          <div className="w-full max-w-xl rounded-xl bg-white p-5 shadow-2xl">
-            <h2 className="text-base font-bold text-zinc-950">Fotoğraf kadrajını ayarla</h2>
-            <p className="mt-1 text-sm text-zinc-600">Görünmesini istediğiniz bölümü yatay ve dikey konumla seçin.</p>
-            <div className="mt-4 overflow-hidden rounded-lg bg-slate-100" style={{ aspectRatio: String(cropAspectRatio) }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={URL.createObjectURL(cropFiles[cropIndex])} alt="Kadraj önizlemesi" className="size-full object-cover" style={{ objectPosition: `${cropX}% ${cropY}%` }} />
+      {/* ── react-easy-crop modal ── */}
+      {cropFiles.length > 0 && cropAspectRatio && currentCropUrl ? (
+        <div className="fixed inset-0 z-[100000] flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
+          <div className="flex w-full max-w-2xl flex-col gap-4 rounded-2xl bg-white p-5 shadow-2xl">
+            <div>
+              <h2 className="text-base font-bold text-zinc-950">
+                Fotoğrafı kırp
+                {cropFiles.length > 1 ? ` (${cropIndex + 1} / ${cropFiles.length})` : ""}
+              </h2>
+              <p className="mt-0.5 text-sm text-zinc-500">
+                Görünmesini istediğiniz alanı sürükleyerek seçin. Kaydırarak veya yakınlaştırarak ayarlayabilirsiniz.
+              </p>
             </div>
-            <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <label className="text-sm font-semibold text-zinc-700">Yatay konum<input type="range" min="0" max="100" value={cropX} onChange={(event) => setCropX(Number(event.target.value))} className="mt-2 w-full accent-red-600" /></label>
-              <label className="text-sm font-semibold text-zinc-700">Dikey konum<input type="range" min="0" max="100" value={cropY} onChange={(event) => setCropY(Number(event.target.value))} className="mt-2 w-full accent-red-600" /></label>
+
+            {/* Crop canvas area */}
+            <div
+              className="relative w-full overflow-hidden rounded-xl bg-zinc-900"
+              style={{ height: 340 }}
+            >
+              <Cropper
+                image={currentCropUrl}
+                crop={crop}
+                zoom={zoom}
+                aspect={cropAspectRatio}
+                onCropChange={setCrop}
+                onZoomChange={setZoom}
+                onCropComplete={onCropComplete}
+                showGrid={true}
+                style={{
+                  containerStyle: { borderRadius: "0.75rem", overflow: "hidden" },
+                  cropAreaStyle: { border: "2px solid #ec1c24", color: "rgba(236,28,36,0.25)" },
+                }}
+              />
             </div>
-            <div className="mt-5 flex justify-end gap-3"><button type="button" onClick={() => setCropFiles([])} className="rounded-md px-3 py-2 text-sm font-semibold text-zinc-600">İptal</button><button type="button" onClick={() => void applyCrop()} className="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white">{cropIndex + 1 < cropFiles.length ? "Sonraki fotoğraf" : "Kadrajı uygula"}</button></div>
+
+            {/* Zoom slider */}
+            <label className="flex items-center gap-3 text-sm font-semibold text-zinc-700">
+              <span className="w-20 shrink-0">Yakınlaştır</span>
+              <input
+                type="range"
+                min={1}
+                max={3}
+                step={0.05}
+                value={zoom}
+                onChange={(e) => setZoom(Number(e.target.value))}
+                className="w-full accent-red-600"
+              />
+            </label>
+
+            <div className="flex justify-end gap-3 border-t border-zinc-100 pt-3">
+              <button
+                type="button"
+                onClick={() => { setCropFiles([]); setCropIndex(0); }}
+                className="rounded-md px-3 py-2 text-sm font-semibold text-zinc-600 hover:bg-zinc-100"
+              >
+                İptal
+              </button>
+              <button
+                type="button"
+                disabled={!croppedAreaPixels}
+                onClick={() => void applyCrop()}
+                className="rounded-md bg-red-600 px-4 py-2 text-sm font-semibold text-white hover:bg-red-700 disabled:opacity-50"
+              >
+                {cropIndex + 1 < cropFiles.length ? "Sonraki fotoğraf →" : "Kırpmayı uygula"}
+              </button>
+            </div>
           </div>
         </div>
       ) : null}

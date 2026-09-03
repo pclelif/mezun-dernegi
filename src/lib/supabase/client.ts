@@ -44,6 +44,7 @@ export type DbAnnouncement = {
   content: string | null;
   date: string | null;
   image_url: string | null;
+  images?: string[] | null;
   is_published?: boolean;
   created_at: string;
 };

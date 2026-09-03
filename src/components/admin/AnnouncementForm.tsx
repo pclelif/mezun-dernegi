@@ -16,7 +16,15 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [images, setImages] = useState<string[]>(initial?.image_url ? [initial.image_url] : []);
+
+  // Etkinlikler gibi çoklu fotoğraf desteği
+  const initialImages: string[] =
+    initial?.images && initial.images.length > 0
+      ? initial.images
+      : initial?.image_url
+      ? [initial.image_url]
+      : [];
+  const [images, setImages] = useState<string[]>(initialImages);
 
   const [dateType, setDateType] = useState(initial?.date ? "date" : "text");
 
@@ -39,6 +47,7 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
       content: String(form.get("content") ?? "").trim() || null,
       date: String(form.get("date") ?? "").trim() || null,
       image_url: images[0] || null,
+      images: images,
       is_published: initial?.is_published ?? true,
     };
 
@@ -99,7 +108,7 @@ export function AnnouncementForm({ initial }: AnnouncementFormProps) {
           </div>
         </label>
 
-        <ImageUploader value={images} onChange={setImages} label="Duyuru görseli" cropAspectRatio={16 / 9} />
+        <ImageUploader value={images} onChange={setImages} multiple label="Duyuru fotoğrafları" cropAspectRatio={16 / 9} />
 
         {error ? <p className="rounded-md bg-red-50 px-3 py-2 text-sm text-red-700">{error}</p> : null}
         <button
