@@ -1,7 +1,7 @@
 import { CalendarDays, Clock3, MapPin } from "lucide-react";
 import type { Metadata } from "next";
-import Image from "next/image";
 import { notFound } from "next/navigation";
+import { EventPhotoCarousel } from "@/components/events/event-photo-carousel";
 import { BreadcrumbJsonLd, EventJsonLd } from "@/components/seo/json-ld";
 import { DetailFooterLink } from "@/components/shared/DetailFooterLink";
 import { ReturnButton } from "@/components/shared/ReturnButton";
@@ -24,7 +24,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     const description =
       event.description?.slice(0, 160) ||
       `${event.title} - ${associationName} Etkinliği`;
-    const ogImage = event.image_url || `${siteUrl}/images/og-image.png`;
+    const ogImage =
+      (event.images && event.images.length > 0 ? event.images[0] : null) ||
+      event.image_url ||
+      `${siteUrl}/images/og-image.png`;
 
     return {
       title: event.title,
@@ -67,6 +70,12 @@ export default async function EventDetailPage({ params }: PageProps) {
   if (!event) notFound();
 
   const isUpcoming = event.status !== "past";
+  const photos: string[] =
+    event.images && event.images.length > 0
+      ? event.images
+      : event.image_url
+      ? [event.image_url]
+      : [];
 
   return (
     <>
@@ -83,20 +92,13 @@ export default async function EventDetailPage({ params }: PageProps) {
         startDate={event.date}
         location={event.location}
         url={`/duyurular-ve-etkinlikler/etkinlikler/${slug}`}
-        imageUrl={event.image_url}
+        imageUrl={photos[0] || event.image_url}
       />
       <div className="min-h-[80vh] bg-slate-100/70 px-4 py-8 sm:py-12 flex items-center justify-center">
         <article className="w-full max-w-2xl overflow-hidden rounded-2xl border border-zinc-200/80 bg-white shadow-xl transition-all">
-          {/* Full-Bleed Edge-to-Edge Image */}
-          {event.image_url ? (
-            <div className="relative aspect-[16/9] w-full overflow-hidden bg-zinc-900">
-              <img
-                src={event.image_url}
-                alt={`${event.title} etkinlik görseli`}
-                className="w-full h-full object-cover object-center block"
-                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center" }}
-              />
-            </div>
+          {/* Full-Bleed Edge-to-Edge Image / Carousel */}
+          {photos.length > 0 ? (
+            <EventPhotoCarousel photos={photos} title={event.title} />
           ) : null}
 
           {/* Top Header Bar */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { ImagePlus, LoaderCircle, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, ImagePlus, LoaderCircle, Trash2 } from "lucide-react";
 import { useId, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -237,14 +237,51 @@ export function ImageUploader({
                       <LoaderCircle className="size-6 animate-spin" aria-label="Yükleniyor" />
                     </div>
                   ) : (
-                    <button
-                      type="button"
-                      onClick={() => void removeImage(url)}
-                      className="absolute right-2 top-2 grid size-8 place-items-center rounded-full bg-white/95 text-red-600 shadow transition hover:bg-red-600 hover:text-white"
-                      aria-label="Görseli sil"
-                    >
-                      <Trash2 className="size-4" aria-hidden="true" />
-                    </button>
+                    <div className="absolute top-2 right-2 flex items-center gap-1.5 z-10">
+                      {multiple && index > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updated = [...value];
+                            const temp = updated[index];
+                            updated[index] = updated[index - 1];
+                            updated[index - 1] = temp;
+                            onChange(updated);
+                          }}
+                          className="grid size-7.5 place-items-center rounded-full bg-white/95 text-zinc-700 shadow hover:bg-zinc-100 hover:text-black transition"
+                          title="Sola / Başa taşı"
+                          aria-label="Sola taşı"
+                        >
+                          <ChevronLeft className="size-4" aria-hidden="true" />
+                        </button>
+                      )}
+                      {multiple && index < value.length - 1 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const updated = [...value];
+                            const temp = updated[index];
+                            updated[index] = updated[index + 1];
+                            updated[index + 1] = temp;
+                            onChange(updated);
+                          }}
+                          className="grid size-7.5 place-items-center rounded-full bg-white/95 text-zinc-700 shadow hover:bg-zinc-100 hover:text-black transition"
+                          title="Sağa / Sona taşı"
+                          aria-label="Sağa taşı"
+                        >
+                          <ChevronRight className="size-4" aria-hidden="true" />
+                        </button>
+                      )}
+                      <button
+                        type="button"
+                        onClick={() => void removeImage(url)}
+                        className="grid size-7.5 place-items-center rounded-full bg-white/95 text-red-600 shadow transition hover:bg-red-600 hover:text-white"
+                        aria-label="Görseli sil"
+                        title="Görseli sil"
+                      >
+                        <Trash2 className="size-3.5" aria-hidden="true" />
+                      </button>
+                    </div>
                   )}
                 </div>
               );

@@ -31,7 +31,9 @@ export type DbEvent = {
   location: string | null;
   status: string | null;
   image_url: string | null;
+  images?: string[] | null;
   is_published?: boolean;
+  display_order?: number | null;
   created_at: string;
 };
 
