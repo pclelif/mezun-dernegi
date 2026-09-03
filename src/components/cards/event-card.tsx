@@ -36,21 +36,27 @@ export function EventCard({
 
   return (
     <Card interactive className={isPast ? "border-l-4 border-l-zinc-400 bg-zinc-50" : "border-l-4 border-l-red-600"}>
-      {showImage && imageUrl ? (
-        <Link
-          href={href}
-          tabIndex={-1}
-          aria-hidden="true"
-          className="group relative mb-4 block h-40 overflow-hidden rounded-md border border-zinc-200 bg-white sm:h-44"
-        >
-          {/* Event photos are user-managed remote URLs, so a native image keeps the existing storage setup working. */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={imageUrl}
-            alt=""
-            className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-          />
-        </Link>
+      {showImage ? (
+        imageUrl ? (
+          <Link
+            href={href}
+            tabIndex={-1}
+            aria-hidden="true"
+            className="group relative mb-4 block h-40 overflow-hidden rounded-md border border-zinc-200 bg-white sm:h-44"
+          >
+            {/* Event photos are user-managed remote URLs, so a native image keeps the existing storage setup working. */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={imageUrl}
+              alt=""
+              className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+          </Link>
+        ) : (
+          <div className="mb-4 flex h-40 items-center justify-center rounded-md border border-zinc-200 bg-slate-50 text-zinc-400 sm:h-44" aria-hidden="true">
+            <CalendarDays className="size-7" />
+          </div>
+        )
       ) : null}
       <p className={`text-xs font-semibold uppercase tracking-wider ${isPast ? "text-zinc-500" : "text-red-600"}`}>
         {isPast ? "Geçmiş etkinlik" : "Yaklaşan etkinlik"}
@@ -65,7 +71,7 @@ export function EventCard({
           <span className="[overflow-wrap:anywhere]">{time}</span>
         </span>
       </div>
-      <Heading className="mt-4 text-xl font-bold leading-snug text-zinc-950 [overflow-wrap:anywhere]">
+      <Heading className="mt-4 line-clamp-3 text-xl font-bold leading-snug text-zinc-950 [overflow-wrap:anywhere]">
         <Link
           href={href}
           className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
@@ -73,10 +79,10 @@ export function EventCard({
           {title}
         </Link>
       </Heading>
-      <p className="mt-3 text-sm leading-6 text-zinc-600 [overflow-wrap:anywhere]">{description}</p>
+      <p className="mt-3 line-clamp-3 text-sm leading-6 text-zinc-600 [overflow-wrap:anywhere]">{description}</p>
       <p className="mt-auto flex min-w-0 items-start gap-2 border-t border-zinc-200 pt-4 text-sm leading-6 text-zinc-600">
         <MapPin className="mt-1 size-4 shrink-0" aria-hidden="true" />
-        <span className="[overflow-wrap:anywhere]">{location}</span>
+        <span className="line-clamp-2 [overflow-wrap:anywhere]">{location}</span>
       </p>
       <Link
         href={href}

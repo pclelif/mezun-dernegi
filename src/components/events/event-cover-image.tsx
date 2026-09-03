@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 
 type EventCoverImageProps = {
@@ -23,14 +23,10 @@ export function EventCoverImage({ photos, alt }: EventCoverImageProps) {
 
   if (!currentPhoto) return null;
 
-  function move(direction: -1 | 1) {
-    setCurrentIndex((index) => (index + direction + total) % total);
-  }
-
   return (
     <>
       <div
-        className="group relative mx-auto aspect-square w-full max-w-64 cursor-pointer overflow-hidden rounded-xl border border-zinc-200/80 bg-slate-50 transition-all duration-200 hover:border-zinc-300 hover:shadow-sm sm:max-w-72"
+        className="group relative aspect-[16/9] w-full max-w-lg cursor-pointer overflow-hidden rounded-xl border border-zinc-200/80 bg-slate-50 transition-all duration-200 hover:border-zinc-300 hover:shadow-sm"
         onClick={() => setIsOpen(true)}
       >
         {validPhotos.map((photo, index) => (
@@ -46,30 +42,9 @@ export function EventCoverImage({ photos, alt }: EventCoverImageProps) {
         ))}
 
         {total > 1 ? (
-          <>
-            <span className="pointer-events-none absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
-              {currentIndex + 1} / {total}
-            </span>
-            <div className="absolute inset-x-2 top-1/2 flex -translate-y-1/2 justify-between">
-              {([-1, 1] as const).map((direction) => {
-                const Icon = direction === -1 ? ChevronLeft : ChevronRight;
-                return (
-                  <button
-                    key={direction}
-                    type="button"
-                    aria-label={direction === -1 ? "Önceki fotoğraf" : "Sonraki fotoğraf"}
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      move(direction);
-                    }}
-                    className="grid size-8 place-items-center rounded-full border border-zinc-300 bg-white/90 text-zinc-900 shadow-sm transition hover:border-red-600 hover:bg-red-600 hover:text-white"
-                  >
-                    <Icon className="size-4" aria-hidden="true" />
-                  </button>
-                );
-              })}
-            </div>
-          </>
+          <span className="pointer-events-none absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+            {currentIndex + 1} / {total}
+          </span>
         ) : null}
       </div>
 

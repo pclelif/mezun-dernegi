@@ -2,7 +2,6 @@ import { CalendarDays, Clock3, MapPin } from "lucide-react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { EventCoverImage } from "@/components/events/event-cover-image";
-import { EventGalleryCarousel } from "@/components/events/event-gallery-carousel";
 import { BreadcrumbJsonLd, EventJsonLd } from "@/components/seo/json-ld";
 import { DetailFooterLink } from "@/components/shared/DetailFooterLink";
 import { ReturnButton } from "@/components/shared/ReturnButton";
@@ -79,9 +78,6 @@ export default async function EventDetailPage({ params }: PageProps) {
       : [];
 
   const coverImage = photos[0] || event.image_url || null;
-  // The first uploaded image is also used as the event cover. Keep it out of
-  // the gallery strip so the same photo is not shown twice in succession.
-  const galleryPhotos = photos.slice(1);
 
   return (
     <>
@@ -154,10 +150,6 @@ export default async function EventDetailPage({ params }: PageProps) {
               {event.description || "Bu etkinlik için henüz detaylı açıklama eklenmemiş."}
             </div>
 
-            {/* Supporting photos remain compact and are omitted when absent. */}
-            {galleryPhotos.length > 0 ? (
-              <EventGalleryCarousel photos={galleryPhotos} title={event.title} />
-            ) : null}
           </div>
 
           {/* Footer Actions */}
