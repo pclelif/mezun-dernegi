@@ -27,7 +27,7 @@ export function BoardMemberCard({ name, role, image, imageCrop }: BoardMemberCar
           </div>
         )}
       </div>
-      <div className="h-40 min-w-0 p-3 sm:p-4 md:p-5">
+      <div className="min-w-0 p-3 sm:p-4 md:h-28 md:p-5">
         <p className="text-xs font-semibold uppercase tracking-wider text-red-600 [overflow-wrap:anywhere]">{role}</p>
         <h2 className="mt-2 text-base font-bold leading-snug text-zinc-950 [overflow-wrap:anywhere] sm:text-lg">{name}</h2>
       </div>
