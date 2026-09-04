@@ -93,9 +93,9 @@ export default async function AidatVeBagisPage() {
           paymentNote={content.payment_note}
         />
 
-        <section className="rounded-xl border-l-2 border-[#ec1c24] bg-red-50/60 p-6 md:p-8" aria-labelledby="donation-title">
+        <section className="rounded-xl border border-zinc-200 bg-white p-6 shadow-sm md:p-8" aria-labelledby="donation-title">
           <div className="flex items-center gap-3">
-            <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-red-100 text-[#ec1c24]">
+            <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-red-50 text-[#ec1c24]">
               <HeartHandshake className="size-5" aria-hidden="true" />
             </span>
             <h2 id="donation-title" className="text-lg font-bold tracking-tight text-zinc-950 md:text-xl">Bağış</h2>
