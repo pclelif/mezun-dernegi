@@ -76,9 +76,9 @@ export default async function AidatVeBagisPage() {
             ))}
           </ul>
 
-          <div className="mt-6 flex gap-3 rounded-lg border-l-4 border-slate-400 bg-slate-50 p-4">
-            <Info className="mt-0.5 size-4 shrink-0 text-slate-500" aria-hidden="true" />
-            <p className="text-sm leading-6 text-slate-600">
+          <div className="mt-6 flex gap-3 rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4">
+            <Info className="mt-1 size-5 shrink-0 text-[#ec1c24]" aria-hidden="true" />
+            <p className="text-base leading-7 text-slate-600">
               Düzenli aidat yükümlülüğünüz, Sivil Toplumla İlişkiler Genel Müdürlüğü (STİ-GM) tarafından
               tarafınıza iletilecek olan üyelik kabul mesajındaki onay tarihinin bulunduğu dönem
               itibarıyla başlar ve sonraki dönemleri kapsar.
@@ -95,7 +95,9 @@ export default async function AidatVeBagisPage() {
 
         <section className="rounded-xl border-l-2 border-[#ec1c24] bg-red-50/60 p-6 md:p-8" aria-labelledby="donation-title">
           <div className="flex items-center gap-3">
-            <HeartHandshake className="size-5 shrink-0 text-[#ec1c24]" aria-hidden="true" />
+            <span className="grid size-10 shrink-0 place-items-center rounded-lg bg-red-100 text-[#ec1c24]">
+              <HeartHandshake className="size-5" aria-hidden="true" />
+            </span>
             <h2 id="donation-title" className="text-lg font-bold tracking-tight text-zinc-950 md:text-xl">Bağış</h2>
           </div>
           <p className="mt-4 text-base leading-7 text-slate-600">

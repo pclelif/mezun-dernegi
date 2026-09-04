@@ -146,19 +146,13 @@ export default async function DernekUyeligiPage() {
               <li>Lise mezuniyet belgesi (PDF formatında)</li>
             </ul>
 
-            <div className="mt-6 space-y-4">
-              <div className="rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4 text-base leading-7 text-slate-600">
-                <p>
-                  e-Devlet üzerinden Adli Sicil Kaydınızı oluştururken “Belgenin Verileceği Kurum”
-                  alanında “Resmî Kurum” seçeneğini seçiniz. Kurum Adı:{" "}
-                  <span className="break-words font-semibold text-black">{associationName}</span>
-                </p>
-              </div>
-              <div className="rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4 text-base leading-7 text-slate-600">
-                <p>
-                  Lise Mezuniyet Belgenizi e-Devlet üzerinden barkodlu PDF olarak alabilirsiniz.
-                </p>
-              </div>
+            <div className="mt-6 rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4 text-base leading-7 text-slate-600">
+              <p>
+                e-Devlet üzerinden Adli Sicil Kaydınızı oluştururken “Belgenin Verileceği Kurum”
+                alanında “Resmi Kurum” seçeneğini seçiniz. Kurum Adı:{" "}
+                <span className="break-words font-semibold text-black">{associationName}</span>.
+                e-Devlet üzerinden Lise Mezuniyet Belgenizi de barkodlu PDF olarak alabilirsiniz.
+              </p>
             </div>
           </Step>
 
@@ -168,15 +162,17 @@ export default async function DernekUyeligiPage() {
               belgesi) aşağıdaki e-posta adresine göndererek başvurunuzu tamamlayabilirsiniz.
             </p>
             <a
-              href="mailto:kaaflmezunderuyelik@gmail.com?subject=%C3%9Cyelik%20Ba%C5%9Fvurusu%20-%20%5B%C4%B0sim%20Soyisminizi%20Buraya%20Yaz%C4%B1n%C4%B1z%5D"
-              className="mt-5 inline-flex touch-manipulation text-base font-bold text-[#ec1c24] underline underline-offset-4 transition-colors hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent("kaaflmezunderuyelik@gmail.com")}&su=${encodeURIComponent("Üyelik Başvurusu - [İsim Soyisminizi Buraya Yazınız]")}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-1 inline-flex touch-manipulation text-base font-bold text-[#ec1c24] underline underline-offset-4 transition-colors hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
             >
               kaaflmezunderuyelik@gmail.com
             </a>
-            <div className="mt-4 rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-4 py-3 text-sm leading-6 text-slate-600">
+            <div className="mt-5 rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4 text-base leading-7 text-slate-600">
               <p>
                 <span className="font-semibold text-zinc-800">Not:</span> Lütfen belgelerinizin
-                karışmaması adına, e-postanızı gönderirken konu (subject) kısmına İsim ve Soyisminizi
+                karışmaması adına, e-postanızı gönderirken konu kısmına İsim ve Soyisminizi
                 yazmayı unutmayınız.
               </p>
             </div>
