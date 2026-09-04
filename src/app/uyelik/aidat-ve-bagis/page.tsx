@@ -1,4 +1,4 @@
-import { CalendarRange, HeartHandshake } from "lucide-react";
+import { CalendarRange, HeartHandshake, Info } from "lucide-react";
 import type { Metadata } from "next";
 import { FAQAccordion } from "@/components/faq/faq-accordion";
 import { BankAccountCard } from "@/components/membership/bank-account-card";
@@ -75,6 +75,15 @@ export default async function AidatVeBagisPage() {
               </li>
             ))}
           </ul>
+
+          <div className="mt-6 flex gap-3 rounded-lg border-l-4 border-slate-400 bg-slate-50 p-4">
+            <Info className="mt-0.5 size-4 shrink-0 text-slate-500" aria-hidden="true" />
+            <p className="text-sm leading-6 text-slate-600">
+              Düzenli aidat yükümlülüğünüz, Sivil Toplumla İlişkiler Genel Müdürlüğü (STİ-GM) tarafından
+              tarafınıza iletilecek olan üyelik kabul mesajındaki onay tarihinin bulunduğu dönem
+              itibarıyla başlar ve sonraki dönemleri kapsar.
+            </p>
+          </div>
         </section>
 
         <BankAccountCard

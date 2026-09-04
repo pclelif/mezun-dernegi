@@ -1,7 +1,7 @@
 "use client";
 
-import { X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useCallback, useEffect, useState } from "react";
 import { CroppedImage } from "@/components/shared/cropped-image";
 import type { ImageCrop } from "@/lib/supabase/client";
 
@@ -20,11 +20,21 @@ export function EventCoverImage({ photos, crops = [], alt }: EventCoverImageProp
   const total = validPhotos.length;
   const currentPhoto = validPhotos[currentIndex] ?? validPhotos[0];
 
+  const goToNext = useCallback(() => {
+    if (total <= 1) return;
+    setCurrentIndex((index) => (index + 1) % total);
+  }, [total]);
+
+  const goToPrev = useCallback(() => {
+    if (total <= 1) return;
+    setCurrentIndex((index) => (index - 1 + total) % total);
+  }, [total]);
+
   useEffect(() => {
     if (total < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    const timer = window.setInterval(() => setCurrentIndex((index) => (index + 1) % total), 5000);
+    const timer = window.setInterval(goToNext, 5000);
     return () => window.clearInterval(timer);
-  }, [total]);
+  }, [total, goToNext]);
 
   if (!currentPhoto) return null;
 
@@ -51,9 +61,33 @@ export function EventCoverImage({ photos, crops = [], alt }: EventCoverImageProp
         ))}
 
         {total > 1 ? (
-          <span className="pointer-events-none absolute bottom-2 right-2 rounded-full bg-black/60 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
-            {currentIndex + 1} / {total}
-          </span>
+          <>
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                goToPrev();
+              }}
+              className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-1.5 text-white opacity-70 backdrop-blur-sm transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              aria-label="Önceki fotoğraf"
+            >
+              <ChevronLeft className="size-5" aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              onClick={(event) => {
+                event.stopPropagation();
+                goToNext();
+              }}
+              className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-1.5 text-white opacity-70 backdrop-blur-sm transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              aria-label="Sonraki fotoğraf"
+            >
+              <ChevronRight className="size-5" aria-hidden="true" />
+            </button>
+            <span className="pointer-events-none absolute bottom-2 right-2 z-20 rounded-full bg-black/60 px-2 py-1 text-[11px] font-semibold text-white backdrop-blur-sm">
+              {currentIndex + 1} / {total}
+            </span>
+          </>
         ) : null}
       </div>
 
@@ -81,6 +115,36 @@ export function EventCoverImage({ photos, crops = [], alt }: EventCoverImageProp
               className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
             />
           </div>
+
+          {total > 1 ? (
+            <>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  goToPrev();
+                }}
+                className="absolute left-4 top-1/2 z-[100000] -translate-y-1/2 rounded-full bg-black/50 p-2 text-white opacity-70 backdrop-blur-sm transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:left-6"
+                aria-label="Önceki fotoğraf"
+              >
+                <ChevronLeft className="size-6" aria-hidden="true" />
+              </button>
+              <button
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  goToNext();
+                }}
+                className="absolute right-4 top-1/2 z-[100000] -translate-y-1/2 rounded-full bg-black/50 p-2 text-white opacity-70 backdrop-blur-sm transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:right-6"
+                aria-label="Sonraki fotoğraf"
+              >
+                <ChevronRight className="size-6" aria-hidden="true" />
+              </button>
+              <span className="pointer-events-none absolute bottom-6 left-1/2 z-[100000] -translate-x-1/2 rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+                {currentIndex + 1} / {total}
+              </span>
+            </>
+          ) : null}
         </div>
       )}
     </>

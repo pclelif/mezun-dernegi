@@ -118,7 +118,7 @@ export default async function DernekUyeligiPage() {
               <strong className="font-semibold text-zinc-900">{ENTRY_FEE}</strong>.
             </p>
             <p className="mt-2 text-base font-medium leading-7 text-zinc-800">
-              Açıklama: Üyelik giriş aidatı – İsim Soyisim – T.C.
+              Açıklama: Üyelik giriş aidatı – İsim Soyisim – T.C. Kimlik No
             </p>
 
             <Link
@@ -138,32 +138,48 @@ export default async function DernekUyeligiPage() {
             />
           </Step>
 
-          <Step step={3} title="Belgelerinizi İletin">
-            <p className="mt-4 text-base leading-7 text-slate-600">
-              Üyelik formunun ıslak imzalı hâlini, giriş ücreti ile girdiğiniz döneme ait üyelik
-              aidatı ödemesinin banka dekontunu ve{" "}
-              <strong className="font-semibold text-zinc-900">adli sicil kaydını</strong> ayrı ayrı
-              PDF dosyaları olarak belirtilen e-posta adresine gönderebilir veya belgeleri
-              derneğimize elden ulaştırabilirsiniz.
-            </p>
+          <Step step={3} title="Belgelerinizi Hazırlayın">
+            <ul className="mt-4 list-disc space-y-3 pl-5 text-base leading-7 text-slate-600">
+              <li>Üyelik formu (Islak imzalı, PDF formatında)</li>
+              <li>Üyelik giriş aidatı dekontu (PDF formatında)</li>
+              <li>Adli sicil kaydı (PDF formatında)</li>
+              <li>Lise mezuniyet belgesi (PDF formatında)</li>
+            </ul>
 
-            <div className="mt-6 rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4 text-base leading-7 text-slate-600">
-              <p>
-                e-Devlet üzerinden adli sicil kaydınızı oluştururken “Belgenin Verileceği Kurum”
-                alanında “Resmî Kurum” seçeneğini seçiniz. Kurum Adı:{" "}
-                <span className="font-semibold text-black break-words">
-                  {associationName}
-                </span>
-              </p>
+            <div className="mt-6 space-y-4">
+              <div className="rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4 text-base leading-7 text-slate-600">
+                <p>
+                  e-Devlet üzerinden Adli Sicil Kaydınızı oluştururken “Belgenin Verileceği Kurum”
+                  alanında “Resmî Kurum” seçeneğini seçiniz. Kurum Adı:{" "}
+                  <span className="break-words font-semibold text-black">{associationName}</span>
+                </p>
+              </div>
+              <div className="rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-5 py-4 text-base leading-7 text-slate-600">
+                <p>
+                  Lise Mezuniyet Belgenizi e-Devlet üzerinden barkodlu PDF olarak alabilirsiniz.
+                </p>
+              </div>
             </div>
           </Step>
 
-          <Step step={4} title="Başvurunuzu Tamamlayın" isLast>
+          <Step step={4} title="Başvurunuzu İletin" isLast>
             <p className="mt-4 text-base leading-7 text-slate-600">
-              Üyelik formunuzu doldurup gerekli belgeleri ve ödemeyi ilettikten sonra başvurunuz
-              tamamlanacaktır. Başvurunuz dernek yönetimi tarafından incelendikten sonra üyelik
-              durumunuzla ilgili tarafınıza bilgilendirme yapılacaktır.
+              Hazırladığınız 4 adet PDF dosyasını (üyelik formu, dekont, adli sicil kaydı ve mezuniyet
+              belgesi) aşağıdaki e-posta adresine göndererek başvurunuzu tamamlayabilirsiniz.
             </p>
+            <a
+              href="mailto:kaaflmezunderuyelik@gmail.com?subject=%C3%9Cyelik%20Ba%C5%9Fvurusu%20-%20%5B%C4%B0sim%20Soyisminizi%20Buraya%20Yaz%C4%B1n%C4%B1z%5D"
+              className="mt-5 inline-flex touch-manipulation text-base font-bold text-[#ec1c24] underline underline-offset-4 transition-colors hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+            >
+              kaaflmezunderuyelik@gmail.com
+            </a>
+            <div className="mt-4 rounded-lg border-l-2 border-[#ec1c24] bg-red-50/60 px-4 py-3 text-sm leading-6 text-slate-600">
+              <p>
+                <span className="font-semibold text-zinc-800">Not:</span> Lütfen belgelerinizin
+                karışmaması adına, e-postanızı gönderirken konu (subject) kısmına İsim ve Soyisminizi
+                yazmayı unutmayınız.
+              </p>
+            </div>
           </Step>
         </ol>
 
