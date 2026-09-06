@@ -21,14 +21,29 @@ export const metadata: Metadata = {
   },
 };
 
-const defaultPresidentMessage = `Değerli Mezunlarımız,
+const defaultPresidentMessage = `Sevgili Mezunlarımız, Kıymetli Öğretmenlerimiz ve Değerli Mensuplarımız,
+Okulumuzun adını onurla taşıyan derneğimizde, kuruluş sürecine başkanlık etmekten ve aktif olarak Yönetim Kurulu Başkanlığını sürdürmekten gurur ve mutluluk duyuyorum. Ortak mirasımız olan Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi'nin bizlere kazandırdığı değerleri yaşatmak ve gelecek nesillere aktarmak en büyük amacımızdır.
 
-Okulumuzda başlayan ortak hikâyemizi mezuniyet sonrasında da dayanışma, paylaşım ve aidiyet duygusuyla sürdürmek için bir aradayız. Derneğimizin; mezunlarımız arasında güçlü bağlar kuran, öğrencilerimize destek olan ve okulumuzun değerlerini geleceğe taşıyan canlı bir buluşma noktası olmasını amaçlıyoruz.
+Birlikteliğimizi güçlendirerek mezunlarımız ve öğrencilerimiz arasında köprüler kuracak; eğitimden sosyal dayanışmaya kadar pek çok alanda önemli izler bırakacağız. Sizlerin desteği ve katılımıyla derneğimizi çok daha ileriye taşıyacağımıza inancım tamdır.
 
-Her mezunumuzun katkısı ve katılımı bu yapıyı daha güçlü kılacaktır. Birlikte üreteceğimiz çalışmaların mezun topluluğumuza ve okulumuza kalıcı değer katacağına inanıyor, hepinizi sevgi ve saygıyla selamlıyorum.`;
+Birlikte daha güçlüyüz, aramıza hoş geldiniz.`;
 
 export default async function BaskaninMesajiPage() {
   const content = await getSiteContent("hakkimizda", contentSections.hakkimizda.defaults);
+
+  const oldPresidentMessages = [
+    `Değerli Mezunlarımız,
+
+Okulumuzda başlayan ortak hikâyemizi mezuniyet sonrasında da dayanışma, paylaşım ve aidiyet duygusuyla sürdürmek için bir aradayız. Derneğimizin; mezunlarımız arasında güçlü bağlar kuran, öğrencilerimize destek olan ve okulumuzun değerlerini geleceğe taşıyan canlı bir buluşma noktası olmasını amaçlıyoruz.
+
+Her mezunumuzun katkısı ve katılımı bu yapıyı daha güçlü kılacaktır. Birlikte üreteceğimiz çalışmaların mezun topluluğumuza ve okulumuza kalıcı değer katacağına inanıyor, hepinizi sevgi ve saygıyla selamlıyorum.`,
+  ];
+
+  const presidentMessage =
+    content.president_message &&
+    !oldPresidentMessages.includes(content.president_message.trim())
+      ? content.president_message
+      : defaultPresidentMessage;
 
   return (
     <>
@@ -47,7 +62,7 @@ export default async function BaskaninMesajiPage() {
       >
         <article className={`grid w-full items-start gap-8 text-left ${content.president_image_url ? "md:grid-cols-[minmax(0,1fr)_18rem]" : ""}`}>
           <p className="whitespace-pre-line text-base leading-7 text-zinc-700">
-            {content.president_message || defaultPresidentMessage}
+            {presidentMessage}
           </p>
           {content.president_image_url ? (
             <div className="relative aspect-[4/5] overflow-hidden rounded-xl bg-slate-100 shadow-sm">

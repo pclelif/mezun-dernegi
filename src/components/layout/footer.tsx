@@ -45,7 +45,7 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Maha
             {/* Masaüstü Görünüm (2 Sütunlu Yan Yana Dağılım) */}
             <div className="mt-3 hidden sm:grid sm:grid-cols-[max-content_max-content] sm:gap-x-6 text-sm leading-5">
               <ul className="grid gap-y-2">
-                {[corporateNavigation[0], corporateNavigation[2], corporateNavigation[5]].map((item) => (
+                {[corporateNavigation[0], corporateNavigation[2], corporateNavigation[4]].map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}
@@ -57,7 +57,7 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Maha
                 ))}
               </ul>
               <ul className="grid gap-y-2">
-                {[corporateNavigation[1], corporateNavigation[3], corporateNavigation[4]].map((item) => (
+                {[corporateNavigation[1], corporateNavigation[3]].map((item) => (
                   <li key={item.href}>
                     <Link
                       href={item.href}

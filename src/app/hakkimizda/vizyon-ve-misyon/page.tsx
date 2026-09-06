@@ -21,9 +21,9 @@ export const metadata: Metadata = {
 };
 
 const DEFAULT_VISION =
-  "Okulumuzla bağını sürdüren, mezunlarımız arasında dayanışmanın güçlendiği ve iletişimin güçlü olduğu bir mezun topluluğu oluşturmak.";
+  "Milli, manevi değerlerimiz ile Türkiye'nin yarınlarına yön veren, Vatansever Şehit Tümgeneral Aydoğan Aydın'ın ismini geleceğe taşımak için tüm mezunlarımızla birlikte güçlü bir sivil toplum kuruluşu olmaktır.";
 const DEFAULT_MISSION =
-  "Bu doğrultuda mezunlarımızı bir araya getirmek, iletişim ve dayanışmayı desteklemek.";
+  "Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi mezunları ve ailesinin tüm fertleri arasında dayanışmayı ve bağı güçlendirmek; okulumuza yönelik burs, mentorluk ve kariyer desteği sağlayarak eğitim-öğretim faaliyetlerine katkıda bulunmak; toplumsal sorumluluk projeleriyle ülkemiz, milletimiz ve insanlık için fayda üretmektir.";
 
 export default async function VizyonMisyonPage() {
   const content = await getSiteContent("hakkimizda", contentSections.hakkimizda.defaults);
@@ -31,10 +31,12 @@ export default async function VizyonMisyonPage() {
   const oldVisions = [
     "Mezunlarımız arasındaki iletişimi ve dayanışmayı güçlendiren, okulumuza ve mezun topluluğumuza değer katan sürdürülebilir bir dernek olmak.",
     "Okuluyla bağını sürdüren, mezunları arasında güçlü ilişkiler kuran ve aktif bir mezun ağına sahip bir topluluk olmak.",
+    "Okulumuzla bağını sürdüren, mezunlarımız arasında dayanışmanın güçlendiği ve iletişimin güçlü olduğu bir mezun topluluğu oluşturmak.",
   ];
   const oldMissions = [
     "Mezunlarımızı ortak bir platformda buluşturmak, sosyal ve mesleki iletişimi desteklemek ve okulumuzla olan bağı güçlendirmek.",
     "Mezunlarımızı bir araya getirmek, iletişim ve dayanışmayı geliştirmek, mezunlar ile okul arasındaki etkileşimi desteklemek.",
+    "Bu doğrultuda mezunlarımızı bir araya getirmek, iletişim ve dayanışmayı desteklemek.",
   ];
 
   const visionText =

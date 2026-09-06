@@ -176,6 +176,16 @@ export default async function DernekUyeligiPage() {
                 yazmayı unutmayınız.
               </p>
             </div>
+            <p className="mt-8 text-base leading-7 text-slate-600">
+              Sorularınız için{" "}
+              <Link
+                href="/iletisim"
+                className="font-semibold text-red-600 transition-colors hover:underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+              >
+                iletişim
+              </Link>{" "}
+              kısmındaki iletişim formundan bizlere ulaşabilirsiniz.
+            </p>
           </Step>
         </ol>
 
