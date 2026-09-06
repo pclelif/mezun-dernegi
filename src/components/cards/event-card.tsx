@@ -100,7 +100,7 @@ export function EventCard({
           <span className="[overflow-wrap:anywhere]">{time}</span>
         </span>
       </div>
-      <Heading className="mt-4 line-clamp-3 text-xl font-bold leading-snug text-zinc-950 [overflow-wrap:anywhere]">
+      <Heading className="mt-4 line-clamp-3 text-xl font-bold leading-snug text-zinc-950 [overflow-wrap:anywhere] md:min-h-[3lh]">
         <Link
           href={href}
           className="rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
