@@ -1,8 +1,6 @@
 import { Inter } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
-import { ConsentGoogleAnalytics } from "@/components/analytics/consent-google-analytics";
-import { CookieBanner } from "@/components/layout/cookie-banner";
 import { SiteShell } from "@/components/layout/site-shell";
 import { OrganizationJsonLd, WebSiteJsonLd } from "@/components/seo/json-ld";
 import {
@@ -181,9 +179,6 @@ export default async function RootLayout({
         <WebSiteJsonLd />
       </head>
       <body className={`${inter.className} bg-white text-black`}>
-        {siteConfig.googleAnalyticsId ? (
-          <ConsentGoogleAnalytics measurementId={siteConfig.googleAnalyticsId} />
-        ) : null}
         <SiteShell
           settings={{
             logo_url: logoUrl,
@@ -195,7 +190,6 @@ export default async function RootLayout({
         >
           {children}
         </SiteShell>
-        <CookieBanner />
       </body>
     </html>
   );

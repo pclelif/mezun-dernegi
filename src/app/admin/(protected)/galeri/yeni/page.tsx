@@ -4,6 +4,7 @@ import { ArrowLeft, LoaderCircle } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
 import { ImageUploader } from "@/components/admin/ImageUploader";
 import { createClient, type ImageCrop } from "@/lib/supabase/client";
 
@@ -36,19 +37,18 @@ export default function NewGalleryPage() {
 
       await Promise.all(
         (existingPhotos ?? []).map((photo, index) =>
-          supabase.from("gallery_images").update({ display_order: index + photos.length }).eq("id", photo.id)
+          adminDbMutate({ table: "gallery_images", action: "update", data: { display_order: index + photos.length }, match: { id: photo.id } })
         )
       );
 
-      const { error: imagesError } = await supabase.from("gallery_images").insert(
+      await adminDbMutate({ table: "gallery_images", action: "insert", data:
         photos.map((imageUrl, index) => ({
           gallery_id: "00000000-0000-0000-0000-000000000000",
           image_url: imageUrl,
           crop: photoCrops[index] ?? null,
           display_order: index,
         }))
-      );
-      if (imagesError) throw imagesError;
+      });
 
       setPhotos([]);
       setPhotoCrops([]);

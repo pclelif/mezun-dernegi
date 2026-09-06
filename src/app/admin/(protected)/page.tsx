@@ -1,10 +1,13 @@
 import { ArrowRight, Bell, CalendarDays, Image, Mail, Megaphone, MessageSquare, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { formatTurkishDate } from "@/lib/supabase/client";
-import { createServerSessionClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/supabase/require-admin";
+import { redirect } from "next/navigation";
 
 export default async function AdminDashboardPage() {
-  const supabase = await createServerSessionClient();
+  const auth = await requireAdmin();
+  if (!auth.ok) redirect("/admin/login");
+  const { supabase } = auth;
   const [
     events,
     announcements,

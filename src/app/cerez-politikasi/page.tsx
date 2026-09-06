@@ -28,7 +28,7 @@ export default function CookiePolicyPage() {
           Çerezler ve yerel depolama araçları (localStorage), ziyaret ettiğiniz internet siteleri tarafından
           tarayıcınız aracılığıyla cihazınıza kaydedilen küçük metin dosyaları veya verilerdir. Bu teknolojiler
           sitenin güvenli çalışmasını, yönetici oturumlarının sürdürülmesini ve kullanıcı tercihlerinin
-          (örneğin çerez onayı veya tema tercihleri) hatırlanmasını sağlar.
+          (örneğin görünüm tercihleri) hatırlanmasını sağlar.
         </p>
       </section>
 
@@ -48,7 +48,7 @@ export default function CookiePolicyPage() {
         <h2 className={legalHeadingClass}>3. Kullanılan çerez ve depolama türleri</h2>
         <h3 className={legalSubheadingClass}>Zorunlu çerezler ve yerel depolama</h3>
         <p>
-          Sitenin temel işlevleri, güvenliği, çerez onay durumunun (cookieConsent) hatırlanması ve yönetici
+          Sitenin temel işlevleri, güvenliği ve yönetici
           oturumunun sürdürülebilmesi için gereklidir. Bu araçlar olmadan ilgili hizmetler sağlıklı çalışmayabilir
           ve kullanımları için ayrıca rıza aranmayabilir.
         </p>
@@ -64,8 +64,8 @@ export default function CookiePolicyPage() {
         </p>
         <h3 className={legalSubheadingClass}>Performans, analitik ve reklam çerezleri</h3>
         <p>
-          Dernek sitesi hâlihazırda kişiselleştirilmiş reklam veya izleme amacıyla çerez kullanmamaktadır.
-          Böyle bir kullanım başlatılırsa bu politika güncellenir ve gerekli onay mekanizması sağlanır.
+          Sitemizde Google Analytics kullanılmaz. Analytics ölçüm kodu yüklenmez ve
+          Google Analytics’e ziyaret verisi gönderilmez.
         </p>
       </section>
 
@@ -73,7 +73,6 @@ export default function CookiePolicyPage() {
         <h2 className={legalHeadingClass}>4. Çerezlerin kullanım amaçları</h2>
         <ul className={legalListClass}>
           <li>Sayfaların ve temel site özelliklerinin doğru çalışmasını sağlamak.</li>
-          <li>Çerez bildirim tercihinizi (kabul/red) hafızada tutmak.</li>
           <li>Yetkili yönetici oturumlarını doğrulamak ve güvenliği korumak.</li>
           <li>İletişim sayfasındaki harita bileşeninin sorunsuz görüntülenmesini sağlamak.</li>
           <li>Kötüye kullanım ve yetkisiz erişim girişimlerini tespit etmek.</li>

@@ -3,6 +3,7 @@
 import { Eye, EyeOff, LoaderCircle, LockKeyhole } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { type FormEvent, useState } from "react";
+import { isAdminUser } from "@/lib/supabase/admin-auth";
 import { createClient } from "@/lib/supabase/client";
 
 function isSupabaseConfigured() {
@@ -80,6 +81,13 @@ export default function AdminLoginPage() {
         return;
       }
 
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !isAdminUser(user)) {
+        await supabase.auth.signOut();
+        setError("Bu hesap yönetici paneline erişemez.");
+        setLoading(false);
+        return;
+      }
       router.replace("/admin");
       router.refresh();
     } catch (err) {

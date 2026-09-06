@@ -1,36 +1,27 @@
 import { NextResponse } from "next/server";
-import { ADMIN_MUTATION_TABLES, isAdminUser } from "@/lib/supabase/admin-auth";
-import { createServerSessionClient } from "@/lib/supabase/server";
+import { requireAdmin } from "@/lib/supabase/require-admin";
+import { parseAdminMutation } from "@/lib/supabase/admin-validation";
 
 export async function POST(request: Request) {
   try {
-    const supabase = await createServerSessionClient();
-    const {
-      data: { user },
-      error: userError,
-    } = await supabase.auth.getUser();
-
-    if (userError || !isAdminUser(user)) {
-      return NextResponse.json({ error: "Yetkisiz işlem." }, { status: 401 });
+    const auth = await requireAdmin();
+    if (!auth.ok) return NextResponse.json({ error: "Yetkisiz işlem." }, { status: auth.status });
+    // Browser mutations must originate from this site and use JSON.
+    const origin = request.headers.get("origin");
+    if ((origin && origin !== new URL(request.url).origin) || request.headers.get("sec-fetch-site") === "cross-site") {
+      return NextResponse.json({ error: "Geçersiz istek kaynağı." }, { status: 403 });
     }
-
-    const body = await request.json();
-    const { table, action, data, match, onConflict } = body as {
-      table?: string;
-      action?: string;
-      data?: Record<string, unknown> | Record<string, unknown>[];
-      match?: Record<string, unknown>;
-      onConflict?: string;
-    };
-
-    if (!table || !action) {
-      return NextResponse.json({ error: "Eksik parametre." }, { status: 400 });
+    if (request.headers.get("content-type")?.split(";")[0].trim() !== "application/json") {
+      return NextResponse.json({ error: "JSON gerekli." }, { status: 415 });
     }
-
-    if (!ADMIN_MUTATION_TABLES.has(table)) {
-      return NextResponse.json({ error: "Bu tablo için işlem yasak." }, { status: 403 });
+    let mutation;
+    try {
+      mutation = parseAdminMutation(await request.json());
+    } catch {
+      return NextResponse.json({ error: "Geçersiz veri veya kayıt filtresi." }, { status: 400 });
     }
-
+    const { table, action, data, match, onConflict } = mutation;
+    const { supabase } = auth;
     let result;
 
     if (action === "insert") {
@@ -41,35 +32,19 @@ export async function POST(request: Request) {
       result = await supabase
         .from(table)
         .update((data as Record<string, unknown>) ?? {})
-        .match(match || {})
+        .match(match!)
         .select();
     } else if (action === "delete") {
-      result = await supabase.from(table).delete().match(match || {});
+      result = await supabase.from(table).delete().match(match!);
     } else {
       return NextResponse.json({ error: "Geçersiz işlem tipi." }, { status: 400 });
     }
 
     if (result?.error) {
-      return NextResponse.json({ error: result.error.message }, { status: 400 });
+      return NextResponse.json({ error: "İşlem gerçekleştirilemedi. Alanları ve yetkinizi kontrol edin." }, { status: 400 });
     }
-
     return NextResponse.json({ data: result?.data ?? null });
-  } catch (err) {
-    return NextResponse.json(
-      { error: err instanceof Error ? err.message : "Sunucu hatası." },
-      { status: 500 },
-    );
+  } catch {
+    return NextResponse.json({ error: "İşlem gerçekleştirilemedi." }, { status: 500 });
   }
-}
-
-export async function GET() {
-  return NextResponse.json({ error: "Method Not Allowed" }, { status: 405 });
-}
-
-export async function PUT() {
-  return NextResponse.json({ error: "Method Not Allowed" }, { status: 405 });
-}
-
-export async function DELETE() {
-  return NextResponse.json({ error: "Method Not Allowed" }, { status: 405 });
 }

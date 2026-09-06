@@ -15,6 +15,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { adminDbMutate } from "@/lib/supabase/admin-mutate";
 import { createClient, formatTurkishDate } from "@/lib/supabase/client";
 
 type Message = {
@@ -29,6 +30,7 @@ type Message = {
 };
 
 export default function AdminContactPage() {
+  const [error, setError] = useState<string | null>(null);
   const [items, setItems] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
@@ -58,48 +60,33 @@ export default function AdminContactPage() {
   }, []);
 
   async function toggleReadStatus(item: Message) {
-    const nextStatus = !item.is_read;
-    const { error } = await createClient()
-      .from("contact_messages")
-      .update({ is_read: nextStatus })
-      .eq("id", item.id);
-
-    if (!error) {
-      setItems((all) =>
-        all.map((x) => (x.id === item.id ? { ...x, is_read: nextStatus } : x))
-      );
-    }
+    setError(null);
+    try {
+      await adminDbMutate({ table: "contact_messages", action: "update", data: { is_read: !item.is_read }, match: { id: item.id } });
+      setItems(all => all.map(x => x.id === item.id ? { ...x, is_read: !item.is_read } : x));
+    } catch { setError("Mesaj durumu değiştirilemedi."); }
   }
 
   async function markAllAsRead() {
+    setError(null);
     setBulkActionLoading(true);
     try {
-      const unreadIds = items.filter((x) => !x.is_read).map((x) => x.id);
-      if (!unreadIds.length) return;
-
-      const { error } = await createClient()
-        .from("contact_messages")
-        .update({ is_read: true })
-        .in("id", unreadIds);
-
-      if (!error) {
-        setItems((all) => all.map((x) => ({ ...x, is_read: true })));
+      for (const item of items.filter(x => !x.is_read)) {
+        await adminDbMutate({ table: "contact_messages", action: "update", data: { is_read: true }, match: { id: item.id } });
+        setItems(all => all.map(x => x.id === item.id ? { ...x, is_read: true } : x));
       }
-    } finally {
-      setBulkActionLoading(false);
-    }
+    } catch { setError("Bazı mesajlar güncellenemedi."); }
+    finally { setBulkActionLoading(false); }
   }
 
   async function handleDelete(id: string) {
+    setError(null);
     setDeletingId(id);
     try {
-      const { error } = await createClient().from("contact_messages").delete().eq("id", id);
-      if (!error) {
-        setItems((all) => all.filter((x) => x.id !== id));
-      }
-    } finally {
-      setDeletingId(null);
-    }
+      await adminDbMutate({ table: "contact_messages", action: "delete", match: { id } });
+      setItems(all => all.filter(x => x.id !== id));
+    } catch { setError("Mesaj silinemedi."); }
+    finally { setDeletingId(null); }
   }
 
   // Stats calculation
@@ -133,6 +120,7 @@ export default function AdminContactPage() {
 
   return (
     <div className="space-y-6">
+      {error ? <p role="alert" className="text-sm text-red-700">{error}</p> : null}
       {/* Header */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>

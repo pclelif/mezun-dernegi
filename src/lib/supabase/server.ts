@@ -1,3 +1,4 @@
+import "server-only";
 import dns from "node:dns";
 import { createClient as createSupabaseJsClient } from "@supabase/supabase-js";
 import { createServerClient } from "@supabase/ssr";
@@ -59,30 +60,5 @@ export async function createServerSessionClient() {
         }
       },
     },
-  });
-}
-
-/**
- * Yalnızca sunucu tarafında, admin doğrulaması sonrası kullanılmalı.
- * NEXT_PUBLIC_* altında asla tanımlanmamalıdır.
- */
-export function createServiceRoleClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
-  if (!url || !serviceRoleKey) {
-    throw new Error(
-      "Service role istemcisi için SUPABASE_SERVICE_ROLE_KEY sunucu ortam değişkeni gerekli.",
-    );
-  }
-
-  if (process.env.NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY) {
-    throw new Error(
-      "GÜVENLİK: NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY tanımlı olmamalı. Service role anahtarını yalnızca SUPABASE_SERVICE_ROLE_KEY olarak tutun.",
-    );
-  }
-
-  return createSupabaseJsClient(url, serviceRoleKey, {
-    auth: { persistSession: false, autoRefreshToken: false },
   });
 }

@@ -1,15 +1,6 @@
--- =============================================================================
--- Admin yetkili yazma + anon yazmayı engelleyen RLS sıkılaştırması
--- Uygulama: Supabase SQL Editor veya `supabase db push`
---
--- ÖNEMLİ (canlıya çıkmadan önce):
--- 1) Yönetici kullanıcıya app_metadata.role = 'admin' atayın:
---    update auth.users
---    set raw_app_meta_data = coalesce(raw_app_meta_data, '{}'::jsonb) || '{"role":"admin"}'::jsonb
---    where email = 'YONETICI@ORNEK.com';
--- 2) ADMIN_EMAILS ve user_metadata yetkilendirme kaynağı değildir.
--- 3) NEXT_PUBLIC_SUPABASE_SERVICE_ROLE_KEY ASLA tanımlamayın.
--- =============================================================================
+-- Applies to databases that already ran 00021; does not delete application data.
+-- Assign app_metadata.role = admin to the intended account before deployment.
+begin;
 
 create or replace function public.is_admin()
 returns boolean
@@ -18,9 +9,11 @@ stable
 security definer
 set search_path = public
 as $$
-  select coalesce(
-    (auth.jwt() -> 'app_metadata' ->> 'role') = 'admin',
-    false
+  -- Read the current server-managed role, so revocation also affects existing JWTs.
+  select exists (
+    select 1 from auth.users
+    where id = auth.uid()
+      and raw_app_meta_data ->> 'role' = 'admin'
   );
 $$;
 
@@ -217,3 +210,58 @@ create policy "Admins can update media"
 create policy "Admins can delete media"
   on storage.objects for delete to authenticated
   using (bucket_id = 'media' and public.is_admin());
+
+alter table public.events enable row level security;
+create policy "Require admin insert" on public.events as restrictive for insert to anon, authenticated with check (public.is_admin());
+create policy "Require admin update" on public.events as restrictive for update to anon, authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Require admin delete" on public.events as restrictive for delete to anon, authenticated using (public.is_admin());
+
+alter table public.announcements enable row level security;
+create policy "Require admin insert" on public.announcements as restrictive for insert to anon, authenticated with check (public.is_admin());
+create policy "Require admin update" on public.announcements as restrictive for update to anon, authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Require admin delete" on public.announcements as restrictive for delete to anon, authenticated using (public.is_admin());
+
+alter table public.galleries enable row level security;
+create policy "Require admin insert" on public.galleries as restrictive for insert to anon, authenticated with check (public.is_admin());
+create policy "Require admin update" on public.galleries as restrictive for update to anon, authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Require admin delete" on public.galleries as restrictive for delete to anon, authenticated using (public.is_admin());
+
+alter table public.gallery_images enable row level security;
+create policy "Require admin insert" on public.gallery_images as restrictive for insert to anon, authenticated with check (public.is_admin());
+create policy "Require admin update" on public.gallery_images as restrictive for update to anon, authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Require admin delete" on public.gallery_images as restrictive for delete to anon, authenticated using (public.is_admin());
+
+alter table public.faqs enable row level security;
+create policy "Require admin insert" on public.faqs as restrictive for insert to anon, authenticated with check (public.is_admin());
+create policy "Require admin update" on public.faqs as restrictive for update to anon, authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Require admin delete" on public.faqs as restrictive for delete to anon, authenticated using (public.is_admin());
+
+alter table public.board_members enable row level security;
+create policy "Require admin insert" on public.board_members as restrictive for insert to anon, authenticated with check (public.is_admin());
+create policy "Require admin update" on public.board_members as restrictive for update to anon, authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Require admin delete" on public.board_members as restrictive for delete to anon, authenticated using (public.is_admin());
+
+alter table public.site_content enable row level security;
+create policy "Require admin insert" on public.site_content as restrictive for insert to anon, authenticated with check (public.is_admin());
+create policy "Require admin update" on public.site_content as restrictive for update to anon, authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Require admin delete" on public.site_content as restrictive for delete to anon, authenticated using (public.is_admin());
+
+alter table public.contact_messages enable row level security;
+create policy "Require admin update" on public.contact_messages as restrictive for update to anon, authenticated using (public.is_admin()) with check (public.is_admin());
+create policy "Require admin delete" on public.contact_messages as restrictive for delete to anon, authenticated using (public.is_admin());
+
+drop policy if exists "Public can read events" on public.events;
+create policy "Public can read events" on public.events for select to anon, authenticated using (is_published or public.is_admin());
+create policy "Protect unpublished content" on public.events as restrictive for select to anon, authenticated using (is_published or public.is_admin());
+
+drop policy if exists "Public can read announcements" on public.announcements;
+create policy "Public can read announcements" on public.announcements for select to anon, authenticated using (is_published or public.is_admin());
+create policy "Protect unpublished content" on public.announcements as restrictive for select to anon, authenticated using (is_published or public.is_admin());
+
+create policy "Protect private messages" on public.contact_messages as restrictive
+  for select to anon, authenticated using (public.is_admin());
+create policy "Require media admin insert" on storage.objects as restrictive for insert to anon, authenticated with check (bucket_id = 'media' and public.is_admin());
+create policy "Require media admin update" on storage.objects as restrictive for update to anon, authenticated using (bucket_id = 'media' and public.is_admin()) with check (bucket_id = 'media' and public.is_admin());
+create policy "Require media admin delete" on storage.objects as restrictive for delete to anon, authenticated using (bucket_id = 'media' and public.is_admin());
+
+commit;

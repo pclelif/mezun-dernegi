@@ -22,7 +22,8 @@ export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
   const pathname = request.nextUrl.pathname;
   const isLogin = pathname === "/admin/login";
-  const isAdminPath = pathname.startsWith("/admin");
+  const isAdminApi = pathname.startsWith("/api/admin/") || pathname === "/api/admin";
+  const isAdminPath = pathname === "/admin" || pathname.startsWith("/admin/") || isAdminApi;
 
   // Eski/sahte client-side admin_session çerezini her admin isteğinde temizle.
   if (isAdminPath && request.cookies.has("admin_session")) {
@@ -34,6 +35,7 @@ export async function proxy(request: NextRequest) {
   }
 
   if (!isSupabaseConfigured()) {
+    if (isAdminApi) return NextResponse.json({ error: "Kimlik doğrulama servisi kullanılamıyor." }, { status: 503 });
     if (!isLogin) {
       const loginUrl = request.nextUrl.clone();
       loginUrl.pathname = "/admin/login";
@@ -80,8 +82,8 @@ export async function proxy(request: NextRequest) {
   const isAdmin = isAdminUser(user);
 
   if (!isAdmin && !isLogin) {
-    if (pathname.startsWith("/api/admin")) {
-      const unauthorized = NextResponse.json({ error: "Yetkisiz işlem." }, { status: 401 });
+    if (isAdminApi) {
+      const unauthorized = NextResponse.json({ error: "Yetkisiz işlem." }, { status: user ? 403 : 401 });
       clearLegacyAdminCookie(unauthorized);
       return unauthorized;
     }
