@@ -44,7 +44,7 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = legalAddress }:
             </ul>
 
             {/* Masaüstü Görünüm (2 Sütunlu Yan Yana Dağılım) */}
-            <ul className="mt-3 hidden gap-y-2 text-sm leading-5 sm:grid sm:grid-cols-[max-content_max-content] sm:gap-x-6">
+            <ul className="mt-3 hidden gap-y-2 text-sm leading-5 sm:grid sm:grid-flow-col sm:grid-rows-3 sm:grid-cols-[max-content_max-content] sm:gap-x-6">
               {corporateNavigation.map((item) => (
                 <li key={item.href}>
                   <Link
