@@ -1,6 +1,18 @@
 # Güvenlik düzeltmelerini canlıya alma
 
-Görsel düzenlemeler `1ea6646` ile pushlandı. Bu belgedeki güvenlik değişiklikleri ayrı tutulur; canlı veritabanına otomatik uygulanmadı.
+Görsel düzenlemeler `1ea6646`, güvenlik ve Analytics kaldırma değişiklikleri `7f93207` ile pushlandı.
+
+## Tamamlanan canlı veritabanı işlemleri
+
+- Session pooler üzerinden Supabase CA sertifikası doğrulanarak bağlantı kuruldu.
+- Mevcut politika ve fonksiyon tanımları değişiklik öncesinde yerel olarak yedeklendi.
+- Mevcut yönetici hesabının `app_metadata.role = admin` olduğu doğrulandı; kullanıcı rolü değiştirilmedi.
+- `00022_enforce_trusted_admin_roles` ve `00023_protect_legacy_membership_applications` tek transaction içinde uygulandı ve `supabase_migrations.schema_migrations` tablosuna kaydedildi.
+- Dokuz içerik/başvuru tablosunun kayıt sayıları ve içerik parmak izleri işlem öncesi/sonrası aynı kaldı.
+- Anonim ve sahte app_metadata/user_metadata rollerinin admin sayılmadığı; mevcut adminin yetkili olduğu doğrulandı. İletişim mesajları, eski üyelik başvuruları ve yayınlanmamış içerikler yetkisiz rollere kapalı.
+- Eski migration geçmişi yalnızca `00001`–`00012` kayıtlarını içeriyordu; gerçekte uygulanıp uygulanmadığı kesin olmayan diğer dosyalar uygulanmış olarak işaretlenmedi.
+
+**Aşağıdaki adımlar referans içindir; mevcut canlı ortamda rol atamasını veya 00022/00023 dosyalarını yeniden çalıştırman gerekmiyor.**
 
 ## 1. Gerçek yönetici hesabını belirle
 
@@ -48,7 +60,7 @@ order by schemaname, tablename, policyname;
 
 ## 3. Uygulama sürümü ve ortam
 
-Güvenlik kodunu inceleme sonrası ayrıca push/deploy et. Yönetici rolünü ve 00022'yi uygulamadan yeni sürüme geçmek admin girişinin reddedilmesine neden olabilir.
+Güvenlik kodu `7f93207` ile pushlandı; mevcut canlı veritabanında yönetici rolü ile 00022/00023 politikaları doğrulandı. Yeni bir ortam kurulurken uygulama yayınlanmadan önce bu rol ve politikalar hazırlanmalı.
 
 - `NEXT_PUBLIC_SUPABASE_URL` ve `NEXT_PUBLIC_SUPABASE_ANON_KEY` korunur.
 - `ADMIN_EMAILS` artık kullanılmaz; kaldırılabilir.

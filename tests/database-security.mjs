@@ -5,7 +5,7 @@ const { PGlite } = await import(process.env.PGLITE_MODULE || '@electric-sql/pgli
 const db = new PGlite();
 const member = '00000000-0000-0000-0000-000000000001';
 const admin = '00000000-0000-0000-0000-000000000002';
-const tables = ['events','announcements','galleries','gallery_images','faqs','board_members','site_content','contact_messages'];
+const tables = ['events','announcements','galleries','gallery_images','faqs','board_members','site_content','contact_messages','membership_applications'];
 await db.exec(`
   create role anon; create role authenticated;
   create schema auth; create schema storage;
@@ -27,6 +27,7 @@ for (const table of tables) {
     insert into public.${table}(id,title,is_published) values (1,'Real content',true),(2,'Private content',false);`);
 }
 await db.exec(await readFile(new URL('../supabase/migrations/00022_enforce_trusted_admin_roles.sql', import.meta.url), 'utf8'));
+await db.exec(await readFile(new URL('../supabase/migrations/00023_protect_legacy_membership_applications.sql', import.meta.url), 'utf8'));
 async function asUser(role, user, query, appRole) {
   await db.query("select set_config('request.jwt.claims', $1, false)", [JSON.stringify({ sub: user, app_metadata: appRole ? { role: appRole } : {}, user_metadata: { role: 'admin' } })]);
   await db.exec(`set role ${role}`);
@@ -39,6 +40,7 @@ for (const role of ['anon','authenticated']) {
     assert.equal((await asUser(role, role === 'anon' ? null : member, `delete from public.${table} returning id`)).rows.length, 0);
   }
   assert.equal((await asUser(role, role === 'anon' ? null : member, 'select * from public.contact_messages')).rows.length, 0);
+  assert.equal((await asUser(role, role === 'anon' ? null : member, 'select * from public.membership_applications')).rows.length, 0);
   assert.equal((await asUser(role, role === 'anon' ? null : member, 'select * from public.events')).rows.length, 1);
   assert.equal((await asUser(role, role === 'anon' ? null : member, 'select * from public.announcements')).rows.length, 1);
   await assert.rejects(asUser(role, role === 'anon' ? null : member, "insert into storage.objects values(1,'media')"));
