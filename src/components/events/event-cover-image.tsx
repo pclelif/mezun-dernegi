@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { CroppedImage } from "@/components/shared/cropped-image";
 import type { ImageCrop } from "@/lib/supabase/client";
 
@@ -12,6 +12,8 @@ type EventCoverImageProps = {
 };
 
 export function EventCoverImage({ photos, crops = [], alt }: EventCoverImageProps) {
+  const pressTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [pressedDirection, setPressedDirection] = useState<-1 | 1 | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const validPhotos = photos
@@ -35,6 +37,27 @@ export function EventCoverImage({ photos, crops = [], alt }: EventCoverImageProp
     const timer = window.setInterval(goToNext, 5000);
     return () => window.clearInterval(timer);
   }, [total, goToNext]);
+
+  useEffect(() => () => {
+    if (pressTimerRef.current) clearTimeout(pressTimerRef.current);
+  }, []);
+
+  function navigate(event: React.MouseEvent<HTMLButtonElement>, direction: -1 | 1) {
+    event.stopPropagation();
+    if (pressTimerRef.current) clearTimeout(pressTimerRef.current);
+    setPressedDirection(direction);
+    pressTimerRef.current = setTimeout(() => setPressedDirection(null), 350);
+    if (direction === -1) goToPrev();
+    else goToNext();
+  }
+
+  function arrowClass(direction: -1 | 1) {
+    return `grid size-12 touch-manipulation select-none place-items-center rounded-full border shadow-md transition-all hover:border-red-600 hover:bg-red-600 hover:text-white active:scale-95 active:border-red-600 active:bg-red-600 active:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600 ${
+      pressedDirection === direction
+        ? "scale-95 border-red-600 bg-red-600 text-white"
+        : "border-zinc-300 bg-white text-zinc-900"
+    }`;
+  }
 
   if (!currentPhoto) return null;
 
@@ -64,22 +87,16 @@ export function EventCoverImage({ photos, crops = [], alt }: EventCoverImageProp
           <>
             <button
               type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                goToPrev();
-              }}
-              className="absolute left-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-1.5 text-white opacity-70 backdrop-blur-sm transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              onClick={(event) => navigate(event, -1)}
+              className={`absolute left-2 top-1/2 z-20 -translate-y-1/2 ${arrowClass(-1)}`}
               aria-label="Önceki fotoğraf"
             >
               <ChevronLeft className="size-5" aria-hidden="true" />
             </button>
             <button
               type="button"
-              onClick={(event) => {
-                event.stopPropagation();
-                goToNext();
-              }}
-              className="absolute right-2 top-1/2 z-20 -translate-y-1/2 rounded-full bg-black/50 p-1.5 text-white opacity-70 backdrop-blur-sm transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              onClick={(event) => navigate(event, 1)}
+              className={`absolute right-2 top-1/2 z-20 -translate-y-1/2 ${arrowClass(1)}`}
               aria-label="Sonraki fotoğraf"
             >
               <ChevronRight className="size-5" aria-hidden="true" />
@@ -120,22 +137,16 @@ export function EventCoverImage({ photos, crops = [], alt }: EventCoverImageProp
             <>
               <button
                 type="button"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  goToPrev();
-                }}
-                className="absolute left-4 top-1/2 z-[100000] -translate-y-1/2 rounded-full bg-black/50 p-2 text-white opacity-70 backdrop-blur-sm transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:left-6"
+                onClick={(event) => navigate(event, -1)}
+                className={`absolute left-4 top-1/2 z-[100000] -translate-y-1/2 sm:left-6 ${arrowClass(-1)}`}
                 aria-label="Önceki fotoğraf"
               >
                 <ChevronLeft className="size-6" aria-hidden="true" />
               </button>
               <button
                 type="button"
-                onClick={(event) => {
-                  event.stopPropagation();
-                  goToNext();
-                }}
-                className="absolute right-4 top-1/2 z-[100000] -translate-y-1/2 rounded-full bg-black/50 p-2 text-white opacity-70 backdrop-blur-sm transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:right-6"
+                onClick={(event) => navigate(event, 1)}
+                className={`absolute right-4 top-1/2 z-[100000] -translate-y-1/2 sm:right-6 ${arrowClass(1)}`}
                 aria-label="Sonraki fotoğraf"
               >
                 <ChevronRight className="size-6" aria-hidden="true" />
