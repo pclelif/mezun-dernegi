@@ -176,17 +176,13 @@ export default async function DernekUyeligiPage() {
                 yazmayı unutmayınız.
               </p>
             </div>
-            <p className="mt-8 text-base leading-7">
-              <Link
-                href="/iletisim"
-                className="touch-manipulation rounded-sm text-slate-600 transition-colors hover:text-red-700 active:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
-              >
-                Sorularınız için <strong className="font-semibold">iletişim</strong> kısmındaki iletişim formundan bizlere{" "}
-                <span className="whitespace-nowrap">
-                  ulaşabilirsiniz <ArrowRight className="ml-1 inline-block size-4 align-middle" aria-hidden="true" />
-                </span>
-              </Link>
-            </p>
+            <Link
+              href="/iletisim"
+              className="mt-8 inline-flex touch-manipulation items-center gap-2 rounded-sm font-semibold text-[#ec1c24] transition-colors hover:text-red-700 active:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+            >
+              Sorularınız için iletişim formu aracılığıyla bizlere ulaşabilirsiniz
+              <ArrowRight className="size-4 shrink-0" aria-hidden="true" />
+            </Link>
           </Step>
         </ol>
 

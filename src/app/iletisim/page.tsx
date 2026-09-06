@@ -1,4 +1,4 @@
-import { ExternalLink, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowRight, ExternalLink, Mail, MapPin, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import type { ComponentType } from "react";
 import { ContactForm } from "@/components/forms/contact-form";
@@ -75,6 +75,9 @@ export default async function ContactPage() {
                           className="mt-1 block touch-manipulation break-words whitespace-pre-line text-base font-normal leading-7 text-[var(--color-muted)] transition-colors hover:text-[var(--color-ink)] active:text-[var(--color-ink)]"
                         >
                           {value}
+                          {label === "Instagram" || label === "LinkedIn" ? (
+                            <ArrowRight className="ml-2 inline-block size-4 shrink-0 align-middle" aria-hidden="true" />
+                          ) : null}
                         </a>
                       ) : (
                         <p className="mt-1 whitespace-pre-line text-base leading-7 text-[var(--color-muted)]">{value}</p>
