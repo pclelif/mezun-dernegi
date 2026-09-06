@@ -70,3 +70,7 @@ Metin güncelleme tarihi 6 Eylül 2026 olarak gösteriliyor. Yayın yapılmadı�
 - İletişim formunda beklenmeyen hatalarda gönderim durumunun temizlenmesi sağlandı. Bu hata yönetimi spam koruması değildir; doğrudan anonim Supabase yazma akışı için sunucu/veritabanı düzeyinde kötüye kullanım sınırı ayrıca uygulanmalıdır.
 - Dokuz JSON-LD çıktısında `<` karakteri Unicode kaçışıyla yazılıyor; içerikteki script kapatma dizilerinin HTML'e dönüşmesi engellendi.
 - Gerçek admin ile canlı kayıt/yükleme ve iletişim mesajı gönderme akışları bu kontrolde denenmedi; canlı veritabanı politikaları yeniden sorgulanmadı. Yukarıdaki hukuki ve kurumsal eksikler açık kalıyor.
+
+## Görsel uyarıları düzeltmesi
+
+Dört img uyarısının bulunduğu admin logosu ve fotoğraf büyütme alanları Next.js Image bileşenine geçirildi. Orijinal dosya kalitesi ve yükleme davranışı `unoptimized` ve `loading="eager"` ile korundu; bu değişiklik ek görsel sıkıştırma sağlamaz. Önceki kontrolün dört uyarısı giderildi; genel ESLint artık sıfır hata ve sıfır uyarıyla geçiyor.

@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 
@@ -33,8 +35,12 @@ export function AdminBrandLogo({ compact = false }: { compact?: boolean }) {
           : "mb-3 size-16 shrink-0 overflow-hidden rounded-full"
       }
     >
-      <img
+      <Image
         src={url}
+        width={64}
+        height={64}
+        unoptimized
+        loading="eager"
         alt="Dernek logosu"
         onError={() => setUrl("/logo-dernek.png")}
         className="size-full rounded-full object-contain"

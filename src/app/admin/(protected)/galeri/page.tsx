@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { ArrowUpDown, ChevronDown, GripVertical, LoaderCircle, Pencil, Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ImageUploader, type ImageUploaderHandle } from "@/components/admin/ImageUploader";
@@ -396,8 +398,14 @@ export default function AdminGalleryPage() {
             <X className="size-6" />
           </button>
           <div className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl bg-black/40 p-2 shadow-2xl backdrop-blur-sm border border-white/10" onClick={(e) => e.stopPropagation()}>
-            <img
+            {/* Preserve the original image dimensions and quality in the lightbox. */}
+            <Image
               src={selectedImage}
+              width={0}
+              height={0}
+              unoptimized
+              loading="eager"
+              style={{ width: "auto", height: "auto" }}
               alt="Büyütülmüş fotoğraf"
               className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
             />

@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 import { ArrowRight, ChevronLeft, ChevronRight, Images, X } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
@@ -110,8 +112,14 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
             <X className="size-6" />
           </button>
           <div className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl bg-black/40 p-2 shadow-2xl backdrop-blur-sm border border-white/10" onClick={(e) => e.stopPropagation()}>
-            <img
+            {/* Preserve the original image dimensions and quality in the lightbox. */}
+            <Image
               src={selectedImage}
+              width={0}
+              height={0}
+              unoptimized
+              loading="eager"
+              style={{ width: "auto", height: "auto" }}
               alt="Büyütülmüş fotoğraf"
               className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
             />
@@ -207,8 +215,14 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
             <X className="size-6" />
           </button>
           <div className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl bg-black/40 p-2 shadow-2xl backdrop-blur-sm border border-white/10" onClick={(e) => e.stopPropagation()}>
-            <img
+            {/* Preserve the original image dimensions and quality in the lightbox. */}
+            <Image
               src={selectedImage}
+              width={0}
+              height={0}
+              unoptimized
+              loading="eager"
+              style={{ width: "auto", height: "auto" }}
               alt="Büyütülmüş fotoğraf"
               className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
             />
