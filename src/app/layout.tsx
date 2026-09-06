@@ -1,3 +1,4 @@
+import { legalAddress } from "@/config/legal";
 import { Inter } from "next/font/google";
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
@@ -124,7 +125,7 @@ export default async function RootLayout({
       favicon_url: "/logo-dernek.png",
     }),
     getSiteContent("iletisim", {
-      address: "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420 Çankaya/Ankara",
+      address: "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33/4, 06420 Çankaya/Ankara",
       email: "kaaflmezunder@gmail.com",
       instagram_url: "https://www.instagram.com/kaaflmezunder",
       linkedin_url:
@@ -171,7 +172,7 @@ export default async function RootLayout({
         <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon.png" />
         <OrganizationJsonLd
           logoUrl={logoUrl}
-          address={contact.address}
+          address={legalAddress}
           email={contact.email}
           instagramUrl={contact.instagram_url}
           linkedinUrl={contact.linkedin_url}
@@ -182,7 +183,7 @@ export default async function RootLayout({
         <SiteShell
           settings={{
             logo_url: logoUrl,
-            address: contact.address,
+            address: legalAddress,
             email: contact.email,
             instagram_url: contact.instagram_url,
             linkedin_url: contact.linkedin_url,

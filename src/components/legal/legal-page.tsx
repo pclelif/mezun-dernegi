@@ -1,3 +1,4 @@
+import { legalRevisionDate, legalRevisionLabel } from "@/config/legal";
 import type { ReactNode } from "react";
 import { PageHero } from "@/components/shared/page-hero";
 
@@ -27,6 +28,9 @@ export function LegalPage({ title, description, children }: LegalPageProps) {
 
       <main className="container-site py-10 md:py-14">
         <article className="max-w-3xl space-y-4 text-sm leading-6 text-zinc-600 sm:text-[0.9375rem] sm:leading-7 [&_strong]:font-semibold [&_strong]:text-zinc-950">
+          <p className="text-xs text-zinc-500">
+            Son güncelleme: <time dateTime={legalRevisionDate}>{legalRevisionLabel}</time>.
+          </p>
           {children}
         </article>
       </main>

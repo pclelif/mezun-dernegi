@@ -157,6 +157,13 @@ export default async function DernekUyeligiPage() {
           </Step>
 
           <Step step={4} title="Başvurunuzu İletin" isLast>
+            <p className="mt-4 text-sm leading-6 text-slate-600">
+              Üyelik ve adli sicil bilgileri özel nitelikli kişisel veridir. Belgeler siteye yüklenmez;
+              aşağıdaki Gmail adresine e-postayla iletilir. Göndermeden önce{" "}
+              <Link href="/kvkk" className="underline underline-offset-4">KVKK Aydınlatma Metni</Link>
+              ’ni inceleyiniz. Adli sicil belgesine erişecek kişiler, uygulanacak saklama süresi ve
+              imha yöntemi hakkında üyelik biriminden belgeye özgü bilgi alınız.
+            </p>
             <p className="mt-4 text-base leading-7 text-slate-600">
               Hazırladığınız 4 adet PDF dosyasını (üyelik formu, dekont, adli sicil kaydı ve mezuniyet
               belgesi) aşağıdaki e-posta adresine göndererek başvurunuzu tamamlayabilirsiniz.

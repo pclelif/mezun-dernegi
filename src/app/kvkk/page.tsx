@@ -1,3 +1,5 @@
+import { DataRecipients, RetentionDetails } from "@/components/legal/data-processing-details";
+import { legalAddress } from "@/config/legal";
 import type { Metadata } from "next";
 import {
   LegalPage,
@@ -28,7 +30,7 @@ export default function KvkkPage() {
           <strong>{associationName}</strong>’dir (“Dernek”).
         </p>
         <ul className={legalListClass}>
-          <li>Adres: <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong></li>
+          <li>Adres: <strong>{legalAddress}</strong></li>
           <li>E-posta: <strong>kaaflmezunder@gmail.com</strong></li>
         </ul>
       </section>
@@ -45,29 +47,34 @@ export default function KvkkPage() {
           <li>İşlem güvenliği bilgileri: internet sitesi erişim, oturum ve güvenlik kayıtları.</li>
         </ul>
         <p>
-          Üyelik başvurusu sürecinde Dernek tüzüğü ve ilgili mevzuat uyarınca üyelik şartlarının tespiti
-          amacıyla talep edilen adli sicil kaydı (ceza mahkûmiyeti ve güvenlik tedbirlerine ilişkin özel
-          nitelikli kişisel veri) mevzuatın izin verdiği hâllerde, tüzük yükümlülükleri veya açık rızanız
-          bulunduğu takdirde amaçla sınırlı olarak işlenir.
+          Dernek üyeliğini ortaya koyan bilgiler KVKK’nın 6’ncı maddesi kapsamında özel nitelikli
+          kişisel veridir. Adli sicil belgesindeki ceza mahkûmiyeti ve güvenlik tedbiri bilgileri de
+          özel niteliklidir. Bu veriler bakımından yalnızca genel nitelikli verilere ilişkin
+          “meşru menfaat” veya “sözleşme” gerekçesine dayanılması yeterli değildir.
+        </p>
+        <p>
+          Site üzerinde adli sicil belgesi yükleme alanı yoktur. Üyelik başvuru sayfası belgeyi,
+          diğer başvuru ekleriyle birlikte kaaflmezunderuyelik@gmail.com adresine e-postayla
+          iletmenizi istemektedir. E-postayla alınması, belgenin Dernek tarafından işlenmediği
+          anlamına gelmez.
         </p>
       </section>
 
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>3. İşleme amaçları ve hukuki sebepler</h2>
-        <p>Kişisel verileriniz aşağıdaki amaçlarla işlenebilir:</p>
         <ul className={legalListClass}>
-          <li>Üyelik başvurularının alınması, değerlendirilmesi ve üyelik kayıtlarının tutulması.</li>
-          <li>İnternet sitesindeki iletişim formu vasıtasıyla iletilen talep, soru ve önerilerin değerlendirilmesi ve yanıtlanması.</li>
-          <li>Dernek faaliyetleri, genel kurul, etkinlik ve duyurular hakkında iletişim kurulması.</li>
-          <li>Aidat ve bağış süreçlerinin yürütülmesi, muhasebe ve yasal kayıtların tutulması.</li>
-          <li>Dernek tüzüğü ve ilgili mevzuattan doğan yükümlülüklerin yerine getirilmesi.</li>
-          <li>Bilgi ve sistem güvenliğinin sağlanması ile yetkisiz erişimlerin önlenmesi.</li>
+          <li><strong>İletişim talepleri:</strong> ad soyad, e-posta, konu ve mesaj; talebi değerlendirmek ve yanıtlamak için. Genel iletişim taleplerinde KVKK m.5/2-f kapsamındaki, temel hakları zedelemeyen meşru menfaat; bir hakkın kullanılması veya uyuşmazlık takibinde m.5/2-e esas alınır.</li>
+          <li><strong>Üyelik başvurusu ve kayıt:</strong> kimlik, iletişim, mezuniyet, başvuru ve üyelik durumu bilgileri; başvuruyu değerlendirmek ve kanuni üye kayıt/bildirimlerini yürütmek için. Kanunun zorunlu kıldığı genel veri işlemlerinde m.5/2-a ve ç; üyeliği gösteren özel nitelikli kayıtların kanunda açıkça öngörülen işlemlerinde m.6/3-b, 5253 sayılı Dernekler Kanunu’nun ilgili kayıt ve bildirim hükümleriyle birlikte değerlendirilir. Bu dayanak bütün başvuru eklerini sınırsız işlemeye izin vermez.</li>
+          <li><strong>Aidat ve bağış:</strong> ödeyenin kimliği, tutar, tarih ve dekont/işlem bilgileri; ödemenin kaydı ve kanuni mali belgelendirme için m.5/2-ç; somut bir hak veya uyuşmazlığın korunması için m.5/2-e. Sitede kartla ödeme alanı bulunmaz; banka işlemi ilgili bankanın kanalı üzerinden gerçekleşir.</li>
+          <li><strong>Yönetici erişimi ve güvenlik:</strong> yönetici hesap/oturum bilgileri ve teknik erişim kayıtları; yetkili erişimi sağlamak, kötüye kullanımı tespit etmek ve sistemi korumak için m.5/2-f. Sitede yönetici işlemleri sunucu tarafında oturum ve admin rolü kontrolüne tabidir.</li>
+          <li><strong>Etkinlik görselleri:</strong> tanıtım amacıyla yayımlanan fotoğraf/video için uygun başka bir işleme şartı bulunmuyorsa, belirli yayın ve kullanım amaçlarını kapsayan ayrı açık rıza gerekir. Etkinliğe katılım veya bu metni okuma kendiliğinden yayın izni sayılmaz.</li>
         </ul>
         <p>
-          Veriler; KVKK’nın 5 ve 6’ncı maddelerinde yer alan kanunlarda açıkça öngörülme, hukuki
-          yükümlülüğün yerine getirilmesi, bir hakkın tesisi veya korunması, sözleşmenin kurulması ya
-          da ifası ve temel haklara zarar vermemek kaydıyla meşru menfaat hukuki sebeplerine dayanılarak
-          işlenir. Bu sebeplerin bulunmadığı işlemlerde açık rızanız alınır.
+          Üyelik başvurusunda istenen belgeler, Dernek tüzüğünün 7’nci maddesi çerçevesinde
+          yönetim kurulunca belirlenen başvuru listesinde yer alır. Adli sicil belgesi,
+          bu listede üyelik değerlendirmesi için istenen belgeler arasındadır; site üzerinden
+          yüklenmez, üyelik e-posta adresine iletilir. Bu metni okumak veya e-posta göndermek,
+          özel nitelikli verilerin işlenmesine kendiliğinden açık rıza oluşturmaz.
         </p>
       </section>
 
@@ -82,22 +89,12 @@ export default function KvkkPage() {
 
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>5. Kişisel verilerin aktarılması</h2>
-        <p>
-          Verileriniz; hukuki yükümlülüklerin yerine getirilmesi amacıyla yetkili kamu kurumlarına,
-          bankalara, mali müşavirlere ve hizmet sunumunun sürdürülebilmesi için zorunlu olan barındırma (Vercel),
-          veri tabanı ve bulut altyapısı (Supabase), e-posta, güvenlik ve bilişim hizmeti sağlayıcılarına
-          aktarılabilir. İnternet sitesi altyapısı ve veri tabanı sunucularının yurt dışında bulunması
-          nedeniyle yapılan aktarımlarda KVKK’nın 9’uncu maddesindeki şartlar ve uygun güvenceler gözetilir.
-        </p>
+        <DataRecipients />
       </section>
 
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>6. Saklama süresi ve güvenlik</h2>
-        <p>
-          Kişisel veriler, ilgili mevzuatta öngörülen süre veya işleme amacının gerektirdiği süre boyunca
-          saklanır; sürenin sonunda silinir, yok edilir ya da anonim hâle getirilir. Dernek, verilere
-          yetkisiz erişimi ve hukuka aykırı işlemeyi önlemek için uygun idari ve teknik tedbirleri alır.
-        </p>
+        <RetentionDetails />
       </section>
 
       <section className={legalSectionClass}>
@@ -108,8 +105,9 @@ export default function KvkkPage() {
           <li>İşleme amacını ve amaca uygun kullanılıp kullanılmadığını öğrenme,</li>
           <li>Yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme,</li>
           <li>Eksik ya da yanlış işlenmiş verilerin düzeltilmesini isteme,</li>
-          <li>Kanuni şartları oluştuğunda silinmesini veya yok edilmesini isteme,</li>
-          <li>Otomatik analiz sonucu aleyhinize bir sonucun ortaya çıkmasına itiraz etme,</li>
+          <li>KVKK’nın 7’nci maddesindeki şartlar çerçevesinde silinmesini veya yok edilmesini isteme,</li>
+          <li>Düzeltme, silme veya yok etme işlemlerinin verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme,</li>
+          <li>İşlenen verilerin münhasıran otomatik sistemlerle analiz edilmesi sonucunda aleyhinize bir sonucun ortaya çıkmasına itiraz etme,</li>
           <li>Kanuna aykırı işleme nedeniyle zarara uğramanız hâlinde tazminat talep etme</li>
         </ul>
         <p>haklarına sahipsiniz.</p>
@@ -119,7 +117,7 @@ export default function KvkkPage() {
         <h2 className={legalHeadingClass}>8. Başvuru yöntemi</h2>
         <p>
           Taleplerinizi kimliğinizi doğrulayan bilgiler ve talebinizin açıklamasıyla birlikte{" "}
-          <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong> adresine yazılı
+          <strong>{legalAddress}</strong> adresine yazılı
           olarak veya <strong>kaaflmezunder@gmail.com</strong> adresine iletebilirsiniz.
           Başvurular, niteliğine göre en kısa sürede ve en geç 30 gün içinde sonuçlandırılır.
         </p>

@@ -19,13 +19,12 @@ export function ContactForm() {
     const payload = {
       name: String(data.get("name") ?? "").trim(),
       email: String(data.get("email") ?? "").trim(),
-      phone: String(data.get("phone") ?? "").trim(),
       subject: String(data.get("subject") ?? "").trim() || null,
       message: String(data.get("message") ?? "").trim(),
     };
 
-    if (!payload.name || !payload.email || !payload.phone || !payload.message) {
-      setNotice({ ok: false, text: "Ad soyad, e-posta, telefon ve mesaj alanları zorunludur." });
+    if (!payload.name || !payload.email || !payload.message) {
+      setNotice({ ok: false, text: "Ad soyad, e-posta ve mesaj alanları zorunludur." });
       setSaving(false);
       return;
     }
@@ -56,11 +55,7 @@ export function ContactForm() {
         </label>
       </div>
 
-      <div className="grid gap-5 md:grid-cols-2">
-        <label className="text-sm font-semibold text-zinc-800">
-          Cep Telefonu
-          <input name="phone" type="tel" autoComplete="tel" required className={inputClass} />
-        </label>
+      <div>
         <label className="text-sm font-semibold text-zinc-800">
           Konu
           <CustomSelect

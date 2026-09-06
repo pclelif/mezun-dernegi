@@ -2,25 +2,17 @@
 
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 
-export function DetailFooterLink({
+function DetailFooterLinkContent({
   href,
   label,
 }: {
   href: string;
   label: string;
 }) {
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("from") === "home") {
-        setShow(true);
-      }
-    } catch {}
-  }, []);
+  const show = useSearchParams().get("from") === "home";
 
   if (!show) {
     return <div className="min-h-[53px] border-t border-zinc-100 bg-slate-50/50 px-6 py-4" />;
@@ -37,4 +29,10 @@ export function DetailFooterLink({
       </Link>
     </div>
   );
+}
+
+export function DetailFooterLink(props: { href: string; label: string }) {
+  return <Suspense fallback={<div className="min-h-[53px] border-t border-zinc-100 bg-slate-50/50 px-6 py-4" />}>
+    <DetailFooterLinkContent {...props} />
+  </Suspense>;
 }

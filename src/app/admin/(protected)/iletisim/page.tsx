@@ -10,7 +10,6 @@ import {
   LoaderCircle,
   Mail,
   MessageSquare,
-  Phone,
   Search,
   Trash2,
 } from "lucide-react";
@@ -22,7 +21,6 @@ type Message = {
   id: string;
   name: string;
   email: string;
-  phone: string | null;
   subject: string | null;
   message: string;
   is_read: boolean;
@@ -44,7 +42,7 @@ export default function AdminContactPage() {
     let active = true;
     void createClient()
       .from("contact_messages")
-      .select("*")
+      .select("id,name,email,subject,message,is_read,created_at")
       .order("created_at", { ascending: false })
       .then(({ data, error }) => {
         if (!active) return;
@@ -107,7 +105,6 @@ export default function AdminContactPage() {
           item.name.toLowerCase().includes(q) ||
           item.email.toLowerCase().includes(q) ||
           (item.subject && item.subject.toLowerCase().includes(q)) ||
-          (item.phone && item.phone.toLowerCase().includes(q)) ||
           item.message.toLowerCase().includes(q)
         );
       })
@@ -286,17 +283,6 @@ export default function AdminContactPage() {
                     >
                       {item.email}
                     </a>
-                    {item.phone && (
-                      <>
-                        <span className="text-slate-500 font-bold select-none">·</span>
-                        <a
-                          href={`tel:${item.phone.replace(/\s+/g, "")}`}
-                          className="text-slate-600 underline underline-offset-4 hover:text-red-600"
-                        >
-                          {item.phone}
-                        </a>
-                      </>
-                    )}
                     <span className="text-slate-500 font-bold select-none">·</span>
                     <span className="text-slate-400">{formatTurkishDate(item.created_at)}</span>
                   </div>

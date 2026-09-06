@@ -18,7 +18,7 @@ export const siteConfig = {
   faviconUrl: `${siteUrl}/logo-dernek.png`,
   description: associationDescription,
   address: {
-    streetAddress: "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33",
+    streetAddress: "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33/4",
     postalCode: "06420",
     addressLocality: "Çankaya",
     addressRegion: "Ankara",

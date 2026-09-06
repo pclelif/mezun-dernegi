@@ -1,3 +1,4 @@
+import { legalAddress } from "@/config/legal";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -24,11 +25,13 @@ export default function TermsOfUsePage() {
       description="İnternet sitesinin kullanımına ilişkin kurallar, haklar ve sorumluluklar."
     >
       <section className={legalSectionClass}>
-        <h2 className={legalHeadingClass}>1. Taraflar ve kabul</h2>
+        <h2 className={legalHeadingClass}>1. İşleten ve kapsam</h2>
         <p>
           Bu internet sitesi <strong>{associationName}</strong> (“Dernek”) tarafından işletilmektedir.
-          Siteyi ziyaret ederek veya site üzerinden sunulan hizmetleri kullanarak bu Kullanım
-          Koşulları’nı kabul etmiş sayılırsınız. Koşulları kabul etmiyorsanız siteyi kullanmamalısınız.
+          Bu koşullar, sitedeki hizmetlerin kapsamını ve tarafların sorumluluklarını açıklar.
+          Siteyi ziyaret etmeniz tek başına bir sözleşme kabulü, üyelik başvurusu veya kişisel verilerin
+          işlenmesine açık rıza anlamına gelmez. Ayrı bir kabul gerektiren işlemlerde ilgili koşullar
+          işlemden önce sunulur.
         </p>
       </section>
 
@@ -37,7 +40,7 @@ export default function TermsOfUsePage() {
         <p>
           Site; Derneğin faaliyetleri, etkinlikleri, duyuruları, üyelik süreçleri, aidat ve bağış
           bilgileri hakkında kamuoyunu ve mezunları bilgilendirmek amacıyla sunulur. Sitedeki içerikler
-          genel bilgilendirme niteliğindedir ve tek başına resmi belge, taahhüt veya hukuki görüş
+          genel bilgilendirme niteliğindedir ve tek başına resmî belge, taahhüt veya hukuki görüş
           oluşturmaz.
         </p>
       </section>
@@ -68,10 +71,12 @@ export default function TermsOfUsePage() {
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>5. Aidat ve bağışlar</h2>
         <p>
-          Aidat ve bağış işlemlerinde sitede belirtilen güncel banka hesap bilgilerinin kontrol edilmesi
-          kullanıcının sorumluluğundadır. Bağışlar gönüllülük esasına dayanır. İşleme ilişkin açıklama
-          ve dekontların saklanması önerilir. Mevzuat veya Dernek kararları gereği aidat tutarları ve
-          ödeme dönemleri değiştirilebilir.
+          Dernek, yayımladığı banka hesap bilgilerini doğru ve güncel tutmak ve tespit edilen hataları
+          düzeltmekle sorumludur. Ödeme öncesinde alıcı unvanını ve IBAN’ı kontrol etmeniz; bir
+          tutarsızlık varsa ödeme yapmadan Dernekle iletişim kurmanız önerilir. Bu kontrol önerisi,
+          Derneğin yanlış veya güncel olmayan bilgi yayımlamasından doğan hukuki sorumluluğunu ortadan
+          kaldırmaz. Bağışlar gönüllüdür. Aidat tutarları ve dönemleri mevzuata, tüzüğe ve yetkili organ
+          kararlarına göre belirlenir; değişiklikler ilgili dönemiyle birlikte duyurulur.
         </p>
       </section>
 
@@ -89,8 +94,9 @@ export default function TermsOfUsePage() {
         <h2 className={legalHeadingClass}>7. Üçüncü taraf hizmet ve bağlantıları</h2>
         <p>
           Sitede üçüncü taraf sitelere veya hizmetlere bağlantılar bulunabilir. Bu bağlantılar kolaylık
-          amacıyla sunulur; üçüncü tarafların içerik, güvenlik, erişilebilirlik veya gizlilik
-          uygulamalarından Dernek sorumlu değildir.
+          amacıyla sunulur. Bağlantı verilen hizmetlerin kendi koşulları ve gizlilik politikaları
+          geçerlidir. Derneğin kendi hizmet seçimi, veri aktarımı ve mevzuattan kaynaklanan
+          yükümlülükleri devam eder.
         </p>
       </section>
 
@@ -98,9 +104,10 @@ export default function TermsOfUsePage() {
         <h2 className={legalHeadingClass}>8. Hizmetin sunumu ve sorumluluğun sınırı</h2>
         <p>
           Dernek, sitenin kesintisiz veya hatasız çalışacağını garanti etmez. Bakım, güvenlik, teknik
-          arıza veya mücbir sebeplerle site geçici olarak kullanılamayabilir. Dernek, kasıt veya ağır
-          kusur hâlleri ile kanunen sınırlandırılamayan sorumluluklar saklı kalmak üzere, sitenin
-          kullanımından doğan dolaylı zararlardan sorumlu tutulamaz.
+          arıza veya mücbir sebeplerle site geçici olarak kullanılamayabilir. Dernek, kendisinden
+          beklenen özeni göstermek ve tespit edilen hataları gidermekle yükümlüdür. Tarafların
+          sorumluluğu somut olay ve uygulanacak mevzuata göre belirlenir; bu metin kanuni başvuru
+          ve tazminat haklarını sınırlandırmaz.
         </p>
       </section>
 
@@ -132,7 +139,7 @@ export default function TermsOfUsePage() {
         </p>
         <p>
           Sorularınız için <strong>kaaflmezunder@gmail.com</strong> veya{" "}
-          <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong> üzerinden Dernek
+          <strong>{legalAddress}</strong> üzerinden Dernek
           ile iletişim kurabilirsiniz.
         </p>
       </section>

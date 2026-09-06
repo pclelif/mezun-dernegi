@@ -1,3 +1,4 @@
+import { legalAddress } from "@/config/legal";
 import Image from "next/image";
 import Link from "next/link";
 import { Fragment } from "react";
@@ -11,7 +12,7 @@ const legalLinks = [
   { href: "/kullanim-kosullari", label: "Kullanım Koşulları" },
 ];
 
-export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420\nÇankaya/Ankara" }: { logoUrl?: string; address?: string }) {
+export function Footer({ logoUrl = "/logo-dernek.jpg", address = legalAddress }: { logoUrl?: string; address?: string }) {
   return (
     <footer className="bg-[#18181b] font-sans text-white">
       <div className="mx-auto grid w-[min(100%-2rem,80rem)] grid-cols-1 items-start gap-8 py-7 md:grid-cols-2 md:gap-10 lg:grid-cols-[1fr_auto_auto] lg:gap-x-12 lg:gap-y-8 md:py-8">
@@ -65,8 +66,7 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Maha
               Adres
             </h2>
             <address className="mt-3 text-sm not-italic leading-6 text-zinc-200">
-              <span className="block sm:w-max sm:max-w-full">Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420</span>
-              <span className="block">Çankaya/Ankara</span>
+              <span className="block">{address}</span>
             </address>
           </div>
         </div>

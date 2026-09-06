@@ -1,3 +1,4 @@
+import { legalAddress } from "@/config/legal";
 import { ArrowRight, ExternalLink, Mail, MapPin, Phone } from "lucide-react";
 import type { Metadata } from "next";
 import type { ComponentType } from "react";
@@ -25,8 +26,8 @@ export const metadata: Metadata = {
 };
 
 export default async function ContactPage() {
-  const content = await getSiteContent("iletisim", contentSections.iletisim.defaults);
-  const mapQuery = content.map_location || content.address || "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33, 06420 Çankaya/Ankara";
+  const content = { ...await getSiteContent("iletisim", contentSections.iletisim.defaults), address: legalAddress };
+  const mapQuery = content.map_location || content.address || "Kızılay Mahallesi, Fevzi Çakmak-2 Sokak No:33/4, 06420 Çankaya/Ankara";
   const mapEmbedUrl = mapQuery ? `https://www.google.com/maps?q=${encodeURIComponent(mapQuery)}&output=embed` : "";
   const mapLink = content.map_url && !content.map_url.includes("maps.app.goo.gl")
     ? content.map_url

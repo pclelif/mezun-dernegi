@@ -1,3 +1,4 @@
+import { legalAddress } from "@/config/legal";
 import type { Metadata } from "next";
 import {
   LegalPage,
@@ -28,7 +29,7 @@ export default function CookiePolicyPage() {
           Çerezler ve yerel depolama araçları (localStorage), ziyaret ettiğiniz internet siteleri tarafından
           tarayıcınız aracılığıyla cihazınıza kaydedilen küçük metin dosyaları veya verilerdir. Bu teknolojiler
           sitenin güvenli çalışmasını, yönetici oturumlarının sürdürülmesini ve kullanıcı tercihlerinin
-          (örneğin görünüm tercihleri) hatırlanmasını sağlar.
+          hatırlanmasını sağlayabilir. Bu sitede genel ziyaretçi hesabı bulunmaz; oturum çerezleri yönetici girişiyle ilgilidir.
         </p>
       </section>
 
@@ -39,7 +40,7 @@ export default function CookiePolicyPage() {
           <strong>{associationName}</strong>’dir (“Dernek”).
         </p>
         <ul className={legalListClass}>
-          <li>Adres: <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong></li>
+          <li>Adres: <strong>{legalAddress}</strong></li>
           <li>E-posta: <strong>kaaflmezunder@gmail.com</strong></li>
         </ul>
       </section>
@@ -54,8 +55,8 @@ export default function CookiePolicyPage() {
         </p>
         <h3 className={legalSubheadingClass}>İşlevsel çerezler</h3>
         <p>
-          Görünüm ve tema gibi tercihleri hatırlamak için kullanılabilir. Bu tür tercihler tarayıcınızın
-          yerel depolama alanında güvenli şekilde saklanır.
+          Önceki sürümden kalan cookieConsent kaydı kabul/ret tercihini içerir; mevcut sürüm bu
+          kaydı okumaz ve buna dayanarak takip başlatmaz. Bu kayıt tarayıcı ayarlarından silinebilir.
         </p>
         <h3 className={legalSubheadingClass}>Üçüncü taraf harita bileşenleri</h3>
         <p>
@@ -82,9 +83,12 @@ export default function CookiePolicyPage() {
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>5. Çerezlerin saklama süresi</h2>
         <p>
-          Oturum çerezleri tarayıcınızı kapattığınızda silinir. Kalıcı çerezler ise amaçları için gerekli
-          olan süre veya ilgili çerez üzerinde tanımlanan süre boyunca cihazınızda tutulur. Saklama
-          süreleri mümkün olan en kısa süreyle sınırlandırılır.
+          Yönetici oturumunda kullanılan Supabase çerezleri, erişim ve oturum yenileme bilgilerinin
+          saklanmasını sağlar. Çerezin tarayıcıda saklanma süresi ile oturumun sunucuda geçerli olduğu
+          süre aynı değildir; tarayıcıyı kapatmak her zaman oturumu sonlandırmaz. Oturumdan çıkış
+          ilgili istemci oturumunu temizler. Çerezlerin son kullanma tarihlerini tarayıcınızın site
+          verileri bölümünde görebilirsiniz. localStorage kayıtları kendiliğinden süre dolumuna
+          uğramaz; uygulama veya kullanıcı tarafından silinene kadar kalabilir.
         </p>
       </section>
 
@@ -102,7 +106,7 @@ export default function CookiePolicyPage() {
         <p>
           Çerezler yoluyla kişisel veri işlenmesi hâlinde işlemler 6698 sayılı KVKK’ya uygun yürütülür.
           KVKK’nın 11’inci maddesindeki haklarınıza ilişkin taleplerinizi{" "}
-          <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong> adresine veya{" "}
+          <strong>{legalAddress}</strong> adresine veya{" "}
           <strong>kaaflmezunder@gmail.com</strong> adresine iletebilirsiniz.
         </p>
       </section>

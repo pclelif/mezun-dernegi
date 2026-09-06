@@ -1,3 +1,5 @@
+import { DataRecipients, RetentionDetails } from "@/components/legal/data-processing-details";
+import { legalAddress } from "@/config/legal";
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
@@ -36,8 +38,8 @@ export default function PrivacyPolicyPage() {
         <h2 className={legalHeadingClass}>2. Toplanan bilgiler</h2>
         <p>Siteyi kullanımınıza ve Dernek ile ilişkinize göre şu bilgiler toplanabilir:</p>
         <ul className={legalListClass}>
-          <li>İletişim formu ve e-posta üzerinden ilettiğiniz ad, soyad, e-posta, telefon ve mesaj içeriği.</li>
-          <li>Üyelik başvurusu kapsamında ilettiğiniz kimlik, mezuniyet, üyelik bilgileri ve mevzuat gereği istenen belgeler.</li>
+          <li>İletişim formu üzerinden ilettiğiniz ad soyad, e-posta adresi, konu ve mesaj içeriği; e-postayla iletişim kurduğunuzda gönderdiğiniz bilgiler.</li>
+          <li>Üyelik e-posta adresine gönderdiğiniz kimlik, mezuniyet, üyelik bilgileri ve başvuru ekleri; adli sicil ve üyelik bilgileri özel nitelikli veri olarak ayrıca değerlendirilir.</li>
           <li>Aidat veya bağış süreçlerine ilişkin işlem ve dekont bilgileri.</li>
           <li>IP adresi, tarayıcı türü, erişim zamanı ve güvenlik günlükleri gibi teknik kayıtlar.</li>
           <li>Açık rızanız veya hukuki dayanak bulunması hâlinde etkinlik fotoğraf ve videoları.</li>
@@ -59,7 +61,9 @@ export default function PrivacyPolicyPage() {
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>4. Çerezler</h2>
         <p>
-          Site, güvenli ve düzgün çalışması için zorunlu çerezler kullanabilir. Çerez türleri, amaçları
+          Google Analytics kaldırılmıştır; site Analytics ölçüm kodu yüklemez ve Google Analytics’e
+          ziyaret verisi göndermez. Eski kabul/ret tercihleriniz bu hizmeti yeniden etkinleştirmez.
+          Yönetici oturumları için gerekli çerezler kullanılabilir. Çerez türleri, amaçları
           ve tercihlerinizi nasıl yönetebileceğiniz hakkında ayrıntılı bilgi için{" "}
           <Link href="/cerez-politikasi" className={legalLinkClass}>
             Çerez Politikası
@@ -70,29 +74,18 @@ export default function PrivacyPolicyPage() {
 
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>5. Hizmet sağlayıcılar ve aktarım</h2>
-        <p>
-          Bilgiler; barındırma (Vercel), veri tabanı ve bulut altyapısı (Supabase), dosya depolama, e-posta,
-          güvenlik, muhasebe ve ödeme hizmetlerinin yürütülmesi için gerekli olduğu ölçüde güvenli hizmet
-          sağlayıcılarla paylaşılabilir. Ayrıca mevzuat gerektirdiğinde yetkili kamu kurum ve kuruluşlarına
-          aktarılabilir. İnternet sitesi altyapısı ve bulut veri tabanlarının yurt dışında bulunması hâlinde
-          KVKK’nın yurt dışına aktarıma ilişkin hükümleri ve uygun güvenceler gözetilir.
-        </p>
+        <DataRecipients />
       </section>
 
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>6. Saklama ve güvenlik</h2>
-        <p>
-          Bilgiler işleme amacının gerektirdiği veya mevzuatta belirtilen süre boyunca saklanır. Dernek;
-          yetkisiz erişim, kayıp, kötüye kullanım ve değişikliğe karşı erişim sınırlaması, güvenli
-          bağlantı, yetkilendirme ve benzeri makul teknik ve idari tedbirleri uygular. İnternet üzerinden
-          hiçbir aktarım yönteminin mutlak güvenlik sağlayamayacağı da dikkate alınmalıdır.
-        </p>
+        <RetentionDetails />
       </section>
 
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>7. Üçüncü taraf bağlantıları ve servisler</h2>
         <p>
-          Site, üçünçü taraf internet sitelerine bağlantı verebilir veya sayfa içerisinde harita (Google Maps)
+          Site, üçüncü taraf internet sitelerine bağlantı verebilir veya sayfa içerisinde harita (Google Maps)
           gibi harici servis bileşenleri sunabilir. Bu servislerin kullanımı sırasında ilgili sağlayıcılar
           tarafından teknik veriler işlenebilir. Bağlantı verilen sitelerin ve servislerin gizlilik
           politikalarını ayrıca incelemenizi öneririz.
@@ -107,7 +100,7 @@ export default function PrivacyPolicyPage() {
             KVKK Aydınlatma Metni
           </Link>{" "}
           sayfasını inceleyebilirsiniz. Sorularınızı <strong>kaaflmezunder@gmail.com</strong> adresine
-          veya <strong>Kızılay Mahallesi Fevzi Çakmak-2 Sokak No:33/4 Çankaya/Ankara</strong> adresine
+          veya <strong>{legalAddress}</strong> adresine
           iletebilirsiniz.
         </p>
       </section>

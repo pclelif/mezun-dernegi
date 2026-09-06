@@ -41,7 +41,7 @@ export default function BaskaninMesajiPage() {
                 Sevgili Mezunlarımız, Kıymetli Öğretmenlerimiz ve Değerli Mensuplarımız,
               </p>
               <p>
-                Okulumuzun adını onurla taşıyan derneğimizde, kuruluş sürecine başkanlık etmekten ve aktif olarak Yönetim Kurulu Başkanlığını sürdürmekten gurur ve mutluluk duyuyorum. Ortak mirasımız olan Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi'nin bizlere kazandırdığı değerleri yaşatmak ve gelecek nesillere aktarmak en büyük amacımızdır.
+                Okulumuzun adını onurla taşıyan derneğimizde, kuruluş sürecine başkanlık etmekten ve aktif olarak Yönetim Kurulu Başkanlığını sürdürmekten gurur ve mutluluk duyuyorum. Ortak mirasımız olan Keçiören Vatansever Şehit Tümgeneral Aydoğan Aydın Fen Lisesi’nin bizlere kazandırdığı değerleri yaşatmak ve gelecek nesillere aktarmak en büyük amacımızdır.
               </p>
               <p>
                 Birlikteliğimizi güçlendirerek mezunlarımız ve öğrencilerimiz arasında köprüler kuracak; eğitimden sosyal dayanışmaya kadar pek çok alanda önemli izler bırakacağız. Sizlerin desteği ve katılımıyla derneğimizi çok daha ileriye taşıyacağımıza inancım tamdır.
