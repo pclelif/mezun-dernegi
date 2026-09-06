@@ -74,3 +74,8 @@ Metin güncelleme tarihi 6 Eylül 2026 olarak gösteriliyor. Yayın yapılmadı�
 ## Görsel uyarıları düzeltmesi
 
 Dört img uyarısının bulunduğu admin logosu ve fotoğraf büyütme alanları Next.js Image bileşenine geçirildi. Orijinal dosya kalitesi ve yükleme davranışı `unoptimized` ve `loading="eager"` ile korundu; bu değişiklik ek görsel sıkıştırma sağlamaz. Önceki kontrolün dört uyarısı giderildi; genel ESLint artık sıfır hata ve sıfır uyarıyla geçiyor.
+
+
+## Çerez bildiriminin geri eklenmesi
+
+Kullanıcının talebiyle cookie-banner.tsx, kaldırma commitinin (7f93207) hemen önceki sürümünden birebir geri alındı. Kabul/ret seçimi cookieConsent kaydına yazılır ve bildirim kapanır; mevcut kayıt varsa tekrar gösterilmez. Google Analytics geri eklenmedi. Bu tercih Google Maps yüklenmesini değiştirmez. Yukarıdaki bildirimin kaldırıldığı ve tercihin okunmadığı notları önceki sürümü anlatır. Tarayıcı testi kabul/ret tıklamalarını, yenileme sonrası tercihin korunmasını ve her iki durumda Analytics isteği olmamasını kontrol edecek şekilde güncellendi.

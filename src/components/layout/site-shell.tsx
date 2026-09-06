@@ -2,6 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
+import { CookieBanner } from "@/components/layout/cookie-banner";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 
@@ -30,6 +31,7 @@ export function SiteShell({ children, settings }: { children: ReactNode; setting
       <Header logoUrl={settings.logo_url} email={settings.email} instagramUrl={settings.instagram_url} linkedinUrl={settings.linkedin_url} />
       <main className="site-shell__main">{children}</main>
       <Footer logoUrl={settings.logo_url} address={settings.address} />
+      <CookieBanner />
     </div>
   );
 }

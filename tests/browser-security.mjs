@@ -21,8 +21,19 @@ for (const choice of [null, 'accepted', 'rejected']) {
   await page.waitForLoadState('networkidle');
   assert.equal(requests.length, 0);
   assert.equal(await page.locator('script[src*="googletagmanager"], script[src*="google-analytics"]').count(), 0);
-  assert.equal(await page.getByRole('button', { name: 'Kabul Et', exact: true }).count(), 0);
+  assert.equal(await page.getByRole('button', { name: 'Kabul Et', exact: true }).count(), choice === null ? 1 : 0);
   assert.equal(await page.getByRole('button', { name: 'Çerez tercihleri', exact: true }).count(), 0);
+}
+for (const [label, value] of [['Reddet', 'rejected'], ['Kabul Et', 'accepted']]) {
+  await page.evaluate(() => localStorage.removeItem('cookieConsent'));
+  await page.reload();
+  await page.getByRole('button', { name: label, exact: true }).click();
+  assert.equal(await page.evaluate(() => localStorage.getItem('cookieConsent')), value);
+  await page.waitForFunction(() => !document.querySelector('[role="dialog"]'));
+  await page.reload();
+  await page.waitForLoadState('networkidle');
+  assert.equal(await page.getByRole('button', { name: 'Reddet', exact: true }).count(), 0);
+  assert.equal(requests.length, 0);
 }
 for (const cookie of ['', 'admin_session=true', 'admin_session=admin']) {
  const api = await context.request.post(base + '/api/admin/db', { headers: { cookie }, data: { table: 'events', action: 'delete', match: {} } });
@@ -32,5 +43,5 @@ for (const cookie of ['', 'admin_session=true', 'admin_session=admin']) {
  assert.ok(panel.headers().location.includes('/admin/login'));
 }
 await context.close();
-console.log('PASS: Analytics absent with no choice and old accepted/rejected choices; anonymous and forged cookies denied over HTTP.');
+console.log('PASS: restored accept/reject banner persists choices; Analytics absent for all choices; anonymous and forged cookies denied over HTTP.');
 await browser.close();

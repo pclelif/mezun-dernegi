@@ -55,8 +55,9 @@ export default function CookiePolicyPage() {
         </p>
         <h3 className={legalSubheadingClass}>İşlevsel çerezler</h3>
         <p>
-          Önceki sürümden kalan cookieConsent kaydı kabul/ret tercihini içerir; mevcut sürüm bu
-          kaydı okumaz ve buna dayanarak takip başlatmaz. Bu kayıt tarayıcı ayarlarından silinebilir.
+          cookieConsent kaydı, bildirimdeki kabul/ret tercihinizi cihazınızda saklar ve bildirimin
+          yeniden gösterilmesini önler. Bu tercih Google Analytics’i başlatmaz ve Google Maps
+          bileşeninin yüklenmesini değiştirmez. Bu kayıt tarayıcı ayarlarından silinebilir.
         </p>
         <h3 className={legalSubheadingClass}>Üçüncü taraf harita bileşenleri</h3>
         <p>
