@@ -47,15 +47,14 @@ export default function TermsOfUsePage() {
 
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>3. Kullanıcı yükümlülükleri</h2>
-        <p>Siteyi kullanırken:</p>
+        <p>Siteyi kullanırken aşağıdaki kurallara uymanız gerekir:</p>
         <ul className={legalListClass}>
-          <li>Yürürlükteki mevzuata, kamu düzenine ve genel ahlaka uygun davranmayı,</li>
-          <li>Yanlış, yanıltıcı veya başkasına ait bilgileri paylaşmamayı,</li>
-          <li>Sitenin güvenliğini, çalışmasını veya diğer kullanıcıları olumsuz etkilememeyi,</li>
-          <li>Yetkisiz erişim, otomatik veri çekme, zararlı yazılım veya benzeri girişimlerde bulunmamayı,</li>
-          <li>Üçüncü kişilerin kişilik, gizlilik ve fikri mülkiyet haklarını ihlal etmemeyi</li>
+          <li>Yürürlükteki mevzuata, kamu düzenine ve genel ahlaka uygun davranmak.</li>
+          <li>Yanlış, yanıltıcı veya başkasına ait bilgileri paylaşmamak.</li>
+          <li>Sitenin güvenliğini, çalışmasını veya diğer kullanıcıları olumsuz etkilememek.</li>
+          <li>Yetkisiz erişim, otomatik veri çekme, zararlı yazılım veya benzeri girişimlerde bulunmamak.</li>
+          <li>Üçüncü kişilerin kişilik, gizlilik ve fikri mülkiyet haklarını ihlal etmemek.</li>
         </ul>
-        <p>kabul edersiniz.</p>
       </section>
 
       <section className={legalSectionClass}>

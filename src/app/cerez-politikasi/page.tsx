@@ -87,8 +87,8 @@ export default function CookiePolicyPage() {
           saklanmasını sağlar. Çerezin tarayıcıda saklanma süresi ile oturumun sunucuda geçerli olduğu
           süre aynı değildir; tarayıcıyı kapatmak her zaman oturumu sonlandırmaz. Oturumdan çıkış
           ilgili istemci oturumunu temizler. Çerezlerin son kullanma tarihlerini tarayıcınızın site
-          verileri bölümünde görebilirsiniz. localStorage kayıtları kendiliğinden süre dolumuna
-          uğramaz; uygulama veya kullanıcı tarafından silinene kadar kalabilir.
+          verileri bölümünde görebilirsiniz. Yerel depolama (localStorage) kayıtlarının süresi kendiliğinden
+          dolmaz; uygulama veya kullanıcı tarafından silinene kadar kalabilir.
         </p>
       </section>
 

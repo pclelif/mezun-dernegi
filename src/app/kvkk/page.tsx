@@ -63,11 +63,11 @@ export default function KvkkPage() {
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>3. İşleme amaçları ve hukuki sebepler</h2>
         <ul className={legalListClass}>
-          <li><strong>İletişim talepleri:</strong> ad soyad, e-posta, konu ve mesaj; talebi değerlendirmek ve yanıtlamak için. Genel iletişim taleplerinde KVKK m.5/2-f kapsamındaki, temel hakları zedelemeyen meşru menfaat; bir hakkın kullanılması veya uyuşmazlık takibinde m.5/2-e esas alınır.</li>
-          <li><strong>Üyelik başvurusu ve kayıt:</strong> kimlik, iletişim, mezuniyet, başvuru ve üyelik durumu bilgileri; başvuruyu değerlendirmek ve kanuni üye kayıt/bildirimlerini yürütmek için. Kanunun zorunlu kıldığı genel veri işlemlerinde m.5/2-a ve ç; üyeliği gösteren özel nitelikli kayıtların kanunda açıkça öngörülen işlemlerinde m.6/3-b, 5253 sayılı Dernekler Kanunu’nun ilgili kayıt ve bildirim hükümleriyle birlikte değerlendirilir. Bu dayanak bütün başvuru eklerini sınırsız işlemeye izin vermez.</li>
-          <li><strong>Aidat ve bağış:</strong> ödeyenin kimliği, tutar, tarih ve dekont/işlem bilgileri; ödemenin kaydı ve kanuni mali belgelendirme için m.5/2-ç; somut bir hak veya uyuşmazlığın korunması için m.5/2-e. Sitede kartla ödeme alanı bulunmaz; banka işlemi ilgili bankanın kanalı üzerinden gerçekleşir.</li>
-          <li><strong>Yönetici erişimi ve güvenlik:</strong> yönetici hesap/oturum bilgileri ve teknik erişim kayıtları; yetkili erişimi sağlamak, kötüye kullanımı tespit etmek ve sistemi korumak için m.5/2-f. Sitede yönetici işlemleri sunucu tarafında oturum ve admin rolü kontrolüne tabidir.</li>
-          <li><strong>Etkinlik görselleri:</strong> tanıtım amacıyla yayımlanan fotoğraf/video için uygun başka bir işleme şartı bulunmuyorsa, belirli yayın ve kullanım amaçlarını kapsayan ayrı açık rıza gerekir. Etkinliğe katılım veya bu metni okuma kendiliğinden yayın izni sayılmaz.</li>
+          <li><strong>İletişim talepleri:</strong> Ad soyad, e-posta, konu ve mesaj, talebi değerlendirmek ve yanıtlamak için işlenir. Genel iletişim taleplerinde KVKK m.5/2-f kapsamındaki, temel hakları zedelemeyen meşru menfaat; bir hakkın kullanılması veya uyuşmazlık takibinde m.5/2-e esas alınır.</li>
+          <li><strong>Üyelik başvurusu ve kayıt:</strong> Kimlik, iletişim, mezuniyet, başvuru ve üyelik durumu bilgileri, başvuruyu değerlendirmek ve kanuni üye kayıt ve bildirimlerini yürütmek için işlenir. Kanunun zorunlu kıldığı genel veri işlemlerinde m.5/2-a ve ç; üyeliği gösteren özel nitelikli kayıtların kanunda açıkça öngörülen işlemlerinde m.6/3-b, 5253 sayılı Dernekler Kanunu’nun ilgili kayıt ve bildirim hükümleriyle birlikte değerlendirilir. Bu dayanak bütün başvuru eklerini sınırsız işlemeye izin vermez.</li>
+          <li><strong>Aidat ve bağış:</strong> Ödeyenin kimliği, tutar, tarih, dekont ve işlem bilgileri, ödemenin kaydı ve kanuni mali belgelendirme için m.5/2-ç; somut bir hak veya uyuşmazlığın korunması için m.5/2-e kapsamında işlenir. Sitede kartla ödeme alanı bulunmaz; banka işlemi ilgili bankanın kanalı üzerinden gerçekleşir.</li>
+          <li><strong>Yönetici erişimi ve güvenlik:</strong> Yönetici hesap/oturum bilgileri ve teknik erişim kayıtları, yetkili erişimi sağlamak, kötüye kullanımı tespit etmek ve sistemi korumak için m.5/2-f kapsamında işlenir. Sitede yönetici işlemleri sunucu tarafında oturum ve admin rolü kontrolüne tabidir.</li>
+          <li><strong>Etkinlik görselleri:</strong> Tanıtım amacıyla yayımlanan fotoğraf/video için uygun başka bir işleme şartı bulunmuyorsa, belirli yayın ve kullanım amaçlarını kapsayan ayrı açık rıza gerekir. Etkinliğe katılım veya bu metni okuma kendiliğinden yayın izni sayılmaz.</li>
         </ul>
         <p>
           Üyelik başvurusunda istenen belgeler, Dernek tüzüğünün 7’nci maddesi çerçevesinde
@@ -99,18 +99,17 @@ export default function KvkkPage() {
 
       <section className={legalSectionClass}>
         <h2 className={legalHeadingClass}>7. KVKK’nın 11’inci maddesi kapsamındaki haklarınız</h2>
-        <p>Derneğe başvurarak kişisel verileriniz hakkında:</p>
+        <p>Derneğe başvurarak kişisel verileriniz hakkında aşağıdaki hakları kullanabilirsiniz:</p>
         <ul className={legalListClass}>
-          <li>İşlenip işlenmediğini öğrenme ve işlenmişse bilgi talep etme,</li>
-          <li>İşleme amacını ve amaca uygun kullanılıp kullanılmadığını öğrenme,</li>
-          <li>Yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme,</li>
-          <li>Eksik ya da yanlış işlenmiş verilerin düzeltilmesini isteme,</li>
-          <li>KVKK’nın 7’nci maddesindeki şartlar çerçevesinde silinmesini veya yok edilmesini isteme,</li>
-          <li>Düzeltme, silme veya yok etme işlemlerinin verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme,</li>
-          <li>İşlenen verilerin münhasıran otomatik sistemlerle analiz edilmesi sonucunda aleyhinize bir sonucun ortaya çıkmasına itiraz etme,</li>
-          <li>Kanuna aykırı işleme nedeniyle zarara uğramanız hâlinde tazminat talep etme</li>
+          <li>İşlenip işlenmediğini öğrenme ve işlenmişse bilgi talep etme.</li>
+          <li>İşleme amacını ve amaca uygun kullanılıp kullanılmadığını öğrenme.</li>
+          <li>Yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme.</li>
+          <li>Eksik ya da yanlış işlenmiş verilerin düzeltilmesini isteme.</li>
+          <li>KVKK’nın 7’nci maddesindeki şartlar çerçevesinde silinmesini veya yok edilmesini isteme.</li>
+          <li>Düzeltme, silme veya yok etme işlemlerinin verilerin aktarıldığı üçüncü kişilere bildirilmesini isteme.</li>
+          <li>İşlenen verilerin münhasıran otomatik sistemlerle analiz edilmesi sonucunda aleyhinize bir sonucun ortaya çıkmasına itiraz etme.</li>
+          <li>Kanuna aykırı işleme nedeniyle zarara uğramanız hâlinde tazminat talep etme.</li>
         </ul>
-        <p>haklarına sahipsiniz.</p>
       </section>
 
       <section className={legalSectionClass}>
