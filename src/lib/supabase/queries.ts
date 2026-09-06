@@ -234,8 +234,8 @@ export function mapEventToCardProps(event: DbEvent) {
   return {
     title: event.title,
     date: formatTurkishDate(event.date) || "Tarih belirtilmedi",
-    time: event.time || "—",
-    location: event.location || "—",
+    time: event.time?.trim() || "",
+    location: event.location?.trim() || "",
     description: event.description || "",
     href: `/duyurular-ve-etkinlikler/etkinlikler/${event.slug}`,
     imageUrls: event.images && event.images.length > 0 ? event.images : event.image_url ? [event.image_url] : [],

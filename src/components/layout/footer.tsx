@@ -43,32 +43,18 @@ export function Footer({ logoUrl = "/logo-dernek.jpg", address = "Kızılay Maha
             </ul>
 
             {/* Masaüstü Görünüm (2 Sütunlu Yan Yana Dağılım) */}
-            <div className="mt-3 hidden sm:grid sm:grid-cols-[max-content_max-content] sm:gap-x-6 text-sm leading-5">
-              <ul className="grid gap-y-2">
-                {[corporateNavigation[0], corporateNavigation[2], corporateNavigation[4]].map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="touch-manipulation whitespace-nowrap rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-              <ul className="grid gap-y-2">
-                {[corporateNavigation[1], corporateNavigation[3]].map((item) => (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      className="touch-manipulation whitespace-nowrap rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <ul className="mt-3 hidden gap-y-2 text-sm leading-5 sm:grid sm:grid-cols-[max-content_max-content] sm:gap-x-6">
+              {corporateNavigation.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="touch-manipulation whitespace-nowrap rounded-sm text-zinc-300 transition-colors hover:text-white active:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </nav>
 

@@ -40,6 +40,8 @@ export function EventCard({
 }: EventCardProps) {
   const Heading = headingLevel;
   const isPast = status === "past";
+  const hasTime = Boolean(time.trim());
+  const hasLocation = Boolean(location.trim());
   const photos = imageUrls.filter((photo) => Boolean(photo?.trim()));
   const [currentPhoto, setCurrentPhoto] = useState(0);
 
@@ -90,7 +92,10 @@ export function EventCard({
           <CalendarDays className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
           <time dateTime={dateTime} className="[overflow-wrap:anywhere]">{date}</time>
         </span>
-        <span className="flex min-w-0 items-start gap-2 sm:justify-end">
+        <span
+          aria-hidden={!hasTime || undefined}
+          className={`flex min-h-5 min-w-0 items-start gap-2 sm:justify-end ${hasTime ? "" : "invisible"}`}
+        >
           <Clock3 className="mt-0.5 size-4 shrink-0" aria-hidden="true" />
           <span className="[overflow-wrap:anywhere]">{time}</span>
         </span>
@@ -105,8 +110,13 @@ export function EventCard({
       </Heading>
       <p className="mt-3 line-clamp-3 text-sm leading-6 text-zinc-600 [overflow-wrap:anywhere]">{description}</p>
       <p className="mt-auto flex min-w-0 items-start gap-2 border-t border-zinc-200 pt-4 text-sm leading-6 text-zinc-600">
-        <MapPin className="mt-1 size-4 shrink-0" aria-hidden="true" />
-        <span className="line-clamp-2 [overflow-wrap:anywhere]">{location}</span>
+        <span
+          aria-hidden={!hasLocation || undefined}
+          className={`flex min-h-12 min-w-0 items-start gap-2 ${hasLocation ? "" : "invisible"}`}
+        >
+          <MapPin className="mt-1 size-4 shrink-0" aria-hidden="true" />
+          <span className="line-clamp-2 [overflow-wrap:anywhere]">{location}</span>
+        </span>
       </p>
       <Link
         href={href}
