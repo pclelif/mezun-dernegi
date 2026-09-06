@@ -150,8 +150,8 @@ export default async function DernekUyeligiPage() {
               <p>
                 e-Devlet üzerinden Adli Sicil Kaydınızı oluştururken “Belgenin Verileceği Kurum”
                 alanında “Resmi Kurum” seçeneğini seçiniz. Kurum Adı:{" "}
-                <span className="break-words font-semibold text-black">{associationName}</span>.
-                e-Devlet üzerinden Lise Mezuniyet Belgenizi de barkodlu PDF olarak alabilirsiniz.
+                <span className="break-words font-semibold text-black">KAAFL Mezunlar Derneği</span>
+                 . e-Devlet üzerinden Lise Mezuniyet Belgenizi de barkodlu PDF olarak alabilirsiniz.
               </p>
             </div>
           </Step>
