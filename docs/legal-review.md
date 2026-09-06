@@ -60,3 +60,13 @@ Metin güncelleme tarihi 6 Eylül 2026 olarak gösteriliyor. Yayın yapılmadı�
 - Kullanıcı son talebinde mevcut değişikliklerin tamamının pushlanmasına açıkça izin verdi. Bu yayın kararı eksik hukuki mekanizmaları tamamlamaz.
 - İletişim formunun telefon alanı ve gönderilen payload içindeki phone kaldırıldı. Admin mesaj sorgusu, araması ve görünümü artık telefon kullanmıyor. Mevcut veritabanındaki eski telefon kayıtları silinmedi.
 - İncelenen tüzük: https://www.kaaflmezunder.org.tr/hakkimizda/dernek-tuzugu
+
+## Son yayın kontrolü — 6 Eylül 2026
+
+- Canlı site HTTPS üzerinden erişilebilir; sitemapteki 23 sayfa 200, olmayan sayfa 404, eski üyelik adresi 308 yanıtı verdi. Bu nedenle yukarıdaki “yayın yapılmadı” notu önceki revizyon anını anlatır; kesin deployment zamanı bu kontrolde doğrulanmadı.
+- Canlı panel sahte admin çereziyle girişe yönlendirdi; yönetim API'si 401 döndü.
+- Ana sayfa, iletişim, üyelik ve galeri 390/1440 piksel genişlikte kontrol edildi; yatay taşma, yüklenmiş kırık görsel veya JavaScript hatası görülmedi.
+- Üretim derlemesi/TypeScript, yedi güvenlik testi, izole veritabanı güvenlik testi ve yerel tarayıcı güvenlik testi geçti. Üretim bağımlılıklarının npm audit sonucunda bildirilen açık sayısı sıfırdı.
+- İletişim formunda beklenmeyen hatalarda gönderim durumunun temizlenmesi sağlandı. Bu hata yönetimi spam koruması değildir; doğrudan anonim Supabase yazma akışı için sunucu/veritabanı düzeyinde kötüye kullanım sınırı ayrıca uygulanmalıdır.
+- Dokuz JSON-LD çıktısında `<` karakteri Unicode kaçışıyla yazılıyor; içerikteki script kapatma dizilerinin HTML'e dönüşmesi engellendi.
+- Gerçek admin ile canlı kayıt/yükleme ve iletişim mesajı gönderme akışları bu kontrolde denenmedi; canlı veritabanı politikaları yeniden sorgulanmadı. Yukarıdaki hukuki ve kurumsal eksikler açık kalıyor.

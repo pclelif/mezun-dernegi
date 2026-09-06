@@ -1,6 +1,6 @@
 "use client";
 
-import { ChevronDown, LoaderCircle, Send } from "lucide-react";
+import { LoaderCircle, Send } from "lucide-react";
 import Link from "next/link";
 import { type FormEvent, useState } from "react";
 import { CustomSelect } from "@/components/ui/custom-select";
@@ -29,13 +29,15 @@ export function ContactForm() {
       return;
     }
 
-    const { error } = await createClient().from("contact_messages").insert(payload);
-    setSaving(false);
-    if (error) {
-      setNotice({ ok: false, text: "Mesajınız gönderilemedi. Lütfen yeniden deneyin." });
-    } else {
+    try {
+      const { error } = await createClient().from("contact_messages").insert(payload);
+      if (error) throw error;
       form.reset();
       setNotice({ ok: true, text: "Mesajınız alındı. En kısa sürede size dönüş yapacağız." });
+    } catch {
+      setNotice({ ok: false, text: "Mesajınız gönderilemedi. Lütfen yeniden deneyin." });
+    } finally {
+      setSaving(false);
     }
   }
 

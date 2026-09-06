@@ -80,7 +80,7 @@ Güvenlik kodu `7f93207` ile pushlandı; mevcut canlı veritabanında yönetici 
 ## Yerel doğrulamalar
 
 - `npm run build`
-- Değişen dosyalarda ESLint geçti. Genel `npm run lint` eski üç hataya takılıyor: `baskanin-mesaji/page.tsx` kaçışsız apostrof; `DetailFooterLink.tsx` ve `ReturnButton.tsx` effect içinde state güncellemesi. Bu güvenlik değişikliğinin dışında bırakıldı.
+- 6 Eylül 2026 son kontrolünde genel `npm run lint` hatasız geçti; dört mevcut img performans uyarısı kaldı. Önceki üç hata sonraki revizyonda düzeltildi.
 - Node 24+: `node --test tests/security.test.mjs`
 - Geçici PGlite kurulumu ile: `PGLITE_MODULE=/.../@electric-sql/pglite/dist/index.js node tests/database-security.mjs`
 - Yerel production sunucusunda: `PLAYWRIGHT_MODULE=/.../playwright/index.mjs CHROME_PATH='/.../Google Chrome' node tests/browser-security.mjs`
