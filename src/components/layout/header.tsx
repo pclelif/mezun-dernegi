@@ -57,7 +57,7 @@ export function Header({ logoUrl = "/logo-dernek.png", email = "kaaflmezunder@gm
             className="flex min-w-0 touch-manipulation items-center gap-2 rounded-sm py-1 text-xs font-medium transition-opacity hover:opacity-80 active:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:text-sm"
           >
             <Mail className="size-4 shrink-0" aria-hidden="true" />
-            <span className="truncate">{email}</span>
+            <span className="truncate underline underline-offset-4">{email}</span>
           </a>
           <div className="flex shrink-0 items-center gap-1" aria-label="Sosyal medya bağlantıları">
             {socialLinks.map(({ label, href, Icon }) => (

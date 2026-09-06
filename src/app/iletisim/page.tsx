@@ -74,7 +74,7 @@ export default async function ContactPage() {
                           rel={href.startsWith("http") ? "noopener noreferrer" : undefined}
                           className="mt-1 block touch-manipulation break-words whitespace-pre-line text-base font-normal leading-7 text-[var(--color-muted)] transition-colors hover:text-[var(--color-ink)] active:text-[var(--color-ink)]"
                         >
-                          {value}
+                          <span className={label === "E-posta" ? "underline underline-offset-4" : undefined}>{value}</span>
                           {label === "Instagram" || label === "LinkedIn" ? (
                             <ArrowRight className="ml-2 inline-block size-4 shrink-0 align-middle" aria-hidden="true" />
                           ) : null}

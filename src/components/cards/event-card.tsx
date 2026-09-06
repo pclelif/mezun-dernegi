@@ -109,16 +109,15 @@ export function EventCard({
         </Link>
       </Heading>
       <div className="mt-3 border-t border-zinc-200" aria-hidden="true" />
-      <p className="mt-3 line-clamp-3 text-sm leading-6 text-zinc-600 [overflow-wrap:anywhere]">{description}</p>
-      <p className="mt-auto flex min-w-0 items-start gap-2 border-t border-zinc-200 pt-4 text-sm leading-6 text-zinc-600">
-        <span
-          aria-hidden={!hasLocation || undefined}
-          className={`flex min-h-12 min-w-0 items-start gap-2 ${hasLocation ? "" : "invisible"}`}
-        >
-          <MapPin className="mt-1 size-4 shrink-0" aria-hidden="true" />
-          <span className="line-clamp-2 [overflow-wrap:anywhere]">{location}</span>
-        </span>
-      </p>
+      <div className="min-h-[149px] flex-1">
+        <p className={`mt-3 text-sm leading-6 text-zinc-600 [overflow-wrap:anywhere] ${hasLocation ? "line-clamp-3" : "line-clamp-5"}`}>{description}</p>
+        {hasLocation ? (
+          <p className="flex min-h-16 min-w-0 items-start gap-2 border-t border-zinc-200 pt-4 text-sm leading-6 text-zinc-600">
+            <MapPin className="mt-1 size-4 shrink-0" aria-hidden="true" />
+            <span className="line-clamp-2 [overflow-wrap:anywhere]">{location}</span>
+          </p>
+        ) : null}
+      </div>
       <Link
         href={href}
         aria-label={`${title} etkinliğinin detaylarını görüntüle`}

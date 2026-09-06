@@ -294,7 +294,7 @@ export default function AdminContactPage() {
                       href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(item.email)}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-slate-600 hover:text-red-600 hover:underline"
+                      className="text-slate-600 underline underline-offset-4 hover:text-red-600"
                     >
                       {item.email}
                     </a>
@@ -303,7 +303,7 @@ export default function AdminContactPage() {
                         <span className="text-slate-500 font-bold select-none">·</span>
                         <a
                           href={`tel:${item.phone.replace(/\s+/g, "")}`}
-                          className="text-slate-600 hover:text-red-600 hover:underline"
+                          className="text-slate-600 underline underline-offset-4 hover:text-red-600"
                         >
                           {item.phone}
                         </a>
