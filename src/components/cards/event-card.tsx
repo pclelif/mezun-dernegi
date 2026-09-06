@@ -108,6 +108,7 @@ export function EventCard({
           {title}
         </Link>
       </Heading>
+      <div className="mt-3 border-t border-zinc-200" aria-hidden="true" />
       <p className="mt-3 line-clamp-3 text-sm leading-6 text-zinc-600 [overflow-wrap:anywhere]">{description}</p>
       <p className="mt-auto flex min-w-0 items-start gap-2 border-t border-zinc-200 pt-4 text-sm leading-6 text-zinc-600">
         <span

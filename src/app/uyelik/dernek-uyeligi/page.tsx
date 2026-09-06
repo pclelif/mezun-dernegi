@@ -165,7 +165,7 @@ export default async function DernekUyeligiPage() {
               href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent("kaaflmezunderuyelik@gmail.com")}&su=${encodeURIComponent("Üyelik Başvurusu - [İsim Soyisminizi Buraya Yazınız]")}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-1 inline-flex touch-manipulation text-base font-bold text-[#ec1c24] underline underline-offset-4 transition-colors hover:text-red-700 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
+              className="mt-1 inline-flex touch-manipulation text-base font-bold text-zinc-900 underline underline-offset-4 transition-colors hover:text-zinc-900 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-600"
             >
               kaaflmezunderuyelik@gmail.com
             </a>
