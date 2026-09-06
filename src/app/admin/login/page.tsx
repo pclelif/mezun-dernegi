@@ -16,7 +16,11 @@ function isSupabaseConfigured() {
 function getTurkishAuthErrorMessage(msg?: string): string {
   if (!msg) return "Geçersiz e-posta veya şifre girdiniz.";
   const lower = msg.toLowerCase();
-  if (lower.includes("invalid login credentials") || lower.includes("invalid_grant") || lower.includes("invalid credentials")) {
+  if (
+    lower.includes("invalid login credentials") ||
+    lower.includes("invalid_grant") ||
+    lower.includes("invalid credentials")
+  ) {
     return "Geçersiz e-posta veya şifre girdiniz.";
   }
   if (lower.includes("email not confirmed")) {
@@ -31,7 +35,14 @@ function getTurkishAuthErrorMessage(msg?: string): string {
   if (lower.includes("network") || lower.includes("fetch") || lower.includes("timeout")) {
     return "Sunucuya bağlanılamadı. Lütfen internet bağlantınızı kontrol edin.";
   }
+  if (lower.includes("yetkisiz") || lower.includes("admin")) {
+    return "Bu hesap yönetici paneline erişemez.";
+  }
   return "Geçersiz e-posta veya şifre girdiniz.";
+}
+
+function clearLegacyAdminCookie() {
+  document.cookie = "admin_session=; path=/; max-age=0; SameSite=Lax";
 }
 
 export default function AdminLoginPage() {
@@ -44,54 +55,37 @@ export default function AdminLoginPage() {
     event.preventDefault();
     setLoading(true);
     setError(null);
+    clearLegacyAdminCookie();
+
+    if (!isSupabaseConfigured()) {
+      setError("Kimlik doğrulama servisi yapılandırılmamış.");
+      setLoading(false);
+      return;
+    }
 
     const form = new FormData(event.currentTarget);
     const email = String(form.get("email") ?? "").trim();
     const password = String(form.get("password") ?? "");
 
-    const tempEmail = process.env.NEXT_PUBLIC_TEMP_ADMIN_EMAIL || "kaafladmin@gmail.com";
-    const tempPass = process.env.NEXT_PUBLIC_TEMP_ADMIN_PASSWORD || "kaaflmezunder06";
+    try {
+      const supabase = createClient();
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    // Instant offline / temp admin authentication
-    if (!isSupabaseConfigured() || email === tempEmail) {
-      if (email === tempEmail && password === tempPass) {
-        document.cookie = "admin_session=true; path=/; max-age=86400; SameSite=Lax";
-        router.replace("/admin");
-        router.refresh();
-        return;
-      }
-      if (!isSupabaseConfigured()) {
-        setError("Geçersiz e-posta veya şifre.");
+      if (signInError) {
+        setError(getTurkishAuthErrorMessage(signInError.message));
         setLoading(false);
         return;
       }
+
+      router.replace("/admin");
+      router.refresh();
+    } catch (err) {
+      setError(getTurkishAuthErrorMessage(err instanceof Error ? err.message : undefined));
+      setLoading(false);
     }
-
-    if (isSupabaseConfigured()) {
-      try {
-        const supabase = createClient();
-        const { error: signInError } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-
-        if (signInError) {
-          setError(getTurkishAuthErrorMessage(signInError.message));
-          setLoading(false);
-          return;
-        }
-        router.replace("/admin");
-        router.refresh();
-        return;
-      } catch (err) {
-        setError(getTurkishAuthErrorMessage(err instanceof Error ? err.message : undefined));
-        setLoading(false);
-        return;
-      }
-    }
-
-    setError("Geçersiz e-posta veya şifre.");
-    setLoading(false);
   }
 
   const fieldClass =
@@ -105,7 +99,7 @@ export default function AdminLoginPage() {
         </span>
         <h1 className="mt-5 text-2xl font-bold text-zinc-950">Yönetici Girişi</h1>
         <p className="mt-2 text-sm leading-6 text-slate-600">
-          İçerik yönetim paneline erişmek için Supabase hesabınızla giriş yapın.
+          İçerik yönetim paneline erişmek için Supabase yönetici hesabınızla giriş yapın.
         </p>
 
         <form onSubmit={handleSubmit} className="mt-6 space-y-5">

@@ -11,6 +11,7 @@ export function LogoutButton() {
 
   async function handleLogout() {
     setLoading(true);
+    document.cookie = "admin_session=; path=/; max-age=0; SameSite=Lax";
     const supabase = createClient();
     await supabase.auth.signOut();
     router.replace("/admin/login");

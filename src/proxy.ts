@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { isAdminUser } from "@/lib/supabase/admin-auth";
 
 function isSupabaseConfigured() {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -9,62 +10,102 @@ function isSupabaseConfigured() {
   return true;
 }
 
+function clearLegacyAdminCookie(response: NextResponse) {
+  response.cookies.set("admin_session", "", {
+    path: "/",
+    maxAge: 0,
+    sameSite: "lax",
+  });
+}
+
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
   const pathname = request.nextUrl.pathname;
   const isLogin = pathname === "/admin/login";
+  const isAdminPath = pathname.startsWith("/admin");
 
-  // Temp admin cookie check for offline / dev mode
-  const isTempAdmin = request.cookies.get("admin_session")?.value === "true";
+  // Eski/sahte client-side admin_session çerezini her admin isteğinde temizle.
+  if (isAdminPath && request.cookies.has("admin_session")) {
+    clearLegacyAdminCookie(response);
+  }
+
+  if (!isAdminPath) {
+    return response;
+  }
+
+  if (!isSupabaseConfigured()) {
+    if (!isLogin) {
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = "/admin/login";
+      loginUrl.searchParams.set("next", pathname);
+      const redirect = NextResponse.redirect(loginUrl);
+      clearLegacyAdminCookie(redirect);
+      return redirect;
+    }
+    return response;
+  }
 
   let user = null;
 
-  if (isSupabaseConfigured()) {
-    try {
-      const supabase = createServerClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-        {
-          cookies: {
-            getAll() {
-              return request.cookies.getAll();
-            },
-            setAll(cookiesToSet) {
-              cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
-              response = NextResponse.next({ request });
-              cookiesToSet.forEach(({ name, value, options }) => {
-                response.cookies.set(name, value, options);
-              });
-            },
+  try {
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll();
+          },
+          setAll(cookiesToSet) {
+            cookiesToSet.forEach(({ name, value }) => request.cookies.set(name, value));
+            response = NextResponse.next({ request });
+            cookiesToSet.forEach(({ name, value, options }) => {
+              response.cookies.set(name, value, options);
+            });
+            if (request.cookies.has("admin_session")) {
+              clearLegacyAdminCookie(response);
+            }
           },
         },
-      );
-      const userRes = await supabase.auth.getUser();
-      user = userRes.data?.user ?? null;
-    } catch {
-      user = null;
-    }
+      },
+    );
+
+    // getSession yerine getUser: JWT sunucuda doğrulanır; sahte çerez geçmez.
+    const userRes = await supabase.auth.getUser();
+    user = userRes.data?.user ?? null;
+  } catch {
+    user = null;
   }
 
-  const isAuthenticated = Boolean(user || isTempAdmin);
+  const isAdmin = isAdminUser(user);
 
-  if (!isAuthenticated && pathname.startsWith("/admin") && !isLogin) {
+  if (!isAdmin && !isLogin) {
+    if (pathname.startsWith("/api/admin")) {
+      const unauthorized = NextResponse.json({ error: "Yetkisiz işlem." }, { status: 401 });
+      clearLegacyAdminCookie(unauthorized);
+      return unauthorized;
+    }
+
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = "/admin/login";
     loginUrl.searchParams.set("next", pathname);
-    return NextResponse.redirect(loginUrl);
+    const redirect = NextResponse.redirect(loginUrl);
+    clearLegacyAdminCookie(redirect);
+    return redirect;
   }
 
-  if (isAuthenticated && isLogin) {
+  if (isAdmin && isLogin) {
     const adminUrl = request.nextUrl.clone();
     adminUrl.pathname = "/admin";
     adminUrl.search = "";
-    return NextResponse.redirect(adminUrl);
+    const redirect = NextResponse.redirect(adminUrl);
+    clearLegacyAdminCookie(redirect);
+    return redirect;
   }
 
   return response;
 }
 
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/api/admin/:path*"],
 };

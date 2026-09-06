@@ -1,30 +1,48 @@
--- 00017_cleanup_test_content.sql
--- Temizleme: Test duyuruları, etkinlikleri ve SSS kayıtlarını siler; galeride tek bir logo fotoğrafı bırakır.
+-- =============================================================================
+-- DİKKAT: Bu script PRODUCTION ortamında çalıştırılmamalıdır.
+-- Yalnızca geliştirme / staging veritabanlarında, başlık veya içerikte
+-- "test" / "deneme" geçen kayıtları temizlemek içindir.
+-- =============================================================================
 
--- 1. Etkinlikleri temizle
-DELETE FROM events;
+-- 1. Test etkinliklerini temizle
+DELETE FROM public.events
+WHERE title ILIKE '%test%'
+   OR title ILIKE '%deneme%'
+   OR coalesce(description, '') ILIKE '%test%'
+   OR coalesce(description, '') ILIKE '%deneme%'
+   OR slug ILIKE '%test%'
+   OR slug ILIKE '%deneme%';
 
--- 2. Duyuruları temizle
-DELETE FROM announcements;
+-- 2. Test duyurularını temizle
+DELETE FROM public.announcements
+WHERE title ILIKE '%test%'
+   OR title ILIKE '%deneme%'
+   OR coalesce(content, '') ILIKE '%test%'
+   OR coalesce(content, '') ILIKE '%deneme%'
+   OR slug ILIKE '%test%'
+   OR slug ILIKE '%deneme%';
 
--- 3. SSS (Sıkça Sorulan Sorular) kayıtlarını temizle
-DELETE FROM faqs;
+-- 3. Test SSS kayıtlarını temizle
+DELETE FROM public.faqs
+WHERE question ILIKE '%test%'
+   OR question ILIKE '%deneme%'
+   OR answer ILIKE '%test%'
+   OR answer ILIKE '%deneme%';
 
--- 4. Galeride sadece 1 adet logo görseli bırak
-DELETE FROM gallery_images;
+-- 4. Test galeri görsellerini temizle (yalnızca test/deneme URL veya albüm başlığı)
+DELETE FROM public.gallery_images
+WHERE image_url ILIKE '%test%'
+   OR image_url ILIKE '%deneme%'
+   OR gallery_id IN (
+     SELECT id FROM public.galleries
+     WHERE title ILIKE '%test%'
+        OR title ILIKE '%deneme%'
+        OR slug ILIKE '%test%'
+        OR slug ILIKE '%deneme%'
+   );
 
-DO $$
-DECLARE
-  v_gallery_id UUID;
-BEGIN
-  SELECT id INTO v_gallery_id FROM galleries ORDER BY created_at ASC LIMIT 1;
-  
-  IF v_gallery_id IS NULL THEN
-    INSERT INTO galleries (title, slug, date, cover_image_url)
-    VALUES ('Ana Galeri', 'ana-galeri', CURRENT_DATE, '/logo-dernek.jpg')
-    RETURNING id INTO v_gallery_id;
-  END IF;
-
-  INSERT INTO gallery_images (gallery_id, image_url, display_order)
-  VALUES (v_gallery_id, '/logo-dernek.jpg', 1);
-END $$;
+DELETE FROM public.galleries
+WHERE title ILIKE '%test%'
+   OR title ILIKE '%deneme%'
+   OR slug ILIKE '%test%'
+   OR slug ILIKE '%deneme%';
