@@ -4,7 +4,6 @@ import { LoaderCircle, Send } from "lucide-react";
 import Link from "next/link";
 import { type FormEvent, useState } from "react";
 import { CustomSelect } from "@/components/ui/custom-select";
-import { createClient } from "@/lib/supabase/client";
 
 export function ContactForm() {
   const [saving, setSaving] = useState(false);
@@ -29,9 +28,46 @@ export function ContactForm() {
       return;
     }
 
+    if (payload.name.length > 50) {
+      setNotice({ ok: false, text: "İsim en fazla 50 karakter olabilir." });
+      setSaving(false);
+      return;
+    }
+
+    if (payload.email.length > 100) {
+      setNotice({ ok: false, text: "E-posta en fazla 100 karakter olabilir." });
+      setSaving(false);
+      return;
+    }
+
+    if (payload.subject && payload.subject.length > 100) {
+      setNotice({ ok: false, text: "Konu en fazla 100 karakter olabilir." });
+      setSaving(false);
+      return;
+    }
+
+    if (payload.message.length > 500) {
+      setNotice({ ok: false, text: "Mesaj en fazla 500 karakter olabilir." });
+      setSaving(false);
+      return;
+    }
+
     try {
-      const { error } = await createClient().from("contact_messages").insert(payload);
-      if (error) throw error;
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const json = (await res.json().catch(() => ({}))) as { error?: string };
+
+      if (!res.ok) {
+        setNotice({
+          ok: false,
+          text: json.error || "Mesajınız gönderilemedi. Lütfen yeniden deneyin.",
+        });
+        return;
+      }
+
       form.reset();
       setNotice({ ok: true, text: "Mesajınız alındı. En kısa sürede size dönüş yapacağız." });
     } catch {
@@ -49,11 +85,18 @@ export function ContactForm() {
       <div className="grid gap-5 md:grid-cols-2">
         <label className="text-sm font-semibold text-zinc-800">
           Ad Soyad
-          <input name="name" autoComplete="name" required className={inputClass} />
+          <input name="name" autoComplete="name" required maxLength={50} className={inputClass} />
         </label>
         <label className="text-sm font-semibold text-zinc-800">
           E-posta
-          <input name="email" type="email" autoComplete="email" required className={inputClass} />
+          <input
+            name="email"
+            type="email"
+            autoComplete="email"
+            required
+            maxLength={100}
+            className={inputClass}
+          />
         </label>
       </div>
 
@@ -78,19 +121,34 @@ export function ContactForm() {
 
       <label className="text-sm font-semibold text-zinc-800">
         Mesaj
-        <textarea name="message" required rows={7} className={`${inputClass} py-3`} />
+        <textarea
+          name="message"
+          required
+          rows={7}
+          maxLength={500}
+          className={`${inputClass} py-3`}
+        />
       </label>
 
       <p className="text-xs leading-5 text-slate-500">
-        Bu formu doldurarak ilettiğiniz kişisel verileriniz, talebinizin yanıtlanması ve sizinle iletişim kurulması amacıyla{" "}
-        <Link href="/kvkk" className="font-semibold text-red-600 underline underline-offset-2 transition hover:text-red-700 active:text-red-700">
+        Bu formu doldurarak ilettiğiniz kişisel verileriniz, talebinizin yanıtlanması ve sizinle
+        iletişim kurulması amacıyla{" "}
+        <Link
+          href="/kvkk"
+          className="font-semibold text-red-600 underline underline-offset-2 transition hover:text-red-700 active:text-red-700"
+        >
           KVKK Aydınlatma Metni
         </Link>{" "}
         kapsamında işlenmektedir.
       </p>
 
       {notice ? (
-        <p role="status" className={`rounded-lg px-4 py-3 text-sm ${notice.ok ? "bg-emerald-50 text-emerald-800" : "bg-red-50 text-red-700"}`}>
+        <p
+          role="status"
+          className={`rounded-lg px-4 py-3 text-sm ${
+            notice.ok ? "bg-emerald-50 text-emerald-800" : "bg-red-50 text-red-700"
+          }`}
+        >
           {notice.text}
         </p>
       ) : null}

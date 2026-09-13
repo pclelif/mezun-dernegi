@@ -19,7 +19,8 @@ export function BoardMemberCard({ name, role, image, imageCrop }: BoardMemberCar
             src={image}
             alt={`${name}, ${role}`}
             crop={imageCrop}
-            className="absolute inset-0 size-full object-cover"
+            sizes="(max-width: 768px) 50vw, 17rem"
+            className="object-cover"
           />
         ) : (
           <div className="grid size-full place-items-center bg-zinc-100 text-zinc-400" aria-hidden="true">

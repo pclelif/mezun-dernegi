@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-
 import { ArrowUpDown, ChevronDown, GripVertical, LoaderCircle, Pencil, Trash2, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ImageUploader, type ImageUploaderHandle } from "@/components/admin/ImageUploader";
+import { OptimizedLightboxImage } from "@/components/shared/optimized-lightbox-image";
 import { adminDbMutate } from "@/lib/supabase/admin-mutate";
 import { createClient, type DbGalleryImage, type ImageCrop } from "@/lib/supabase/client";
 
@@ -299,12 +299,13 @@ export default function AdminGalleryPage() {
                   className="relative aspect-square w-full bg-white flex items-center justify-center p-2.5 cursor-pointer hover:opacity-95 transition-opacity"
                   onClick={() => setSelectedImage(photo.image_url)}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                  <Image
                     src={photo.image_url}
                     alt=""
-                    className="size-full object-contain pointer-events-none select-none"
-                    style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center" }}
+                    fill
+                    quality={75}
+                    sizes="(max-width: 768px) 50vw, 25vw"
+                    className="pointer-events-none select-none object-contain p-2.5"
                   />
                   <button
                     type="button"
@@ -398,17 +399,7 @@ export default function AdminGalleryPage() {
             <X className="size-6" />
           </button>
           <div className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl bg-black/40 p-2 shadow-2xl backdrop-blur-sm border border-white/10" onClick={(e) => e.stopPropagation()}>
-            {/* Preserve the original image dimensions and quality in the lightbox. */}
-            <Image
-              src={selectedImage}
-              width={0}
-              height={0}
-              unoptimized
-              loading="eager"
-              style={{ width: "auto", height: "auto" }}
-              alt="Büyütülmüş fotoğraf"
-              className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
-            />
+            <OptimizedLightboxImage src={selectedImage} alt="Büyütülmüş fotoğraf" />
           </div>
         </div>
       )}

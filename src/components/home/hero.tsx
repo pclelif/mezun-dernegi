@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,11 +11,17 @@ export function HomeHero({ title, description, imageUrl }: { title: string; desc
     <section className="relative isolate overflow-hidden bg-slate-200 px-4 py-20 md:py-28">
       {imageUrl ? (
         <>
-          <div
-            className="absolute inset-0 -z-20 bg-cover bg-center"
-            style={{ backgroundImage: `url(${imageUrl})` }}
-            aria-hidden="true"
-          />
+          <div className="absolute inset-0 -z-20" aria-hidden="true">
+            <Image
+              src={imageUrl}
+              alt=""
+              fill
+              priority
+              quality={75}
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          </div>
           <div
             className="absolute inset-0 -z-10 bg-gradient-to-r from-white/90 via-white/75 to-white/90"
             aria-hidden="true"

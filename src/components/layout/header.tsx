@@ -92,6 +92,8 @@ export function Header({ logoUrl = "/logo-dernek.png", email = "kaaflmezunder@gm
             width={80}
             height={80}
             priority
+            quality={75}
+            sizes="72px"
             className="size-14 shrink-0 rounded-full object-contain sm:size-16 xl:size-[4.5rem]"
           />
           <span className="flex min-w-0 flex-col justify-center text-[13px] font-bold leading-snug tracking-tight text-zinc-900 sm:text-[15px]">

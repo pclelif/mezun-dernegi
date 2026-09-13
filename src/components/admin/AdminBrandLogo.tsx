@@ -31,19 +31,18 @@ export function AdminBrandLogo({ compact = false }: { compact?: boolean }) {
     <div
       className={
         compact
-          ? "size-9 shrink-0 overflow-hidden rounded-full"
-          : "mb-3 size-16 shrink-0 overflow-hidden rounded-full"
+          ? "relative size-9 shrink-0 overflow-hidden rounded-full"
+          : "relative mb-3 size-16 shrink-0 overflow-hidden rounded-full"
       }
     >
       <Image
         src={url}
-        width={64}
-        height={64}
-        unoptimized
-        loading="eager"
         alt="Dernek logosu"
+        fill
+        quality={75}
+        sizes={compact ? "36px" : "64px"}
+        className="rounded-full object-contain"
         onError={() => setUrl("/logo-dernek.png")}
-        className="size-full rounded-full object-contain"
       />
     </div>
   );

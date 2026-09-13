@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { OptimizedLightboxImage } from "@/components/shared/optimized-lightbox-image";
 
 type EventPhotoCarouselProps = {
   photos: string[];
@@ -30,7 +32,6 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
     setCurrentIndex((prev) => (prev - 1 + total) % total);
   }, [total]);
 
-  // Autoplay timer: 5 seconds, restarts on manual navigation or hover change
   useEffect(() => {
     if (total <= 1 || isHovered) return;
 
@@ -65,7 +66,6 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
 
   if (total === 0) return null;
 
-  // Single photo: standard full-bleed display without carousel overhead
   if (total === 1) {
     return (
       <>
@@ -73,16 +73,16 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
           className="relative aspect-square w-full overflow-hidden bg-white border-b border-zinc-100 cursor-pointer group flex items-center justify-center p-3 sm:p-5"
           onClick={() => setSelectedImage(validPhotos[0])}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={validPhotos[0]}
             alt={`${title} etkinlik görseli`}
-            className="size-full object-contain object-center block transition-transform duration-300 group-hover:scale-[1.02]"
-            style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center" }}
+            fill
+            quality={75}
+            sizes="(max-width: 768px) 100vw, 42rem"
+            className="object-contain object-center transition-transform duration-300 group-hover:scale-[1.02]"
           />
         </div>
 
-        {/* Lightbox Modal matching Galeri */}
         {selectedImage && (
           <div
             className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 p-4 sm:p-8 backdrop-blur-md animate-in fade-in duration-200"
@@ -100,12 +100,7 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
               className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl bg-black/40 p-2 shadow-2xl backdrop-blur-sm border border-white/10"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={selectedImage}
-                alt="Büyütülmüş etkinlik fotoğrafı"
-                className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
-              />
+              <OptimizedLightboxImage src={selectedImage} alt="Büyütülmüş etkinlik fotoğrafı" />
             </div>
           </div>
         )}
@@ -113,7 +108,6 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
     );
   }
 
-  // Multi-photo Carousel with Galeri design language
   return (
     <>
       <div
@@ -121,35 +115,33 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Layered Images with smooth fade transition */}
         {validPhotos.map((photoUrl, index) => {
           const isActive = index === currentIndex;
           return (
             <div
               key={`${photoUrl}-${index}`}
-              className={`absolute inset-0 size-full transition-opacity duration-700 ease-in-out cursor-pointer flex items-center justify-center p-3 sm:p-5 ${
+              className={`absolute inset-0 size-full transition-opacity duration-700 ease-in-out cursor-pointer ${
                 isActive ? "opacity-100 z-10" : "opacity-0 z-0 pointer-events-none"
               }`}
               onClick={() => setSelectedImage(photoUrl)}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={photoUrl}
                 alt={`${title} etkinlik görseli (${index + 1}/${total})`}
-                className="size-full object-contain object-center block"
-                style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center" }}
-                loading={index === 0 ? "eager" : "lazy"}
+                fill
+                quality={75}
+                sizes="(max-width: 768px) 100vw, 42rem"
+                priority={index === 0}
+                className="object-contain object-center p-3 sm:p-5"
               />
             </div>
           );
         })}
 
-        {/* Counter Badge */}
         <div className="absolute bottom-3 right-3 z-20 pointer-events-none rounded-full bg-black/60 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm shadow-sm">
           {currentIndex + 1} / {total}
         </div>
 
-        {/* Navigation Arrows matching Galeri style */}
         <div className="pointer-events-none absolute inset-0 z-30 flex items-center justify-between px-3 sm:px-4">
           {([-1, 1] as const).map((direction) => {
             const isPrevious = direction === -1;
@@ -174,7 +166,6 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
         </div>
       </div>
 
-      {/* Lightbox Modal matching Galeri */}
       {selectedImage && (
         <div
           className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 p-4 sm:p-8 backdrop-blur-md animate-in fade-in duration-200"
@@ -192,12 +183,7 @@ export function EventPhotoCarousel({ photos, title }: EventPhotoCarouselProps) {
             className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl bg-black/40 p-2 shadow-2xl backdrop-blur-sm border border-white/10"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={selectedImage}
-              alt="Büyütülmüş etkinlik fotoğrafı"
-              className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
-            />
+            <OptimizedLightboxImage src={selectedImage} alt="Büyütülmüş etkinlik fotoğrafı" />
           </div>
         </div>
       )}

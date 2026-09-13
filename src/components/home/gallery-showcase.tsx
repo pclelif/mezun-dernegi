@@ -1,11 +1,10 @@
 "use client";
 
-import Image from "next/image";
-
 import { ArrowRight, ChevronLeft, ChevronRight, Images, X } from "lucide-react";
 import Link from "next/link";
 import { useRef, useState } from "react";
 import { CroppedImage } from "@/components/shared/cropped-image";
+import { OptimizedLightboxImage } from "@/components/shared/optimized-lightbox-image";
 import type { ImageCrop } from "@/lib/supabase/client";
 
 export type GalleryShowcaseItem = {
@@ -86,7 +85,13 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
-                  <CroppedImage src={item.imageUrl} alt={item.title || "Galeri fotoğrafı"} crop={item.crop} className={item.crop ? "" : "absolute inset-0 size-full object-contain p-3 transition-transform duration-300 hover:scale-105"} />
+                  <CroppedImage
+                    src={item.imageUrl}
+                    alt={item.title || "Galeri fotoğrafı"}
+                    crop={item.crop}
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    className={item.crop ? "" : "object-contain p-3 transition-transform duration-300 hover:scale-105"}
+                  />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
                     <Images className="size-12" />
@@ -112,17 +117,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
             <X className="size-6" />
           </button>
           <div className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl bg-black/40 p-2 shadow-2xl backdrop-blur-sm border border-white/10" onClick={(e) => e.stopPropagation()}>
-            {/* Preserve the original image dimensions and quality in the lightbox. */}
-            <Image
-              src={selectedImage}
-              width={0}
-              height={0}
-              unoptimized
-              loading="eager"
-              style={{ width: "auto", height: "auto" }}
-              alt="Büyütülmüş fotoğraf"
-              className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
-            />
+            <OptimizedLightboxImage src={selectedImage} alt="Büyütülmüş fotoğraf" />
           </div>
         </div>
       )}
@@ -165,7 +160,13 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
                 onClick={() => item.imageUrl && setSelectedImage(item.imageUrl)}
               >
                 {item.imageUrl ? (
-                  <CroppedImage src={item.imageUrl} alt={item.title || "Galeri fotoğrafı"} crop={item.crop} className={item.crop ? "" : "absolute inset-0 size-full object-contain p-3 transition-transform duration-300 hover:scale-105"} />
+                  <CroppedImage
+                    src={item.imageUrl}
+                    alt={item.title || "Galeri fotoğrafı"}
+                    crop={item.crop}
+                    sizes="(max-width: 640px) 72vw, (max-width: 768px) 44vw, (max-width: 1024px) 34vw, 28vw"
+                    className={item.crop ? "" : "object-contain p-3 transition-transform duration-300 hover:scale-105"}
+                  />
                 ) : (
                   <div className="absolute inset-0 grid place-items-center text-zinc-400" aria-hidden="true">
                     <Images className="size-12" />
@@ -215,17 +216,7 @@ export function GalleryShowcase({ items, title = "Galeri", description, showAllL
             <X className="size-6" />
           </button>
           <div className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl bg-black/40 p-2 shadow-2xl backdrop-blur-sm border border-white/10" onClick={(e) => e.stopPropagation()}>
-            {/* Preserve the original image dimensions and quality in the lightbox. */}
-            <Image
-              src={selectedImage}
-              width={0}
-              height={0}
-              unoptimized
-              loading="eager"
-              style={{ width: "auto", height: "auto" }}
-              alt="Büyütülmüş fotoğraf"
-              className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
-            />
+            <OptimizedLightboxImage src={selectedImage} alt="Büyütülmüş fotoğraf" />
           </div>
         </div>
       )}

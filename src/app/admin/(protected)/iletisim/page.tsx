@@ -375,12 +375,12 @@ export default function AdminContactPage() {
 
 function MessageBody({ text }: { text: string }) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const isLong = text.length > 280;
+  const isLong = text.length > 80;
 
   return (
     <div className="mt-4">
       <p className="text-sm leading-relaxed text-zinc-700 whitespace-pre-line break-words">
-        {isLong && !isExpanded ? `${text.slice(0, 280)}…` : text}
+        {isLong && !isExpanded ? `${text.slice(0, 80)}...` : text}
       </p>
       {isLong && (
         <button

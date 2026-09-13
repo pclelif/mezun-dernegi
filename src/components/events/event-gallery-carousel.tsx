@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import { ChevronLeft, ChevronRight, Images, X } from "lucide-react";
 import { useRef, useState } from "react";
+import { OptimizedLightboxImage } from "@/components/shared/optimized-lightbox-image";
 
 type EventGalleryCarouselProps = {
   photos: string[];
@@ -86,12 +88,13 @@ export function EventGalleryCarousel({ photos, title }: EventGalleryCarouselProp
               className="relative aspect-square min-w-[70%] sm:min-w-[260px] lg:min-w-[280px] shrink-0 snap-start overflow-hidden rounded-xl border border-zinc-200 bg-white cursor-pointer transition-all duration-200 hover:shadow-lg"
               onClick={() => setSelectedImage(photoUrl)}
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src={photoUrl}
                 alt={`${title} fotoğrafı (${index + 1}/${total})`}
-                className="size-full object-contain p-2 select-none"
-                style={{ width: "100%", height: "100%", objectFit: "contain", objectPosition: "center" }}
+                fill
+                quality={75}
+                sizes="(max-width: 640px) 70vw, 280px"
+                className="select-none object-contain p-2"
               />
             </figure>
           ))}
@@ -123,7 +126,6 @@ export function EventGalleryCarousel({ photos, title }: EventGalleryCarouselProp
         )}
       </div>
 
-      {/* Lightbox Modal matching Galeri */}
       {selectedImage && (
         <div
           className="fixed inset-0 z-[99999] flex items-center justify-center bg-black/90 p-4 sm:p-8 backdrop-blur-md animate-in fade-in duration-200"
@@ -141,12 +143,7 @@ export function EventGalleryCarousel({ photos, title }: EventGalleryCarouselProp
             className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl bg-black/40 p-2 shadow-2xl backdrop-blur-sm border border-white/10"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={selectedImage}
-              alt="Büyütülmüş etkinlik fotoğrafı"
-              className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
-            />
+            <OptimizedLightboxImage src={selectedImage} alt="Büyütülmüş etkinlik fotoğrafı" />
           </div>
         </div>
       )}

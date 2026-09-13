@@ -2,6 +2,7 @@
 
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
+import Image from "next/image";
 import { GripVertical, ImagePlus, LoaderCircle, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { forwardRef, useId, useState, useCallback, useImperativeHandle, useMemo } from "react";
 import { createClient, type ImageCrop } from "@/lib/supabase/client";
@@ -342,7 +343,8 @@ export const ImageUploader = forwardRef<ImageUploaderHandle, ImageUploaderProps>
                     src={url}
                     alt=""
                     crop={crops[index]}
-                    className={crops[index] ? "pointer-events-none select-none" : "size-full select-none object-cover pointer-events-none"}
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className={crops[index] ? "pointer-events-none select-none" : "select-none object-cover pointer-events-none"}
                   />
 
                   {isTemporary ? (
@@ -465,13 +467,20 @@ export const ImageUploader = forwardRef<ImageUploaderHandle, ImageUploaderProps>
                       setZoom(1);
                       setResetCrop(false);
                     }}
-                    className={`size-12 shrink-0 overflow-hidden rounded-md border-2 ${
+                    className={`relative size-12 shrink-0 overflow-hidden rounded-md border-2 ${
                       index === cropIndex ? "border-red-600" : "border-transparent"
                     }`}
                     aria-label={`${index + 1}. fotoğrafı düzenle`}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={URL.createObjectURL(file)} alt="" className="size-full object-cover" />
+                    <Image
+                      src={URL.createObjectURL(file)}
+                      alt=""
+                      fill
+                      unoptimized
+                      quality={75}
+                      sizes="48px"
+                      className="object-cover"
+                    />
                   </button>
                 ))}
               </div>

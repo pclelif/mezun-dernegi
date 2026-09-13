@@ -75,6 +75,7 @@ export default function AydoganAydinPage() {
                   alt="Vatansever Şehit Tümgeneral Aydoğan Aydın askerî üniformasıyla selam verirken"
                   width={548}
                   height={446}
+                  quality={75}
                   className="aspect-[548/446] h-auto w-full object-cover grayscale"
                   sizes="(max-width: 1024px) 100vw, 22rem"
                   priority

@@ -3,6 +3,7 @@
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { CroppedImage } from "@/components/shared/cropped-image";
+import { OptimizedLightboxImage } from "@/components/shared/optimized-lightbox-image";
 import type { ImageCrop } from "@/lib/supabase/client";
 
 type EventCoverImageProps = {
@@ -78,7 +79,8 @@ export function EventCoverImage({ photos, crops = [], alt }: EventCoverImageProp
               src={photo}
               alt={index === currentIndex ? alt : ""}
               crop={crop}
-              className={crop ? "" : "absolute inset-0 size-full object-cover"}
+              sizes="(max-width: 768px) 100vw, 32rem"
+              className={crop ? "" : "object-cover"}
             />
           </div>
         ))}
@@ -125,12 +127,7 @@ export function EventCoverImage({ photos, crops = [], alt }: EventCoverImageProp
             className="relative flex max-h-[85vh] max-w-[90vw] items-center justify-center overflow-hidden rounded-2xl bg-black/40 p-2 shadow-2xl backdrop-blur-sm border border-white/10"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={currentPhoto.photo}
-              alt={alt}
-              className="max-h-[80vh] max-w-[85vw] rounded-xl object-contain"
-            />
+            <OptimizedLightboxImage src={currentPhoto.photo} alt={alt} />
           </div>
 
           {total > 1 ? (
